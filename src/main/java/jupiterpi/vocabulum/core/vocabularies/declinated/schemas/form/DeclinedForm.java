@@ -1,7 +1,5 @@
 package jupiterpi.vocabulum.core.vocabularies.declinated.schemas.form;
 
-import java.util.Objects;
-
 public class DeclinedForm {
     private Casus casus;
     private Number number;
@@ -43,5 +41,14 @@ public class DeclinedForm {
         if (o == null || getClass() != o.getClass()) return false;
         DeclinedForm that = (DeclinedForm) o;
         return casus == that.casus && number == that.number && gender == that.gender;
+    }
+
+    @Override
+    public String toString() {
+        return "{" + capitalize(casus.toString()) + ". " + capitalize(number.toString()) + ". " + capitalize(gender.toString()) + ".}";
+    }
+
+    private String capitalize(String str) {
+        return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
     }
 }
