@@ -7,6 +7,7 @@ import org.bson.Document;
 
 public class DeclensionClasses {
     public static DeclensionSchema a_Declension;
+    public static DeclensionSchema o_Declension;
 
     public static void loadDeclensionSchemas(MongoClient client) {
         MongoDatabase vocabulum_data = client.getDatabase("vocabulum_data");
@@ -14,6 +15,9 @@ public class DeclensionClasses {
 
         a_Declension = SimpleDeclensionSchema.readFromDocument(
                 declension_schemas.find(new Document("name", "a")).first()
+        );
+        o_Declension = GenderDependantDeclensionSchema.readFromDocument(
+                declension_schemas.find(new Document("name", "o")).first()
         );
     }
 }

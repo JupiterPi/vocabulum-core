@@ -2,10 +2,11 @@ package jupiterpi.vocabulum.core.vocabularies.declinated.schemas;
 
 import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.form.DeclinedForm;
+import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.form.Number;
 import org.bson.Document;
 
-public class SimpleDeclensionSchema implements DeclensionSchema {
+public class SimpleDeclensionSchema extends DeclensionSchema {
     public static SimpleDeclensionSchema readFromDocument(Document document) {
         SimpleDeclensionSchema schema = new SimpleDeclensionSchema();
 
@@ -41,9 +42,9 @@ public class SimpleDeclensionSchema implements DeclensionSchema {
     private String abl_pl;
 
     @Override
-    public String getSuffix(DeclinedForm form) {
-        Number number = form.getNumber();
+    public String getSuffixRaw(DeclinedForm form) {
         Casus casus = form.getCasus();
+        Number number = form.getNumber();
 
         if (number == Number.SG) {
             return switch (casus) {

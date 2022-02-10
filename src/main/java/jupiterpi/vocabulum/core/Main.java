@@ -2,6 +2,7 @@ package jupiterpi.vocabulum.core;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declinated.Noun;
 import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.DeclensionClasses;
 import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.form.Casus;
@@ -23,8 +24,16 @@ public class Main {
     }
 
     private static void test1() {
-        Noun noun = new Noun(DeclensionClasses.a_Declension, "amica", "amic");
-        System.out.println("Nom. Sg. f. = " + noun.getForm(new DeclinedForm(Casus.NOM, Number.SG, Gender.FEM)));
-        System.out.println("Gen. Pl. f. = " + noun.getForm(new DeclinedForm(Casus.GEN, Number.PL, Gender.FEM)));
+        try {
+            Noun noun1 = new Noun(DeclensionClasses.a_Declension, "amica", "amic", Gender.FEM);
+            System.out.println("Nom. Sg. f. = " + noun1.getForm(new DeclinedForm(Casus.NOM, Number.SG, Gender.FEM)));
+            System.out.println("Gen. Pl. f. = " + noun1.getForm(new DeclinedForm(Casus.GEN, Number.PL, Gender.FEM)));
+
+            Noun noun2 = new Noun(DeclensionClasses.o_Declension, "amicus", "amic", Gender.MASC);
+            System.out.println("Nom. Sg. f. = " + noun2.getForm(new DeclinedForm(Casus.NOM, Number.SG, Gender.MASC)));
+            System.out.println("Gen. Pl. f. = " + noun2.getForm(new DeclinedForm(Casus.ABL, Number.PL, Gender.MASC)));
+        } catch (DeclinedFormDoesNotExistException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

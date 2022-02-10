@@ -1,0 +1,17 @@
+{
+    "name":"a", 
+    "sg": {
+        "nom": "a", 
+        "gen": "ae", 
+        "dat": "ae", 
+        "acc": "am", 
+        "abl": "a"
+    }, 
+    "pl": {
+        "nom": "ae", 
+        "gen": "arum", 
+        "dat": "is", 
+        "acc": "as", 
+        "abl": "is"
+    }
+}
