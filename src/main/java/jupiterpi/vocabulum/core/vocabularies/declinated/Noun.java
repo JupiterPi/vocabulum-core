@@ -1,12 +1,13 @@
 package jupiterpi.vocabulum.core.vocabularies.declinated;
 
+import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.DeclensionSchema;
 import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.form.Number;
 
-public class Noun {
+public class Noun extends Vocabulary {
     private DeclensionSchema declensionSchema;
     private String nom_sg;
     private String root;
@@ -17,6 +18,15 @@ public class Noun {
         this.nom_sg = nom_sg;
         this.root = root;
         this.gender = gender;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    @Override
+    public String getBaseForm() {
+        return nom_sg;
     }
 
     public String getForm(DeclinedForm form) throws DeclinedFormDoesNotExistException {

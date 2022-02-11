@@ -25,15 +25,20 @@ public class Main {
 
     private static void test1() {
         try {
-            Noun noun1 = new Noun(DeclensionClasses.a_Declension, "amica", "amic", Gender.FEM);
-            System.out.println("Nom. Sg. f. = " + noun1.getForm(new DeclinedForm(Casus.NOM, Number.SG, Gender.FEM)));
-            System.out.println("Gen. Pl. f. = " + noun1.getForm(new DeclinedForm(Casus.GEN, Number.PL, Gender.FEM)));
-
-            Noun noun2 = new Noun(DeclensionClasses.o_Declension, "amicus", "amic", Gender.MASC);
-            System.out.println("Nom. Sg. f. = " + noun2.getForm(new DeclinedForm(Casus.NOM, Number.SG, Gender.MASC)));
-            System.out.println("Gen. Pl. f. = " + noun2.getForm(new DeclinedForm(Casus.ABL, Number.PL, Gender.MASC)));
+            printForms(new Noun(DeclensionClasses.a_Declension, "amica", "amic", Gender.FEM),
+                    new DeclinedForm(Casus.NOM, Number.SG, Gender.FEM),
+                    new DeclinedForm(Casus.GEN, Number.PL, Gender.FEM));
+            printForms(new Noun(DeclensionClasses.o_Declension, "amicus", "amic", Gender.MASC),
+                    new DeclinedForm(Casus.NOM, Number.SG, Gender.MASC),
+                    new DeclinedForm(Casus.ABL, Number.PL, Gender.MASC));
         } catch (DeclinedFormDoesNotExistException e) {
             System.out.println(e.getMessage());
+        }
+    }
+    private static void printForms(Noun noun, DeclinedForm... forms) throws DeclinedFormDoesNotExistException {
+        System.out.println("--- " + noun.getBaseForm() + " ---");
+        for (DeclinedForm form : forms) {
+            System.out.println(form.formToString() + " = " + noun.getForm(form));
         }
     }
 }

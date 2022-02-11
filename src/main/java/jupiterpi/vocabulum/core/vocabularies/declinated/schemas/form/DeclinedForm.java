@@ -43,9 +43,15 @@ public class DeclinedForm {
         return casus == that.casus && number == that.number && gender == that.gender;
     }
 
+    // to string
+
     @Override
     public String toString() {
-        return "{" + capitalize(casus.toString()) + ". " + capitalize(number.toString()) + ". " + capitalize(gender.toString()) + ".}";
+        return "{" + formToString() + "}";
+    }
+
+    public String formToString() {
+        return capitalize(casus.toString()) + ". " + capitalize(number.toString()) + ". " + gender.toString().substring(0, 1).toLowerCase() + ".";
     }
 
     private String capitalize(String str) {

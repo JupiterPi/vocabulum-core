@@ -1,5 +1,6 @@
 {
     "name": "a",
+    "schema": "simple",
     "sg": {
         "nom": "a", 
         "gen": "ae", 

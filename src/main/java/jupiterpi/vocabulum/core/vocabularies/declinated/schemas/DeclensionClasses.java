@@ -22,6 +22,7 @@ public class DeclensionClasses {
             declensionSchemas.put(name, switch (schema) {
                 case "simple" -> SimpleDeclensionSchema.readFromDocument(document);
                 case "gender_dependant" -> GenderDependantDeclensionSchema.readFromDocument(document);
+                default -> null;
             });
         }
 
