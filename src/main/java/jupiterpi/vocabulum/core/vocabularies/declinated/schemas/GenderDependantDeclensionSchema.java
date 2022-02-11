@@ -8,7 +8,8 @@ import org.bson.Document;
 
 public class GenderDependantDeclensionSchema extends DeclensionSchema {
     public static GenderDependantDeclensionSchema readFromDocument(Document document) {
-        GenderDependantDeclensionSchema schema = new GenderDependantDeclensionSchema();
+        String name = document.getString("name");
+        GenderDependantDeclensionSchema schema = new GenderDependantDeclensionSchema(name);
 
         // MASC
 
@@ -67,7 +68,9 @@ public class GenderDependantDeclensionSchema extends DeclensionSchema {
         return schema;
     }
 
-    private GenderDependantDeclensionSchema() {}
+    private GenderDependantDeclensionSchema(String name) {
+        super(name);
+    }
 
     // MASC
 

@@ -8,7 +8,8 @@ import org.bson.Document;
 
 public class SimpleDeclensionSchema extends DeclensionSchema {
     public static SimpleDeclensionSchema readFromDocument(Document document) {
-        SimpleDeclensionSchema schema = new SimpleDeclensionSchema();
+        String name = document.getString("name");
+        SimpleDeclensionSchema schema = new SimpleDeclensionSchema(name);
 
         Document sg = (Document) document.get("sg");
         schema.nom_sg = sg.getString("nom");
@@ -27,7 +28,9 @@ public class SimpleDeclensionSchema extends DeclensionSchema {
         return schema;
     }
 
-    private SimpleDeclensionSchema() {}
+    private SimpleDeclensionSchema(String name) {
+        super(name);
+    }
 
     private String nom_sg;
     private String gen_sg;
