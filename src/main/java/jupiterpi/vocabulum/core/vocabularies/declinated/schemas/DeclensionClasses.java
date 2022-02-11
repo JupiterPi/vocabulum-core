@@ -5,7 +5,9 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DeclensionClasses {
@@ -31,6 +33,14 @@ public class DeclensionClasses {
 
     public static DeclensionSchema get(String name) {
         return declensionSchemas.get(name);
+    }
+
+    public static List<DeclensionSchema> getAll() {
+        List<DeclensionSchema> schemas = new ArrayList<>();
+        for (String key : declensionSchemas.keySet()) {
+            schemas.add(declensionSchemas.get(key));
+        }
+        return schemas;
     }
 
     // utility fields

@@ -2,6 +2,11 @@ package jupiterpi.vocabulum.core;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
+import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
+import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
+import jupiterpi.vocabulum.core.interpreter.tokens.Token;
+import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declinated.Noun;
 import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.DeclensionClasses;
@@ -13,14 +18,26 @@ import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.form.Number;
 public class Main {
     public static MongoClient mongoClient;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws LexerException, DeclinedFormDoesNotExistException, ParserException {
         System.out.println("----- Vocabulum Core -----");
 
         mongoClient = MongoClients.create("mongodb://localhost");
 
         DeclensionClasses.loadDeclensionSchemas(mongoClient);
 
-        test1();
+        //test1();
+        test2();
+    }
+
+    private static void test2() throws LexerException, DeclinedFormDoesNotExistException, ParserException {
+        Lexer lexer = new Lexer("amicus, amici m.");
+        for (Token token : lexer.getTokens()) {
+            System.out.println(token);
+        }
+
+        Vocabulary vocabulary = Vocabulary.fromString("amicus, amici m.");
+        System.out.println(vocabulary.getBaseForm());
+        System.out.println(((Noun) vocabulary).getForm(new DeclinedForm(Casus.ABL, Number.PL, Gender.MASC)));
     }
 
     private static void test1() {
