@@ -51,7 +51,7 @@ public class Noun extends Vocabulary {
     }
 
     public String getForm(DeclinedForm form) throws DeclinedFormDoesNotExistException {
-        if (form.getGender() != this.gender) {
+        if (form.hasGender() && form.getGender() != this.gender) {
             throw new DeclinedFormDoesNotExistException(form, nom_sg);
         }
         if (form.isCasus(Casus.NOM) && form.isNumber(Number.SG)) {

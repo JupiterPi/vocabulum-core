@@ -18,7 +18,7 @@ public class Token {
     }
 
     public enum Type {
-        WORD, COMMA, GENDER
+        WORD, COMMA, CASUS, NUMBER, GENDER
     }
 
     @Override

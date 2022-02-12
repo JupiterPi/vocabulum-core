@@ -19,11 +19,13 @@ public class Lexer {
 
     // character types
     private final StringSet whitespaces = new StringSet(" ", "\t");
-    private final StringSet letters = StringSet.getCharacters("abcdefghijklmnopqrstuvwxyz");
+    private final StringSet letters = StringSet.getCharacters("abcdefghijklmnopqrstuvwxyz" + "abcdefghijklmnopqrstuvwxyz".toUpperCase());
     private final String comma = ",";
     private final String dot = ".";
 
     // other string sets
+    private final StringSet casusSymbols = new StringSet("Nom", "Gen", "Dat", "Acc", "Abl");
+    private final StringSet numberSymbols = new StringSet("Sg", "Pl");
     private final StringSet genderSymbols = new StringSet("m", "f", "n");
 
     // buffer
@@ -73,7 +75,11 @@ public class Lexer {
         if (bufferType == BufferType.WORD) {
             tokens.add(new Token(Token.Type.WORD, buffer));
         } else if (bufferType == BufferType.ABBREVIATION) {
-            if (genderSymbols.contains(buffer)) {
+            if (casusSymbols.contains(buffer)) {
+                tokens.add(new Token(Token.Type.CASUS, buffer));
+            } else if (numberSymbols.contains(buffer)) {
+                tokens.add(new Token(Token.Type.NUMBER, buffer));
+            } else if (genderSymbols.contains(buffer)) {
                 tokens.add(new Token(Token.Type.GENDER, buffer));
             } else {
                 throw new LexerException("Invalid abbreviation: " + buffer);

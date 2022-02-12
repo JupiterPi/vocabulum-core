@@ -26,19 +26,16 @@ public class Main {
         DeclensionClasses.loadDeclensionSchemas(mongoClient);
 
         //test1();
-        test2();
+        //test2();
+
+        Terminal terminal = new Terminal();
+        terminal.run();
     }
 
     private static void test2() throws LexerException, DeclinedFormDoesNotExistException, ParserException {
-        Lexer lexer = new Lexer("amicus, amici m.");
-        for (Token token : lexer.getTokens()) {
-            System.out.println(token);
-        }
-
-        Vocabulary vocabulary = Vocabulary.fromString("exercitus, exercitus m.");
-        System.out.println(vocabulary.getBaseForm());
-        System.out.println(((Noun) vocabulary).getForm(new DeclinedForm(Casus.NOM, Number.SG, Gender.MASC)));
-        System.out.println(((Noun) vocabulary).getForm(new DeclinedForm(Casus.GEN, Number.PL, Gender.MASC)));
+        Vocabulary vocabulary = Vocabulary.fromString("consilium, consilii n.");
+        System.out.println(((Noun) vocabulary).getForm(DeclinedForm.formString("Nom. Sg.")));
+        System.out.println(((Noun) vocabulary).getForm(DeclinedForm.formString("Gen. Pl.")));
     }
 
     private static void test1() {
