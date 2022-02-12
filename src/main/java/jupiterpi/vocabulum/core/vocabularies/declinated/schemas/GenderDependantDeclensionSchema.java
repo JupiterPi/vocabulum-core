@@ -31,7 +31,7 @@ public class GenderDependantDeclensionSchema extends DeclensionSchema {
 
         // FEM
 
-        Document fem = (Document) document.get("masc");
+        Document fem = (Document) document.get("fem");
 
         Document sg_fem = (Document) fem.get("sg");
         schema.nom_sg_fem = sg_fem.getString("nom");
@@ -49,7 +49,7 @@ public class GenderDependantDeclensionSchema extends DeclensionSchema {
 
         // NEUT
 
-        Document neut = (Document) document.get("masc");
+        Document neut = (Document) document.get("neut");
 
         Document sg_neut = (Document) neut.get("sg");
         schema.nom_sg_neut = sg_neut.getString("nom");
