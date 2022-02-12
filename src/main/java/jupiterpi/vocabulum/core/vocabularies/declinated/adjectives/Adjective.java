@@ -16,6 +16,10 @@ public class Adjective extends Vocabulary {
     private String nom_sg_masc;
     private String nom_sg_fem;
     private String nom_sg_neut;
+    private Kind kind;
+    public enum Kind {
+        AO, CONS
+    }
     private String root;
 
     public Adjective(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, String root) {
@@ -26,18 +30,28 @@ public class Adjective extends Vocabulary {
     }
 
     private Adjective() {}
-    public static Adjective fromBaseForms(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut) {
+    public static Adjective fromBaseForms(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut) throws DeclinedFormDoesNotExistException {
         Adjective adjective = new Adjective();
         adjective.nom_sg_masc = nom_sg_masc;
         adjective.nom_sg_fem = nom_sg_fem;
         adjective.nom_sg_neut = nom_sg_neut;
 
-        adjective.root = "";
-        for (int i = 0; i < nom_sg_fem.length() && i < nom_sg_neut.length(); i++) {
-            String fem_c = nom_sg_fem.split("")[i];
-            String neut_c = nom_sg_neut.split("")[i];
-            if (fem_c.equals(neut_c)) adjective.root += fem_c;
-            else break;
+        if (
+                nom_sg_masc.endsWith(masculineDeclensionSchema.getSuffix(DeclinedForm.get("Nom. Sg. m.")))
+                && nom_sg_fem.endsWith(feminineDeclensionSchema.getSuffix(DeclinedForm.get("Nom. Sg. f.")))
+                && nom_sg_neut.endsWith(neuterDeclensionSchema.getSuffix(DeclinedForm.get("Nom. Sg. n.")))
+        ) {
+            adjective.kind = Kind.AO;
+            adjective.root = nom_sg_masc.substring(0, nom_sg_masc.length() - masculineDeclensionSchema.getSuffix(DeclinedForm.get("Nom. Sg. m.")).length());
+        } else {
+            adjective.kind = Kind.CONS;
+            adjective.root = "";
+            for (int i = 0; i < nom_sg_fem.length() && i < nom_sg_neut.length(); i++) {
+                String fem_c = nom_sg_fem.split("")[i];
+                String neut_c = nom_sg_neut.split("")[i];
+                if (fem_c.equals(neut_c)) adjective.root += fem_c;
+                else break;
+            }
         }
 
         return adjective;
@@ -55,6 +69,7 @@ public class Adjective extends Vocabulary {
             throw new ParserException("Could not determine root from Gen. Sg. form: " + gen_sg);
         }
 
+        adjective.kind = Kind.CONS;
         return adjective;
     }
 
@@ -67,11 +82,15 @@ public class Adjective extends Vocabulary {
             };
         }
         form.normalizeGender();
-        return root + switch (form.getGender()) {
-            case MASC -> consonantalDeclensionSchema.getSuffix(form);
-            case FEM -> consonantalDeclensionSchema.getSuffix(form);
-            case NEUT -> consonantalDeclensionSchema.getSuffix(form);
-        };
+        if (kind == Kind.AO) {
+            return root + switch (form.getGender()) {
+                case MASC -> masculineDeclensionSchema.getSuffix(form);
+                case FEM -> feminineDeclensionSchema.getSuffix(form);
+                case NEUT -> neuterDeclensionSchema.getSuffix(form);
+            };
+        } else {
+            return root + consonantalDeclensionSchema.getSuffix(form);
+        }
     }
 
     @Override
@@ -80,7 +99,7 @@ public class Adjective extends Vocabulary {
     }
 
     @Override
-    public Kind getKind() {
-        return Kind.ADJECTIVE;
+    public Vocabulary.Kind getKind() {
+        return Vocabulary.Kind.ADJECTIVE;
     }
 }

@@ -40,6 +40,8 @@ public class Main {
         System.out.println();
         test3_print(Adjective.fromBaseForm("felix", "felicis"));
         System.out.println();
+        test3_full("laetus", "laeta", "laetum");
+        System.out.println();
     }
     private static void test3_full(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut) throws DeclinedFormDoesNotExistException, LexerException, ParserException {
         Adjective adjective = Adjective.fromBaseForms(nom_sg_masc, nom_sg_fem, nom_sg_neut);
