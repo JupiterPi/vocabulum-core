@@ -182,4 +182,9 @@ public class GenderDependantDeclensionSchema extends DeclensionSchema {
 
         }
     }
+
+    @Override
+    protected boolean isGenderDependant() {
+        return true;
+    }
 }

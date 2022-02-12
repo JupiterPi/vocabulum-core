@@ -66,4 +66,9 @@ public class SimpleDeclensionSchema extends DeclensionSchema {
             };
         }
     }
+
+    @Override
+    protected boolean isGenderDependant() {
+        return false;
+    }
 }

@@ -19,8 +19,16 @@ public class DeclinedForm {
 
     private DeclinedForm() {}
 
-    public static DeclinedForm formString(String str) throws LexerException, ParserException {
+    public static DeclinedForm fromString(String str) throws LexerException, ParserException {
         return fromString(new Lexer(str).getTokens());
+    }
+    public static DeclinedForm get(String str) {
+        try {
+            return fromString(str);
+        } catch (ParserException | LexerException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static DeclinedForm fromString(TokenSequence tokens) throws ParserException {
@@ -66,6 +74,12 @@ public class DeclinedForm {
             return true;
         } else {
             return this.gender == target.gender;
+        }
+    }
+
+    public void normalizeGender() {
+        if (!hasGender()) {
+            gender = Gender.MASC;
         }
     }
 

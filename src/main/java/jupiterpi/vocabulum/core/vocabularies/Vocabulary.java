@@ -33,4 +33,9 @@ public abstract class Vocabulary {
     }
 
     public abstract String getBaseForm();
+
+    public abstract Kind getKind();
+    public enum Kind {
+        NOUN, ADJECTIVE
+    }
 }

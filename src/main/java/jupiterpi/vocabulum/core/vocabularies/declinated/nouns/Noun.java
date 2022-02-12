@@ -1,7 +1,8 @@
-package jupiterpi.vocabulum.core.vocabularies.declinated;
+package jupiterpi.vocabulum.core.vocabularies.declinated.nouns;
 
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
+import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.DeclensionClasses;
 import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.DeclensionSchema;
 import jupiterpi.vocabulum.core.vocabularies.declinated.form.Casus;
@@ -41,10 +42,6 @@ public class Noun extends Vocabulary {
         return noun;
     }
 
-    public Gender getGender() {
-        return gender;
-    }
-
     @Override
     public String getBaseForm() {
         return nom_sg;
@@ -58,5 +55,10 @@ public class Noun extends Vocabulary {
             return nom_sg;
         }
         return root + declensionSchema.getSuffix(form);
+    }
+
+    @Override
+    public Kind getKind() {
+        return Kind.NOUN;
     }
 }

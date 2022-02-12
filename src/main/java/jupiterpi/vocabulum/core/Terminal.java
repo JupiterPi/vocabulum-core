@@ -5,7 +5,7 @@ import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
-import jupiterpi.vocabulum.core.vocabularies.declinated.Noun;
+import jupiterpi.vocabulum.core.vocabularies.declinated.nouns.Noun;
 import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
 
 public class Terminal extends ConsoleInterface {
@@ -20,7 +20,7 @@ public class Terminal extends ConsoleInterface {
             while (true) {
                 String formInput = in(noun.getBaseForm() + " > ");
                 if (formInput.equals("")) break;
-                DeclinedForm form = DeclinedForm.formString(formInput);
+                DeclinedForm form = DeclinedForm.fromString(formInput);
                 out(noun.getForm(form));
             }
         }

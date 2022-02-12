@@ -4,7 +4,7 @@ import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
-import jupiterpi.vocabulum.core.vocabularies.declinated.Noun;
+import jupiterpi.vocabulum.core.vocabularies.declinated.nouns.Noun;
 import jupiterpi.vocabulum.core.vocabularies.declinated.form.Genders;
 
 public class Parser {
