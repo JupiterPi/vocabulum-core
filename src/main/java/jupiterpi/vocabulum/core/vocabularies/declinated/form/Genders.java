@@ -1,4 +1,4 @@
-package jupiterpi.vocabulum.core.vocabularies.declinated.schemas.form;
+package jupiterpi.vocabulum.core.vocabularies.declinated.form;
 
 public class Genders {
     public static Gender fromSymbol(String symbol) {

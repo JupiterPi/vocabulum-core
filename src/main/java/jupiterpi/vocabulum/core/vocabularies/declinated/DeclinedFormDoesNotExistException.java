@@ -1,6 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.declinated;
 
-import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.form.DeclinedForm;
+import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
 
 public class DeclinedFormDoesNotExistException extends Exception {
     public DeclinedFormDoesNotExistException(DeclinedForm form) {

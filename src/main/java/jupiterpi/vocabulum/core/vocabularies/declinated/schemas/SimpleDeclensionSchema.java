@@ -1,9 +1,8 @@
 package jupiterpi.vocabulum.core.vocabularies.declinated.schemas;
 
-import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.form.Casus;
-import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.form.DeclinedForm;
-import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.form.Gender;
-import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.form.Number;
+import jupiterpi.vocabulum.core.vocabularies.declinated.form.Casus;
+import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
+import jupiterpi.vocabulum.core.vocabularies.declinated.form.Number;
 import org.bson.Document;
 
 public class SimpleDeclensionSchema extends DeclensionSchema {

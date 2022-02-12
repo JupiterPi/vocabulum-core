@@ -1,4 +1,4 @@
-package jupiterpi.vocabulum.core.vocabularies.declinated.schemas.form;
+package jupiterpi.vocabulum.core.vocabularies.declinated.form;
 
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;

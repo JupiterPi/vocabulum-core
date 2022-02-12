@@ -1,4 +1,4 @@
-package jupiterpi.vocabulum.core.vocabularies.declinated.schemas.form;
+package jupiterpi.vocabulum.core.vocabularies.declinated.form;
 
 public enum Casus {
     NOM, // Nominative

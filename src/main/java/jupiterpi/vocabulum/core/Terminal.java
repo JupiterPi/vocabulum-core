@@ -6,7 +6,7 @@ import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declinated.Noun;
-import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.form.DeclinedForm;
+import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
 
 public class Terminal extends ConsoleInterface {
     public void run() throws ParserException, DeclinedFormDoesNotExistException, LexerException {
