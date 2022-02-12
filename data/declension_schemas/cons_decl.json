@@ -1,0 +1,18 @@
+{
+    "name": "cons",
+    "schema": "simple",
+    "sg": {
+        "nom": "-",
+        "gen": "is",
+        "dat": "i",
+        "acc": "em",
+        "abl": "e"
+    }, 
+    "pl": {
+        "nom": "es",
+        "gen": "um",
+        "dat": "ibus",
+        "acc": "es",
+        "abl": "ibus"
+    }
+}

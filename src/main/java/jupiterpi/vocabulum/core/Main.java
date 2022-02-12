@@ -35,9 +35,10 @@ public class Main {
             System.out.println(token);
         }
 
-        Vocabulary vocabulary = Vocabulary.fromString("amicus, amici m.");
+        Vocabulary vocabulary = Vocabulary.fromString("exercitus, exercitus m.");
         System.out.println(vocabulary.getBaseForm());
-        System.out.println(((Noun) vocabulary).getForm(new DeclinedForm(Casus.ABL, Number.PL, Gender.MASC)));
+        System.out.println(((Noun) vocabulary).getForm(new DeclinedForm(Casus.NOM, Number.SG, Gender.MASC)));
+        System.out.println(((Noun) vocabulary).getForm(new DeclinedForm(Casus.GEN, Number.PL, Gender.MASC)));
     }
 
     private static void test1() {

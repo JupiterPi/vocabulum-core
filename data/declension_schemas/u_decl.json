@@ -1,0 +1,18 @@
+{
+    "name": "u",
+    "schema": "simple",
+    "sg": {
+        "nom": "us",
+        "gen": "us",
+        "dat": "ui",
+        "acc": "um",
+        "abl": "u"
+    }, 
+    "pl": {
+        "nom": "us",
+        "gen": "uum",
+        "dat": "ibus",
+        "acc": "us",
+        "abl": "ibus"
+    }
+}

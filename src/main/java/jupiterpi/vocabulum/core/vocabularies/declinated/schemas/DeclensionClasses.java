@@ -47,9 +47,15 @@ public class DeclensionClasses {
 
     public static DeclensionSchema a_Declension;
     public static DeclensionSchema o_Declension;
+    public static DeclensionSchema cons_Declension;
+    public static DeclensionSchema e_Declension;
+    public static DeclensionSchema u_Declension;
 
     private static void assignUtilityFields() {
         a_Declension = get("a");
         o_Declension = get("o");
+        cons_Declension = get("cons");
+        e_Declension = get("e");
+        u_Declension = get("u");
     }
 }
