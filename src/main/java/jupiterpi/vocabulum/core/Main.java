@@ -4,6 +4,8 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
+import jupiterpi.vocabulum.core.interpreter.tokens.Token;
+import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declinated.adjectives.Adjective;
@@ -30,7 +32,25 @@ public class Main {
         //Terminal terminal = new Terminal();
         //terminal.run();
 
-        test3();
+        //test3();
+        test4();
+    }
+
+    private static void test4() throws ParserException, DeclinedFormDoesNotExistException, LexerException {
+        System.out.println(TokenSequence.fromTypes(
+                Token.Type.WORD,
+                Token.Type.COMMA,
+                Token.Type.WORD,
+                Token.Type.COMMA,
+                Token.Type.WORD));
+
+        test3_print((Adjective) Vocabulary.fromString("acer, acris, acre"));
+        System.out.println();
+        test3_print((Adjective) Vocabulary.fromString("brevis, brevis, breve"));
+        System.out.println();
+        test3_print((Adjective) Vocabulary.fromString("felix, Gen. felicis"));
+        System.out.println();
+        test3_print((Adjective) Vocabulary.fromString("laetus, laeta, laetum"));
     }
 
     private static void test3() throws ParserException, LexerException, DeclinedFormDoesNotExistException {
@@ -49,9 +69,9 @@ public class Main {
     }
     private static void test3_print(Adjective adjective) throws ParserException, LexerException, DeclinedFormDoesNotExistException {
         System.out.println(adjective.getBaseForm());
-        System.out.println(adjective.getForm(DeclinedForm.fromString("Nom. Sg. f.")));
-        System.out.println(adjective.getForm(DeclinedForm.fromString("Gen. Pl. m.")));
-        System.out.println(adjective.getForm(DeclinedForm.fromString("Acc. Sg. n.")));
+        System.out.println("Nom. Sg. f. = " + adjective.getForm(DeclinedForm.fromString("Nom. Sg. f.")));
+        System.out.println("Gen. Pl. m. = " + adjective.getForm(DeclinedForm.fromString("Gen. Pl. m.")));
+        System.out.println("Acc. Sg. n. = " + adjective.getForm(DeclinedForm.fromString("Acc. Sg. n.")));
     }
 
     private static void test2() throws LexerException, DeclinedFormDoesNotExistException, ParserException {

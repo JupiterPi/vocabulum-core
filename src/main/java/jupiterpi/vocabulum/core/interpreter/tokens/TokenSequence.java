@@ -11,6 +11,14 @@ public class TokenSequence extends ArrayList<Token> {
         super(Arrays.asList(tokens));
     }
 
+    public static TokenSequence fromTypes(Token.Type... types) {
+        TokenSequence tokens = new TokenSequence();
+        for (Token.Type type : types) {
+            tokens.add(new Token(type));
+        }
+        return tokens;
+    }
+
     public TokenSequence subsequence(int fromIndex, int toIndex) {
         try {
             TokenSequence tokens = new TokenSequence();
@@ -25,5 +33,17 @@ public class TokenSequence extends ArrayList<Token> {
 
     public TokenSequence subsequence(int fromIndex) {
         return subsequence(fromIndex, this.size());
+    }
+
+    public boolean fitsStartsWith(TokenSequence tokens) {
+        if (this.size() > tokens.size()) return false;
+        for (int i = 0; i < this.size(); i++) {
+            Token token1 = this.get(i);
+            Token token2 = tokens.get(i);
+            if (!token1.fits(token2)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
