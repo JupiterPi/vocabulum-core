@@ -74,6 +74,7 @@ public class Adjective extends Vocabulary {
     }
 
     public String getForm(DeclinedForm form) throws DeclinedFormDoesNotExistException {
+        form.normalizeGender();
         if (form.fits(DeclinedForm.get("Nom. Sg."))) {
             return switch (form.getGender()) {
                 case MASC -> nom_sg_masc;
@@ -81,7 +82,6 @@ public class Adjective extends Vocabulary {
                 case NEUT -> nom_sg_neut;
             };
         }
-        form.normalizeGender();
         if (kind == Kind.AO) {
             return root + switch (form.getGender()) {
                 case MASC -> masculineDeclensionSchema.getSuffix(form);

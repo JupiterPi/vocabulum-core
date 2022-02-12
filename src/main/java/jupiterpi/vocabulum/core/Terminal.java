@@ -5,23 +5,38 @@ import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
-import jupiterpi.vocabulum.core.vocabularies.declinated.nouns.Noun;
+import jupiterpi.vocabulum.core.vocabularies.declinated.adjectives.Adjective;
 import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
+import jupiterpi.vocabulum.core.vocabularies.declinated.nouns.Noun;
 
 public class Terminal extends ConsoleInterface {
     public void run() throws ParserException, DeclinedFormDoesNotExistException, LexerException {
         out("----- Vocabulum Terminal -----");
 
         out("");
+        out("Usage: Type a vocabulary after \">\" (e. g. \"amicus, amici m.\", \"laetus, laeta, laetum\" or \"felix, Gen. felicis\"). Then after the indented \">\", type the form you want to generate (e. g. \"Nom. Sg.\" or \"Gen. Pl. f.\"). Note: \"Akk.\" is \"Acc.\"!");
+        out("");
+
         while (true) {
-            String nounInput = in("> ");
-            if (nounInput.equals("")) break;
-            Noun noun = (Noun) Vocabulary.fromString(nounInput);
-            while (true) {
-                String formInput = in(noun.getBaseForm() + " > ");
-                if (formInput.equals("")) break;
-                DeclinedForm form = DeclinedForm.fromString(formInput);
-                out(noun.getForm(form));
+            String wordInput = in("> ");
+            if (wordInput.equals("")) break;
+            Vocabulary vocabulary = Vocabulary.fromString(wordInput);
+            if (vocabulary.getKind() == Vocabulary.Kind.NOUN) {
+                Noun noun = (Noun) vocabulary;
+                while (true) {
+                    String formInput = in("[NOUN] " + noun.getBaseForm() + " > ");
+                    if (formInput.equals("")) break;
+                    DeclinedForm form = DeclinedForm.fromString(formInput);
+                    out(noun.getForm(form));
+                }
+            } else if (vocabulary.getKind() == Vocabulary.Kind.ADJECTIVE) {
+                Adjective adjective = (Adjective) vocabulary;
+                while (true) {
+                    String formInput = in("[ADJECTIVE] " + adjective.getBaseForm() + " > ");
+                    if (formInput.equals("")) break;
+                    DeclinedForm form = DeclinedForm.fromString(formInput);
+                    out(adjective.getForm(form));
+                }
             }
         }
         out("Done. ");

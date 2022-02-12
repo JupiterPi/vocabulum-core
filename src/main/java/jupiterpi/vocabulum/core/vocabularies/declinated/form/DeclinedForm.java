@@ -78,8 +78,11 @@ public class DeclinedForm {
     }
 
     public void normalizeGender() {
+        normalizeGender(Gender.MASC);
+    }
+    public void normalizeGender(Gender normalizeTo) {
         if (!hasGender()) {
-            gender = Gender.MASC;
+            gender = normalizeTo;
         }
     }
 

@@ -51,6 +51,7 @@ public class Noun extends Vocabulary {
         if (form.hasGender() && form.getGender() != this.gender) {
             throw new DeclinedFormDoesNotExistException(form, nom_sg);
         }
+        form.normalizeGender(gender);
         if (form.isCasus(Casus.NOM) && form.isNumber(Number.SG)) {
             return nom_sg;
         }

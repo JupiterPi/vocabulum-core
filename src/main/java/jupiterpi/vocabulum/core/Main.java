@@ -29,11 +29,11 @@ public class Main {
         //test1();
         //test2();
 
-        //Terminal terminal = new Terminal();
-        //terminal.run();
-
         //test3();
-        test4();
+        //test4();
+
+        Terminal terminal = new Terminal();
+        terminal.run();
     }
 
     private static void test4() throws ParserException, DeclinedFormDoesNotExistException, LexerException {
