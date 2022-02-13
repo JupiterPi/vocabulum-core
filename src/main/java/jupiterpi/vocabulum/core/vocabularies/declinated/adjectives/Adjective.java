@@ -37,12 +37,12 @@ public class Adjective extends Vocabulary {
         adjective.nom_sg_neut = nom_sg_neut;
 
         if (
-                nom_sg_masc.endsWith(masculineDeclensionSchema.getSuffix(DeclinedForm.get("Nom. Sg. m.")))
-                && nom_sg_fem.endsWith(feminineDeclensionSchema.getSuffix(DeclinedForm.get("Nom. Sg. f.")))
+                /*nom_sg_masc.endsWith(masculineDeclensionSchema.getSuffix(DeclinedForm.get("Nom. Sg. m.")))      // incorrect, only depends on f. and n. ending
+                &&*/ nom_sg_fem.endsWith(feminineDeclensionSchema.getSuffix(DeclinedForm.get("Nom. Sg. f.")))
                 && nom_sg_neut.endsWith(neuterDeclensionSchema.getSuffix(DeclinedForm.get("Nom. Sg. n.")))
         ) {
             adjective.kind = Kind.AO;
-            adjective.root = nom_sg_masc.substring(0, nom_sg_masc.length() - masculineDeclensionSchema.getSuffix(DeclinedForm.get("Nom. Sg. m.")).length());
+            adjective.root = nom_sg_fem.substring(0, nom_sg_fem.length() - feminineDeclensionSchema.getSuffix(DeclinedForm.get("Nom. Sg. f.")).length());
         } else {
             adjective.kind = Kind.CONS;
             adjective.root = "";
