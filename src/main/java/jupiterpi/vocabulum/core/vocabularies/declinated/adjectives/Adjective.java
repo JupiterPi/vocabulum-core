@@ -1,17 +1,21 @@
 package jupiterpi.vocabulum.core.vocabularies.declinated.adjectives;
 
+import jupiterpi.vocabulum.core.Database;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.DeclensionClasses;
 import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.DeclensionSchema;
+import org.bson.Document;
 
 public class Adjective extends Vocabulary {
     private static final DeclensionSchema masculineDeclensionSchema = DeclensionClasses.o_Declension;
     private static final DeclensionSchema feminineDeclensionSchema = DeclensionClasses.a_Declension;
     private static final DeclensionSchema neuterDeclensionSchema = DeclensionClasses.o_Declension;
     private static final DeclensionSchema consonantalDeclensionSchema = DeclensionClasses.cons_adjectives_Declension;
+
+    private static final Document adjectivesData = Database.other.find(new Document("id", "adjectives")).first();
 
     private String nom_sg_masc;
     private String nom_sg_fem;
@@ -62,7 +66,7 @@ public class Adjective extends Vocabulary {
         adjective.nom_sg_fem = nom_sg;
         adjective.nom_sg_neut = nom_sg;
 
-        String gen_sg_suffix = consonantalDeclensionSchema.getSuffix(DeclinedForm.get("Gen. Sg."));
+        String gen_sg_suffix = consonantalDeclensionSchema.getSuffix(DeclinedForm.get("Gen. Sg. m."));
         if (gen_sg.endsWith(gen_sg_suffix)) {
             adjective.root = gen_sg.substring(0, gen_sg.length() - gen_sg_suffix.length());
         } else {
@@ -77,23 +81,37 @@ public class Adjective extends Vocabulary {
         return makeForm(new AdjectiveForm(form, ComparativeForm.POSITIVE));
     }
     public String makeForm(AdjectiveForm form) throws DeclinedFormDoesNotExistException {
-        DeclinedForm declinedForm = form.getDeclinedForm();
-        declinedForm.normalizeGender();
-        if (declinedForm.fits(DeclinedForm.get("Nom. Sg."))) {
-            return switch (declinedForm.getGender()) {
-                case MASC -> nom_sg_masc;
-                case FEM -> nom_sg_fem;
-                case NEUT -> nom_sg_neut;
-            };
-        }
-        if (kind == Kind.AO) {
-            return root + switch (declinedForm.getGender()) {
-                case MASC -> masculineDeclensionSchema.getSuffix(declinedForm);
-                case FEM -> feminineDeclensionSchema.getSuffix(declinedForm);
-                case NEUT -> neuterDeclensionSchema.getSuffix(declinedForm);
-            };
+        if (form.isAdverb()) {
+            Document adverbsData = (Document) adjectivesData.get("adverbs");
+            if (kind == Kind.AO) {
+                return root + adverbsData.getString("ao_suffix");
+            } else {
+                Document exceptionData = (Document) adverbsData.get("cons_exception");
+                if (nom_sg_masc.endsWith(exceptionData.getString("nom_sg_masc_suffix"))) {
+                    return root + exceptionData.getString("suffix");
+                } else {
+                    return root + adverbsData.getString("cons_suffix");
+                }
+            }
         } else {
-            return root + consonantalDeclensionSchema.getSuffix(declinedForm);
+            DeclinedForm declinedForm = form.getDeclinedForm();
+            declinedForm.normalizeGender();
+            if (declinedForm.fits(DeclinedForm.get("Nom. Sg."))) {
+                return switch (declinedForm.getGender()) {
+                    case MASC -> nom_sg_masc;
+                    case FEM -> nom_sg_fem;
+                    case NEUT -> nom_sg_neut;
+                };
+            }
+            if (kind == Kind.AO) {
+                return root + switch (declinedForm.getGender()) {
+                    case MASC -> masculineDeclensionSchema.getSuffix(declinedForm);
+                    case FEM -> feminineDeclensionSchema.getSuffix(declinedForm);
+                    case NEUT -> neuterDeclensionSchema.getSuffix(declinedForm);
+                };
+            } else {
+                return root + consonantalDeclensionSchema.getSuffix(declinedForm);
+            }
         }
     }
 

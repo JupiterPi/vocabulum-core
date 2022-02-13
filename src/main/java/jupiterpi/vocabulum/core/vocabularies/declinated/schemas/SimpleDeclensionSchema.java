@@ -61,68 +61,6 @@ public class SimpleDeclensionSchema extends DeclensionSchema {
         String abl_pl = pl.getString("abl");
         schema.abl_pl = abl_pl.equals(".") ? schema.abl_pl : abl_pl;
 
-
-        /*System.out.println();
-        System.out.println(name + "-------------------------------------------------------------------------");
-        System.out.println();
-
-        try {
-
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.NOM, Number.SG, Gender.MASC)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.GEN, Number.SG, Gender.MASC)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.DAT, Number.SG, Gender.MASC)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.ACC, Number.SG, Gender.MASC)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.ABL, Number.SG, Gender.MASC)));
-
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.NOM, Number.PL, Gender.MASC)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.GEN, Number.PL, Gender.MASC)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.DAT, Number.PL, Gender.MASC)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.ACC, Number.PL, Gender.MASC)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.ABL, Number.PL, Gender.MASC)));
-
-            System.out.println();
-
-
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.NOM, Number.SG, Gender.FEM)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.GEN, Number.SG, Gender.FEM)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.DAT, Number.SG, Gender.FEM)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.ACC, Number.SG, Gender.FEM)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.ABL, Number.SG, Gender.FEM)));
-
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.NOM, Number.PL, Gender.FEM)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.GEN, Number.PL, Gender.FEM)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.DAT, Number.PL, Gender.FEM)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.ACC, Number.PL, Gender.FEM)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.ABL, Number.PL, Gender.FEM)));
-
-            System.out.println();
-
-
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.NOM, Number.SG, Gender.NEUT)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.GEN, Number.SG, Gender.NEUT)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.DAT, Number.SG, Gender.NEUT)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.ACC, Number.SG, Gender.NEUT)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.ABL, Number.SG, Gender.NEUT)));
-
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.NOM, Number.PL, Gender.NEUT)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.GEN, Number.PL, Gender.NEUT)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.DAT, Number.PL, Gender.NEUT)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.ACC, Number.PL, Gender.NEUT)));
-            System.out.println(schema.getSuffix(new DeclinedForm(Casus.ABL, Number.PL, Gender.NEUT)));
-
-            System.out.println();
-
-        } catch (DeclinedFormDoesNotExistException e) {
-            e.printStackTrace();
-        }*/
-
-
-
-
-
-
-
-
         return schema;
     }
 

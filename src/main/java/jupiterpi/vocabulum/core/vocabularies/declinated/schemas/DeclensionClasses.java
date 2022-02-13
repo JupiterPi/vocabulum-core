@@ -1,14 +1,7 @@
 package jupiterpi.vocabulum.core.vocabularies.declinated.schemas;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
+import jupiterpi.vocabulum.core.Database;
 import jupiterpi.vocabulum.core.vocabularies.declinated.LoadingDataException;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.Casus;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.Gender;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.Number;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -20,71 +13,20 @@ public class DeclensionClasses {
     private static Map<String, Document> declensionSchemasRaw;
     private static Map<String, DeclensionSchema> declensionSchemas;
 
-    public static void loadDeclensionSchemas(MongoClient client) throws LoadingDataException {
-        MongoDatabase vocabulum_data = client.getDatabase("vocabulum_data");
-        MongoCollection<Document> declension_schemas = vocabulum_data.getCollection("declension_schemas");
-
+    public static void loadDeclensionSchemas() throws LoadingDataException {
         declensionSchemasRaw = new HashMap<>();
-        for (Document document : declension_schemas.find()) {
+        for (Document document : Database.declension_schemas.find()) {
             String name = document.getString("name");
             declensionSchemasRaw.put(name, document);
         }
 
         declensionSchemas = new HashMap<>();
-        for (Document document : declension_schemas.find()) {
+        for (Document document : Database.declension_schemas.find()) {
             String name = document.getString("name");
             declensionSchemas.put(name, makeSchema(document));
         }
 
         assignUtilityFields();
-
-        /*try {
-
-            System.out.println("NOM, SG, MASC = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.NOM, Number.SG, Gender.MASC)));
-            System.out.println("GEN, SG, MASC = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.GEN, Number.SG, Gender.MASC)));
-            System.out.println("DAT, SG, MASC = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.DAT, Number.SG, Gender.MASC)));
-            System.out.println("ACC, SG, MASC = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.ACC, Number.SG, Gender.MASC)));
-            System.out.println("ABL, SG, MASC = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.ABL, Number.SG, Gender.MASC)));
-
-            System.out.println("NOM, PL, MASC = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.NOM, Number.PL, Gender.MASC)));
-            System.out.println("GEN, PL, MASC = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.GEN, Number.PL, Gender.MASC)));
-            System.out.println("DAT, PL, MASC = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.DAT, Number.PL, Gender.MASC)));
-            System.out.println("ACC, PL, MASC = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.ACC, Number.PL, Gender.MASC)));
-            System.out.println("ABL, PL, MASC = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.ABL, Number.PL, Gender.MASC)));
-
-            System.out.println();
-
-
-            System.out.println("NOM, SG, FEM = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.NOM, Number.SG, Gender.FEM)));
-            System.out.println("GEN, SG, FEM = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.GEN, Number.SG, Gender.FEM)));
-            System.out.println("DAT, SG, FEM = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.DAT, Number.SG, Gender.FEM)));
-            System.out.println("ACC, SG, FEM = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.ACC, Number.SG, Gender.FEM)));
-            System.out.println("ABL, SG, FEM = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.ABL, Number.SG, Gender.FEM)));
-
-            System.out.println("NOM, PL, FEM = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.NOM, Number.PL, Gender.FEM)));
-            System.out.println("GEN, PL, FEM = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.GEN, Number.PL, Gender.FEM)));
-            System.out.println("DAT, PL, FEM = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.DAT, Number.PL, Gender.FEM)));
-            System.out.println("ACC, PL, FEM = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.ACC, Number.PL, Gender.FEM)));
-            System.out.println("ABL, PL, FEM = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.ABL, Number.PL, Gender.FEM)));
-
-            System.out.println();
-
-
-            System.out.println("NOM, SG, NEUT = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.NOM, Number.SG, Gender.NEUT)));
-            System.out.println("GEN, SG, NEUT = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.GEN, Number.SG, Gender.NEUT)));
-            System.out.println("DAT, SG, NEUT = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.DAT, Number.SG, Gender.NEUT)));
-            System.out.println("ACC, SG, NEUT = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.ACC, Number.SG, Gender.NEUT)));
-            System.out.println("ABL, SG, NEUT = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.ABL, Number.SG, Gender.NEUT)));
-
-            System.out.println("NOM, PL, NEUT = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.NOM, Number.PL, Gender.NEUT)));
-            System.out.println("GEN, PL, NEUT = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.GEN, Number.PL, Gender.NEUT)));
-            System.out.println("DAT, PL, NEUT = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.DAT, Number.PL, Gender.NEUT)));
-            System.out.println("ACC, PL, NEUT = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.ACC, Number.PL, Gender.NEUT)));
-            System.out.println("ABL, PL, NEUT = " + cons_adjectives_Declension.getSuffix(new DeclinedForm(Casus.ABL, Number.PL, Gender.NEUT)));
-
-        } catch (DeclinedFormDoesNotExistException e) {
-            e.printStackTrace();
-        }*/
     }
 
     public static DeclensionSchema makeSchema(Document document) throws LoadingDataException {

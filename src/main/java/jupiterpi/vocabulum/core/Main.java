@@ -1,7 +1,5 @@
 package jupiterpi.vocabulum.core;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
@@ -10,6 +8,8 @@ import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declinated.LoadingDataException;
 import jupiterpi.vocabulum.core.vocabularies.declinated.adjectives.Adjective;
+import jupiterpi.vocabulum.core.vocabularies.declinated.adjectives.AdjectiveForm;
+import jupiterpi.vocabulum.core.vocabularies.declinated.adjectives.ComparativeForm;
 import jupiterpi.vocabulum.core.vocabularies.declinated.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declinated.form.Gender;
@@ -18,23 +18,26 @@ import jupiterpi.vocabulum.core.vocabularies.declinated.nouns.Noun;
 import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.DeclensionClasses;
 
 public class Main {
-    public static MongoClient mongoClient;
-
     public static void main(String[] args) throws LexerException, DeclinedFormDoesNotExistException, ParserException, LoadingDataException {
         System.out.println("----- Vocabulum Core -----");
 
-        mongoClient = MongoClients.create("mongodb://localhost");
+        DeclensionClasses.loadDeclensionSchemas();
 
-        DeclensionClasses.loadDeclensionSchemas(mongoClient);
+        //Terminal terminal = new Terminal();
+        //terminal.run();
 
-        //test1();
-        //test2();
+        test5();
+    }
 
-        //test3();
-        //test4();
+    private static void test5() throws ParserException, DeclinedFormDoesNotExistException, LexerException {
+        Adjective adjective1 = (Adjective) Vocabulary.fromString("verus, vera, verum");
+        System.out.println(adjective1.makeForm(new AdjectiveForm(true, ComparativeForm.POSITIVE)));
 
-        Terminal terminal = new Terminal();
-        terminal.run();
+        Adjective adjective2 = (Adjective) Vocabulary.fromString("acer, acris, acre");
+        System.out.println(adjective2.makeForm(new AdjectiveForm(true, ComparativeForm.POSITIVE)));
+
+        Adjective adjective3 = (Adjective) Vocabulary.fromString("clemens, Gen. clementis");
+        System.out.println(adjective3.makeForm(new AdjectiveForm(true, ComparativeForm.POSITIVE)));
     }
 
     private static void test4() throws ParserException, DeclinedFormDoesNotExistException, LexerException {
