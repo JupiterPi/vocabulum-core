@@ -14,7 +14,7 @@ public class Terminal extends ConsoleInterface {
         out("----- Vocabulum Terminal -----");
 
         out("");
-        out("Usage: Type a vocabulary after \">\" (e. g. \"amicus, amici m.\", \"laetus, laeta, laetum\" or \"felix, Gen. felicis\"). Then after the indented \">\", type the form you want to generate (e. g. \"Nom. Sg.\" or \"Gen. Pl. f.\"). Note: \"Akk.\" is \"Acc.\"!");
+        out("Usage: Type a vocabulary after \">\" (e. g. \"amicus, amici m.\", \"laetus, laeta, laetum\" or \"felix, Gen. felicis\"). Then after the indented \">\", type the form you want to generate (e. g. \"Nom. Sg.\" or \"Gen. Pl. f.\"). To go back at any time, press enter without typing something on a prompt. Note: \"Akk.\" is \"Acc.\"!");
         out("");
 
         while (true) {
@@ -27,7 +27,7 @@ public class Terminal extends ConsoleInterface {
                     String formInput = in("[NOUN] " + noun.getBaseForm() + " > ");
                     if (formInput.equals("")) break;
                     DeclinedForm form = DeclinedForm.fromString(formInput);
-                    out(noun.getForm(form));
+                    out(noun.makeForm(form));
                 }
             } else if (vocabulary.getKind() == Vocabulary.Kind.ADJECTIVE) {
                 Adjective adjective = (Adjective) vocabulary;
@@ -35,7 +35,7 @@ public class Terminal extends ConsoleInterface {
                     String formInput = in("[ADJECTIVE] " + adjective.getBaseForm() + " > ");
                     if (formInput.equals("")) break;
                     DeclinedForm form = DeclinedForm.fromString(formInput);
-                    out(adjective.getForm(form));
+                    out(adjective.makeForm(form));
                 }
             }
         }

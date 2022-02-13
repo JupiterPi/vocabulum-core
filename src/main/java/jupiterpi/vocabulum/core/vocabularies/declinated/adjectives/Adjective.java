@@ -73,23 +73,27 @@ public class Adjective extends Vocabulary {
         return adjective;
     }
 
-    public String getForm(DeclinedForm form) throws DeclinedFormDoesNotExistException {
-        form.normalizeGender();
-        if (form.fits(DeclinedForm.get("Nom. Sg."))) {
-            return switch (form.getGender()) {
+    public String makeForm(DeclinedForm form) throws DeclinedFormDoesNotExistException {
+        return makeForm(new AdjectiveForm(form, ComparativeForm.POSITIVE));
+    }
+    public String makeForm(AdjectiveForm form) throws DeclinedFormDoesNotExistException {
+        DeclinedForm declinedForm = form.getDeclinedForm();
+        declinedForm.normalizeGender();
+        if (declinedForm.fits(DeclinedForm.get("Nom. Sg."))) {
+            return switch (declinedForm.getGender()) {
                 case MASC -> nom_sg_masc;
                 case FEM -> nom_sg_fem;
                 case NEUT -> nom_sg_neut;
             };
         }
         if (kind == Kind.AO) {
-            return root + switch (form.getGender()) {
-                case MASC -> masculineDeclensionSchema.getSuffix(form);
-                case FEM -> feminineDeclensionSchema.getSuffix(form);
-                case NEUT -> neuterDeclensionSchema.getSuffix(form);
+            return root + switch (declinedForm.getGender()) {
+                case MASC -> masculineDeclensionSchema.getSuffix(declinedForm);
+                case FEM -> feminineDeclensionSchema.getSuffix(declinedForm);
+                case NEUT -> neuterDeclensionSchema.getSuffix(declinedForm);
             };
         } else {
-            return root + consonantalDeclensionSchema.getSuffix(form);
+            return root + consonantalDeclensionSchema.getSuffix(declinedForm);
         }
     }
 

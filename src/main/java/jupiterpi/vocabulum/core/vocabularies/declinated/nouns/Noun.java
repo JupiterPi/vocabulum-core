@@ -47,15 +47,19 @@ public class Noun extends Vocabulary {
         return nom_sg;
     }
 
-    public String getForm(DeclinedForm form) throws DeclinedFormDoesNotExistException {
-        if (form.hasGender() && form.getGender() != this.gender) {
-            throw new DeclinedFormDoesNotExistException(form, nom_sg);
+    public String makeForm(DeclinedForm form) throws DeclinedFormDoesNotExistException {
+        return makeForm(new NounForm(form));
+    }
+    public String makeForm(NounForm form) throws DeclinedFormDoesNotExistException {
+        DeclinedForm declinedForm = form.getDeclinedForm();
+        if (declinedForm.hasGender() && declinedForm.getGender() != this.gender) {
+            throw new DeclinedFormDoesNotExistException(declinedForm, nom_sg);
         }
-        form.normalizeGender(gender);
-        if (form.isCasus(Casus.NOM) && form.isNumber(Number.SG)) {
+        declinedForm.normalizeGender(gender);
+        if (declinedForm.isCasus(Casus.NOM) && declinedForm.isNumber(Number.SG)) {
             return nom_sg;
         }
-        return root + declensionSchema.getSuffix(form);
+        return root + declensionSchema.getSuffix(declinedForm);
     }
 
     @Override

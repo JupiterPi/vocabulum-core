@@ -69,15 +69,15 @@ public class Main {
     }
     private static void test3_print(Adjective adjective) throws ParserException, LexerException, DeclinedFormDoesNotExistException {
         System.out.println(adjective.getBaseForm());
-        System.out.println("Nom. Sg. f. = " + adjective.getForm(DeclinedForm.fromString("Nom. Sg. f.")));
-        System.out.println("Gen. Pl. m. = " + adjective.getForm(DeclinedForm.fromString("Gen. Pl. m.")));
-        System.out.println("Acc. Sg. n. = " + adjective.getForm(DeclinedForm.fromString("Acc. Sg. n.")));
+        System.out.println("Nom. Sg. f. = " + adjective.makeForm(DeclinedForm.fromString("Nom. Sg. f.")));
+        System.out.println("Gen. Pl. m. = " + adjective.makeForm(DeclinedForm.fromString("Gen. Pl. m.")));
+        System.out.println("Acc. Sg. n. = " + adjective.makeForm(DeclinedForm.fromString("Acc. Sg. n.")));
     }
 
     private static void test2() throws LexerException, DeclinedFormDoesNotExistException, ParserException {
         Vocabulary vocabulary = Vocabulary.fromString("consilium, consilii n.");
-        System.out.println(((Noun) vocabulary).getForm(DeclinedForm.fromString("Nom. Sg.")));
-        System.out.println(((Noun) vocabulary).getForm(DeclinedForm.fromString("Gen. Pl.")));
+        System.out.println(((Noun) vocabulary).makeForm(DeclinedForm.fromString("Nom. Sg.")));
+        System.out.println(((Noun) vocabulary).makeForm(DeclinedForm.fromString("Gen. Pl.")));
     }
 
     private static void test1() {
@@ -95,7 +95,7 @@ public class Main {
     private static void printForms(Noun noun, DeclinedForm... forms) throws DeclinedFormDoesNotExistException {
         System.out.println("--- " + noun.getBaseForm() + " ---");
         for (DeclinedForm form : forms) {
-            System.out.println(form.formToString() + " = " + noun.getForm(form));
+            System.out.println(form.formToString() + " = " + noun.makeForm(form));
         }
     }
 }
