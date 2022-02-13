@@ -11,7 +11,7 @@ public class Adjective extends Vocabulary {
     private static final DeclensionSchema masculineDeclensionSchema = DeclensionClasses.o_Declension;
     private static final DeclensionSchema feminineDeclensionSchema = DeclensionClasses.a_Declension;
     private static final DeclensionSchema neuterDeclensionSchema = DeclensionClasses.o_Declension;
-    private static final DeclensionSchema consonantalDeclensionSchema = DeclensionClasses.cons_Declension;
+    private static final DeclensionSchema consonantalDeclensionSchema = DeclensionClasses.cons_adjectives_Declension;
 
     private String nom_sg_masc;
     private String nom_sg_fem;

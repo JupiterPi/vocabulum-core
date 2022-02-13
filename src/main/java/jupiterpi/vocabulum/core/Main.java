@@ -8,6 +8,7 @@ import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
+import jupiterpi.vocabulum.core.vocabularies.declinated.LoadingDataException;
 import jupiterpi.vocabulum.core.vocabularies.declinated.adjectives.Adjective;
 import jupiterpi.vocabulum.core.vocabularies.declinated.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
@@ -19,7 +20,7 @@ import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.DeclensionClasse
 public class Main {
     public static MongoClient mongoClient;
 
-    public static void main(String[] args) throws LexerException, DeclinedFormDoesNotExistException, ParserException {
+    public static void main(String[] args) throws LexerException, DeclinedFormDoesNotExistException, ParserException, LoadingDataException {
         System.out.println("----- Vocabulum Core -----");
 
         mongoClient = MongoClients.create("mongodb://localhost");

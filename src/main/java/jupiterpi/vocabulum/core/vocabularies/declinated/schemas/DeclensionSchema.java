@@ -15,9 +15,9 @@ public abstract class DeclensionSchema {
     }
 
     public String getSuffix(DeclinedForm form) throws DeclinedFormDoesNotExistException {
-        if (!form.hasGender() && isGenderDependant()) throw new DeclinedFormDoesNotExistException(form);
+        if (!form.hasGender() && isGenderDependant()) throw DeclinedFormDoesNotExistException.forDeclensionSchema(form, this);
         String suffix = getSuffixRaw(form);
-        if (suffix.equals("-")) throw new DeclinedFormDoesNotExistException(form);
+        if (suffix.equals("-")) throw DeclinedFormDoesNotExistException.forDeclensionSchema(form, this);
         return suffix;
     }
 

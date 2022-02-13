@@ -17,6 +17,12 @@ public class DeclinedForm {
         this.gender = gender;
     }
 
+    public DeclinedForm(Casus casus, Number number) {
+        this.casus = casus;
+        this.number = number;
+        this.gender = null;
+    }
+
     private DeclinedForm() {}
 
     public static DeclinedForm fromString(String str) throws LexerException, ParserException {

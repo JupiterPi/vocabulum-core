@@ -1,5 +1,7 @@
 package jupiterpi.vocabulum.core.vocabularies.declinated.schemas;
 
+import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
+import jupiterpi.vocabulum.core.vocabularies.declinated.LoadingDataException;
 import jupiterpi.vocabulum.core.vocabularies.declinated.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declinated.form.Gender;
@@ -7,63 +9,150 @@ import jupiterpi.vocabulum.core.vocabularies.declinated.form.Number;
 import org.bson.Document;
 
 public class GenderDependantDeclensionSchema extends DeclensionSchema {
-    public static GenderDependantDeclensionSchema readFromDocument(Document document) {
+    public static GenderDependantDeclensionSchema readFromDocument(Document document) throws LoadingDataException {
         String name = document.getString("name");
         GenderDependantDeclensionSchema schema = new GenderDependantDeclensionSchema(name);
+
+        boolean hasParent = false;
+        if (document.containsKey("parent")) {
+            hasParent = true;
+            String parentName = document.getString("parent");
+            Document parentDocument = DeclensionClasses.getRaw(parentName);
+            DeclensionSchema parent = DeclensionClasses.makeSchema(parentDocument);
+
+            try {
+
+                // MASC
+
+                schema.nom_sg_masc = parent.getSuffix(new DeclinedForm(Casus.NOM, Number.SG, Gender.MASC));
+                schema.gen_sg_masc = parent.getSuffix(new DeclinedForm(Casus.GEN, Number.SG, Gender.MASC));
+                schema.dat_sg_masc = parent.getSuffix(new DeclinedForm(Casus.DAT, Number.SG, Gender.MASC));
+                schema.acc_sg_masc = parent.getSuffix(new DeclinedForm(Casus.ACC, Number.SG, Gender.MASC));
+                schema.abl_sg_masc = parent.getSuffix(new DeclinedForm(Casus.ABL, Number.SG, Gender.MASC));
+
+                schema.nom_pl_masc = parent.getSuffix(new DeclinedForm(Casus.NOM, Number.PL, Gender.MASC));
+                schema.gen_pl_masc = parent.getSuffix(new DeclinedForm(Casus.GEN, Number.PL, Gender.MASC));
+                schema.dat_pl_masc = parent.getSuffix(new DeclinedForm(Casus.DAT, Number.PL, Gender.MASC));
+                schema.acc_pl_masc = parent.getSuffix(new DeclinedForm(Casus.ACC, Number.PL, Gender.MASC));
+                schema.abl_pl_masc = parent.getSuffix(new DeclinedForm(Casus.ABL, Number.PL, Gender.MASC));
+
+                // FEM
+
+                schema.nom_sg_fem = parent.getSuffix(new DeclinedForm(Casus.NOM, Number.SG, Gender.FEM));
+                schema.gen_sg_fem = parent.getSuffix(new DeclinedForm(Casus.GEN, Number.SG, Gender.FEM));
+                schema.dat_sg_fem = parent.getSuffix(new DeclinedForm(Casus.DAT, Number.SG, Gender.FEM));
+                schema.acc_sg_fem = parent.getSuffix(new DeclinedForm(Casus.ACC, Number.SG, Gender.FEM));
+                schema.abl_sg_fem = parent.getSuffix(new DeclinedForm(Casus.ABL, Number.SG, Gender.FEM));
+
+                schema.nom_pl_fem = parent.getSuffix(new DeclinedForm(Casus.NOM, Number.PL, Gender.FEM));
+                schema.gen_pl_fem = parent.getSuffix(new DeclinedForm(Casus.GEN, Number.PL, Gender.FEM));
+                schema.dat_pl_fem = parent.getSuffix(new DeclinedForm(Casus.DAT, Number.PL, Gender.FEM));
+                schema.acc_pl_fem = parent.getSuffix(new DeclinedForm(Casus.ACC, Number.PL, Gender.FEM));
+                schema.abl_pl_fem = parent.getSuffix(new DeclinedForm(Casus.ABL, Number.PL, Gender.FEM));
+
+                // NEUT
+
+                schema.nom_sg_neut = parent.getSuffix(new DeclinedForm(Casus.NOM, Number.SG, Gender.NEUT));
+                schema.gen_sg_neut = parent.getSuffix(new DeclinedForm(Casus.GEN, Number.SG, Gender.NEUT));
+                schema.dat_sg_neut = parent.getSuffix(new DeclinedForm(Casus.DAT, Number.SG, Gender.NEUT));
+                schema.acc_sg_neut = parent.getSuffix(new DeclinedForm(Casus.ACC, Number.SG, Gender.NEUT));
+                schema.abl_sg_neut = parent.getSuffix(new DeclinedForm(Casus.ABL, Number.SG, Gender.NEUT));
+
+                schema.nom_pl_neut = parent.getSuffix(new DeclinedForm(Casus.NOM, Number.PL, Gender.NEUT));
+                schema.gen_pl_neut = parent.getSuffix(new DeclinedForm(Casus.GEN, Number.PL, Gender.NEUT));
+                schema.dat_pl_neut = parent.getSuffix(new DeclinedForm(Casus.DAT, Number.PL, Gender.NEUT));
+                schema.acc_pl_neut = parent.getSuffix(new DeclinedForm(Casus.ACC, Number.PL, Gender.NEUT));
+                schema.abl_pl_neut = parent.getSuffix(new DeclinedForm(Casus.ABL, Number.PL, Gender.NEUT));
+
+            } catch (DeclinedFormDoesNotExistException e) {
+                /*throw new LoadingDataException("Could not create GenderDependantDeclensionSchema " + name + ", as parent " + parentName + " does not accept form " + e.getForm());*/
+                e.printStackTrace();
+            }
+        }
 
         // MASC
 
         Document masc = (Document) document.get("masc");
 
         Document sg_masc = (Document) masc.get("sg");
-        schema.nom_sg_masc = sg_masc.getString("nom");
-        schema.gen_sg_masc = sg_masc.getString("gen");
-        schema.dat_sg_masc = sg_masc.getString("dat");
-        schema.acc_sg_masc = sg_masc.getString("acc");
-        schema.abl_sg_masc = sg_masc.getString("abl");
+        String nom_sg_masc = sg_masc.getString("nom");
+        schema.nom_sg_masc = nom_sg_masc.equals(".") ? schema.nom_sg_masc : nom_sg_masc;
+        String gen_sg_masc = sg_masc.getString("gen");
+        schema.gen_sg_masc = gen_sg_masc.equals(".") ? schema.gen_sg_masc : gen_sg_masc;
+        String dat_sg_masc = sg_masc.getString("dat");
+        schema.dat_sg_masc = dat_sg_masc.equals(".") ? schema.dat_sg_masc : dat_sg_masc;
+        String acc_sg_masc = sg_masc.getString("acc");
+        schema.acc_sg_masc = acc_sg_masc.equals(".") ? schema.acc_sg_masc : acc_sg_masc;
+        String abl_sg_masc = sg_masc.getString("abl");
+        schema.abl_sg_masc = abl_sg_masc.equals(".") ? schema.abl_sg_masc : abl_sg_masc;
 
         Document pl_masc = (Document) masc.get("pl");
-        schema.nom_pl_masc = pl_masc.getString("nom");
-        schema.gen_pl_masc = pl_masc.getString("gen");
-        schema.dat_pl_masc = pl_masc.getString("dat");
-        schema.acc_pl_masc = pl_masc.getString("acc");
-        schema.abl_pl_masc = pl_masc.getString("abl");
+        String nom_pl_masc = pl_masc.getString("nom");
+        schema.nom_pl_masc = nom_pl_masc.equals(".") ? schema.nom_pl_masc : nom_pl_masc;
+        String gen_pl_masc = pl_masc.getString("gen");
+        schema.gen_pl_masc = gen_pl_masc.equals(".") ? schema.gen_pl_masc : gen_pl_masc;
+        String dat_pl_masc = pl_masc.getString("dat");
+        schema.dat_pl_masc = dat_pl_masc.equals(".") ? schema.dat_pl_masc : dat_pl_masc;
+        String acc_pl_masc = pl_masc.getString("acc");
+        schema.acc_pl_masc = acc_pl_masc.equals(".") ? schema.acc_pl_masc : acc_pl_masc;
+        String abl_pl_masc = pl_masc.getString("abl");
+        schema.abl_pl_masc = abl_pl_masc.equals(".") ? schema.abl_pl_masc : abl_pl_masc;
 
         // FEM
 
         Document fem = (Document) document.get("fem");
 
         Document sg_fem = (Document) fem.get("sg");
-        schema.nom_sg_fem = sg_fem.getString("nom");
-        schema.gen_sg_fem = sg_fem.getString("gen");
-        schema.dat_sg_fem = sg_fem.getString("dat");
-        schema.acc_sg_fem = sg_fem.getString("acc");
-        schema.abl_sg_fem = sg_fem.getString("abl");
+        String nom_sg_fem = sg_fem.getString("nom");
+        schema.nom_sg_fem = nom_sg_fem.equals(".") ? schema.nom_sg_fem : nom_sg_fem;
+        String gen_sg_fem = sg_fem.getString("gen");
+        schema.gen_sg_fem = gen_sg_fem.equals(".") ? schema.gen_sg_fem : gen_sg_fem;
+        String dat_sg_fem = sg_fem.getString("dat");
+        schema.dat_sg_fem = dat_sg_fem.equals(".") ? schema.dat_sg_fem : dat_sg_fem;
+        String acc_sg_fem = sg_fem.getString("acc");
+        schema.acc_sg_fem = acc_sg_fem.equals(".") ? schema.acc_sg_fem : acc_sg_fem;
+        String abl_sg_fem = sg_fem.getString("abl");
+        schema.abl_sg_fem = abl_sg_fem.equals(".") ? schema.abl_sg_fem : abl_sg_fem;
 
         Document pl_fem = (Document) fem.get("pl");
-        schema.nom_pl_fem = pl_fem.getString("nom");
-        schema.gen_pl_fem = pl_fem.getString("gen");
-        schema.dat_pl_fem = pl_fem.getString("dat");
-        schema.acc_pl_fem = pl_fem.getString("acc");
-        schema.abl_pl_fem = pl_fem.getString("abl");
+        String nom_pl_fem = pl_fem.getString("nom");
+        schema.nom_pl_fem = nom_pl_fem.equals(".") ? schema.nom_pl_fem : nom_pl_fem;
+        String gen_pl_fem = pl_fem.getString("gen");
+        schema.gen_pl_fem = gen_pl_fem.equals(".") ? schema.gen_pl_fem : gen_pl_fem;
+        String dat_pl_fem = pl_fem.getString("dat");
+        schema.dat_pl_fem = dat_pl_fem.equals(".") ? schema.dat_pl_fem : dat_pl_fem;
+        String acc_pl_fem = pl_fem.getString("acc");
+        schema.acc_pl_fem = acc_pl_fem.equals(".") ? schema.acc_pl_fem : acc_pl_fem;
+        String abl_pl_fem = pl_fem.getString("abl");
+        schema.abl_pl_fem = abl_pl_fem.equals(".") ? schema.abl_pl_fem : abl_pl_fem;
 
         // NEUT
 
         Document neut = (Document) document.get("neut");
 
         Document sg_neut = (Document) neut.get("sg");
-        schema.nom_sg_neut = sg_neut.getString("nom");
-        schema.gen_sg_neut = sg_neut.getString("gen");
-        schema.dat_sg_neut = sg_neut.getString("dat");
-        schema.acc_sg_neut = sg_neut.getString("acc");
-        schema.abl_sg_neut = sg_neut.getString("abl");
+        String nom_sg_neut = sg_neut.getString("nom");
+        schema.nom_sg_neut = nom_sg_neut.equals(".") ? schema.nom_sg_neut : nom_sg_neut;
+        String gen_sg_neut = sg_neut.getString("gen");
+        schema.gen_sg_neut = gen_sg_neut.equals(".") ? schema.gen_sg_neut : gen_sg_neut;
+        String dat_sg_neut = sg_neut.getString("dat");
+        schema.dat_sg_neut = dat_sg_neut.equals(".") ? schema.dat_sg_neut : dat_sg_neut;
+        String acc_sg_neut = sg_neut.getString("acc");
+        schema.acc_sg_neut = acc_sg_neut.equals(".") ? schema.acc_sg_neut : acc_sg_neut;
+        String abl_sg_neut = sg_neut.getString("abl");
+        schema.abl_sg_neut = abl_sg_neut.equals(".") ? schema.abl_sg_neut : abl_sg_neut;
 
         Document pl_neut = (Document) neut.get("pl");
-        schema.nom_pl_neut = pl_neut.getString("nom");
-        schema.gen_pl_neut = pl_neut.getString("gen");
-        schema.dat_pl_neut = pl_neut.getString("dat");
-        schema.acc_pl_neut = pl_neut.getString("acc");
-        schema.abl_pl_neut = pl_neut.getString("abl");
+        String nom_pl_neut = pl_neut.getString("nom");
+        schema.nom_pl_neut = nom_pl_neut.equals(".") ? schema.nom_pl_neut : nom_pl_neut;
+        String gen_pl_neut = pl_neut.getString("gen");
+        schema.gen_pl_neut = gen_pl_neut.equals(".") ? schema.gen_pl_neut : gen_pl_neut;
+        String dat_pl_neut = pl_neut.getString("dat");
+        schema.dat_pl_neut = dat_pl_neut.equals(".") ? schema.dat_pl_neut : dat_pl_neut;
+        String acc_pl_neut = pl_neut.getString("acc");
+        schema.acc_pl_neut = acc_pl_neut.equals(".") ? schema.acc_pl_neut : acc_pl_neut;
+        String abl_pl_neut = pl_neut.getString("abl");
+        schema.abl_pl_neut = abl_pl_neut.equals(".") ? schema.abl_pl_neut : abl_pl_neut;
 
         return schema;
     }
