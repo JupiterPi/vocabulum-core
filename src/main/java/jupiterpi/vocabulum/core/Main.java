@@ -30,14 +30,21 @@ public class Main {
     }
 
     private static void test5() throws ParserException, DeclinedFormDoesNotExistException, LexerException {
-        Adjective adjective1 = (Adjective) Vocabulary.fromString("verus, vera, verum");
-        System.out.println(adjective1.makeForm(new AdjectiveForm(true, ComparativeForm.POSITIVE)));
+        test5_print("acer, acris, acre");
+        test5_print("brevis, brevis, breve");
+        test5_print("felix, Gen. felicis");
+        test5_print("clemens, Gen. clementis");
+        test5_print("celer, celeris, celere");
+        test5_print("pulcher, pulchra, pulchrum");
+    }
 
-        Adjective adjective2 = (Adjective) Vocabulary.fromString("acer, acris, acre");
-        System.out.println(adjective2.makeForm(new AdjectiveForm(true, ComparativeForm.POSITIVE)));
-
-        Adjective adjective3 = (Adjective) Vocabulary.fromString("clemens, Gen. clementis");
-        System.out.println(adjective3.makeForm(new AdjectiveForm(true, ComparativeForm.POSITIVE)));
+    private static void test5_print(String str) throws ParserException, DeclinedFormDoesNotExistException, LexerException {
+        Adjective adjective = (Adjective) Vocabulary.fromString(str);
+        System.out.println("----- " + str + " -----");
+        System.out.println("POSITIVE = " + adjective.makeForm(new AdjectiveForm(true, ComparativeForm.POSITIVE)));
+        System.out.println("COMPARATIVE = " + adjective.makeForm(new AdjectiveForm(true, ComparativeForm.COMPARATIVE)));
+        System.out.println("SUPERLATIVE = " + adjective.makeForm(new AdjectiveForm(true, ComparativeForm.SUPERLATIVE)));
+        System.out.println();
     }
 
     private static void test4() throws ParserException, DeclinedFormDoesNotExistException, LexerException {

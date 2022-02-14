@@ -4,10 +4,15 @@ import jupiterpi.vocabulum.core.Database;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
+import jupiterpi.vocabulum.core.vocabularies.declinated.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
+import jupiterpi.vocabulum.core.vocabularies.declinated.form.Gender;
+import jupiterpi.vocabulum.core.vocabularies.declinated.form.Number;
 import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.DeclensionClasses;
 import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.DeclensionSchema;
-import org.bson.Document;
+import org.bson.*;
+
+import java.util.List;
 
 public class Adjective extends Vocabulary {
     private static final DeclensionSchema masculineDeclensionSchema = DeclensionClasses.o_Declension;
@@ -81,36 +86,103 @@ public class Adjective extends Vocabulary {
         return makeForm(new AdjectiveForm(form, ComparativeForm.POSITIVE));
     }
     public String makeForm(AdjectiveForm form) throws DeclinedFormDoesNotExistException {
+        // adverbs
         if (form.isAdverb()) {
             Document adverbsData = (Document) adjectivesData.get("adverbs");
-            if (kind == Kind.AO) {
-                return root + adverbsData.getString("ao_suffix");
-            } else {
-                Document exceptionData = (Document) adverbsData.get("cons_exception");
-                if (nom_sg_masc.endsWith(exceptionData.getString("nom_sg_masc_suffix"))) {
-                    return root + exceptionData.getString("suffix");
-                } else {
-                    return root + adverbsData.getString("cons_suffix");
+            Document suffixData = (Document) (kind == Kind.AO ? adverbsData.get("ao_suffix") : adverbsData.get("cons_suffix"));
+
+            if (kind == Kind.CONS) {
+                List<Document> exceptions = (List<Document>) adverbsData.get("cons_exceptions");
+                for (Document exceptionData : exceptions) {
+                    Document requiredSuffixData = (Document) exceptionData.get("required_suffix");
+                    String requiredSuffixForm = requiredSuffixData.getString("form");
+                    String requiredSuffix = requiredSuffixData.getString("suffix");
+                    if (switch (requiredSuffixForm) {
+                        case "nom_sg_masc" -> nom_sg_masc.endsWith(requiredSuffix);
+                        case "root" -> root.endsWith(requiredSuffix);
+                        default -> false;
+                    }) {
+                        suffixData = (Document) exceptionData.get("suffix");
+                    }
                 }
             }
-        } else {
-            DeclinedForm declinedForm = form.getDeclinedForm();
-            declinedForm.normalizeGender();
-            if (declinedForm.fits(DeclinedForm.get("Nom. Sg."))) {
-                return switch (declinedForm.getGender()) {
-                    case MASC -> nom_sg_masc;
-                    case FEM -> nom_sg_fem;
-                    case NEUT -> nom_sg_neut;
-                };
+
+            String result = root + switch (form.getComparativeForm()) {
+                case POSITIVE -> suffixData.getString("positive");
+                case COMPARATIVE -> suffixData.getString("comparative");
+                case SUPERLATIVE -> suffixData.getString("superlative");
+            };
+            if (form.getComparativeForm() == ComparativeForm.SUPERLATIVE) {
+                String extra = suffixData.getString("extra");
+                if (extra != null && extra.equals("superlative_with_nom_sg_masc")) {
+                    result = nom_sg_masc + suffixData.getString("superlative");
+                }
             }
-            if (kind == Kind.AO) {
-                return root + switch (declinedForm.getGender()) {
-                    case MASC -> masculineDeclensionSchema.getSuffix(declinedForm);
-                    case FEM -> feminineDeclensionSchema.getSuffix(declinedForm);
-                    case NEUT -> neuterDeclensionSchema.getSuffix(declinedForm);
-                };
+            return result;
+
+        // adjectives
+        } else {
+            // positive
+            if (form.getComparativeForm() == ComparativeForm.POSITIVE) {
+
+                DeclinedForm declinedForm = form.getDeclinedForm();
+                declinedForm.normalizeGender();
+                if (declinedForm.fits(DeclinedForm.get("Nom. Sg."))) {
+                    return switch (declinedForm.getGender()) {
+                        case MASC -> nom_sg_masc;
+                        case FEM -> nom_sg_fem;
+                        case NEUT -> nom_sg_neut;
+                    };
+                }
+                if (kind == Kind.AO) {
+                    return root + switch (declinedForm.getGender()) {
+                        case MASC -> masculineDeclensionSchema.getSuffix(declinedForm);
+                        case FEM -> feminineDeclensionSchema.getSuffix(declinedForm);
+                        case NEUT -> neuterDeclensionSchema.getSuffix(declinedForm);
+                    };
+                } else {
+                    return root + consonantalDeclensionSchema.getSuffix(declinedForm);
+                }
+
             } else {
-                return root + consonantalDeclensionSchema.getSuffix(declinedForm);
+                Document comparativeFormsData = (Document) adjectivesData.get("comparative_forms");
+
+                // comparative
+                if (form.getComparativeForm() == ComparativeForm.COMPARATIVE) {
+
+                    Document comparativeData = (Document) comparativeFormsData.get("comparative");
+
+                    DeclinedForm declinedForm = form.getDeclinedForm();
+                    declinedForm.normalizeGender();
+
+                    String comparativeSign = comparativeData.getString("comparative_sign");
+                    if (declinedForm.equals(new DeclinedForm(Casus.NOM, Number.SG, Gender.NEUT))) {
+                        comparativeSign = comparativeData.getString("comparative_sign_nom_sg_n");
+                    }
+
+                    return root + comparativeSign + consonantalDeclensionSchema.getSuffix(declinedForm);
+
+                // superlative
+                } else {
+
+                    Document superlativeData = (Document) comparativeFormsData.get("superlative");
+
+                    DeclinedForm declinedForm = form.getDeclinedForm();
+                    declinedForm.normalizeGender();
+
+                    String superlativeSign = superlativeData.getString("superlative_sign");
+                    Document exceptionData = (Document) superlativeData.get("exception");
+                    if (nom_sg_masc.endsWith(exceptionData.getString("nom_sg_masc_suffix"))) {
+                        superlativeSign = exceptionData.getString("superlative_sign");
+                    }
+
+                    return root + superlativeSign + switch (declinedForm.getGender()) {
+                        case MASC -> masculineDeclensionSchema.getSuffix(declinedForm);
+                        case FEM -> feminineDeclensionSchema.getSuffix(declinedForm);
+                        case NEUT -> neuterDeclensionSchema.getSuffix(declinedForm);
+                    };
+
+                }
             }
         }
     }

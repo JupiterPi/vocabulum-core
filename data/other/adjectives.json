@@ -1,11 +1,53 @@
 {
   "id": "adjectives",
   "adverbs": {
-    "ao_suffix": "e",
-    "cons_suffix": "iter",
-    "cons_exception": {
-      "nom_sg_masc_suffix": "s",
-      "suffix": "er"
+    "ao_suffix": {
+      "positive": "e",
+      "comparative": "ius",
+      "superlative": "issime"
+    },
+    "cons_suffix": {
+      "positive": "iter",
+      "comparative": "ius",
+      "superlative": "issime"
+    },
+    "cons_exceptions": [
+      {
+        "required_suffix": {
+          "form": "nom_sg_masc",
+          "suffix": "r"
+        },
+        "suffix": {
+          "positive": "iter",
+          "comparative": "ius",
+          "superlative": "rime",
+          "extra": "superlative_with_nom_sg_masc"
+        }
+      },
+      {
+        "required_suffix": {
+          "form": "root",
+          "suffix": "nt"
+        },
+        "suffix": {
+          "positive": "er",
+          "comparative": "ius",
+          "superlative": "errime"
+        }
+      }
+    ]
+  },
+  "comparative_forms": {
+    "comparative": {
+      "comparative_sign": "ior",
+      "comparative_sign_nom_sg_n": "ius"
+    },
+    "superlative": {
+      "superlative_sign": "issim",
+      "exception": {
+        "nom_sg_masc_suffix": "r",
+        "superlative_sign": "rim"
+      }
     }
   }
 }
