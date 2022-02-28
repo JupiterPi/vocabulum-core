@@ -1,5 +1,7 @@
 package jupiterpi.vocabulum.core.vocabularies;
 
+import jupiterpi.vocabulum.core.i18n.I18n;
+import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.Parser;
@@ -11,8 +13,8 @@ public abstract class Vocabulary {
     protected int lesson;
     protected int part;
 
-    public static Vocabulary fromString(String str) throws LexerException, ParserException, DeclinedFormDoesNotExistException {
-        Lexer lexer = new Lexer(str);
+    public static Vocabulary fromString(String str, I18n i18n) throws LexerException, ParserException, DeclinedFormDoesNotExistException, I18nException {
+        Lexer lexer = new Lexer(str, i18n);
         TokenSequence tokens = lexer.getTokens();
         Parser parser = new Parser(tokens);
         return parser.getVocabulary();

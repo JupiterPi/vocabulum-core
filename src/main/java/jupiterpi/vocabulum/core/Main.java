@@ -1,35 +1,32 @@
 package jupiterpi.vocabulum.core;
 
+import jupiterpi.vocabulum.core.i18n.I18n;
+import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
-import jupiterpi.vocabulum.core.interpreter.tokens.Token;
-import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declinated.LoadingDataException;
 import jupiterpi.vocabulum.core.vocabularies.declinated.adjectives.Adjective;
 import jupiterpi.vocabulum.core.vocabularies.declinated.adjectives.AdjectiveForm;
 import jupiterpi.vocabulum.core.vocabularies.declinated.adjectives.ComparativeForm;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.Casus;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.Gender;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.Number;
-import jupiterpi.vocabulum.core.vocabularies.declinated.nouns.Noun;
 import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.DeclensionClasses;
 
 public class Main {
-    public static void main(String[] args) throws LexerException, DeclinedFormDoesNotExistException, ParserException, LoadingDataException {
+    public static I18n i18n = I18n.de;
+
+    public static void main(String[] args) throws LexerException, DeclinedFormDoesNotExistException, ParserException, LoadingDataException, I18nException {
         System.out.println("----- Vocabulum Core -----");
 
         DeclensionClasses.loadDeclensionSchemas();
 
-        //Terminal terminal = new Terminal();
-        //terminal.run();
+        Terminal terminal = new Terminal();
+        terminal.run();
 
-        test5();
+        //test5();
     }
 
-    private static void test5() throws ParserException, DeclinedFormDoesNotExistException, LexerException {
+    private static void test5() throws ParserException, DeclinedFormDoesNotExistException, LexerException, I18nException {
         test5_print("acer, acris, acre");
         test5_print("brevis, brevis, breve");
         test5_print("felix, Gen. felicis");
@@ -38,75 +35,12 @@ public class Main {
         test5_print("pulcher, pulchra, pulchrum");
     }
 
-    private static void test5_print(String str) throws ParserException, DeclinedFormDoesNotExistException, LexerException {
-        Adjective adjective = (Adjective) Vocabulary.fromString(str);
+    private static void test5_print(String str) throws ParserException, DeclinedFormDoesNotExistException, LexerException, I18nException {
+        Adjective adjective = (Adjective) Vocabulary.fromString(str, Main.i18n);
         System.out.println("----- " + str + " -----");
         System.out.println("POSITIVE = " + adjective.makeForm(new AdjectiveForm(true, ComparativeForm.POSITIVE)));
         System.out.println("COMPARATIVE = " + adjective.makeForm(new AdjectiveForm(true, ComparativeForm.COMPARATIVE)));
         System.out.println("SUPERLATIVE = " + adjective.makeForm(new AdjectiveForm(true, ComparativeForm.SUPERLATIVE)));
         System.out.println();
-    }
-
-    private static void test4() throws ParserException, DeclinedFormDoesNotExistException, LexerException {
-        System.out.println(TokenSequence.fromTypes(
-                Token.Type.WORD,
-                Token.Type.COMMA,
-                Token.Type.WORD,
-                Token.Type.COMMA,
-                Token.Type.WORD));
-
-        test3_print((Adjective) Vocabulary.fromString("acer, acris, acre"));
-        System.out.println();
-        test3_print((Adjective) Vocabulary.fromString("brevis, brevis, breve"));
-        System.out.println();
-        test3_print((Adjective) Vocabulary.fromString("felix, Gen. felicis"));
-        System.out.println();
-        test3_print((Adjective) Vocabulary.fromString("laetus, laeta, laetum"));
-    }
-
-    private static void test3() throws ParserException, LexerException, DeclinedFormDoesNotExistException {
-        test3_full("acer", "acris", "acre");
-        System.out.println();
-        test3_full("brevis", "brevis", "breve");
-        System.out.println();
-        test3_print(Adjective.fromBaseForm("felix", "felicis"));
-        System.out.println();
-        test3_full("laetus", "laeta", "laetum");
-        System.out.println();
-    }
-    private static void test3_full(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut) throws DeclinedFormDoesNotExistException, LexerException, ParserException {
-        Adjective adjective = Adjective.fromBaseForms(nom_sg_masc, nom_sg_fem, nom_sg_neut);
-        test3_print(adjective);
-    }
-    private static void test3_print(Adjective adjective) throws ParserException, LexerException, DeclinedFormDoesNotExistException {
-        System.out.println(adjective.getBaseForm());
-        System.out.println("Nom. Sg. f. = " + adjective.makeForm(DeclinedForm.fromString("Nom. Sg. f.")));
-        System.out.println("Gen. Pl. m. = " + adjective.makeForm(DeclinedForm.fromString("Gen. Pl. m.")));
-        System.out.println("Acc. Sg. n. = " + adjective.makeForm(DeclinedForm.fromString("Acc. Sg. n.")));
-    }
-
-    private static void test2() throws LexerException, DeclinedFormDoesNotExistException, ParserException {
-        Vocabulary vocabulary = Vocabulary.fromString("consilium, consilii n.");
-        System.out.println(((Noun) vocabulary).makeForm(DeclinedForm.fromString("Nom. Sg.")));
-        System.out.println(((Noun) vocabulary).makeForm(DeclinedForm.fromString("Gen. Pl.")));
-    }
-
-    private static void test1() {
-        try {
-            printForms(new Noun(DeclensionClasses.a_Declension, "amica", "amic", Gender.FEM),
-                    new DeclinedForm(Casus.NOM, Number.SG, Gender.FEM),
-                    new DeclinedForm(Casus.GEN, Number.PL, Gender.FEM));
-            printForms(new Noun(DeclensionClasses.o_Declension, "amicus", "amic", Gender.MASC),
-                    new DeclinedForm(Casus.NOM, Number.SG, Gender.MASC),
-                    new DeclinedForm(Casus.ABL, Number.PL, Gender.MASC));
-        } catch (DeclinedFormDoesNotExistException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-    private static void printForms(Noun noun, DeclinedForm... forms) throws DeclinedFormDoesNotExistException {
-        System.out.println("--- " + noun.getBaseForm() + " ---");
-        for (DeclinedForm form : forms) {
-            System.out.println(form.formToString() + " = " + noun.makeForm(form));
-        }
     }
 }

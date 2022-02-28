@@ -1,0 +1,22 @@
+{
+  "language": "int",
+  "texts": null,
+  "str-texts": {
+    "casus": {
+      "nom": "Nom",
+      "acc": "Acc",
+      "gen": "Gen",
+      "dat": "Dat",
+      "abl": "Abl"
+    },
+    "number": {
+      "sg": "Sg",
+      "pl": "Pl"
+    },
+    "gender": {
+      "masc": "m",
+      "fem": "f",
+      "neut": "n"
+    }
+  }
+}

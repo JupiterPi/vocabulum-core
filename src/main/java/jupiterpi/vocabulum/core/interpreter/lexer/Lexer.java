@@ -1,13 +1,37 @@
 package jupiterpi.vocabulum.core.interpreter.lexer;
 
+import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.util.StringSet;
+import jupiterpi.vocabulum.core.vocabularies.declinated.form.Casus;
+import jupiterpi.vocabulum.core.vocabularies.declinated.form.Gender;
+import jupiterpi.vocabulum.core.vocabularies.declinated.form.Number;
 
 public class Lexer {
+    private I18n i18n;
     private TokenSequence tokens = new TokenSequence();
 
-    public Lexer(String expr) throws LexerException {
+    public Lexer(String expr, I18n i18n) throws LexerException {
+        this.i18n = i18n;
+
+        casusSymbols = new StringSet(
+                i18n.getString(Casus.NOM),
+                i18n.getString(Casus.GEN),
+                i18n.getString(Casus.DAT),
+                i18n.getString(Casus.ACC),
+                i18n.getString(Casus.ABL)
+        );
+        numberSymbols = new StringSet(
+                i18n.getString(Number.SG),
+                i18n.getString(Number.PL)
+        );
+        genderSymbols = new StringSet(
+                i18n.getString(Gender.MASC),
+                i18n.getString(Gender.FEM),
+                i18n.getString(Gender.NEUT)
+        );
+
         generateTokens(expr);
     }
 
@@ -24,9 +48,9 @@ public class Lexer {
     private final String dot = ".";
 
     // other string sets
-    private final StringSet casusSymbols = new StringSet("Nom", "Gen", "Dat", "Acc", "Abl");
-    private final StringSet numberSymbols = new StringSet("Sg", "Pl");
-    private final StringSet genderSymbols = new StringSet("m", "f", "n");
+    private final StringSet casusSymbols;  // set in constructor
+    private final StringSet numberSymbols; // set in constructor
+    private final StringSet genderSymbols; // set in constructor
 
     // buffer
     private String buffer = "";
@@ -73,19 +97,19 @@ public class Lexer {
 
     private void flushBuffer() throws LexerException {
         if (bufferType == BufferType.WORD) {
-            tokens.add(new Token(Token.Type.WORD, buffer));
+            tokens.add(new Token(Token.Type.WORD, buffer, i18n));
         } else if (bufferType == BufferType.ABBREVIATION) {
             if (casusSymbols.contains(buffer)) {
-                tokens.add(new Token(Token.Type.CASUS, buffer));
+                tokens.add(new Token(Token.Type.CASUS, buffer, i18n));
             } else if (numberSymbols.contains(buffer)) {
-                tokens.add(new Token(Token.Type.NUMBER, buffer));
+                tokens.add(new Token(Token.Type.NUMBER, buffer, i18n));
             } else if (genderSymbols.contains(buffer)) {
-                tokens.add(new Token(Token.Type.GENDER, buffer));
+                tokens.add(new Token(Token.Type.GENDER, buffer, i18n));
             } else {
                 throw new LexerException("Invalid abbreviation: " + buffer);
             }
         } else if (bufferType == BufferType.COMMA) {
-            tokens.add(new Token(Token.Type.COMMA, buffer));
+            tokens.add(new Token(Token.Type.COMMA, buffer, i18n));
         }
         buffer = "";
         bufferType = null;

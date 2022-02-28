@@ -1,6 +1,7 @@
 package jupiterpi.vocabulum.core;
 
 import jupiterpi.tools.ui.ConsoleInterface;
+import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
@@ -10,7 +11,7 @@ import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declinated.nouns.Noun;
 
 public class Terminal extends ConsoleInterface {
-    public void run() throws ParserException, DeclinedFormDoesNotExistException, LexerException {
+    public void run() throws ParserException, DeclinedFormDoesNotExistException, LexerException, I18nException {
         out("----- Vocabulum Terminal -----");
 
         out("");
@@ -20,13 +21,13 @@ public class Terminal extends ConsoleInterface {
         while (true) {
             String wordInput = in("> ");
             if (wordInput.equals("")) break;
-            Vocabulary vocabulary = Vocabulary.fromString(wordInput);
+            Vocabulary vocabulary = Vocabulary.fromString(wordInput, Main.i18n);
             if (vocabulary.getKind() == Vocabulary.Kind.NOUN) {
                 Noun noun = (Noun) vocabulary;
                 while (true) {
                     String formInput = in("[NOUN] " + noun.getBaseForm() + " > ");
                     if (formInput.equals("")) break;
-                    DeclinedForm form = DeclinedForm.fromString(formInput);
+                    DeclinedForm form = DeclinedForm.fromString(formInput, Main.i18n);
                     out(noun.makeForm(form));
                 }
             } else if (vocabulary.getKind() == Vocabulary.Kind.ADJECTIVE) {
@@ -34,7 +35,7 @@ public class Terminal extends ConsoleInterface {
                 while (true) {
                     String formInput = in("[ADJECTIVE] " + adjective.getBaseForm() + " > ");
                     if (formInput.equals("")) break;
-                    DeclinedForm form = DeclinedForm.fromString(formInput);
+                    DeclinedForm form = DeclinedForm.fromString(formInput, Main.i18n);
                     out(adjective.makeForm(form));
                 }
             }

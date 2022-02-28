@@ -1,5 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.declinated.form;
 
+import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
@@ -25,29 +26,29 @@ public class DeclinedForm {
 
     private DeclinedForm() {}
 
-    public static DeclinedForm fromString(String str) throws LexerException, ParserException {
-        return fromString(new Lexer(str).getTokens());
+    public static DeclinedForm fromString(String str, I18n i18n) throws LexerException, ParserException {
+        return fromTokens(new Lexer(str, i18n).getTokens());
     }
     public static DeclinedForm get(String str) {
         try {
-            return fromString(str);
+            return fromString(str, I18n.internal);
         } catch (ParserException | LexerException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static DeclinedForm fromString(TokenSequence tokens) throws ParserException {
+    public static DeclinedForm fromTokens(TokenSequence tokens) throws ParserException {
         DeclinedForm form = new DeclinedForm();
         if (tokens.size() < 2 || tokens.size() > 3) {
             throw new ParserException("Invalid form: " + tokens);
         }
         if (tokens.get(0).getType() == Token.Type.CASUS && tokens.get(1).getType() == Token.Type.NUMBER) {
-            form.casus = Casus.valueOf(tokens.get(0).getContent().toUpperCase());
-            form.number = Number.valueOf(tokens.get(1).getContent().toUpperCase());
+            form.casus = DeclinedFormAspects.casusFromString(tokens.get(0).getContent(), tokens.getI18n());
+            form.number = DeclinedFormAspects.numberFromString(tokens.get(1).getContent(), tokens.getI18n());
             if (tokens.size() > 2) {
                 if (tokens.get(2).getType() == Token.Type.GENDER) {
-                    form.gender = Genders.fromSymbol(tokens.get(2).getContent());
+                    form.gender = DeclinedFormAspects.genderFromString(tokens.get(2).getContent(), tokens.getI18n());
                 } else {
                     throw new ParserException("Invalid form: " + tokens);
                 }
