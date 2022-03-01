@@ -11,7 +11,7 @@ import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declinated.nouns.Noun;
 
 public class Terminal extends ConsoleInterface {
-    public void run() throws ParserException, DeclinedFormDoesNotExistException, LexerException, I18nException {
+    public void run() {
         out("----- Vocabulum Terminal -----");
 
         out("");
@@ -19,25 +19,37 @@ public class Terminal extends ConsoleInterface {
         out("");
 
         while (true) {
-            String wordInput = in("> ");
-            if (wordInput.equals("")) break;
-            Vocabulary vocabulary = Vocabulary.fromString(wordInput, Main.i18n);
-            if (vocabulary.getKind() == Vocabulary.Kind.NOUN) {
-                Noun noun = (Noun) vocabulary;
-                while (true) {
-                    String formInput = in("[NOUN] " + noun.getBaseForm() + " > ");
-                    if (formInput.equals("")) break;
-                    DeclinedForm form = DeclinedForm.fromString(formInput, Main.i18n);
-                    out(noun.makeForm(form));
+            try {
+                String wordInput = in("> ");
+                if (wordInput.equals("")) break;
+                Vocabulary vocabulary = Vocabulary.fromString(wordInput, Main.i18n);
+                if (vocabulary.getKind() == Vocabulary.Kind.NOUN) {
+                    Noun noun = (Noun) vocabulary;
+                    while (true) {
+                        try {
+                            String formInput = in("[NOUN] " + noun.getBaseForm() + " > ");
+                            if (formInput.equals("")) break;
+                            DeclinedForm form = DeclinedForm.fromString(formInput, Main.i18n);
+                            out(noun.makeForm(form));
+                        } catch (ParserException | DeclinedFormDoesNotExistException | LexerException e) {
+                            out("ERROR: " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
+                        }
+                    }
+                } else if (vocabulary.getKind() == Vocabulary.Kind.ADJECTIVE) {
+                    Adjective adjective = (Adjective) vocabulary;
+                    while (true) {
+                        try {
+                            String formInput = in("[ADJECTIVE] " + adjective.getBaseForm() + " > ");
+                            if (formInput.equals("")) break;
+                            DeclinedForm form = DeclinedForm.fromString(formInput, Main.i18n);
+                            out(adjective.makeForm(form));
+                        } catch (ParserException | DeclinedFormDoesNotExistException | LexerException e) {
+                            out("ERROR: " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
+                        }
+                    }
                 }
-            } else if (vocabulary.getKind() == Vocabulary.Kind.ADJECTIVE) {
-                Adjective adjective = (Adjective) vocabulary;
-                while (true) {
-                    String formInput = in("[ADJECTIVE] " + adjective.getBaseForm() + " > ");
-                    if (formInput.equals("")) break;
-                    DeclinedForm form = DeclinedForm.fromString(formInput, Main.i18n);
-                    out(adjective.makeForm(form));
-                }
+            } catch (ParserException | DeclinedFormDoesNotExistException | I18nException | LexerException e) {
+                out("ERROR: " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
             }
         }
         out("Done. ");
