@@ -14,6 +14,7 @@ public class Database {
     public static MongoCollection<Document> other;
     public static MongoCollection<Document> texts;
     public static MongoCollection<Document> portions;
+    public static MongoCollection<Document> wordbase;
 
     static {
         Database.mongoClient = MongoClients.create("mongodb://localhost");
@@ -23,5 +24,6 @@ public class Database {
         other = vocabulum_data.getCollection("other");
         texts = vocabulum_data.getCollection("texts");
         portions = vocabulum_data.getCollection("portions");
+        wordbase = vocabulum_data.getCollection("wordbase");
     }
 }
