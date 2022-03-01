@@ -4,6 +4,7 @@ import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
+import jupiterpi.vocabulum.core.portions.PortionManager;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declinated.LoadingDataException;
@@ -14,16 +15,16 @@ import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.DeclensionClasse
 
 public class Main {
     public static I18n i18n = I18n.de;
+    public static PortionManager portionManager;
 
     public static void main(String[] args) throws LoadingDataException {
         System.out.println("----- Vocabulum Core -----");
 
         DeclensionClasses.loadDeclensionSchemas();
+        portionManager = new PortionManager();
 
         Terminal terminal = new Terminal();
         terminal.run();
-
-        //test5();
     }
 
     private static void test5() throws ParserException, DeclinedFormDoesNotExistException, LexerException, I18nException {

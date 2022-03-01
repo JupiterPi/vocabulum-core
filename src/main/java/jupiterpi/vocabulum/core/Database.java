@@ -13,6 +13,7 @@ public class Database {
     public static MongoCollection<Document> declension_schemas;
     public static MongoCollection<Document> other;
     public static MongoCollection<Document> texts;
+    public static MongoCollection<Document> portions;
 
     static {
         Database.mongoClient = MongoClients.create("mongodb://localhost");
@@ -21,5 +22,6 @@ public class Database {
         declension_schemas = vocabulum_data.getCollection("declension_schemas");
         other = vocabulum_data.getCollection("other");
         texts = vocabulum_data.getCollection("texts");
+        portions = vocabulum_data.getCollection("portions");
     }
 }
