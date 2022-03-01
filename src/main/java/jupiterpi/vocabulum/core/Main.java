@@ -15,7 +15,7 @@ import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.DeclensionClasse
 public class Main {
     public static I18n i18n = I18n.de;
 
-    public static void main(String[] args) throws LexerException, DeclinedFormDoesNotExistException, ParserException, LoadingDataException, I18nException {
+    public static void main(String[] args) throws LoadingDataException {
         System.out.println("----- Vocabulum Core -----");
 
         DeclensionClasses.loadDeclensionSchemas();

@@ -1,6 +1,14 @@
 {
   "language": "de",
-  "texts": null,
+  "texts": {
+    "terminal": {
+      "help-text": "Funktionsweise: Tippen Sie nach \">\" eine Vokabel (bspw. \"amicus, amici m.\", \"laetus, laeta, laetum\" oder \"felix, Gen. felicis\"). Tippen Sie anschließend nach dem eingerückten \">\" die Form, die Sie generieren wollen (bspw. \"Nom. Sg.\" oder \"Gen. Pl. f.\"). Um zu einem beliebigen Zeitpunkt zurückzugehen, drücken Sie Enter, ohne etwas einzugeben. ",
+      "noun": "Substantiv",
+      "adjective": "Adjektiv",
+      "error": "FEHLER",
+      "done": "Fertig. "
+    }
+  },
   "str-texts": {
     "casus": {
       "nom": "Nom",

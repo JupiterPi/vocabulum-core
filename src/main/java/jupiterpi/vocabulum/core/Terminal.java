@@ -9,14 +9,21 @@ import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExist
 import jupiterpi.vocabulum.core.vocabularies.declinated.adjectives.Adjective;
 import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declinated.nouns.Noun;
+import org.bson.Document;
 
 public class Terminal extends ConsoleInterface {
     public void run() {
         out("----- Vocabulum Terminal -----");
 
+        Document texts = (Document) Main.i18n.getTexts().get("terminal");
+
         out("");
-        out("Usage: Type a vocabulary after \">\" (e. g. \"amicus, amici m.\", \"laetus, laeta, laetum\" or \"felix, Gen. felicis\"). Then after the indented \">\", type the form you want to generate (e. g. \"Nom. Sg.\" or \"Gen. Pl. f.\"). To go back at any time, press enter without typing something on a prompt. Note: \"Akk.\" is \"Acc.\"!");
+        out(texts.getString("help-text"));
         out("");
+
+        final String NOUN = texts.getString("noun");
+        final String ADJECTIVE = texts.getString("adjective");
+        final String ERROR = texts.getString("error");
 
         while (true) {
             try {
@@ -27,31 +34,31 @@ public class Terminal extends ConsoleInterface {
                     Noun noun = (Noun) vocabulary;
                     while (true) {
                         try {
-                            String formInput = in("[NOUN] " + noun.getBaseForm() + " > ");
+                            String formInput = in("[" + NOUN + "] " + noun.getBaseForm() + " > ");
                             if (formInput.equals("")) break;
                             DeclinedForm form = DeclinedForm.fromString(formInput, Main.i18n);
                             out(noun.makeForm(form));
                         } catch (ParserException | DeclinedFormDoesNotExistException | LexerException e) {
-                            out("ERROR: " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
+                            out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
                         }
                     }
                 } else if (vocabulary.getKind() == Vocabulary.Kind.ADJECTIVE) {
                     Adjective adjective = (Adjective) vocabulary;
                     while (true) {
                         try {
-                            String formInput = in("[ADJECTIVE] " + adjective.getBaseForm() + " > ");
+                            String formInput = in("[" + ADJECTIVE + "] " + adjective.getBaseForm() + " > ");
                             if (formInput.equals("")) break;
                             DeclinedForm form = DeclinedForm.fromString(formInput, Main.i18n);
                             out(adjective.makeForm(form));
                         } catch (ParserException | DeclinedFormDoesNotExistException | LexerException e) {
-                            out("ERROR: " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
+                            out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
                         }
                     }
                 }
             } catch (ParserException | DeclinedFormDoesNotExistException | I18nException | LexerException e) {
-                out("ERROR: " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
+                out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
             }
         }
-        out("Done. ");
+        out(texts.getString("done"));
     }
 }

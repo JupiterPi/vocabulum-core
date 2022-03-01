@@ -1,6 +1,14 @@
 {
   "language": "en",
-  "texts": null,
+  "texts": {
+    "terminal": {
+      "help-text": "Usage: Type a vocabulary after \">\" (e. g. \"amicus, amici m.\", \"laetus, laeta, laetum\" or \"felix, Gen. felicis\"). Then after the indented \">\", type the form you want to generate (e. g. \"Nom. Sg.\" or \"Gen. Pl. f.\"). To go back at any time, press enter without typing something on a prompt. Note: \"Akk.\" is \"Acc.\"!",
+      "noun": "Noun",
+      "adjective": "Adjective",
+      "error": "ERROR",
+      "done": "Done. "
+    }
+  },
   "str-texts": {
     "casus": {
       "nom": "Nom",

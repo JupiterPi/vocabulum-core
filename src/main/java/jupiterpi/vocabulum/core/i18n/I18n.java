@@ -15,28 +15,34 @@ public class I18n {
 
     private String name;
     private Document texts;
+    private Document str_texts;
 
     public I18n(String language) {
         name = language;
-        texts = (Document) Database.texts.find(new Document("language", language)).first().get("str-texts");
+        texts = (Document) Database.texts.find(new Document("language", language)).first().get("texts");
+        str_texts = (Document) Database.texts.find(new Document("language", language)).first().get("str-texts");
     }
 
     public String getName() {
         return name;
     }
 
+    public Document getTexts() {
+        return texts;
+    }
+
     public String getString(Casus casus) {
-        Document document = (Document) texts.get("casus");
+        Document document = (Document) str_texts.get("casus");
         return document.getString(casus.toString().toLowerCase());
     }
 
     public String getString(Number number) {
-        Document document = (Document) texts.get("number");
+        Document document = (Document) str_texts.get("number");
         return document.getString(number.toString().toLowerCase());
     }
 
     public String getString(Gender gender) {
-        Document document = (Document) texts.get("gender");
+        Document document = (Document) str_texts.get("gender");
         return document.getString(gender.toString().toLowerCase());
     }
 
