@@ -5,10 +5,10 @@ import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
-import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.Adjective;
+import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.RuntimeAdjective;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedFormAspects;
-import jupiterpi.vocabulum.core.vocabularies.declined.nouns.Noun;
+import jupiterpi.vocabulum.core.vocabularies.declined.nouns.RuntimeNoun;
 
 public class Parser {
     private Vocabulary vocabulary;
@@ -30,7 +30,7 @@ public class Parser {
                 Token.Type.COMMA,
                 Token.Type.WORD,
                 Token.Type.GENDER))) {
-            return Noun.fromGenitive(
+            return RuntimeNoun.fromGenitive(
                     tokens.get(0).getContent(),
                     tokens.get(2).getContent(),
                     DeclinedFormAspects.genderFromString(tokens.get(3).getContent(), tokens.getI18n()));
@@ -42,7 +42,7 @@ public class Parser {
                 Token.Type.WORD,
                 Token.Type.COMMA,
                 Token.Type.WORD))) {
-            return Adjective.fromBaseForms(
+            return RuntimeAdjective.fromBaseForms(
                     tokens.get(0).getContent(),
                     tokens.get(2).getContent(),
                     tokens.get(4).getContent()
@@ -55,7 +55,7 @@ public class Parser {
                 new Token(Token.Type.CASUS, tokens.getI18n().getString(Casus.GEN), tokens.getI18n()),
                 new Token(Token.Type.WORD)
         ))) {
-            return Adjective.fromBaseForm(
+            return RuntimeAdjective.fromBaseForm(
                     tokens.get(0).getContent(),
                     tokens.get(3).getContent()
             );
