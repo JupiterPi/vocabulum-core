@@ -26,6 +26,7 @@ public class Main {
 
         DeclensionClasses.loadDeclensionSchemas();
         portionManager = new PortionManager();
+        wordbaseManager = new WordbaseManager();
 
         Map<String, Portion> portions = portionManager.getPortions();
         for (String key : portions.keySet()) {
@@ -34,9 +35,8 @@ public class Main {
         }
         for (Vocabulary vocabulary : portions.get("01-1").getVocabularies()) {
             System.out.println(vocabulary);
+            wordbaseManager.saveVocabulary(vocabulary);
         }
-
-        wordbaseManager = new WordbaseManager();
 
         //Terminal terminal = new Terminal();
         //terminal.run();

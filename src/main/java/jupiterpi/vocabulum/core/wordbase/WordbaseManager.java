@@ -12,7 +12,13 @@ public class WordbaseManager {
         Vocabulary vocabulary = switch (vocabularyDocument.getString("kind")) {
             case "noun" -> WordbaseNoun.readFromDocument(vocabularyDocument);
             case "adjective" -> WordbaseAdjective.readFromDocument(vocabularyDocument);
+            default -> null;
         };
         return vocabulary;
+    }
+
+    public void saveVocabulary(Vocabulary vocabulary) {
+        Document document = vocabulary.generateWordbaseEntry();
+        Database.wordbase.insertOne(document);
     }
 }

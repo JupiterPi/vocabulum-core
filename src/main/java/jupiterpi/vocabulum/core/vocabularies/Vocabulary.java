@@ -8,6 +8,7 @@ import jupiterpi.vocabulum.core.interpreter.parser.Parser;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
+import org.bson.Document;
 
 import java.util.Arrays;
 import java.util.List;
@@ -60,6 +61,8 @@ public abstract class Vocabulary {
         if (translations.size() == 0) return null;
         return translations.get(0);
     }
+
+    public abstract Document generateWordbaseEntry();
 
     @Override
     public String toString() {

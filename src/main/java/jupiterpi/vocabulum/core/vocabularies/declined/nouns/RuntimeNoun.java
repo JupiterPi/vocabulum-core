@@ -42,6 +42,11 @@ public class RuntimeNoun extends Noun {
     }
 
     @Override
+    public Gender getGender() {
+        return gender;
+    }
+
+    @Override
     public String getBaseForm() {
         return nom_sg;
     }

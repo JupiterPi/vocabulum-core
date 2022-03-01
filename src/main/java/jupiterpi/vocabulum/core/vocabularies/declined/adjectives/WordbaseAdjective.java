@@ -24,14 +24,12 @@ public class WordbaseAdjective extends Adjective {
 
     @Override
     public String makeForm(AdjectiveForm form) throws DeclinedFormDoesNotExistException {
-        try {
-            Document comparativeFormForms = (Document) forms.get(form.getComparativeForm().toString().toLowerCase());
-            DeclinedForm declinedForm = form.getDeclinedForm();
-            Document genderForms = (Document) comparativeFormForms.get(declinedForm.getGender().toString().toLowerCase());
-            Document numberForms = (Document) genderForms.get(declinedForm.getNumber().toString().toLowerCase());
-            return numberForms.getString(declinedForm.getCasus().toString().toLowerCase());
-        } catch (NullPointerException e) {
-            throw DeclinedFormDoesNotExistException.forWord(form.getDeclinedForm(), baseForm);
-        }
+        Document comparativeFormForms = (Document) forms.get(form.getComparativeForm().toString().toLowerCase());
+        DeclinedForm declinedForm = form.getDeclinedForm();
+        Document genderForms = (Document) comparativeFormForms.get(declinedForm.getGender().toString().toLowerCase());
+        Document numberForms = (Document) genderForms.get(declinedForm.getNumber().toString().toLowerCase());
+        String generatedForm = numberForms.getString(declinedForm.getCasus().toString().toLowerCase());
+        if (generatedForm.equals("-")) throw DeclinedFormDoesNotExistException.forWord(declinedForm, baseForm);
+        return generatedForm;
     }
 }
