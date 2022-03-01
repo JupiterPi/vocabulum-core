@@ -1,4 +1,4 @@
-package jupiterpi.vocabulum.core.vocabularies.declinated.adjectives;
+package jupiterpi.vocabulum.core.vocabularies.declined.adjectives;
 
 public enum ComparativeForm {
     POSITIVE, COMPARATIVE, SUPERLATIVE

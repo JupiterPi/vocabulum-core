@@ -1,6 +1,6 @@
-package jupiterpi.vocabulum.core.vocabularies.declinated.nouns;
+package jupiterpi.vocabulum.core.vocabularies.declined.nouns;
 
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 
 public class NounForm {
     private DeclinedForm declinedForm;

@@ -1,8 +1,8 @@
 package jupiterpi.vocabulum.core.i18n;
 
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.Casus;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.Gender;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.Number;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.Number;
 import org.bson.Document;
 
 public class I18n {

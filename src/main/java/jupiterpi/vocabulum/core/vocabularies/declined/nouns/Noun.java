@@ -1,14 +1,14 @@
-package jupiterpi.vocabulum.core.vocabularies.declinated.nouns;
+package jupiterpi.vocabulum.core.vocabularies.declined.nouns;
 
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
-import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
-import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.DeclensionClasses;
-import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.DeclensionSchema;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.Casus;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.Gender;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.Number;
+import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
+import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionClasses;
+import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionSchema;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.Number;
 
 public class Noun extends Vocabulary {
     private DeclensionSchema declensionSchema;

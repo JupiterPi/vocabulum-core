@@ -8,9 +8,9 @@ import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.portions.Portion;
 import jupiterpi.vocabulum.core.portions.PortionManager;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
-import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
-import jupiterpi.vocabulum.core.vocabularies.declinated.LoadingDataException;
-import jupiterpi.vocabulum.core.vocabularies.declinated.schemas.DeclensionClasses;
+import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
+import jupiterpi.vocabulum.core.vocabularies.declined.LoadingDataException;
+import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionClasses;
 
 import java.util.Map;
 

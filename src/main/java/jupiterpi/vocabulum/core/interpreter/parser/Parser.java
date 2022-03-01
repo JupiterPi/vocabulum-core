@@ -4,11 +4,11 @@ import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
-import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
-import jupiterpi.vocabulum.core.vocabularies.declinated.adjectives.Adjective;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.Casus;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedFormAspects;
-import jupiterpi.vocabulum.core.vocabularies.declinated.nouns.Noun;
+import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
+import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.Adjective;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedFormAspects;
+import jupiterpi.vocabulum.core.vocabularies.declined.nouns.Noun;
 
 public class Parser {
     private Vocabulary vocabulary;

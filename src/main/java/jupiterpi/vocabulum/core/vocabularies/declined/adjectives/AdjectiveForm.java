@@ -1,6 +1,6 @@
-package jupiterpi.vocabulum.core.vocabularies.declinated.adjectives;
+package jupiterpi.vocabulum.core.vocabularies.declined.adjectives;
 
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 
 public class AdjectiveForm {
     private boolean adverb;

@@ -5,10 +5,10 @@ import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
-import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
-import jupiterpi.vocabulum.core.vocabularies.declinated.adjectives.Adjective;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
-import jupiterpi.vocabulum.core.vocabularies.declinated.nouns.Noun;
+import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
+import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.Adjective;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
+import jupiterpi.vocabulum.core.vocabularies.declined.nouns.Noun;
 import org.bson.Document;
 
 public class Terminal extends ConsoleInterface {

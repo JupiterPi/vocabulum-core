@@ -1,7 +1,7 @@
-package jupiterpi.vocabulum.core.vocabularies.declinated.schemas;
+package jupiterpi.vocabulum.core.vocabularies.declined.schemas;
 
 import jupiterpi.vocabulum.core.Database;
-import jupiterpi.vocabulum.core.vocabularies.declinated.LoadingDataException;
+import jupiterpi.vocabulum.core.vocabularies.declined.LoadingDataException;
 import org.bson.Document;
 
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
-package jupiterpi.vocabulum.core.vocabularies.declinated.schemas;
+package jupiterpi.vocabulum.core.vocabularies.declined.schemas;
 
-import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
+import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 
 public abstract class DeclensionSchema {
     protected String name;

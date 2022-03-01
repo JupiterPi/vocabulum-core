@@ -1,11 +1,11 @@
-package jupiterpi.vocabulum.core.vocabularies.declinated.schemas;
+package jupiterpi.vocabulum.core.vocabularies.declined.schemas;
 
-import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
-import jupiterpi.vocabulum.core.vocabularies.declinated.LoadingDataException;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.Casus;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.DeclinedForm;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.Gender;
-import jupiterpi.vocabulum.core.vocabularies.declinated.form.Number;
+import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
+import jupiterpi.vocabulum.core.vocabularies.declined.LoadingDataException;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.Number;
 import org.bson.Document;
 
 public class GenderDependantDeclensionSchema extends DeclensionSchema {

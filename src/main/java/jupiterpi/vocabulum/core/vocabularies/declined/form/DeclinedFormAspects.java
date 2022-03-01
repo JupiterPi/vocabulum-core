@@ -1,4 +1,4 @@
-package jupiterpi.vocabulum.core.vocabularies.declinated.form;
+package jupiterpi.vocabulum.core.vocabularies.declined.form;
 
 import jupiterpi.vocabulum.core.i18n.I18n;
 
