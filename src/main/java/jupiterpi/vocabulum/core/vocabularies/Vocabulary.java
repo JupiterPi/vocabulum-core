@@ -60,4 +60,9 @@ public abstract class Vocabulary {
         if (translations.size() == 0) return null;
         return translations.get(0);
     }
+
+    @Override
+    public String toString() {
+        return getKind().toString().toLowerCase() + "(\"" + getBaseForm() + "\")";
+    }
 }

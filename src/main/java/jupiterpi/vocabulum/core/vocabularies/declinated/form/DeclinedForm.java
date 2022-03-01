@@ -1,5 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.declinated.form;
 
+import jupiterpi.vocabulum.core.Main;
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
@@ -31,7 +32,7 @@ public class DeclinedForm {
     }
     public static DeclinedForm get(String str) {
         try {
-            return fromString(str, I18n.internal);
+            return fromString(str, Main.i18nManager.internal);
         } catch (ParserException | LexerException e) {
             e.printStackTrace();
         }

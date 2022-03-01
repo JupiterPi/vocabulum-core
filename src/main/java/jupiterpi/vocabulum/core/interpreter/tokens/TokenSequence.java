@@ -24,12 +24,12 @@ public class TokenSequence extends ArrayList<Token> {
     private static I18n evaluateI18n(TokenSequence sequence) throws I18nException {
         I18n i18n = null;
         for (Token token : sequence) {
+            if (token.getI18n() == null) continue;
             if (i18n == null) i18n = token.getI18n();
             else {
                 if (i18n != token.getI18n()) throw I18nException.mismatch(i18n, token.getI18n());
             }
         }
-        if (i18n == null) throw new I18nException("cannot find i18n for token sequence: " + sequence);
         return i18n;
     }
 
