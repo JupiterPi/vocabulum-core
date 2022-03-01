@@ -9,15 +9,27 @@ import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.declinated.DeclinedFormDoesNotExistException;
 
+import java.util.Arrays;
+import java.util.List;
+
 public abstract class Vocabulary {
     protected int lesson;
     protected int part;
 
+    protected List<String> translations;
+
     public static Vocabulary fromString(String str, I18n i18n) throws LexerException, ParserException, DeclinedFormDoesNotExistException, I18nException {
-        Lexer lexer = new Lexer(str, i18n);
+        String[] parts = str.split(" - ");
+        String latinStr = parts[0];
+        String translationStr = parts[1];
+
+        Lexer lexer = new Lexer(latinStr, i18n);
         TokenSequence tokens = lexer.getTokens();
         Parser parser = new Parser(tokens);
-        return parser.getVocabulary();
+        Vocabulary vocabulary = parser.getVocabulary();
+
+        vocabulary.translations = Arrays.asList(translationStr.split(", "));
+        return vocabulary;
     }
 
     public int getLesson() {
@@ -39,5 +51,13 @@ public abstract class Vocabulary {
     public abstract Kind getKind();
     public enum Kind {
         NOUN, ADJECTIVE
+    }
+
+    public List<String> getTranslations() {
+        return translations;
+    }
+    public String getTopTranslation() {
+        if (translations.size() == 0) return null;
+        return translations.get(0);
     }
 }

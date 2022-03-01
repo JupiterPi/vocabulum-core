@@ -1,5 +1,6 @@
 package jupiterpi.vocabulum.core.portions;
 
+import jupiterpi.tools.util.AppendingList;
 import org.bson.Document;
 
 import java.util.List;
@@ -41,5 +42,14 @@ public class Portion {
 
     public List<String> getVocabularies() {
         return vocabularies;
+    }
+
+    @Override
+    public String toString() {
+        AppendingList vocabulariesStr = new AppendingList();
+        for (String vocabulary : vocabularies) {
+            vocabulariesStr.add("\"" + vocabulary + "\"");
+        }
+        return "Portion{name=" + name + ",vocabularies=[" + vocabulariesStr.render(",") + "]}";
     }
 }

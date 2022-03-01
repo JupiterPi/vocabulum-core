@@ -1,13 +1,13 @@
 {
   "name": "01-1",
   "vocabularies": [
-    "sol, solis m.",
-    "silentium, silentii n.",
-    "villa, villae f.",
-    "iacere, iaceo, iacui, iacutum",
-    "canis, canis n.",
-    "tacere, taceo, tacui, tacitum",
-    "clamare, clamo, clamavi, clamatum",
-    "stare, sto, stavi, statum"
+    "sol, solis m. - die Sonne",
+    "silentium, silentii n. - die Ruhe, die Stille, das Schweigen",
+    "villa, villae f. - das (Land)Haus, die Villa",
+    "iacere, iaceo, iacui, iacutum - (da)liegen",
+    "canis, canis n. - der Hund",
+    "tacere, taceo, tacui, tacitum - schweigen, still sein",
+    "clamare, clamo, clamavi, clamatum - schreien, (laut) rufen",
+    "stare, sto, stavi, statum - (da)stehen"
   ]
 }
