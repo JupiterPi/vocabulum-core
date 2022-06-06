@@ -1,5 +1,11 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.adjectives;
 
+import jupiterpi.vocabulum.core.i18n.I18n;
+import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
+import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
+import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
+import jupiterpi.vocabulum.core.interpreter.tokens.Token;
+import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 
 public class AdjectiveForm {
@@ -23,6 +29,29 @@ public class AdjectiveForm {
         this.adverb = adverb;
         this.declinedForm = null;
         this.comparativeForm = comparativeForm;
+    }
+
+    public static AdjectiveForm fromString(String expr, I18n i18n) throws ParserException, LexerException {
+        return fromTokens(new Lexer(expr, i18n).getTokens());
+    }
+
+    public static AdjectiveForm fromTokens(TokenSequence tokens) throws ParserException {
+        int adverbFlagIndex = tokens.indexOf(new Token(Token.Type.ADV_FLAG));
+        boolean isAdverb = adverbFlagIndex >= 0;
+        if (isAdverb) {
+            tokens.remove(adverbFlagIndex);
+        }
+
+        int comparativeFormIndex = tokens.indexOf(new Token(Token.Type.COMPARATIVE_FORM));
+        ComparativeForm comparativeForm = ComparativeForm.POSITIVE;
+        if (comparativeFormIndex >= 0) {
+            comparativeForm = tokens.getI18n().comparativeFormFromSymbol(tokens.get(comparativeFormIndex).getContent());
+            tokens.remove(comparativeFormIndex);
+        }
+
+        DeclinedForm declinedForm = DeclinedForm.fromTokens(tokens);
+
+        return new AdjectiveForm(isAdverb, declinedForm, comparativeForm);
     }
 
     public boolean isAdverb() {

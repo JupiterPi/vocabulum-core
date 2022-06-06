@@ -3,7 +3,9 @@ package jupiterpi.vocabulum.core;
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.i18n.I18nManager;
+import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
+import jupiterpi.vocabulum.core.interpreter.parser.Parser;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.portions.Portion;
 import jupiterpi.vocabulum.core.portions.PortionManager;
@@ -35,10 +37,10 @@ public class Main {
         }
         for (Vocabulary vocabulary : portions.get("01-1").getVocabularies()) {
             System.out.println(vocabulary);
-            wordbaseManager.saveVocabulary(vocabulary);
+            //wordbaseManager.saveVocabulary(vocabulary);
         }
 
-        //Terminal terminal = new Terminal();
-        //terminal.run();
+        Terminal terminal = new Terminal();
+        terminal.run();
     }
 }

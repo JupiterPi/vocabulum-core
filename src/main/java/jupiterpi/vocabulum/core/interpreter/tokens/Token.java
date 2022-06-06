@@ -30,7 +30,7 @@ public class Token {
     }
 
     public enum Type {
-        WORD, COMMA, CASUS, NUMBER, GENDER
+        WORD, COMMA, CASUS, NUMBER, GENDER, COMPARATIVE_FORM, ADV_FLAG
     }
 
     public I18n getI18n() {
@@ -39,10 +39,7 @@ public class Token {
 
     @Override
     public String toString() {
-        return "{" +
-                "type=" + type +
-                ", content='" + content + '\'' +
-                '}';
+        return type + " \"" + content + "\"";
     }
 
     @Override

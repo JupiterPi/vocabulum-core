@@ -2,8 +2,10 @@ package jupiterpi.vocabulum.core;
 
 import jupiterpi.tools.ui.ConsoleInterface;
 import jupiterpi.vocabulum.core.i18n.I18nException;
+import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
+import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.AdjectiveForm;
@@ -39,8 +41,8 @@ public class Terminal extends ConsoleInterface {
                         try {
                             String formInput = in("[" + NOUN + "] " + noun.getBaseForm() + " > ");
                             if (formInput.equals("")) break;
-                            DeclinedForm form = DeclinedForm.fromString(formInput, Main.i18n);
-                            out(noun.makeForm(new NounForm(form)));
+                            NounForm form = NounForm.fromString(formInput, Main.i18n);
+                            out(noun.makeForm(form));
                         } catch (ParserException | DeclinedFormDoesNotExistException | LexerException e) {
                             out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
                         }
@@ -51,8 +53,8 @@ public class Terminal extends ConsoleInterface {
                         try {
                             String formInput = in("[" + ADJECTIVE + "] " + adjective.getBaseForm() + " > ");
                             if (formInput.equals("")) break;
-                            DeclinedForm form = DeclinedForm.fromString(formInput, Main.i18n);
-                            out(adjective.makeForm(new AdjectiveForm(form, ComparativeForm.POSITIVE)));
+                            AdjectiveForm form = AdjectiveForm.fromString(formInput, Main.i18n);
+                            out(adjective.makeForm(form));
                         } catch (ParserException | DeclinedFormDoesNotExistException | LexerException e) {
                             out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
                         }

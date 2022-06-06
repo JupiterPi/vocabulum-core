@@ -62,6 +62,17 @@ public class TokenSequence extends ArrayList<Token> {
         return subsequence(fromIndex, this.size());
     }
 
+    public boolean contains(Token token) {
+        return indexOf(token) >= 0;
+    }
+
+    public int indexOf(Token token) {
+        for (int i = 0; i < this.size(); i++) {
+            if (this.get(i).fits(token)) return i;
+        }
+        return -1;
+    }
+
     public boolean fitsStartsWith(TokenSequence tokens) {
         if (this.size() > tokens.size()) return false;
         for (int i = 0; i < this.size(); i++) {
@@ -80,6 +91,6 @@ public class TokenSequence extends ArrayList<Token> {
         for (Token token : this) {
             tokensStr.add(token.toString());
         }
-        return "TokenSequence{i18n=" + i18n.getName() + ",tokens=[" + tokensStr.render(",") + "]}";
+        return "TokenSequence{i18n=" + i18n.getName() + ",tokens=[" + tokensStr.render(", ") + "]}";
     }
 }

@@ -7,7 +7,6 @@ import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.RuntimeAdjective;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
-import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedFormAspects;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.RuntimeNoun;
 
 public class Parser {
@@ -33,7 +32,7 @@ public class Parser {
             return RuntimeNoun.fromGenitive(
                     tokens.get(0).getContent(),
                     tokens.get(2).getContent(),
-                    DeclinedFormAspects.genderFromString(tokens.get(3).getContent(), tokens.getI18n()));
+                    tokens.getI18n().genderFromSymbol(tokens.get(3).getContent()));
         }
         // adjectives (2-/3-ended)
         if (tokens.size() == 5 && tokens.fitsStartsWith(TokenSequence.fromTypes(
@@ -52,7 +51,7 @@ public class Parser {
         if (tokens.size() == 4 && tokens.fitsStartsWith(new TokenSequence(
                 new Token(Token.Type.WORD),
                 new Token(Token.Type.COMMA),
-                new Token(Token.Type.CASUS, tokens.getI18n().getString(Casus.GEN), tokens.getI18n()),
+                new Token(Token.Type.CASUS, tokens.getI18n().getCasusSymbol(Casus.GEN), tokens.getI18n()),
                 new Token(Token.Type.WORD)
         ))) {
             return RuntimeAdjective.fromBaseForm(

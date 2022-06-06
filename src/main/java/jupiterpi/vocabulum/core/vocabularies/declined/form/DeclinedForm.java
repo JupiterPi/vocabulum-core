@@ -45,11 +45,11 @@ public class DeclinedForm {
             throw new ParserException("Invalid form: " + tokens);
         }
         if (tokens.get(0).getType() == Token.Type.CASUS && tokens.get(1).getType() == Token.Type.NUMBER) {
-            form.casus = DeclinedFormAspects.casusFromString(tokens.get(0).getContent(), tokens.getI18n());
-            form.number = DeclinedFormAspects.numberFromString(tokens.get(1).getContent(), tokens.getI18n());
+            form.casus = tokens.getI18n().casusFromSymbol(tokens.get(0).getContent());
+            form.number = tokens.getI18n().numberFromSymbol(tokens.get(1).getContent());
             if (tokens.size() > 2) {
                 if (tokens.get(2).getType() == Token.Type.GENDER) {
-                    form.gender = DeclinedFormAspects.genderFromString(tokens.get(2).getContent(), tokens.getI18n());
+                    form.gender = tokens.getI18n().genderFromSymbol(tokens.get(2).getContent());
                 } else {
                     throw new ParserException("Invalid form: " + tokens);
                 }

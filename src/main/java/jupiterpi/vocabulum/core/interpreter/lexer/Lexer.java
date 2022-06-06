@@ -4,6 +4,7 @@ import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.util.StringSet;
+import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.ComparativeForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Number;
@@ -16,21 +17,27 @@ public class Lexer {
         this.i18n = i18n;
 
         casusSymbols = new StringSet(
-                i18n.getString(Casus.NOM),
-                i18n.getString(Casus.GEN),
-                i18n.getString(Casus.DAT),
-                i18n.getString(Casus.ACC),
-                i18n.getString(Casus.ABL)
+                i18n.getCasusSymbol(Casus.NOM),
+                i18n.getCasusSymbol(Casus.GEN),
+                i18n.getCasusSymbol(Casus.DAT),
+                i18n.getCasusSymbol(Casus.ACC),
+                i18n.getCasusSymbol(Casus.ABL)
         );
         numberSymbols = new StringSet(
-                i18n.getString(Number.SG),
-                i18n.getString(Number.PL)
+                i18n.getNumberSymbol(Number.SG),
+                i18n.getNumberSymbol(Number.PL)
         );
         genderSymbols = new StringSet(
-                i18n.getString(Gender.MASC),
-                i18n.getString(Gender.FEM),
-                i18n.getString(Gender.NEUT)
+                i18n.getGenderSymbol(Gender.MASC),
+                i18n.getGenderSymbol(Gender.FEM),
+                i18n.getGenderSymbol(Gender.NEUT)
         );
+        comparativeFormSymbols = new StringSet(
+                i18n.getComparativeFormSymbol(ComparativeForm.POSITIVE),
+                i18n.getComparativeFormSymbol(ComparativeForm.COMPARATIVE),
+                i18n.getComparativeFormSymbol(ComparativeForm.SUPERLATIVE)
+        );
+        adverbSymbol = i18n.getAdverbSymbol();
 
         generateTokens(expr);
     }
@@ -47,10 +54,12 @@ public class Lexer {
     private final String comma = ",";
     private final String dot = ".";
 
-    // other string sets
-    private final StringSet casusSymbols;  // set in constructor
-    private final StringSet numberSymbols; // set in constructor
-    private final StringSet genderSymbols; // set in constructor
+    // other string sets                   // all set in constructor
+    private final StringSet casusSymbols;
+    private final StringSet numberSymbols;
+    private final StringSet genderSymbols;
+    private final StringSet comparativeFormSymbols;
+    private final String adverbSymbol;
 
     // buffer
     private String buffer = "";
@@ -105,6 +114,10 @@ public class Lexer {
                 tokens.add(new Token(Token.Type.NUMBER, buffer, i18n));
             } else if (genderSymbols.contains(buffer)) {
                 tokens.add(new Token(Token.Type.GENDER, buffer, i18n));
+            } else if (comparativeFormSymbols.contains(buffer)) {
+                tokens.add(new Token(Token.Type.COMPARATIVE_FORM, buffer, i18n));
+            } else if (adverbSymbol.equals(buffer)) {
+                tokens.add(new Token(Token.Type.ADV_FLAG, buffer, i18n));
             } else {
                 throw new LexerException("Invalid abbreviation: " + buffer);
             }

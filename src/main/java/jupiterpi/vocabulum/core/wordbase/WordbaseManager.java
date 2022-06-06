@@ -9,12 +9,11 @@ import org.bson.Document;
 public class WordbaseManager {
     public Vocabulary loadVocabulary(String baseForm) {
         Document vocabularyDocument = Database.wordbase.find(new Document("base_form", baseForm)).first();
-        Vocabulary vocabulary = switch (vocabularyDocument.getString("kind")) {
+        return switch (vocabularyDocument.getString("kind")) {
             case "noun" -> WordbaseNoun.readFromDocument(vocabularyDocument);
             case "adjective" -> WordbaseAdjective.readFromDocument(vocabularyDocument);
             default -> null;
         };
-        return vocabulary;
     }
 
     public void saveVocabulary(Vocabulary vocabulary) {
