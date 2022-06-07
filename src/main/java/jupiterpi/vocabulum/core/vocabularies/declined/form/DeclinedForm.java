@@ -10,16 +10,16 @@ import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 
 public class DeclinedForm {
     private Casus casus;
-    private Number number;
+    private NNumber number;
     private Gender gender;
 
-    public DeclinedForm(Casus casus, Number number, Gender gender) {
+    public DeclinedForm(Casus casus, NNumber number, Gender gender) {
         this.casus = casus;
         this.number = number;
         this.gender = gender;
     }
 
-    public DeclinedForm(Casus casus, Number number) {
+    public DeclinedForm(Casus casus, NNumber number) {
         this.casus = casus;
         this.number = number;
         this.gender = null;
@@ -46,7 +46,7 @@ public class DeclinedForm {
         }
         if (tokens.get(0).getType() == Token.Type.CASUS && tokens.get(1).getType() == Token.Type.NUMBER) {
             form.casus = tokens.getI18n().casusFromSymbol(tokens.get(0).getContent());
-            form.number = tokens.getI18n().numberFromSymbol(tokens.get(1).getContent());
+            form.number = tokens.getI18n().nNumberFromSymbol(tokens.get(1).getContent());
             if (tokens.size() > 2) {
                 if (tokens.get(2).getType() == Token.Type.GENDER) {
                     form.gender = tokens.getI18n().genderFromSymbol(tokens.get(2).getContent());
@@ -64,7 +64,7 @@ public class DeclinedForm {
         return casus;
     }
 
-    public Number getNumber() {
+    public NNumber getNumber() {
         return number;
     }
 
@@ -74,15 +74,6 @@ public class DeclinedForm {
 
     public boolean hasGender() {
         return gender != null;
-    }
-
-    @Deprecated
-    public boolean fitsGender(DeclinedForm target) {
-        if (target.gender == null) {
-            return true;
-        } else {
-            return this.gender == target.gender;
-        }
     }
 
     public void normalizeGender() {
@@ -98,7 +89,7 @@ public class DeclinedForm {
         return this.casus == casus;
     }
 
-    public boolean isNumber(Number number) {
+    public boolean isNumber(NNumber number) {
         return this.number == number;
     }
 

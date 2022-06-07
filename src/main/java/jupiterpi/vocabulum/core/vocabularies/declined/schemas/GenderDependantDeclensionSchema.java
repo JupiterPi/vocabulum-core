@@ -5,7 +5,7 @@ import jupiterpi.vocabulum.core.vocabularies.declined.LoadingDataException;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
-import jupiterpi.vocabulum.core.vocabularies.declined.form.Number;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import org.bson.Document;
 
 public class GenderDependantDeclensionSchema extends DeclensionSchema {
@@ -24,45 +24,45 @@ public class GenderDependantDeclensionSchema extends DeclensionSchema {
 
                 // MASC
 
-                schema.nom_sg_masc = parent.getSuffix(new DeclinedForm(Casus.NOM, Number.SG, Gender.MASC));
-                schema.gen_sg_masc = parent.getSuffix(new DeclinedForm(Casus.GEN, Number.SG, Gender.MASC));
-                schema.dat_sg_masc = parent.getSuffix(new DeclinedForm(Casus.DAT, Number.SG, Gender.MASC));
-                schema.acc_sg_masc = parent.getSuffix(new DeclinedForm(Casus.ACC, Number.SG, Gender.MASC));
-                schema.abl_sg_masc = parent.getSuffix(new DeclinedForm(Casus.ABL, Number.SG, Gender.MASC));
+                schema.nom_sg_masc = parent.getSuffix(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC));
+                schema.gen_sg_masc = parent.getSuffix(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC));
+                schema.dat_sg_masc = parent.getSuffix(new DeclinedForm(Casus.DAT, NNumber.SG, Gender.MASC));
+                schema.acc_sg_masc = parent.getSuffix(new DeclinedForm(Casus.ACC, NNumber.SG, Gender.MASC));
+                schema.abl_sg_masc = parent.getSuffix(new DeclinedForm(Casus.ABL, NNumber.SG, Gender.MASC));
 
-                schema.nom_pl_masc = parent.getSuffix(new DeclinedForm(Casus.NOM, Number.PL, Gender.MASC));
-                schema.gen_pl_masc = parent.getSuffix(new DeclinedForm(Casus.GEN, Number.PL, Gender.MASC));
-                schema.dat_pl_masc = parent.getSuffix(new DeclinedForm(Casus.DAT, Number.PL, Gender.MASC));
-                schema.acc_pl_masc = parent.getSuffix(new DeclinedForm(Casus.ACC, Number.PL, Gender.MASC));
-                schema.abl_pl_masc = parent.getSuffix(new DeclinedForm(Casus.ABL, Number.PL, Gender.MASC));
+                schema.nom_pl_masc = parent.getSuffix(new DeclinedForm(Casus.NOM, NNumber.PL, Gender.MASC));
+                schema.gen_pl_masc = parent.getSuffix(new DeclinedForm(Casus.GEN, NNumber.PL, Gender.MASC));
+                schema.dat_pl_masc = parent.getSuffix(new DeclinedForm(Casus.DAT, NNumber.PL, Gender.MASC));
+                schema.acc_pl_masc = parent.getSuffix(new DeclinedForm(Casus.ACC, NNumber.PL, Gender.MASC));
+                schema.abl_pl_masc = parent.getSuffix(new DeclinedForm(Casus.ABL, NNumber.PL, Gender.MASC));
 
                 // FEM
 
-                schema.nom_sg_fem = parent.getSuffix(new DeclinedForm(Casus.NOM, Number.SG, Gender.FEM));
-                schema.gen_sg_fem = parent.getSuffix(new DeclinedForm(Casus.GEN, Number.SG, Gender.FEM));
-                schema.dat_sg_fem = parent.getSuffix(new DeclinedForm(Casus.DAT, Number.SG, Gender.FEM));
-                schema.acc_sg_fem = parent.getSuffix(new DeclinedForm(Casus.ACC, Number.SG, Gender.FEM));
-                schema.abl_sg_fem = parent.getSuffix(new DeclinedForm(Casus.ABL, Number.SG, Gender.FEM));
+                schema.nom_sg_fem = parent.getSuffix(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM));
+                schema.gen_sg_fem = parent.getSuffix(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.FEM));
+                schema.dat_sg_fem = parent.getSuffix(new DeclinedForm(Casus.DAT, NNumber.SG, Gender.FEM));
+                schema.acc_sg_fem = parent.getSuffix(new DeclinedForm(Casus.ACC, NNumber.SG, Gender.FEM));
+                schema.abl_sg_fem = parent.getSuffix(new DeclinedForm(Casus.ABL, NNumber.SG, Gender.FEM));
 
-                schema.nom_pl_fem = parent.getSuffix(new DeclinedForm(Casus.NOM, Number.PL, Gender.FEM));
-                schema.gen_pl_fem = parent.getSuffix(new DeclinedForm(Casus.GEN, Number.PL, Gender.FEM));
-                schema.dat_pl_fem = parent.getSuffix(new DeclinedForm(Casus.DAT, Number.PL, Gender.FEM));
-                schema.acc_pl_fem = parent.getSuffix(new DeclinedForm(Casus.ACC, Number.PL, Gender.FEM));
-                schema.abl_pl_fem = parent.getSuffix(new DeclinedForm(Casus.ABL, Number.PL, Gender.FEM));
+                schema.nom_pl_fem = parent.getSuffix(new DeclinedForm(Casus.NOM, NNumber.PL, Gender.FEM));
+                schema.gen_pl_fem = parent.getSuffix(new DeclinedForm(Casus.GEN, NNumber.PL, Gender.FEM));
+                schema.dat_pl_fem = parent.getSuffix(new DeclinedForm(Casus.DAT, NNumber.PL, Gender.FEM));
+                schema.acc_pl_fem = parent.getSuffix(new DeclinedForm(Casus.ACC, NNumber.PL, Gender.FEM));
+                schema.abl_pl_fem = parent.getSuffix(new DeclinedForm(Casus.ABL, NNumber.PL, Gender.FEM));
 
                 // NEUT
 
-                schema.nom_sg_neut = parent.getSuffix(new DeclinedForm(Casus.NOM, Number.SG, Gender.NEUT));
-                schema.gen_sg_neut = parent.getSuffix(new DeclinedForm(Casus.GEN, Number.SG, Gender.NEUT));
-                schema.dat_sg_neut = parent.getSuffix(new DeclinedForm(Casus.DAT, Number.SG, Gender.NEUT));
-                schema.acc_sg_neut = parent.getSuffix(new DeclinedForm(Casus.ACC, Number.SG, Gender.NEUT));
-                schema.abl_sg_neut = parent.getSuffix(new DeclinedForm(Casus.ABL, Number.SG, Gender.NEUT));
+                schema.nom_sg_neut = parent.getSuffix(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT));
+                schema.gen_sg_neut = parent.getSuffix(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.NEUT));
+                schema.dat_sg_neut = parent.getSuffix(new DeclinedForm(Casus.DAT, NNumber.SG, Gender.NEUT));
+                schema.acc_sg_neut = parent.getSuffix(new DeclinedForm(Casus.ACC, NNumber.SG, Gender.NEUT));
+                schema.abl_sg_neut = parent.getSuffix(new DeclinedForm(Casus.ABL, NNumber.SG, Gender.NEUT));
 
-                schema.nom_pl_neut = parent.getSuffix(new DeclinedForm(Casus.NOM, Number.PL, Gender.NEUT));
-                schema.gen_pl_neut = parent.getSuffix(new DeclinedForm(Casus.GEN, Number.PL, Gender.NEUT));
-                schema.dat_pl_neut = parent.getSuffix(new DeclinedForm(Casus.DAT, Number.PL, Gender.NEUT));
-                schema.acc_pl_neut = parent.getSuffix(new DeclinedForm(Casus.ACC, Number.PL, Gender.NEUT));
-                schema.abl_pl_neut = parent.getSuffix(new DeclinedForm(Casus.ABL, Number.PL, Gender.NEUT));
+                schema.nom_pl_neut = parent.getSuffix(new DeclinedForm(Casus.NOM, NNumber.PL, Gender.NEUT));
+                schema.gen_pl_neut = parent.getSuffix(new DeclinedForm(Casus.GEN, NNumber.PL, Gender.NEUT));
+                schema.dat_pl_neut = parent.getSuffix(new DeclinedForm(Casus.DAT, NNumber.PL, Gender.NEUT));
+                schema.acc_pl_neut = parent.getSuffix(new DeclinedForm(Casus.ACC, NNumber.PL, Gender.NEUT));
+                schema.abl_pl_neut = parent.getSuffix(new DeclinedForm(Casus.ABL, NNumber.PL, Gender.NEUT));
 
             } catch (DeclinedFormDoesNotExistException e) {
                 /*throw new LoadingDataException("Could not create GenderDependantDeclensionSchema " + name + ", as parent " + parentName + " does not accept form " + e.getForm());*/
@@ -206,12 +206,12 @@ public class GenderDependantDeclensionSchema extends DeclensionSchema {
     @Override
     public String getSuffixRaw(DeclinedForm form) {
         Casus casus = form.getCasus();
-        Number number = form.getNumber();
+        NNumber number = form.getNumber();
         Gender gender = form.getGender();
 
         if (gender == Gender.MASC) {
 
-            if (number == Number.SG) {
+            if (number == NNumber.SG) {
                 return switch (casus) {
                     case NOM -> nom_sg_masc;
                     case GEN -> gen_sg_masc;
@@ -231,7 +231,7 @@ public class GenderDependantDeclensionSchema extends DeclensionSchema {
 
         } else if (gender == Gender.FEM) {
 
-            if (number == Number.SG) {
+            if (number == NNumber.SG) {
                 return switch (casus) {
                     case NOM -> nom_sg_fem;
                     case GEN -> gen_sg_fem;
@@ -251,7 +251,7 @@ public class GenderDependantDeclensionSchema extends DeclensionSchema {
 
         } else {
 
-            if (number == Number.SG) {
+            if (number == NNumber.SG) {
                 return switch (casus) {
                     case NOM -> nom_sg_neut;
                     case GEN -> gen_sg_neut;

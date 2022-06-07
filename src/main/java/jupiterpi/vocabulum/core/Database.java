@@ -11,6 +11,7 @@ public class Database {
 
     public static MongoDatabase vocabulum_data;
     public static MongoCollection<Document> declension_schemas;
+    public static MongoCollection<Document> conjugation_schemas;
     public static MongoCollection<Document> other;
     public static MongoCollection<Document> texts;
     public static MongoCollection<Document> portions;
@@ -21,6 +22,7 @@ public class Database {
 
         vocabulum_data = mongoClient.getDatabase("vocabulum_data");
         declension_schemas = vocabulum_data.getCollection("declension_schemas");
+        conjugation_schemas = vocabulum_data.getCollection("conjugation_schemas");
         other = vocabulum_data.getCollection("other");
         texts = vocabulum_data.getCollection("texts");
         portions = vocabulum_data.getCollection("portions");

@@ -5,7 +5,7 @@ import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistEx
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
-import jupiterpi.vocabulum.core.vocabularies.declined.form.Number;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionClasses;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionSchema;
 
@@ -28,7 +28,7 @@ public class RuntimeNoun extends Noun {
         noun.nom_sg = nom_sg;
         noun.gender = gender;
         for (DeclensionSchema declensionSchema : DeclensionClasses.getAll()) {
-            String suffix = declensionSchema.getSuffix(new DeclinedForm(Casus.GEN, Number.SG, gender));
+            String suffix = declensionSchema.getSuffix(new DeclinedForm(Casus.GEN, NNumber.SG, gender));
             if (gen_sg.endsWith(suffix)) {
                 noun.declensionSchema = declensionSchema;
                 noun.root = gen_sg.substring(0, gen_sg.length()-suffix.length());
@@ -58,7 +58,7 @@ public class RuntimeNoun extends Noun {
             throw DeclinedFormDoesNotExistException.forWord(declinedForm, nom_sg);
         }
         declinedForm.normalizeGender(gender);
-        if (declinedForm.isCasus(Casus.NOM) && declinedForm.isNumber(Number.SG)) {
+        if (declinedForm.isCasus(Casus.NOM) && declinedForm.isNumber(NNumber.SG)) {
             return nom_sg;
         }
         return root + declensionSchema.getSuffix(declinedForm);

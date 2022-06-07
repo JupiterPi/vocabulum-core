@@ -5,7 +5,7 @@ import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistEx
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
-import jupiterpi.vocabulum.core.vocabularies.declined.form.Number;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import org.bson.Document;
 
 public abstract class Noun extends Vocabulary {
@@ -28,7 +28,7 @@ public abstract class Noun extends Vocabulary {
         Document formsDocument = new Document();
         for (Gender gender : Gender.values()) {
             Document genderDocument = new Document();
-            for (Number number : Number.values()) {
+            for (NNumber number : NNumber.values()) {
                 Document numberDocument = new Document();
                 for (Casus casus : Casus.values()) {
                     NounForm form = new NounForm(new DeclinedForm(casus, number, gender));

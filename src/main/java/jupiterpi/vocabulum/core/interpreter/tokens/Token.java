@@ -30,7 +30,9 @@ public class Token {
     }
 
     public enum Type {
-        WORD, COMMA, CASUS, NUMBER, GENDER, COMPARATIVE_FORM, ADV_FLAG
+        WORD, COMMA,
+        CASUS, NUMBER, GENDER, COMPARATIVE_FORM, ADV_FLAG,
+        PERSON, MODE, TENSE, VOICE
     }
 
     public I18n getI18n() {

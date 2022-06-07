@@ -15,14 +15,10 @@ public class DeclensionClasses {
 
     public static void loadDeclensionSchemas() throws LoadingDataException {
         declensionSchemasRaw = new HashMap<>();
-        for (Document document : Database.declension_schemas.find()) {
-            String name = document.getString("name");
-            declensionSchemasRaw.put(name, document);
-        }
-
         declensionSchemas = new HashMap<>();
         for (Document document : Database.declension_schemas.find()) {
             String name = document.getString("name");
+            declensionSchemasRaw.put(name, document);
             declensionSchemas.put(name, makeSchema(document));
         }
 

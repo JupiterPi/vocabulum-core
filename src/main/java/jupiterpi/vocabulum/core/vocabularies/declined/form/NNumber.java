@@ -1,6 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.form;
 
-public enum Number {
+public enum NNumber {
     SG, // Singular
     PL  // Plural
 }

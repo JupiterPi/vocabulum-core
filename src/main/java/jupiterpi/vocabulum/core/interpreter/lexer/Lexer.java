@@ -4,10 +4,14 @@ import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.util.StringSet;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.form.Mode;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.form.Person;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.form.Tense;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.form.Voice;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.ComparativeForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
-import jupiterpi.vocabulum.core.vocabularies.declined.form.Number;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 
 public class Lexer {
     private I18n i18n;
@@ -24,8 +28,8 @@ public class Lexer {
                 i18n.getCasusSymbol(Casus.ABL)
         );
         numberSymbols = new StringSet(
-                i18n.getNumberSymbol(Number.SG),
-                i18n.getNumberSymbol(Number.PL)
+                i18n.getNumberSymbol(NNumber.SG),
+                i18n.getNumberSymbol(NNumber.PL)
         );
         genderSymbols = new StringSet(
                 i18n.getGenderSymbol(Gender.MASC),
@@ -38,6 +42,27 @@ public class Lexer {
                 i18n.getComparativeFormSymbol(ComparativeForm.SUPERLATIVE)
         );
         adverbSymbol = i18n.getAdverbSymbol();
+        personSymbols = new StringSet(
+                i18n.getPersonSymbol(Person.FIRST),
+                i18n.getPersonSymbol(Person.SECOND),
+                i18n.getPersonSymbol(Person.THIRD)
+        );
+        modeSymbols = new StringSet(
+                i18n.getModeSymbol(Mode.INDICATIVE),
+                i18n.getModeSymbol(Mode.CONJUNCTIVE)
+        );
+        tenseSymbols = new StringSet(
+                i18n.getTenseSymbol(Tense.PRESENT),
+                i18n.getTenseSymbol(Tense.IMPERFECT),
+                i18n.getTenseSymbol(Tense.PERFECT),
+                i18n.getTenseSymbol(Tense.PLUPERFECT),
+                i18n.getTenseSymbol(Tense.FUTURE_I),
+                i18n.getTenseSymbol(Tense.FUTURE_II)
+        );
+        voiceSymbols = new StringSet(
+                i18n.getVoiceSymbol(Voice.ACTIVE),
+                i18n.getVoiceSymbol(Voice.PASSIVE)
+        );
 
         generateTokens(expr);
     }
@@ -60,6 +85,10 @@ public class Lexer {
     private final StringSet genderSymbols;
     private final StringSet comparativeFormSymbols;
     private final String adverbSymbol;
+    private final StringSet personSymbols;
+    private final StringSet modeSymbols;
+    private final StringSet tenseSymbols;
+    private final StringSet voiceSymbols;
 
     // buffer
     private String buffer = "";
@@ -118,6 +147,14 @@ public class Lexer {
                 tokens.add(new Token(Token.Type.COMPARATIVE_FORM, buffer, i18n));
             } else if (adverbSymbol.equals(buffer)) {
                 tokens.add(new Token(Token.Type.ADV_FLAG, buffer, i18n));
+            } else if (personSymbols.contains(buffer)) {
+                tokens.add(new Token(Token.Type.PERSON, buffer, i18n));
+            } else if (modeSymbols.contains(buffer)) {
+                tokens.add(new Token(Token.Type.MODE, buffer, i18n));
+            } else if (tenseSymbols.contains(buffer)) {
+                tokens.add(new Token(Token.Type.TENSE, buffer, i18n));
+            } else if (voiceSymbols.contains(buffer)) {
+                tokens.add(new Token(Token.Type.VOICE, buffer, i18n));
             } else {
                 throw new LexerException("Invalid abbreviation: " + buffer);
             }

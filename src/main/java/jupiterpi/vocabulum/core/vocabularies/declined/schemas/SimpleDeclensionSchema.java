@@ -4,7 +4,7 @@ import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistEx
 import jupiterpi.vocabulum.core.vocabularies.declined.LoadingDataException;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
-import jupiterpi.vocabulum.core.vocabularies.declined.form.Number;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import org.bson.Document;
 
 public class SimpleDeclensionSchema extends DeclensionSchema {
@@ -20,17 +20,17 @@ public class SimpleDeclensionSchema extends DeclensionSchema {
             DeclensionSchema parent = DeclensionClasses.makeSchema(parentDocument);
 
             try {
-                schema.nom_sg = parent.getSuffix(new DeclinedForm(Casus.NOM, Number.SG));
-                schema.gen_sg = parent.getSuffix(new DeclinedForm(Casus.GEN, Number.SG));
-                schema.dat_sg = parent.getSuffix(new DeclinedForm(Casus.DAT, Number.SG));
-                schema.acc_sg = parent.getSuffix(new DeclinedForm(Casus.ACC, Number.SG));
-                schema.abl_sg = parent.getSuffix(new DeclinedForm(Casus.ABL, Number.SG));
+                schema.nom_sg = parent.getSuffix(new DeclinedForm(Casus.NOM, NNumber.SG));
+                schema.gen_sg = parent.getSuffix(new DeclinedForm(Casus.GEN, NNumber.SG));
+                schema.dat_sg = parent.getSuffix(new DeclinedForm(Casus.DAT, NNumber.SG));
+                schema.acc_sg = parent.getSuffix(new DeclinedForm(Casus.ACC, NNumber.SG));
+                schema.abl_sg = parent.getSuffix(new DeclinedForm(Casus.ABL, NNumber.SG));
 
-                schema.nom_pl = parent.getSuffix(new DeclinedForm(Casus.NOM, Number.PL));
-                schema.gen_pl = parent.getSuffix(new DeclinedForm(Casus.GEN, Number.PL));
-                schema.dat_pl = parent.getSuffix(new DeclinedForm(Casus.DAT, Number.PL));
-                schema.acc_pl = parent.getSuffix(new DeclinedForm(Casus.ACC, Number.PL));
-                schema.abl_pl = parent.getSuffix(new DeclinedForm(Casus.ABL, Number.PL));
+                schema.nom_pl = parent.getSuffix(new DeclinedForm(Casus.NOM, NNumber.PL));
+                schema.gen_pl = parent.getSuffix(new DeclinedForm(Casus.GEN, NNumber.PL));
+                schema.dat_pl = parent.getSuffix(new DeclinedForm(Casus.DAT, NNumber.PL));
+                schema.acc_pl = parent.getSuffix(new DeclinedForm(Casus.ACC, NNumber.PL));
+                schema.abl_pl = parent.getSuffix(new DeclinedForm(Casus.ABL, NNumber.PL));
             } catch (DeclinedFormDoesNotExistException e) {
                 throw new LoadingDataException("Could not create SimpleDeclensionSchema " + name + ", as parent " + parentName + " does not accept form " + e.getForm());
             }
@@ -82,9 +82,9 @@ public class SimpleDeclensionSchema extends DeclensionSchema {
     @Override
     public String getSuffixRaw(DeclinedForm form) {
         Casus casus = form.getCasus();
-        Number number = form.getNumber();
+        NNumber number = form.getNumber();
 
-        if (number == Number.SG) {
+        if (number == NNumber.SG) {
             return switch (casus) {
                 case NOM -> nom_sg;
                 case GEN -> gen_sg;

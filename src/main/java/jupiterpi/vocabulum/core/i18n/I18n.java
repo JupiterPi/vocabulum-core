@@ -1,10 +1,11 @@
 package jupiterpi.vocabulum.core.i18n;
 
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.form.*;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.ComparativeForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
-import jupiterpi.vocabulum.core.vocabularies.declined.form.Number;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import org.bson.Document;
 
 public class I18n {
@@ -38,16 +39,16 @@ public class I18n {
         throw new ParserException("Invalid casus: " + symbol);
     }
 
-    // number
-    public String getNumberSymbol(Number number) {
+    // nNumber
+    public String getNumberSymbol(NNumber number) { // is duplicate with cNumber
         Document document = (Document) str_texts.get("number");
         return document.getString(number.toString().toLowerCase());
     }
-    public Number numberFromSymbol(String symbol) throws ParserException {
-        for (Number number : Number.values()) {
+    public NNumber nNumberFromSymbol(String symbol) throws ParserException {
+        for (NNumber number : NNumber.values()) {
             if (getNumberSymbol(number).equals(symbol)) return number;
         }
-        throw new ParserException("Invalid number: " + symbol);
+        throw new ParserException("Invalid nNumber: " + symbol);
     }
 
     // gender
@@ -77,6 +78,71 @@ public class I18n {
     // adverb (flag)
     public String getAdverbSymbol() {
         return str_texts.getString("adverb");
+    }
+
+    // person
+    public String getPersonSymbol(Person person) {
+        Document document = (Document) str_texts.get("person");
+        return document.getString(person.toString().toLowerCase());
+    }
+    public Person personFromSymbol(String symbol) throws ParserException {
+        for (Person person : Person.values()) {
+            if (getPersonSymbol(person).equals(symbol)) return person;
+        }
+        throw new ParserException("Invalid person: " + symbol);
+    }
+
+    // "person" (cosmetic)
+    public String getPersonCosmetic() {
+        return str_texts.getString("person_cosmetic");
+    }
+
+    // cNumber
+    public String getNumberSymbol(CNumber number) { // is duplicate with nNumber
+        Document document = (Document) str_texts.get("cNumber");
+        return document.getString(number.toString().toLowerCase());
+    }
+    public CNumber cNumberFromSymbol(String symbol) throws ParserException {
+        for (CNumber number : CNumber.values()) {
+            if (getNumberSymbol(number).equals(symbol)) return number;
+        }
+        throw new ParserException("Invalid cNumber: " + symbol);
+    }
+
+    // mode
+    public String getModeSymbol(Mode mode) {
+        Document document = (Document) str_texts.get("mode");
+        return document.getString(mode.toString().toLowerCase());
+    }
+    public Mode modeFromSymbol(String symbol) throws ParserException {
+        for (Mode mode : Mode.values()) {
+            if (getModeSymbol(mode).equals(symbol)) return mode;
+        }
+        throw new ParserException("Invalid mode: " + symbol);
+    }
+
+    // tense
+    public String getTenseSymbol(Tense tense) {
+        Document document = (Document) str_texts.get("tense");
+        return document.getString(tense.toString().toLowerCase());
+    }
+    public Tense tenseFromSymbol(String symbol) throws ParserException {
+        for (Tense tense : Tense.values()) {
+            if (getTenseSymbol(tense).equals(symbol)) return tense;
+        }
+        throw new ParserException("Invalid tense: " + symbol);
+    }
+
+    // voice
+    public String getVoiceSymbol(Voice voice) {
+        Document document = (Document) str_texts.get("voice");
+        return document.getString(voice.toString().toLowerCase());
+    }
+    public Voice voiceFromSymbol(String symbol) throws ParserException {
+        for (Voice voice : Voice.values()) {
+            if (getVoiceSymbol(voice).equals(symbol)) return voice;
+        }
+        throw new ParserException("Invalid voice: " + symbol);
     }
 
     @Override

@@ -6,7 +6,7 @@ import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistEx
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
-import jupiterpi.vocabulum.core.vocabularies.declined.form.Number;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionClasses;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionSchema;
 import org.bson.Document;
@@ -153,7 +153,7 @@ public class RuntimeAdjective extends Adjective {
                     declinedForm.normalizeGender();
 
                     String comparativeSign = comparativeData.getString("comparative_sign");
-                    if (declinedForm.equals(new DeclinedForm(Casus.NOM, Number.SG, Gender.NEUT))) {
+                    if (declinedForm.equals(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT))) {
                         comparativeSign = comparativeData.getString("comparative_sign_nom_sg_n");
                     }
 

@@ -69,6 +69,6 @@ public class AdjectiveForm {
     @Override
     public String toString() {
         String adverbDeclinedFormStr = adverb ? "adverb" : "form=" + declinedForm.toString();
-        return "{Noun" + adverbDeclinedFormStr + ",comparative=" + comparativeForm.toString().toLowerCase() + "}";
+        return "Adjective{" + adverbDeclinedFormStr + ",comparative=" + comparativeForm.toString().toLowerCase() + "}";
     }
 }

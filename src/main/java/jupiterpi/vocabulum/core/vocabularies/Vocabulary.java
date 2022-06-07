@@ -51,7 +51,7 @@ public abstract class Vocabulary {
 
     public abstract Kind getKind();
     public enum Kind {
-        NOUN, ADJECTIVE
+        NOUN, ADJECTIVE, VERB
     }
 
     public List<String> getTranslations() {
