@@ -1,6 +1,6 @@
 package jupiterpi.vocabulum.core.portions;
 
-import jupiterpi.vocabulum.core.Database;
+import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;

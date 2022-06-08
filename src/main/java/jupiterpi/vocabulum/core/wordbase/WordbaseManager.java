@@ -1,6 +1,6 @@
 package jupiterpi.vocabulum.core.wordbase;
 
-import jupiterpi.vocabulum.core.Database;
+import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.WordbaseAdjective;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.WordbaseNoun;

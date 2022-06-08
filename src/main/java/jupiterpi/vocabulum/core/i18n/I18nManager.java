@@ -1,6 +1,6 @@
 package jupiterpi.vocabulum.core.i18n;
 
-import jupiterpi.vocabulum.core.Database;
+import jupiterpi.vocabulum.core.db.Database;
 import org.bson.Document;
 
 import java.util.HashMap;

@@ -2,7 +2,7 @@
   "language": "de",
   "texts": {
     "terminal": {
-      "help-text": "Funktionsweise: Tippen Sie nach \">\" eine Vokabel (bspw. \"amicus, amici m.\", \"laetus, laeta, laetum\" oder \"felix, Gen. felicis\"). Tippen Sie anschließend nach dem eingerückten \">\" die Form, die Sie generieren wollen (bspw. \"Nom. Sg.\" oder \"Gen. Pl. f.\"). Um zu einem beliebigen Zeitpunkt zurückzugehen, drücken Sie Enter, ohne etwas einzugeben. ",
+      "help-text": "Funktionsweise: Tippen Sie nach \">\" eine Vokabel (bspw. \"amicus, amici m. - der Freund\", \"laetus, laeta, laetum - fröhlich\" oder \"felix, Gen. felicis - glücklich\"). Tippen Sie anschließend nach dem eingerückten \">\" die Form, die Sie generieren wollen (bspw. \"Nom. Sg.\" oder \"Gen. Pl. f.\"). Um zu einem beliebigen Zeitpunkt zurückzugehen, drücken Sie Enter, ohne etwas einzugeben. ",
       "noun": "Substantiv",
       "adjective": "Adjektiv",
       "error": "FEHLER",
@@ -25,6 +25,34 @@
       "masc": "m",
       "fem": "f",
       "neut": "n"
+    },
+    "comparative_form": {
+      "positive": "Pos",
+      "comparative": "Komp",
+      "superlative": "Sup"
+    },
+    "adverb": "Adv",
+    "person": {
+      "first": "1",
+      "second": "2",
+      "third": "3"
+    },
+    "person_cosmetic": "Pers",
+    "mode": {
+      "indicative": "Ind",
+      "conjunctive": "Konj"
+    },
+    "tense": {
+      "present": "Präs",
+      "imperfect": "Imperf",
+      "perfect": "Perf",
+      "pluperfect": "Plusq",
+      "future_i": "FutI",
+      "future_ii": "FutII"
+    },
+    "voice": {
+      "active": "Akt",
+      "passive": "Pass"
     }
   }
 }

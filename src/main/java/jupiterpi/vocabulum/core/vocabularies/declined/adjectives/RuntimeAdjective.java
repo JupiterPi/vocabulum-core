@@ -1,6 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.adjectives;
 
-import jupiterpi.vocabulum.core.Database;
+import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;

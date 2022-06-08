@@ -1,7 +1,7 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.schemas;
 
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
-import jupiterpi.vocabulum.core.vocabularies.declined.LoadingDataException;
+import jupiterpi.vocabulum.core.db.LoadingDataException;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;

@@ -3,15 +3,18 @@ package jupiterpi.vocabulum.core;
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.i18n.I18nManager;
-import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
-import jupiterpi.vocabulum.core.interpreter.parser.Parser;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.portions.Portion;
 import jupiterpi.vocabulum.core.portions.PortionManager;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.RuntimeVerb;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.Verb;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbForm;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.ConjugationClasses;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.ConjugationSchema;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
-import jupiterpi.vocabulum.core.vocabularies.declined.LoadingDataException;
+import jupiterpi.vocabulum.core.db.LoadingDataException;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionClasses;
 import jupiterpi.vocabulum.core.wordbase.WordbaseManager;
 
@@ -27,6 +30,7 @@ public class Main {
         System.out.println("----- Vocabulum Core -----");
 
         DeclensionClasses.loadDeclensionSchemas();
+        ConjugationClasses.loadConjugationSchemas();
         portionManager = new PortionManager();
         wordbaseManager = new WordbaseManager();
 
@@ -40,7 +44,12 @@ public class Main {
             //wordbaseManager.saveVocabulary(vocabulary);
         }
 
-        Terminal terminal = new Terminal();
-        terminal.run();
+        Verb sampleVerb = new RuntimeVerb(ConjugationClasses.a_Conjugation, "vocare", "voc", "vocav");
+        System.out.println(sampleVerb.makeForm(VerbForm.fromString("1. Pers. Sg. Präs. Ind.", i18n)));
+        System.out.println(sampleVerb.makeForm(VerbForm.fromString("1. Pers. Sg. Perf. Ind.", i18n)));
+        System.out.println(sampleVerb.makeForm(VerbForm.fromString("1. Pers. Pl. Plusq. Konj.", i18n)));
+
+        //Terminal terminal = new Terminal();
+        //terminal.run();
     }
 }

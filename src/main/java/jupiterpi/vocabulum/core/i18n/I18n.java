@@ -99,7 +99,7 @@ public class I18n {
 
     // cNumber
     public String getNumberSymbol(CNumber number) { // is duplicate with nNumber
-        Document document = (Document) str_texts.get("cNumber");
+        Document document = (Document) str_texts.get("number");
         return document.getString(number.toString().toLowerCase());
     }
     public CNumber cNumberFromSymbol(String symbol) throws ParserException {

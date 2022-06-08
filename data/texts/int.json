@@ -17,6 +17,34 @@
       "masc": "m",
       "fem": "f",
       "neut": "n"
+    },
+    "comparative_form": {
+      "positive": "Pos",
+      "comparative": "Comp",
+      "superlative": "Sup"
+    },
+    "adverb": "Adv",
+    "person": {
+      "first": "1",
+      "second": "2",
+      "third": "3"
+    },
+    "person_cosmetic": "Pers",
+    "mode": {
+      "indicative": "Ind",
+      "conjunctive": "Conj"
+    },
+    "tense": {
+      "present": "Pres",
+      "imperfect": "Imperf",
+      "perfect": "Perf",
+      "pluperfect": "Pluperf",
+      "future_i": "FutI",
+      "future_ii": "FutII"
+    },
+    "voice": {
+      "active": "Act",
+      "passive": "Pass"
     }
   }
 }

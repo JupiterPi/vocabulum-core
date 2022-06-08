@@ -1,0 +1,331 @@
+{
+  "name": "a",
+  "active": {
+    "present": {
+      "root": "present", 
+      "indicative": {
+        "sg": {
+          "first": "o", 
+          "second": "as",
+          "third": "at"
+        }, 
+        "pl": {
+          "first": "amus", 
+          "second": "atis", 
+          "third": "ant"
+        }
+      },
+      "conjunctive": {
+        "sg": {
+          "first": "em",
+          "second": "es",
+          "third": "et"
+        },
+        "pl": {
+          "first": "emus",
+          "second": "etis",
+          "third": "ent"
+        }
+      }
+    },
+    "imperfect": {
+      "root": "present",
+      "indicative": {
+        "sg": {
+          "first": "bam",
+          "second": "bas",
+          "third": "bat"
+        },
+        "pl": {
+          "first": "bamus",
+          "second": "batis",
+          "third": "bant"
+        }
+      },
+      "conjunctive": {
+        "sg": {
+          "first": "rem",
+          "second": "res",
+          "third": "ret"
+        },
+        "pl": {
+          "first": "remus",
+          "second": "retis",
+          "third": "rent"
+        }
+      }
+    }, 
+    "perfect": {
+      "root": "perfect",
+      "indicative": {
+        "sg": {
+          "first": "i",
+          "second": "isti",
+          "third": "it"
+        },
+        "pl": {
+          "first": "imus",
+          "second": "istis",
+          "third": "erunt"
+        }
+      },
+      "conjunctive": {
+        "sg": {
+          "first": "erim",
+          "second": "eris",
+          "third": "erit"
+        },
+        "pl": {
+          "first": "erimus",
+          "second": "eritis",
+          "third": "erint"
+        }
+      }
+    }, 
+    "pluperfect": {
+      "root": "perfect",
+      "indicative": {
+        "sg": {
+          "first": "eram",
+          "second": "eras",
+          "third": "erat"
+        },
+        "pl": {
+          "first": "eramus",
+          "second": "eratis",
+          "third": "erant"
+        }
+      },
+      "conjunctive": {
+        "sg": {
+          "first": "issem",
+          "second": "isses",
+          "third": "isset"
+        },
+        "pl": {
+          "first": "issemus",
+          "second": "issetis",
+          "third": "issent"
+        }
+      }
+    }, 
+    "future_i": {
+      "root": "present",
+      "indicative": {
+        "sg": {
+          "first": "bo",
+          "second": "bis",
+          "third": "bit"
+        },
+        "pl": {
+          "first": "bimus",
+          "second": "bitis",
+          "third": "bunt"
+        }
+      },
+      "conjunctive": {
+        "sg": {
+          "first": "-",
+          "second": "-",
+          "third": "-"
+        },
+        "pl": {
+          "first": "-",
+          "second": "-",
+          "third": "-t"
+        }
+      }
+    }, 
+    "future_ii": {
+      "root": "perfect",
+      "indicative": {
+        "sg": {
+          "first": "ero",
+          "second": "eris",
+          "third": "erit"
+        },
+        "pl": {
+          "first": "erimus",
+          "second": "eritis",
+          "third": "erint"
+        }
+      },
+      "conjunctive": {
+        "sg": {
+          "first": "-",
+          "second": "-",
+          "third": "-"
+        },
+        "pl": {
+          "first": "-",
+          "second": "-",
+          "third": "-"
+        }
+      }
+    }
+  }, 
+  "passive": {
+    "present": {
+      "root": "present",
+      "indicative": {
+        "sg": {
+          "first": "o",
+          "second": "as",
+          "third": "at"
+        },
+        "pl": {
+          "first": "amus",
+          "second": "atis",
+          "third": "ant"
+        }
+      },
+      "conjunctive": {
+        "sg": {
+          "first": "em",
+          "second": "es",
+          "third": "et"
+        },
+        "pl": {
+          "first": "emus",
+          "second": "etis",
+          "third": "ent"
+        }
+      }
+    },
+    "imperfect": {
+      "root": "present",
+      "indicative": {
+        "sg": {
+          "first": "bam",
+          "second": "bas",
+          "third": "bat"
+        },
+        "pl": {
+          "first": "bamus",
+          "second": "batis",
+          "third": "bant"
+        }
+      },
+      "conjunctive": {
+        "sg": {
+          "first": "rem",
+          "second": "res",
+          "third": "ret"
+        },
+        "pl": {
+          "first": "remus",
+          "second": "retis",
+          "third": "rent"
+        }
+      }
+    },
+    "perfect": {
+      "root": "perfect",
+      "indicative": {
+        "sg": {
+          "first": "i",
+          "second": "isti",
+          "third": "it"
+        },
+        "pl": {
+          "first": "imus",
+          "second": "istis",
+          "third": "erunt"
+        }
+      },
+      "conjunctive": {
+        "sg": {
+          "first": "erim",
+          "second": "eris",
+          "third": "erit"
+        },
+        "pl": {
+          "first": "erimus",
+          "second": "eritis",
+          "third": "erint"
+        }
+      }
+    },
+    "pluperfect": {
+      "root": "perfect",
+      "indicative": {
+        "sg": {
+          "first": "eram",
+          "second": "eras",
+          "third": "erat"
+        },
+        "pl": {
+          "first": "eramus",
+          "second": "eratis",
+          "third": "erant"
+        }
+      },
+      "conjunctive": {
+        "sg": {
+          "first": "issem",
+          "second": "isses",
+          "third": "isset"
+        },
+        "pl": {
+          "first": "issemus",
+          "second": "issetis",
+          "third": "issent"
+        }
+      }
+    },
+    "future_i": {
+      "root": "present",
+      "indicative": {
+        "sg": {
+          "first": "bo",
+          "second": "bis",
+          "third": "bit"
+        },
+        "pl": {
+          "first": "bimus",
+          "second": "bitis",
+          "third": "bunt"
+        }
+      },
+      "conjunctive": {
+        "sg": {
+          "first": "-",
+          "second": "-",
+          "third": "-"
+        },
+        "pl": {
+          "first": "-",
+          "second": "-",
+          "third": "-t"
+        }
+      }
+    },
+    "future_ii": {
+      "root": "perfect",
+      "indicative": {
+        "sg": {
+          "first": "ero",
+          "second": "eris",
+          "third": "erit"
+        },
+        "pl": {
+          "first": "erimus",
+          "second": "eritis",
+          "third": "erint"
+        }
+      },
+      "conjunctive": {
+        "sg": {
+          "first": "-",
+          "second": "-",
+          "third": "-"
+        },
+        "pl": {
+          "first": "-",
+          "second": "-",
+          "third": "-"
+        }
+      }
+    }
+  }
+}

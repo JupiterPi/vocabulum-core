@@ -47,6 +47,7 @@ public class Lexer {
                 i18n.getPersonSymbol(Person.SECOND),
                 i18n.getPersonSymbol(Person.THIRD)
         );
+        personCosmetic = i18n.getPersonCosmetic();
         modeSymbols = new StringSet(
                 i18n.getModeSymbol(Mode.INDICATIVE),
                 i18n.getModeSymbol(Mode.CONJUNCTIVE)
@@ -75,7 +76,7 @@ public class Lexer {
 
     // character types
     private final StringSet whitespaces = new StringSet(" ", "\t");
-    private final StringSet letters = StringSet.getCharacters("abcdefghijklmnopqrstuvwxyz" + "abcdefghijklmnopqrstuvwxyz".toUpperCase());
+    private final StringSet letters = StringSet.getCharacters("abcdefghijklmnopqrstuvwxyzäöüß" + "abcdefghijklmnopqrstuvwxyzäöü".toUpperCase() + "123");
     private final String comma = ",";
     private final String dot = ".";
 
@@ -86,6 +87,7 @@ public class Lexer {
     private final StringSet comparativeFormSymbols;
     private final String adverbSymbol;
     private final StringSet personSymbols;
+    private final String personCosmetic;
     private final StringSet modeSymbols;
     private final StringSet tenseSymbols;
     private final StringSet voiceSymbols;
@@ -149,6 +151,8 @@ public class Lexer {
                 tokens.add(new Token(Token.Type.ADV_FLAG, buffer, i18n));
             } else if (personSymbols.contains(buffer)) {
                 tokens.add(new Token(Token.Type.PERSON, buffer, i18n));
+            } else if (personCosmetic.equals(buffer)) {
+                // do nothing, the cosmetic should be ignored completely
             } else if (modeSymbols.contains(buffer)) {
                 tokens.add(new Token(Token.Type.MODE, buffer, i18n));
             } else if (tenseSymbols.contains(buffer)) {

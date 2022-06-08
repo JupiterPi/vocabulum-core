@@ -1,5 +1,7 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated.schemas;
 
+import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbForm;
+
 public abstract class ConjugationSchema {
     protected String name;
 
@@ -11,5 +13,5 @@ public abstract class ConjugationSchema {
         return name;
     }
 
-    //TODO implement
+    public abstract FormInfo getFormInfo(VerbForm verbForm);
 }

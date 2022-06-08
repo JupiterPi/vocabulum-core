@@ -5,7 +5,10 @@ import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
+import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
+
+import java.util.Objects;
 
 public class ConjugatedForm {
     private Person person;
@@ -18,22 +21,26 @@ public class ConjugatedForm {
 
     private ConjugatedForm() {}
 
-    public static ConjugatedForm fromString(String str, I18n i18n) throws LexerException {
+    public static ConjugatedForm fromString(String str, I18n i18n) throws LexerException, ParserException {
         return fromTokens(new Lexer(str, i18n).getTokens());
     }
     public static ConjugatedForm get(String str) {
         try {
             return fromString(str, Main.i18nManager.internal);
-        } catch (ParserException | LexerException e) {
+        } catch (LexerException | ParserException e) {
             e.printStackTrace();
         }
         return null;
     }
 
     public static ConjugatedForm fromTokens(TokenSequence tokens) throws ParserException {
-        ConjugatedForm form = new ConjugatedForm();
-        return form;
-        //TODO implement
+        if (tokens.size() == 2 && tokens.fitsStartsWith(TokenSequence.fromTypes(Token.Type.PERSON, Token.Type.NUMBER))) {
+            Person person = tokens.getI18n().personFromSymbol(tokens.get(0).getContent());
+            CNumber number = tokens.getI18n().cNumberFromSymbol(tokens.get(1).getContent());
+            return new ConjugatedForm(person, number);
+        } else {
+            throw new ParserException("Invalid conjugated form: " + tokens);
+        }
     }
 
     public Person getPerson() {
@@ -52,8 +59,12 @@ public class ConjugatedForm {
         return person == that.person && number == that.number;
     }
 
-    // to string
+    @Override
+    public int hashCode() {
+        return Objects.hash(person, number);
+    }
 
+    // to string
 
     @Override
     public String toString() {
@@ -65,9 +76,8 @@ public class ConjugatedForm {
             case FIRST -> "1. ";
             case SECOND -> "2. ";
             case THIRD -> "3. ";
-        } + i18n.getPersonCosmetic()
-                + " "
-                + person.toString().substring(0, 1).toUpperCase() + person.toString().substring(1).toLowerCase()
-                + ".";
+        }
+            + number.toString().substring(0, 1).toUpperCase() + number.toString().substring(1).toLowerCase()
+            + ".";
     }
 }
