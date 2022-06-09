@@ -1,20 +1,27 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.adjectives;
 
+import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import org.bson.Document;
+
+import java.util.List;
 
 public class WordbaseAdjective extends Adjective {
     private String baseForm;
     private Document forms;
 
-    public WordbaseAdjective(String baseForm, Document forms) {
+    public WordbaseAdjective(String baseForm, Document forms, List<String> translations) {
+        super(translations);
         this.baseForm = baseForm;
         this.forms = forms;
     }
 
     public static WordbaseAdjective readFromDocument(Document document) {
-        return new WordbaseAdjective(document.getString("base_form"), (Document) document.get("forms"));
+        return new WordbaseAdjective(
+                document.getString("base_form"),
+                (Document) document.get("forms"),
+                readTranslations(document));
     }
 
     @Override

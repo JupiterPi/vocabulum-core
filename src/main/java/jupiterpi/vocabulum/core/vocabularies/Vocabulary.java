@@ -19,17 +19,24 @@ public abstract class Vocabulary {
 
     protected List<String> translations;
 
+    protected Vocabulary(List<String> translations) {
+        this.translations = translations;
+    }
+    protected static List<String> readTranslations(Document document) {
+        return document.getList("translations", String.class);
+    }
+
     public static Vocabulary fromString(String str, I18n i18n) throws LexerException, ParserException, DeclinedFormDoesNotExistException, I18nException {
         String[] parts = str.split(" - ");
         String latinStr = parts[0];
         String translationStr = parts[1];
+        List<String> translations = Arrays.asList(translationStr.split(", "));
 
         Lexer lexer = new Lexer(latinStr, i18n);
         TokenSequence tokens = lexer.getTokens();
-        Parser parser = new Parser(tokens);
+        Parser parser = new Parser(tokens, translations);
         Vocabulary vocabulary = parser.getVocabulary();
 
-        vocabulary.translations = Arrays.asList(translationStr.split(", "));
         return vocabulary;
     }
 
@@ -51,7 +58,7 @@ public abstract class Vocabulary {
 
     public abstract Kind getKind();
     public enum Kind {
-        NOUN, ADJECTIVE, VERB
+        NOUN, ADJECTIVE, VERB, INFLEXIBLE
     }
 
     public List<String> getTranslations() {
@@ -66,6 +73,6 @@ public abstract class Vocabulary {
 
     @Override
     public String toString() {
-        return getKind().toString().toLowerCase() + "(\"" + getBaseForm() + "\")";
+        return getKind().toString().toLowerCase() + "(\"" + getBaseForm() + " - " + getTopTranslation() + "\")";
     }
 }

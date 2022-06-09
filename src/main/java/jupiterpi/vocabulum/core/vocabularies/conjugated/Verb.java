@@ -4,7 +4,13 @@ import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.*;
 import org.bson.Document;
 
+import java.util.List;
+
 public abstract class Verb extends Vocabulary {
+    protected Verb(List<String> translations) {
+        super(translations);
+    }
+
     public abstract String makeForm(VerbForm form);
 
     @Override

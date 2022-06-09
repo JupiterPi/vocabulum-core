@@ -1,17 +1,18 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated;
 
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.*;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.FormInfo;
 import org.bson.Document;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class WordbaseVerb extends Verb {
     private String baseForm;
     private Map<VerbForm, String> forms;
 
-    public WordbaseVerb(String baseForm, Document forms) {
+    public WordbaseVerb(String baseForm, Document forms, List<String> translations) {
+        super(translations);
         this.baseForm = baseForm;
 
         this.forms = new HashMap<>();
@@ -34,7 +35,10 @@ public class WordbaseVerb extends Verb {
     }
 
     public static WordbaseVerb readFromDocument(Document document) {
-        return new WordbaseVerb(document.getString("base_form"), (Document) document.get("forms"));
+        return new WordbaseVerb(
+                document.getString("base_form"),
+                (Document) document.get("forms"),
+                readTranslations(document));
     }
 
     @Override

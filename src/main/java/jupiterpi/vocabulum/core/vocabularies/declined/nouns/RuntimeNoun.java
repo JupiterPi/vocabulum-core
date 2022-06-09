@@ -9,22 +9,27 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionClasses;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionSchema;
 
+import java.util.List;
+
 public class RuntimeNoun extends Noun {
     private DeclensionSchema declensionSchema;
     private String nom_sg;
     private String root;
     private Gender gender;
 
-    public RuntimeNoun(DeclensionSchema declensionSchema, String nom_sg, String root, Gender gender) {
+    public RuntimeNoun(DeclensionSchema declensionSchema, String nom_sg, String root, Gender gender, List<String> translations) {
+        super(translations);
         this.declensionSchema = declensionSchema;
         this.nom_sg = nom_sg;
         this.root = root;
         this.gender = gender;
     }
 
-    private RuntimeNoun() {}
-    public static RuntimeNoun fromGenitive(String nom_sg, String gen_sg, Gender gender) throws DeclinedFormDoesNotExistException, ParserException {
-        RuntimeNoun noun = new RuntimeNoun();
+    private RuntimeNoun(List<String> translations) {
+        super(translations);
+    }
+    public static RuntimeNoun fromGenitive(String nom_sg, String gen_sg, Gender gender, List<String> translations) throws DeclinedFormDoesNotExistException, ParserException {
+        RuntimeNoun noun = new RuntimeNoun(translations);
         noun.nom_sg = nom_sg;
         noun.gender = gender;
         for (DeclensionSchema declensionSchema : DeclensionClasses.getAll()) {

@@ -9,12 +9,15 @@ import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistEx
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.RuntimeAdjective;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.RuntimeNoun;
+import jupiterpi.vocabulum.core.vocabularies.inflexible.Inflexible;
+
+import java.util.List;
 
 public class Parser {
     private Vocabulary vocabulary;
 
-    public Parser(TokenSequence tokens) throws ParserException, DeclinedFormDoesNotExistException, I18nException {
-        this.vocabulary = parseVocabulary(tokens);
+    public Parser(TokenSequence tokens, List<String> translations) throws ParserException, DeclinedFormDoesNotExistException, I18nException {
+        this.vocabulary = parseVocabulary(tokens, translations);
     }
 
     public Vocabulary getVocabulary() {
@@ -23,7 +26,8 @@ public class Parser {
 
     /* parser */
 
-    private Vocabulary parseVocabulary(TokenSequence tokens) throws ParserException, DeclinedFormDoesNotExistException, I18nException {
+    private Vocabulary parseVocabulary(TokenSequence tokens, List<String> translations) throws ParserException, DeclinedFormDoesNotExistException {
+
         // nouns
         if (tokens.size() == 4 && tokens.fitsStartsWith(TokenSequence.fromTypes(
                 Token.Type.WORD,
@@ -33,8 +37,10 @@ public class Parser {
             return RuntimeNoun.fromGenitive(
                     tokens.get(0).getContent(),
                     tokens.get(2).getContent(),
-                    tokens.getI18n().genderFromSymbol(tokens.get(3).getContent()));
+                    tokens.getI18n().genderFromSymbol(tokens.get(3).getContent()),
+                    translations);
         }
+
         // adjectives (2-/3-ended)
         if (tokens.size() == 5 && tokens.fitsStartsWith(TokenSequence.fromTypes(
                 Token.Type.WORD,
@@ -45,9 +51,11 @@ public class Parser {
             return RuntimeAdjective.fromBaseForms(
                     tokens.get(0).getContent(),
                     tokens.get(2).getContent(),
-                    tokens.get(4).getContent()
+                    tokens.get(4).getContent(),
+                    translations
             );
         }
+
         // adjectives (1-ended)
         if (tokens.size() == 4 && tokens.fitsStartsWith(new TokenSequence(
                 new Token(Token.Type.WORD),
@@ -57,9 +65,11 @@ public class Parser {
         ))) {
             return RuntimeAdjective.fromBaseForm(
                     tokens.get(0).getContent(),
-                    tokens.get(3).getContent()
+                    tokens.get(3).getContent(),
+                    translations
             );
         }
+
         // verbs
         if (tokens.size() == 7 && tokens.fitsStartsWith(TokenSequence.fromTypes(
                 Token.Type.WORD,
@@ -73,9 +83,18 @@ public class Parser {
             return RuntimeVerb.fromBaseForms(
                     tokens.get(0).getContent(),
                     tokens.get(2).getContent(),
-                    tokens.get(4).getContent()
+                    tokens.get(4).getContent(),
+                    translations
             );
         }
+
+        // inflexibles
+        if (tokens.size() == 1 && tokens.fitsStartsWith(TokenSequence.fromTypes(
+                Token.Type.WORD
+        ))) {
+            return new Inflexible(tokens.get(0).getContent(), translations);
+        }
+
         throw new ParserException("Could not parse token sequence: " + tokens);
     }
 }

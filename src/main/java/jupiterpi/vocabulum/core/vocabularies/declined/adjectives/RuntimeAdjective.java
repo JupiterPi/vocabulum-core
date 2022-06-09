@@ -30,16 +30,19 @@ public class RuntimeAdjective extends Adjective {
     }
     private String root;
 
-    public RuntimeAdjective(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, String root) {
+    public RuntimeAdjective(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, String root, List<String> translations) {
+        super(translations);
         this.nom_sg_masc = nom_sg_masc;
         this.nom_sg_fem = nom_sg_fem;
         this.nom_sg_neut = nom_sg_neut;
         this.root = root;
     }
 
-    private RuntimeAdjective() {}
-    public static RuntimeAdjective fromBaseForms(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut) throws DeclinedFormDoesNotExistException {
-        RuntimeAdjective adjective = new RuntimeAdjective();
+    private RuntimeAdjective(List<String> translations) {
+        super(translations);
+    }
+    public static RuntimeAdjective fromBaseForms(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, List<String> translations) throws DeclinedFormDoesNotExistException {
+        RuntimeAdjective adjective = new RuntimeAdjective(translations);
         adjective.nom_sg_masc = nom_sg_masc;
         adjective.nom_sg_fem = nom_sg_fem;
         adjective.nom_sg_neut = nom_sg_neut;
@@ -64,8 +67,8 @@ public class RuntimeAdjective extends Adjective {
 
         return adjective;
     }
-    public static RuntimeAdjective fromBaseForm(String nom_sg, String gen_sg) throws DeclinedFormDoesNotExistException, ParserException {
-        RuntimeAdjective adjective = new RuntimeAdjective();
+    public static RuntimeAdjective fromBaseForm(String nom_sg, String gen_sg, List<String> translations) throws DeclinedFormDoesNotExistException, ParserException {
+        RuntimeAdjective adjective = new RuntimeAdjective(translations);
         adjective.nom_sg_masc = nom_sg;
         adjective.nom_sg_fem = nom_sg;
         adjective.nom_sg_neut = nom_sg;

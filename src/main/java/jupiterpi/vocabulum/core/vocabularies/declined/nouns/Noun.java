@@ -8,7 +8,13 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import org.bson.Document;
 
+import java.util.List;
+
 public abstract class Noun extends Vocabulary {
+    protected Noun(List<String> translations) {
+        super(translations);
+    }
+
     protected abstract Gender getGender();
 
     public abstract String makeForm(NounForm form) throws DeclinedFormDoesNotExistException;

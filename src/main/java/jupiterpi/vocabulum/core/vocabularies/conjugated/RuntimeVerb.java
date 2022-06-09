@@ -6,20 +6,23 @@ import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.ConjugationClass
 import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.ConjugationSchema;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.FormInfo;
 
+import java.util.List;
+
 public class RuntimeVerb extends Verb {
     private ConjugationSchema conjugationSchema;
     private String infinitive;
     private String presentRoot;
     private String perfectRoot;
 
-    public RuntimeVerb(ConjugationSchema conjugationSchema, String infinitive, String presentRoot, String perfectRoot) {
+    public RuntimeVerb(ConjugationSchema conjugationSchema, String infinitive, String presentRoot, String perfectRoot, List<String> translations) {
+        super(translations);
         this.conjugationSchema = conjugationSchema;
         this.infinitive = infinitive;
         this.presentRoot = presentRoot;
         this.perfectRoot = perfectRoot;
     }
 
-    public static RuntimeVerb fromBaseForms(String infinitive, String first_sg_present, String first_sg_perfect) throws ParserException {
+    public static RuntimeVerb fromBaseForms(String infinitive, String first_sg_present, String first_sg_perfect, List<String> translations) throws ParserException {
         ConjugationSchema conjugationSchema = ConjugationClasses.a_Conjugation;
 
         String presentRoot = null;
@@ -35,7 +38,7 @@ public class RuntimeVerb extends Verb {
             throw new ParserException("Couldn't read present root from 1. Sg. Pres. form: " + first_sg_present);
         }
 
-        return new RuntimeVerb(conjugationSchema, infinitive, presentRoot, perfectRoot);
+        return new RuntimeVerb(conjugationSchema, infinitive, presentRoot, perfectRoot, translations);
     }
 
     @Override

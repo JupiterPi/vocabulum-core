@@ -5,6 +5,7 @@ import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.WordbaseVerb;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.WordbaseAdjective;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.WordbaseNoun;
+import jupiterpi.vocabulum.core.vocabularies.inflexible.Inflexible;
 import org.bson.Document;
 
 public class WordbaseManager {
@@ -14,6 +15,7 @@ public class WordbaseManager {
             case "noun" -> WordbaseNoun.readFromDocument(vocabularyDocument);
             case "adjective" -> WordbaseAdjective.readFromDocument(vocabularyDocument);
             case "verb" -> WordbaseVerb.readFromDocument(vocabularyDocument);
+            case "inflexible" -> Inflexible.readFromDocument(vocabularyDocument);
             default -> null;
         };
     }

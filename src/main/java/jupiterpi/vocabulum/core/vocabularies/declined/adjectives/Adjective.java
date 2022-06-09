@@ -8,7 +8,13 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import org.bson.Document;
 
+import java.util.List;
+
 public abstract class Adjective extends Vocabulary {
+    protected Adjective(List<String> translations) {
+        super(translations);
+    }
+
     public abstract String makeForm(AdjectiveForm form) throws DeclinedFormDoesNotExistException;
 
     @Override
