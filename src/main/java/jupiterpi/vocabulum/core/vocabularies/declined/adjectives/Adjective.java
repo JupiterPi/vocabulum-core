@@ -53,6 +53,7 @@ public abstract class Adjective extends Vocabulary {
         }
 
         document.put("forms", formsDocument);
+        document.put("translations", translations);
         return document;
     }
 }

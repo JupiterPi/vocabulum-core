@@ -33,6 +33,7 @@ public class Inflexible extends Vocabulary {
         Document document = new Document();
         document.put("kind", "inflexible");
         document.put("base_form", word);
+        document.put("translations", translations);
         return document;
     }
 }

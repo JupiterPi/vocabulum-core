@@ -45,10 +45,11 @@ public class Main {
         }
 
         //Verb sampleVerb = new RuntimeVerb(ConjugationClasses.a_Conjugation, "vocare", "voc", "vocav");
-        /*Verb sampleVerb = (Verb) wordbaseManager.loadVocabulary("vocare");
+        Verb sampleVerb = (Verb) wordbaseManager.loadVocabulary("vocare");
+        System.out.println(sampleVerb);
         System.out.println(sampleVerb.makeForm(VerbForm.fromString("1. Pers. Sg. Präs. Ind.", i18n)));
         System.out.println(sampleVerb.makeForm(VerbForm.fromString("1. Pers. Sg. Perf. Ind.", i18n)));
-        System.out.println(sampleVerb.makeForm(VerbForm.fromString("1. Pers. Pl. Plusq. Konj.", i18n)));*/
+        System.out.println(sampleVerb.makeForm(VerbForm.fromString("1. Pers. Pl. Plusq. Konj.", i18n)));
 
         Portion sentence1Portion = portionManager.getPortion("x-01");
         for (Vocabulary vocabulary : sentence1Portion.getVocabularies()) {
