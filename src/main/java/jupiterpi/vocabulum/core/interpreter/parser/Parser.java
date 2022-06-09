@@ -4,6 +4,7 @@ import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.RuntimeVerb;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.RuntimeAdjective;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
@@ -57,6 +58,22 @@ public class Parser {
             return RuntimeAdjective.fromBaseForm(
                     tokens.get(0).getContent(),
                     tokens.get(3).getContent()
+            );
+        }
+        // verbs
+        if (tokens.size() == 7 && tokens.fitsStartsWith(TokenSequence.fromTypes(
+                Token.Type.WORD,
+                Token.Type.COMMA,
+                Token.Type.WORD,
+                Token.Type.COMMA,
+                Token.Type.WORD,
+                Token.Type.COMMA,
+                Token.Type.WORD
+        ))) {
+            return RuntimeVerb.fromBaseForms(
+                    tokens.get(0).getContent(),
+                    tokens.get(2).getContent(),
+                    tokens.get(4).getContent()
             );
         }
         throw new ParserException("Could not parse token sequence: " + tokens);

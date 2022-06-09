@@ -130,7 +130,7 @@ public class I18n {
         for (Tense tense : Tense.values()) {
             if (getTenseSymbol(tense).equals(symbol)) return tense;
         }
-        throw new ParserException("Invalid tense: " + symbol);
+        throw new ParserException("Invalid tense: " + symbol + " in i18n: " + getName());
     }
 
     // voice

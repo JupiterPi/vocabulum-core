@@ -10,30 +10,24 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public class TokenSequence extends ArrayList<Token> {
-    private I18n i18n = Main.i18n;
-
     public TokenSequence() {}
-    public TokenSequence(Collection<? extends Token> c) throws I18nException {
+    public TokenSequence(Collection<? extends Token> c) {
         super(c);
-        this.i18n = evaluateI18n(this);
     }
-    public TokenSequence(Token... tokens) throws I18nException {
+    public TokenSequence(Token... tokens) {
         super(Arrays.asList(tokens));
-        this.i18n = evaluateI18n(this);
-    }
-    private static I18n evaluateI18n(TokenSequence sequence) throws I18nException {
-        I18n i18n = null;
-        for (Token token : sequence) {
-            if (token.getI18n() == null) continue;
-            if (i18n == null) i18n = token.getI18n();
-            else {
-                if (i18n != token.getI18n()) throw I18nException.mismatch(i18n, token.getI18n());
-            }
-        }
-        return i18n;
     }
 
     public I18n getI18n() {
+        if (this.size() == 0) return null;
+        I18n i18n = null;
+        for (Token token : this) {
+            if (token.getI18n() == null) continue;
+            if (i18n == null) i18n = token.getI18n();
+            else {
+                if (i18n != token.getI18n()) I18nException.mismatch(i18n, token.getI18n()).printStackTrace();
+            }
+        }
         return i18n;
     }
 
@@ -42,7 +36,6 @@ public class TokenSequence extends ArrayList<Token> {
         for (Token.Type type : types) {
             tokens.add(new Token(type));
         }
-        tokens.i18n = null;
         return tokens;
     }
 
@@ -91,6 +84,6 @@ public class TokenSequence extends ArrayList<Token> {
         for (Token token : this) {
             tokensStr.add(token.toString());
         }
-        return "TokenSequence{i18n=" + i18n.getName() + ",tokens=[" + tokensStr.render(", ") + "]}";
+        return "TokenSequence{i18n=" + (getI18n() == null ? "null" : getI18n().getName()) + ",tokens=[" + tokensStr.render(", ") + "]}";
     }
 }

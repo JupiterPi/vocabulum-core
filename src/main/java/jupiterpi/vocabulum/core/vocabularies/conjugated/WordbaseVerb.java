@@ -19,7 +19,6 @@ public class WordbaseVerb extends Verb {
             Document voiceDocument = (Document) forms.get(voice.toString().toLowerCase());
             for (Tense tense : Tense.values()) {
                 Document tenseDocument = (Document) voiceDocument.get(tense.toString().toLowerCase());
-                FormInfo.Root root = FormInfo.Root.valueOf(tenseDocument.getString("root").toUpperCase());
                 for (Mode mode : Mode.values()) {
                     Document modeDocument = (Document) tenseDocument.get(mode.toString().toLowerCase());
                     for (CNumber number : CNumber.values()) {

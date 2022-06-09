@@ -44,7 +44,8 @@ public class Main {
             //wordbaseManager.saveVocabulary(vocabulary);
         }
 
-        Verb sampleVerb = new RuntimeVerb(ConjugationClasses.a_Conjugation, "vocare", "voc", "vocav");
+        //Verb sampleVerb = new RuntimeVerb(ConjugationClasses.a_Conjugation, "vocare", "voc", "vocav");
+        Verb sampleVerb = (Verb) wordbaseManager.loadVocabulary("vocare");
         System.out.println(sampleVerb.makeForm(VerbForm.fromString("1. Pers. Sg. Präs. Ind.", i18n)));
         System.out.println(sampleVerb.makeForm(VerbForm.fromString("1. Pers. Sg. Perf. Ind.", i18n)));
         System.out.println(sampleVerb.makeForm(VerbForm.fromString("1. Pers. Pl. Plusq. Konj.", i18n)));

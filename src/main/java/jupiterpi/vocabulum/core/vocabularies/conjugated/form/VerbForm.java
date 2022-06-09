@@ -1,5 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated.form;
 
+import jupiterpi.vocabulum.core.Main;
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
@@ -31,6 +32,15 @@ public class VerbForm {
 
     public static VerbForm fromString(String expr, I18n i18n) throws ParserException, LexerException {
         return fromTokens(new Lexer(expr, i18n).getTokens());
+    }
+
+    public static VerbForm get(String expr) {
+        try {
+            return fromString(expr, Main.i18nManager.internal);
+        } catch (ParserException | LexerException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static VerbForm fromTokens(TokenSequence tokens) throws ParserException {

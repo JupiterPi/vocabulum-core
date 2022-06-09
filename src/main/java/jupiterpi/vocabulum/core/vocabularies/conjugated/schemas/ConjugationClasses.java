@@ -4,7 +4,9 @@ import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.LoadingDataException;
 import org.bson.Document;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ConjugationClasses {
@@ -26,6 +28,14 @@ public class ConjugationClasses {
 
     public static ConjugationSchema get(String name) {
         return conjugationSchemas.get(name);
+    }
+
+    public static List<ConjugationSchema> getAll() {
+        List<ConjugationSchema> schemas = new ArrayList<>();
+        for (String key : conjugationSchemas.keySet()) {
+            schemas.add(conjugationSchemas.get(key));
+        }
+        return schemas;
     }
 
     // utility fields
