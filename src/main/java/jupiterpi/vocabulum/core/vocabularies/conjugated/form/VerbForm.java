@@ -7,10 +7,11 @@ import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
+import jupiterpi.vocabulum.core.vocabularies.VocabularyForm;
 
 import java.util.Objects;
 
-public class VerbForm {
+public class VerbForm implements VocabularyForm {
     private ConjugatedForm conjugatedForm;
     private Mode mode;
     private Tense tense;
@@ -43,23 +44,27 @@ public class VerbForm {
         return null;
     }
 
+    public static final Mode DEFAULT_MODE = Mode.INDICATIVE;
+    public static final Tense DEFAULT_TENSE = Tense.PRESENT;
+    public static final Voice DEFAULT_VOICE = Voice.ACTIVE;
+
     public static VerbForm fromTokens(TokenSequence tokens) throws ParserException {
         int voiceIndex = tokens.indexOf(new Token(Token.Type.VOICE));
-        Voice voice = Voice.ACTIVE;
+        Voice voice = DEFAULT_VOICE;
         if (voiceIndex >= 0) {
             voice = tokens.getI18n().voiceFromSymbol(tokens.get(voiceIndex).getContent());
             tokens.remove(voiceIndex);
         }
 
         int tenseIndex = tokens.indexOf(new Token(Token.Type.TENSE));
-        Tense tense = Tense.PRESENT;
+        Tense tense = DEFAULT_TENSE;
         if (tenseIndex >= 0) {
             tense = tokens.getI18n().tenseFromSymbol(tokens.get(tenseIndex).getContent());
             tokens.remove(tenseIndex);
         }
 
         int modeIndex = tokens.indexOf(new Token(Token.Type.MODE));
-        Mode mode = Mode.INDICATIVE;
+        Mode mode = DEFAULT_MODE;
         if (modeIndex >= 0) {
             mode = tokens.getI18n().modeFromSymbol(tokens.get(modeIndex).getContent());
             tokens.remove(modeIndex);
@@ -87,11 +92,6 @@ public class VerbForm {
     }
 
     @Override
-    public String toString() {
-        return "Verb{form=" + conjugatedForm.toString() + ",mode=" + mode.toString().toLowerCase() + ",tense=" + tense.toString().toLowerCase() + ",voice=" + voice.toString().toLowerCase() + "}";
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -102,5 +102,22 @@ public class VerbForm {
     @Override
     public int hashCode() {
         return Objects.hash(conjugatedForm, mode, tense, voice);
+    }
+
+    // to string
+
+    @Override
+    public String formToString(I18n i18n) {
+        String str = "";
+        str += conjugatedForm.formToString(i18n, true) + " ";
+        str += mode == DEFAULT_MODE ? i18n.getModeSymbol(mode) : "" + " ";
+        str += tense == DEFAULT_TENSE ? i18n.getTenseSymbol(tense) : "" + " ";
+        str += voice == DEFAULT_VOICE ? i18n.getVoiceSymbol(voice) : "";
+        return str;
+    }
+
+    @Override
+    public String toString() {
+        return "Verb{form=" + conjugatedForm.toString() + ",mode=" + mode.toString().toLowerCase() + ",tense=" + tense.toString().toLowerCase() + ",voice=" + voice.toString().toLowerCase() + "}";
     }
 }

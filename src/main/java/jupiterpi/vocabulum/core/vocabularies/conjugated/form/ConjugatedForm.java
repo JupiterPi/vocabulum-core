@@ -68,15 +68,16 @@ public class ConjugatedForm {
 
     @Override
     public String toString() {
-        return "{" + formToString(Main.i18nManager.internal) + "}";
+        return "{" + formToString(Main.i18nManager.internal, false) + "}";
     }
 
-    public String formToString(I18n i18n) {
+    public String formToString(I18n i18n, boolean userFriendly) {
         return switch (person) {
             case FIRST -> "1. ";
             case SECOND -> "2. ";
             case THIRD -> "3. ";
         }
+            + (userFriendly ? i18n.getPersonCosmetic() + ". " : "")
             + number.toString().substring(0, 1).toUpperCase() + number.toString().substring(1).toLowerCase()
             + ".";
     }

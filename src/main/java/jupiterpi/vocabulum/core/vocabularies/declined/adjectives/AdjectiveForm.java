@@ -6,9 +6,10 @@ import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
+import jupiterpi.vocabulum.core.vocabularies.VocabularyForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 
-public class AdjectiveForm {
+public class AdjectiveForm implements VocabularyForm {
     private boolean adverb;
     private DeclinedForm declinedForm;
     private ComparativeForm comparativeForm;
@@ -35,6 +36,8 @@ public class AdjectiveForm {
         return fromTokens(new Lexer(expr, i18n).getTokens());
     }
 
+    public static final ComparativeForm DEFAULT_COMPARATIVE_FORM = ComparativeForm.POSITIVE;
+
     public static AdjectiveForm fromTokens(TokenSequence tokens) throws ParserException {
         int adverbFlagIndex = tokens.indexOf(new Token(Token.Type.ADV_FLAG));
         boolean isAdverb = adverbFlagIndex >= 0;
@@ -43,7 +46,7 @@ public class AdjectiveForm {
         }
 
         int comparativeFormIndex = tokens.indexOf(new Token(Token.Type.COMPARATIVE_FORM));
-        ComparativeForm comparativeForm = ComparativeForm.POSITIVE;
+        ComparativeForm comparativeForm = DEFAULT_COMPARATIVE_FORM;
         if (comparativeFormIndex >= 0) {
             comparativeForm = tokens.getI18n().comparativeFormFromSymbol(tokens.get(comparativeFormIndex).getContent());
             tokens.remove(comparativeFormIndex);
@@ -64,6 +67,20 @@ public class AdjectiveForm {
 
     public ComparativeForm getComparativeForm() {
         return comparativeForm;
+    }
+
+    // to string
+
+    @Override
+    public String formToString(I18n i18n) {
+        String str = "";
+        if (adverb) {
+            str += i18n.getAdverbSymbol() + ".";
+        } else {
+            str += declinedForm.formToString(i18n);
+        }
+        str += (comparativeForm == DEFAULT_COMPARATIVE_FORM ? " " + i18n.getComparativeFormSymbol(comparativeForm) + "." : "");
+        return str;
     }
 
     @Override

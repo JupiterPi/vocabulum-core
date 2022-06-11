@@ -121,18 +121,14 @@ public class DeclinedForm {
 
     @Override
     public String toString() {
-        return "{" + formToString() + "}";
+        return "{" + formToString(Main.i18nManager.internal) + "}";
     }
 
-    public String formToString() {
-        String str = capitalize(casus.toString()) + ". " + capitalize(number.toString()) + ".";
+    public String formToString(I18n i18n) {
+        String str = i18n.getCasusSymbol(casus) + ". " + i18n.getNumberSymbol(number) + ".";
         if (gender != null) {
             str += " " + gender.toString().substring(0, 1).toLowerCase() + ".";
         }
         return str;
-    }
-
-    private String capitalize(String str) {
-        return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
     }
 }

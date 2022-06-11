@@ -1,13 +1,15 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.nouns;
 
+import jupiterpi.vocabulum.core.Main;
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
+import jupiterpi.vocabulum.core.vocabularies.VocabularyForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 
-public class NounForm {
+public class NounForm implements VocabularyForm {
     private DeclinedForm declinedForm;
 
     public NounForm(DeclinedForm declinedForm) {
@@ -25,6 +27,15 @@ public class NounForm {
 
     public DeclinedForm getDeclinedForm() {
         return declinedForm;
+    }
+
+    // to string
+
+    @Override
+    public String formToString(I18n i18n) {
+        String str = "";
+        str += declinedForm.formToString(i18n);
+        return str;
     }
 
     @Override
