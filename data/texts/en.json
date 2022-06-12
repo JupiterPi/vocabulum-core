@@ -2,7 +2,16 @@
   "language": "en",
   "texts": {
     "terminal": {
-      "help-text": "Usage: Type a vocabulary after \">\" (e. g. \"amicus, amici m. - friend\", \"laetus, laeta, laetum - happy\" or \"felix, Gen. felicis - lucky\"). Then after the indented \">\", type the form you want to generate (e. g. \"Nom. Sg.\" or \"Gen. Pl. Fem.\"). To go back at any time, press Enter without typing something on a prompt. Note: \"Akk.\" is \"Acc.\"!",
+      "help-text": "Enter \"p\" for Prompting, \"t\" for Translation Assistance. ",
+      "unknown-mode-err": "Unknown mode: %s",
+      "prompt": {
+        "title": "Prompting",
+        "help-text": "Usage: Type a vocabulary after \">\" (e. g. \"amicus, amici m. - friend\", \"laetus, laeta, laetum - happy\" or \"felix, Gen. felicis - lucky\"). Then after the indented \">\", type the form you want to generate (e. g. \"Nom. Sg.\" or \"Gen. Pl. Fem.\"). To go back at any time, press Enter without typing something on a prompt. "
+      },
+      "translation_assistance": {
+        "title": "Translaton Assistance",
+        "help-text": "Usage: Type a sentence after \">\" (e. g. \"Asinus stat es exspectat.\") and press Enter. Translation Assistance will print you all available information required for translating it."
+      },
       "noun": "Noun",
       "adjective": "Adjective",
       "error": "ERROR",

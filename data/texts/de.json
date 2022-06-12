@@ -1,12 +1,28 @@
 {
   "language": "de",
   "texts": {
-    "terminal": {
+    "terminal-old": {
       "help-text": "Funktionsweise: Tippen Sie nach \">\" eine Vokabel (bspw. \"amicus, amici m. - der Freund\", \"laetus, laeta, laetum - fröhlich\" oder \"felix, Gen. felicis - glücklich\"). Tippen Sie anschließend nach dem eingerückten \">\" die Form, die Sie generieren wollen (bspw. \"Nom. Sg.\" oder \"Gen. Pl. f.\"). Um zu einem beliebigen Zeitpunkt zurückzugehen, drücken Sie Enter, ohne etwas einzugeben. ",
       "noun": "Substantiv",
       "adjective": "Adjektiv",
       "error": "FEHLER",
       "done": "Fertig. "
+    },
+    "terminal": {
+      "help-text": "Geben Sie \"p\" ein für Prompting, \"t\" für Translation Assistance. ",
+      "unknown-mode-err": "Unbekannter Modus: %s",
+      "prompt": {
+        "title": "Prompting",
+        "help-text": "Funktionsweise: Tippen Sie nach \">\" eine Vokabel (bspw. \"amicus, amici m. - der Freund\", \"laetus, laeta, laetum - fröhlich\" oder \"felix, Gen. felicis - glücklich\"). Tippen Sie anschließend nach dem eingerückten \">\" die Form, die Sie generieren wollen (bspw. \"Nom. Sg.\" oder \"Gen. Pl. f.\"). Um zu einem beliebigen Zeitpunkt zurückzugehen, drücken Sie Enter, ohne etwas einzugeben. "
+      },
+      "translation_assistance": {
+        "title": "Translaton Assistance",
+        "help-text": "Funktionsweise: Geben Sie nach \">\" einen Satz ein (bspw. \"Asinus stat et exspectat.\") und drücken Sie Enter. Die Translation Assistance wird Ihnen alle verfügbaren Informationen ausgeben, die zum Übersetzen notwendig sind. "
+      },
+      "noun": "Noun",
+      "adjective": "Adjective",
+      "error": "ERROR",
+      "done": "Done. "
     }
   },
   "str-texts": {
