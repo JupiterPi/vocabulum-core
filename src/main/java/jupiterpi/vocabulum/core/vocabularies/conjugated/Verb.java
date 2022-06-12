@@ -52,4 +52,20 @@ public abstract class Verb extends Vocabulary {
         document.put("translations", translations);
         return document;
     }
+
+    public VerbForm identifyForm(String word) {
+        for (Voice voice : Voice.values()) {
+            for (Tense tense : Tense.values()) {
+                for (Mode mode : Mode.values()) {
+                    for (CNumber number : CNumber.values()) {
+                        for (Person person : Person.values()) {
+                            VerbForm form = new VerbForm(new ConjugatedForm(person, number), mode, tense, voice);
+                            if (makeForm(form).equalsIgnoreCase(word)) return form;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
 }

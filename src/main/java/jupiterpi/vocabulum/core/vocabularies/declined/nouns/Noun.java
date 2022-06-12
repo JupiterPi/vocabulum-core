@@ -1,6 +1,7 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.nouns;
 
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
+import jupiterpi.vocabulum.core.vocabularies.VocabularyForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
@@ -54,5 +55,19 @@ public abstract class Noun extends Vocabulary {
         document.put("forms", formsDocument);
         document.put("translations", translations);
         return document;
+    }
+
+    public NounForm identifyForm(String word) {
+        for (Gender gender : Gender.values()) {
+            for (NNumber number : NNumber.values()) {
+                for (Casus casus : Casus.values()) {
+                    NounForm form = new NounForm(new DeclinedForm(casus, number, gender));
+                    try {
+                        if (makeForm(form).equalsIgnoreCase(word)) return form;
+                    } catch (DeclinedFormDoesNotExistException ignored) {}
+                }
+            }
+        }
+        return null;
     }
 }
