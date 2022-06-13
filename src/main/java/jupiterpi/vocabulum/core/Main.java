@@ -57,6 +57,11 @@ public class Main {
             //wordbaseManager.saveVocabulary(vocabulary);
         }
 
+        /*System.out.println(wordbaseManager.identifyWord("exspectat"));
+        System.out.println(wordbaseManager.identifyWord("exspectant"));
+        System.out.println(wordbaseManager.identifyWord("stat"));
+        System.out.println(wordbaseManager.identifyWord("stant"));*/
+
         Terminal terminal = new Terminal();
         terminal.run();
     }

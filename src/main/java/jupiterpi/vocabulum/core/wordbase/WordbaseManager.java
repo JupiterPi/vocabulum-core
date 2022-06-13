@@ -13,6 +13,7 @@ import jupiterpi.vocabulum.core.vocabularies.inflexible.Inflexible;
 import org.bson.Document;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class WordbaseManager {
@@ -29,34 +30,45 @@ public class WordbaseManager {
 
     public static class IdentificationResult {
         private Vocabulary vocabulary;
-        private VocabularyForm form;
+        private List<VocabularyForm> forms;
 
-        public IdentificationResult(Vocabulary vocabulary, VocabularyForm form) {
+        public IdentificationResult(Vocabulary vocabulary, List<VocabularyForm> forms) {
             this.vocabulary = vocabulary;
-            this.form = form;
+            this.forms = forms;
         }
 
         public Vocabulary getVocabulary() {
             return vocabulary;
         }
 
-        public VocabularyForm getForm() {
-            return form;
+        public List<VocabularyForm> getForms() {
+            return forms;
+        }
+
+        @Override
+        public String toString() {
+            return "IdentificationResult{" +
+                    "vocabulary=" + vocabulary +
+                    ", forms=" + forms +
+                    '}';
         }
     }
 
     public List<IdentificationResult> identifyWord(String word) {
+        List<VocabularyForm> nullForms = new ArrayList<>();
+        nullForms.add(null);
+
         Database.wordbase.createIndex(new Document("$**", "text"));
         List<IdentificationResult> results = new ArrayList<>();
         for (Document vocabularyDocument : Database.wordbase.find(new Document("$text", new Document("$search", word)))) {
             Vocabulary vocabulary = loadVocabulary(vocabularyDocument.getString("base_form"));
-            VocabularyForm form = switch (vocabulary.getKind()) {
-                case NOUN -> ((Noun) vocabulary).identifyForm(word);
-                case ADJECTIVE -> ((Adjective) vocabulary).identifyForm(word);
-                case VERB -> ((Verb) vocabulary).identifyForm(word);
-                case INFLEXIBLE -> null;
+            List<VocabularyForm> forms = switch (vocabulary.getKind()) {
+                case NOUN -> new ArrayList<>(((Noun) vocabulary).identifyForm(word));
+                case ADJECTIVE -> new ArrayList<>(((Adjective) vocabulary).identifyForm(word));
+                case VERB -> new ArrayList<>(((Verb) vocabulary).identifyForm(word));
+                case INFLEXIBLE -> new ArrayList<>(nullForms);
             };
-            results.add(new IdentificationResult(vocabulary, form));
+            results.add(new IdentificationResult(vocabulary, forms));
         }
         return results;
     }

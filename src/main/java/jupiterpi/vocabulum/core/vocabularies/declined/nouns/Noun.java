@@ -9,6 +9,7 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import org.bson.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Noun extends Vocabulary {
@@ -57,17 +58,18 @@ public abstract class Noun extends Vocabulary {
         return document;
     }
 
-    public NounForm identifyForm(String word) {
+    public List<NounForm> identifyForm(String word) {
+        List<NounForm> forms = new ArrayList<>();
         for (Gender gender : Gender.values()) {
             for (NNumber number : NNumber.values()) {
                 for (Casus casus : Casus.values()) {
                     NounForm form = new NounForm(new DeclinedForm(casus, number, gender));
                     try {
-                        if (makeForm(form).equalsIgnoreCase(word)) return form;
+                        if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
                     } catch (DeclinedFormDoesNotExistException ignored) {}
                 }
             }
         }
-        return null;
+        return forms;
     }
 }

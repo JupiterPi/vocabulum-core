@@ -28,21 +28,24 @@ public class TAResult {
     public static class TAWord implements TAResultItem {
         private String word;
         private Vocabulary vocabulary;
-        private VocabularyForm form;
+        private List<VocabularyForm> forms;
 
-        public TAWord(String word, Vocabulary vocabulary, VocabularyForm form) {
+        public TAWord(String word, Vocabulary vocabulary, List<VocabularyForm> forms) {
             this.word = word;
             this.vocabulary = vocabulary;
-            this.form = form;
+            this.forms = forms;
         }
 
         public String getWord() {
             return word;
         }
 
-        public String getForm(I18n i18n) {
-            if (form != null) return form.formToString(i18n);
-            else return "";
+        public List<String> getForms(I18n i18n) {
+            List<String> forms = new ArrayList<>();
+            for (VocabularyForm form : this.forms) {
+                if (form != null) forms.add(form.formToString(i18n));
+            }
+            return forms;
         }
 
         public List<String> getTranslations() {
@@ -59,7 +62,7 @@ public class TAResult {
         @Override
         public List<String> getLines(I18n i18n) {
             List<String> lines = new ArrayList<>();
-            lines.add(getForm(i18n));
+            lines.addAll(getForms(i18n));
             lines.addAll(getTranslations());
             return lines;
         }

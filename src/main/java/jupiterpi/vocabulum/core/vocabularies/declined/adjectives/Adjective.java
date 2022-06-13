@@ -9,6 +9,7 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.NounForm;
 import org.bson.Document;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -59,24 +60,25 @@ public abstract class Adjective extends Vocabulary {
         return document;
     }
 
-    public AdjectiveForm identifyForm(String word) {
+    public List<AdjectiveForm> identifyForm(String word) {
+        List<AdjectiveForm> forms = new ArrayList<>();
         for (ComparativeForm comparativeForm : ComparativeForm.values()) {
-            AdjectiveForm adverbForm = new AdjectiveForm(true, comparativeForm);
-            try {
-                if (makeForm(adverbForm).equalsIgnoreCase(word)) return adverbForm;
-            } catch (DeclinedFormDoesNotExistException ignored) {}
-
             for (Gender gender : Gender.values()) {
                 for (NNumber number : NNumber.values()) {
                     for (Casus casus : Casus.values()) {
                         AdjectiveForm form = new AdjectiveForm(new DeclinedForm(casus, number, gender), comparativeForm);
                         try {
-                            if (makeForm(form).equalsIgnoreCase(word)) return form;
+                            if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
                         } catch (DeclinedFormDoesNotExistException ignored) {}
                     }
                 }
             }
+
+            AdjectiveForm adverbForm = new AdjectiveForm(true, comparativeForm);
+            try {
+                if (makeForm(adverbForm).equalsIgnoreCase(word)) forms.add(adverbForm);
+            } catch (DeclinedFormDoesNotExistException ignored) {}
         }
-        return null;
+        return forms;
     }
 }

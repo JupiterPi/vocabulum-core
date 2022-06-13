@@ -110,9 +110,9 @@ public class VerbForm implements VocabularyForm {
     public String formToString(I18n i18n) {
         String str = "";
         str += conjugatedForm.formToString(i18n, true) + " ";
-        str += mode == DEFAULT_MODE ? i18n.getModeSymbol(mode) + ". " : "";
-        str += tense == DEFAULT_TENSE ? i18n.getTenseSymbol(tense) + ". " : "";
-        str += voice == DEFAULT_VOICE ? i18n.getVoiceSymbol(voice) + ". " : "";
+        str += mode != DEFAULT_MODE ? i18n.getModeSymbol(mode) + ". " : "";
+        str += tense != DEFAULT_TENSE ? i18n.getTenseSymbol(tense) + ". " : "";
+        str += voice != DEFAULT_VOICE ? i18n.getVoiceSymbol(voice) + ". " : "";
         return str.substring(0, str.length()-1);
     }
 

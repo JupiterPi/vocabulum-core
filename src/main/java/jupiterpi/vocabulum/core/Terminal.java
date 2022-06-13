@@ -99,57 +99,61 @@ public class Terminal extends ConsoleInterface {
             out("");
 
             while (true) {
-                String sentenceInput = in("> ");
-                if (sentenceInput.equals("")) break;
-                TAResult result = TranslationAssistance.runTranslationAssistance(Main.i18n);
+                try {
+                    String sentence = in("> ");
+                    if (sentence.equals("")) break;
+                    TAResult result = TranslationAssistance.runTranslationAssistance(sentence, Main.i18n);
 
-                int maxLines = 0;
-                for (TAResult.TAResultItem item : result.getItems()) {
-                    if (item.getLines(Main.i18n).size() > maxLines) maxLines = item.getLines(Main.i18n).size();
-                }
-
-                List<String> outputLines = new ArrayList<>();
-                for (int i = 0; i < (maxLines + 2); i++) {
-                    outputLines.add("");
-                }
-
-                for (TAResult.TAResultItem item : result.getItems()) {
-                    int maxLineLength = 0;
-                    if (item.getItem().length() > maxLineLength) maxLineLength = item.getItem().length();
-                    for (String line : item.getLines(Main.i18n)) {
-                        if (line.length() > maxLineLength) maxLineLength = line.length();
+                    int maxLines = 0;
+                    for (TAResult.TAResultItem item : result.getItems()) {
+                        if (item.getLines(Main.i18n).size() > maxLines) maxLines = item.getLines(Main.i18n).size();
                     }
 
-                    String itemLine = item.getItem();
-                    while (itemLine.length() < maxLineLength) {
-                        itemLine += " ";
+                    List<String> outputLines = new ArrayList<>();
+                    for (int i = 0; i < (maxLines + 2); i++) {
+                        outputLines.add("");
                     }
-                    outputLines.set(0, outputLines.get(0) + "   " + itemLine);
 
-                    int linesCount = item.getLines(Main.i18n).size();
-                    for (int i = 0; i < linesCount; i++) {
-                        String lineLine = item.getLines(Main.i18n).get(i);
-                        while (lineLine.length() < maxLineLength) {
-                            lineLine += " ";
+                    for (TAResult.TAResultItem item : result.getItems()) {
+                        int maxLineLength = 0;
+                        if (item.getItem().length() > maxLineLength) maxLineLength = item.getItem().length();
+                        for (String line : item.getLines(Main.i18n)) {
+                            if (line.length() > maxLineLength) maxLineLength = line.length();
                         }
-                        int index = 2 + i;
-                        outputLines.set(index, outputLines.get(index) + "   " + lineLine);
-                    }
-                    String fillLine = "";
-                    for (int i = 0; i < maxLineLength; i++) {
-                        fillLine += " ";
-                    }
-                    for (int i = 0; i < (maxLines - linesCount); i++) {
-                        int index = 2 + linesCount + i;
-                        outputLines.set(index, outputLines.get(index) + fillLine + "   ");
-                    }
-                }
 
-                out("");
-                for (String outputLine : outputLines) {
-                    out(outputLine);
+                        String itemLine = item.getItem();
+                        while (itemLine.length() < maxLineLength) {
+                            itemLine += " ";
+                        }
+                        outputLines.set(0, outputLines.get(0) + "   " + itemLine);
+
+                        int linesCount = item.getLines(Main.i18n).size();
+                        for (int i = 0; i < linesCount; i++) {
+                            String lineLine = item.getLines(Main.i18n).get(i);
+                            while (lineLine.length() < maxLineLength) {
+                                lineLine += " ";
+                            }
+                            int index = 2 + i;
+                            outputLines.set(index, outputLines.get(index) + "   " + lineLine);
+                        }
+                        String fillLine = "";
+                        for (int i = 0; i < maxLineLength; i++) {
+                            fillLine += " ";
+                        }
+                        for (int i = 0; i < (maxLines - linesCount); i++) {
+                            int index = 2 + linesCount + i;
+                            outputLines.set(index, outputLines.get(index) + fillLine + "   ");
+                        }
+                    }
+
+                    out("");
+                    for (String outputLine : outputLines) {
+                        out(outputLine);
+                    }
+                    out("");
+                } catch (Exception e) {
+                    out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
                 }
-                out("");
             }
 
         } else {
