@@ -13,7 +13,6 @@ import jupiterpi.vocabulum.core.vocabularies.inflexible.Inflexible;
 import org.bson.Document;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class WordbaseManager {
@@ -76,5 +75,9 @@ public class WordbaseManager {
     public void saveVocabulary(Vocabulary vocabulary) {
         Document document = vocabulary.generateWordbaseEntry();
         Database.wordbase.insertOne(document);
+    }
+
+    public void clearAll() {
+        Database.wordbase.deleteMany(new Document());
     }
 }

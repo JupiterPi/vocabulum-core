@@ -1,5 +1,6 @@
 package jupiterpi.vocabulum.core;
 
+import jupiterpi.vocabulum.core.db.LoadingDataException;
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.i18n.I18nManager;
@@ -8,13 +9,8 @@ import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.portions.Portion;
 import jupiterpi.vocabulum.core.portions.PortionManager;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.RuntimeVerb;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.Verb;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbForm;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.ConjugationClasses;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.ConjugationSchema;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
-import jupiterpi.vocabulum.core.db.LoadingDataException;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionClasses;
 import jupiterpi.vocabulum.core.wordbase.WordbaseManager;
 
@@ -39,9 +35,15 @@ public class Main {
             Portion portion = portions.get(key);
             System.out.println(portion);
         }
-        for (Vocabulary vocabulary : portions.get("01-1").getVocabularies()) {
-            System.out.println(vocabulary);
-            //wordbaseManager.saveVocabulary(vocabulary);
+
+        wordbaseManager.clearAll();
+        for (Portion portion : portions.values()) {
+            System.out.println(portion.getName());
+            for (Vocabulary vocabulary : portion.getVocabularies()) {
+                System.out.println(vocabulary);
+                wordbaseManager.saveVocabulary(vocabulary);
+            }
+            System.out.println();
         }
 
         //Verb sampleVerb = new RuntimeVerb(ConjugationClasses.a_Conjugation, "vocare", "voc", "vocav");
@@ -50,12 +52,6 @@ public class Main {
         System.out.println(sampleVerb.makeForm(VerbForm.fromString("1. Pers. Sg. Präs. Ind.", i18n)));
         System.out.println(sampleVerb.makeForm(VerbForm.fromString("1. Pers. Sg. Perf. Ind.", i18n)));
         System.out.println(sampleVerb.makeForm(VerbForm.fromString("1. Pers. Pl. Plusq. Konj.", i18n)));*/
-
-        Portion sentence1Portion = portionManager.getPortion("x-01");
-        for (Vocabulary vocabulary : sentence1Portion.getVocabularies()) {
-            System.out.println(vocabulary);
-            //wordbaseManager.saveVocabulary(vocabulary);
-        }
 
         /*System.out.println(wordbaseManager.identifyWord("exspectat"));
         System.out.println(wordbaseManager.identifyWord("exspectant"));
