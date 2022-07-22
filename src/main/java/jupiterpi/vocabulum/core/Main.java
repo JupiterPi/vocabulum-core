@@ -9,6 +9,7 @@ import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.portions.Portion;
 import jupiterpi.vocabulum.core.portions.PortionManager;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.ConjugationClasses;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionClasses;
@@ -22,7 +23,7 @@ public class Main {
     public static PortionManager portionManager;
     public static WordbaseManager wordbaseManager;
 
-    public static void main(String[] args) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException {
+    public static void main(String[] args) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
         System.out.println("----- Vocabulum Core -----");
 
         DeclensionClasses.loadDeclensionSchemas();

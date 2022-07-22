@@ -12,7 +12,7 @@ public abstract class Verb extends Vocabulary {
         super(translations);
     }
 
-    public abstract String makeForm(VerbForm form);
+    public abstract String makeForm(VerbForm form) throws VerbFormDoesNotExistException;
 
     @Override
     public Kind getKind() {
@@ -37,8 +37,12 @@ public abstract class Verb extends Vocabulary {
                     for (CNumber number : CNumber.values()) {
                         Document numberDocument = new Document();
                         for (Person person : Person.values()) {
-                            String form = makeForm(new VerbForm(new ConjugatedForm(person, number), mode, tense, voice));
-                            numberDocument.put(person.toString().toLowerCase(), form);
+                            try {
+                                String form = makeForm(new VerbForm(new ConjugatedForm(person, number), mode, tense, voice));
+                                numberDocument.put(person.toString().toLowerCase(), form);
+                            } catch (VerbFormDoesNotExistException e) {
+                                numberDocument.put(person.toString().toLowerCase(), "-");
+                            }
                         }
                         modeDocument.put(number.toString().toLowerCase(), numberDocument);
                     }
@@ -62,7 +66,9 @@ public abstract class Verb extends Vocabulary {
                     for (CNumber number : CNumber.values()) {
                         for (Person person : Person.values()) {
                             VerbForm form = new VerbForm(new ConjugatedForm(person, number), mode, tense, voice);
-                            if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
+                            try {
+                                if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
+                            } catch (VerbFormDoesNotExistException ignored) {}
                         }
                     }
                 }

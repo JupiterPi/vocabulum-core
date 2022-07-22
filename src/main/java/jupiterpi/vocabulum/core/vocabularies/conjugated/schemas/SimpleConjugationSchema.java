@@ -47,7 +47,9 @@ public class SimpleConjugationSchema extends ConjugationSchema {
     private Map<VerbForm, FormInfo> formInfos;
 
     @Override
-    public FormInfo getFormInfo(VerbForm verbForm) {
-        return formInfos.get(verbForm);
+    public FormInfo getFormInfo(VerbForm verbForm) throws VerbFormDoesNotExistException {
+        FormInfo formInfo = formInfos.get(verbForm);
+        if (!formInfo.exists()) throw VerbFormDoesNotExistException.forConjugationSchema(verbForm, this);
+        return formInfo;
     }
 }

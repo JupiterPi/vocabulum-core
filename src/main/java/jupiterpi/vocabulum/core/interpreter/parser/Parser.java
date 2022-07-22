@@ -5,6 +5,7 @@ import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.RuntimeVerb;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.RuntimeAdjective;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
@@ -16,7 +17,7 @@ import java.util.List;
 public class Parser {
     private Vocabulary vocabulary;
 
-    public Parser(TokenSequence tokens, List<String> translations) throws ParserException, DeclinedFormDoesNotExistException, I18nException {
+    public Parser(TokenSequence tokens, List<String> translations) throws ParserException, DeclinedFormDoesNotExistException, I18nException, VerbFormDoesNotExistException {
         this.vocabulary = parseVocabulary(tokens, translations);
     }
 
@@ -26,7 +27,7 @@ public class Parser {
 
     /* parser */
 
-    private Vocabulary parseVocabulary(TokenSequence tokens, List<String> translations) throws ParserException, DeclinedFormDoesNotExistException {
+    private Vocabulary parseVocabulary(TokenSequence tokens, List<String> translations) throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
 
         // nouns
         if (tokens.size() == 4 && tokens.fitsStartsWith(TokenSequence.fromTypes(

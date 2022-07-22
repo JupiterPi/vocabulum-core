@@ -7,6 +7,7 @@ import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.Parser;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import org.bson.Document;
 
@@ -26,7 +27,7 @@ public abstract class Vocabulary {
         return document.getList("translations", String.class);
     }
 
-    public static Vocabulary fromString(String str, I18n i18n) throws LexerException, ParserException, DeclinedFormDoesNotExistException, I18nException {
+    public static Vocabulary fromString(String str, I18n i18n) throws LexerException, ParserException, DeclinedFormDoesNotExistException, I18nException, VerbFormDoesNotExistException {
         String[] parts = str.split(" - ");
         String latinStr = parts[0];
         String translationStr = parts[1];

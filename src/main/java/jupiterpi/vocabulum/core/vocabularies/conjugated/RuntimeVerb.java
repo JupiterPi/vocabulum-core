@@ -2,6 +2,7 @@ package jupiterpi.vocabulum.core.vocabularies.conjugated;
 
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbForm;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.ConjugationClasses;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.ConjugationSchema;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.FormInfo;
@@ -22,7 +23,7 @@ public class RuntimeVerb extends Verb {
         this.perfectRoot = perfectRoot;
     }
 
-    public static RuntimeVerb fromBaseForms(String infinitive, String first_sg_present, String first_sg_perfect, List<String> translations) throws ParserException {
+    public static RuntimeVerb fromBaseForms(String infinitive, String first_sg_present, String first_sg_perfect, List<String> translations) throws ParserException, VerbFormDoesNotExistException {
         ConjugationSchema conjugationSchema = ConjugationClasses.a_Conjugation;
 
         String presentRoot = null;
@@ -47,8 +48,11 @@ public class RuntimeVerb extends Verb {
     }
 
     @Override
-    public String makeForm(VerbForm form) {
+    public String makeForm(VerbForm form) throws VerbFormDoesNotExistException {
         FormInfo formInfo = conjugationSchema.getFormInfo(form);
+        if (!formInfo.exists()) {
+
+        }
         String root = switch (formInfo.getRoot()) {
             case PRESENT -> presentRoot;
             case PERFECT -> perfectRoot;

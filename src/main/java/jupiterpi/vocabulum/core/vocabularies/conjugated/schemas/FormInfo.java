@@ -20,4 +20,8 @@ public class FormInfo {
     public String getSuffix() {
         return suffix;
     }
+
+    public boolean exists() {
+        return !suffix.equals("-");
+    }
 }

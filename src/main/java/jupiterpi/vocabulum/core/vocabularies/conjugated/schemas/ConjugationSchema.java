@@ -1,6 +1,7 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated.schemas;
 
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbForm;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 
 public abstract class ConjugationSchema {
     protected String name;
@@ -13,5 +14,5 @@ public abstract class ConjugationSchema {
         return name;
     }
 
-    public abstract FormInfo getFormInfo(VerbForm verbForm);
+    public abstract FormInfo getFormInfo(VerbForm verbForm) throws VerbFormDoesNotExistException;
 }

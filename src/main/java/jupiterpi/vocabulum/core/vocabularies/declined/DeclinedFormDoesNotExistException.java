@@ -16,8 +16,8 @@ public class DeclinedFormDoesNotExistException extends Exception {
         this.form = form;
     }
 
-    public static DeclinedFormDoesNotExistException forWord(DeclinedForm form, String wordToBeDeclined) {
-        return new DeclinedFormDoesNotExistException("This declined form does not exist for word " + wordToBeDeclined + ": " + form.toString(), form);
+    public static DeclinedFormDoesNotExistException forWord(DeclinedForm form, String word) {
+        return new DeclinedFormDoesNotExistException("This declined form does not exist for word " + word + ": " + form.toString(), form);
     }
 
     public static DeclinedFormDoesNotExistException forDeclensionSchema(DeclinedForm form, DeclensionSchema declensionSchema) {
