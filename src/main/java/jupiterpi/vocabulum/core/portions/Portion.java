@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Portion {
     private String name;
-    private List<Vocabulary> vocabularies = new ArrayList<>();
+    private List<List<Vocabulary>> vocabularyBlocks = new ArrayList<>();
 
     private Portion() {}
     public static Portion readFromDocument(Document document) throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
@@ -26,9 +26,13 @@ public class Portion {
         portion.name = name;
 
         I18n i18n = Main.i18nManager.get(document.getString("i18n"));
-        List<String> vocabularies = (List<String>) document.get("vocabularies");
-        for (String vocabulary : vocabularies) {
-            portion.vocabularies.add(Vocabulary.fromString(vocabulary, i18n, name));
+        List<List<String>> vocabularyBlocks = (List<List<String>>) document.get("vocabularies");
+        for (List<String> vocabularies : vocabularyBlocks) {
+            List<Vocabulary> vocabularyBlock = new ArrayList<>();
+            for (String vocabulary : vocabularies) {
+                vocabularyBlock.add(Vocabulary.fromString(vocabulary, i18n, name));
+            }
+            portion.vocabularyBlocks.add(vocabularyBlock);
         }
 
         return portion;
@@ -38,16 +42,29 @@ public class Portion {
         return name;
     }
 
+    public List<List<Vocabulary>> getVocabularyBlocks() {
+        return vocabularyBlocks;
+    }
+
     public List<Vocabulary> getVocabularies() {
+        List<Vocabulary> vocabularies = new ArrayList<>();
+        for (List<Vocabulary> block : vocabularyBlocks) {
+            vocabularies.addAll(block);
+        }
         return vocabularies;
     }
 
     @Override
     public String toString() {
-        AppendingList vocabulariesStr = new AppendingList();
-        for (Vocabulary vocabulary : vocabularies) {
-            vocabulariesStr.add(vocabulary.toString());
+        List<String> blockStrs = new ArrayList<>();
+        for (List<Vocabulary> block : getVocabularyBlocks()) {
+            List<String> vocabularies = new ArrayList<>();
+            block.forEach((vocabulary -> vocabularies.add(vocabulary.toString())));
+            blockStrs.add(String.join(",", vocabularies));
         }
-        return "Portion{name=" + name + ",vocabularies=[" + vocabulariesStr.render(",") + "]}";
+        AppendingList list = new AppendingList();
+        list.addAll(blockStrs);
+        String blocksStr = list.render(" // ");
+        return "Portion{name=" + name + ",vocabularies=[" + blocksStr + "]}";
     }
 }
