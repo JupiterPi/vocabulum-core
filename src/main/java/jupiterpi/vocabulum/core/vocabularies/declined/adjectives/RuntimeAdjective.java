@@ -31,19 +31,19 @@ public class RuntimeAdjective extends Adjective {
     }
     private String root;
 
-    public RuntimeAdjective(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, String root, List<VocabularyTranslation> translations) {
-        super(translations);
+    public RuntimeAdjective(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, String root, List<VocabularyTranslation> translations, String portion) {
+        super(translations, portion);
         this.nom_sg_masc = nom_sg_masc;
         this.nom_sg_fem = nom_sg_fem;
         this.nom_sg_neut = nom_sg_neut;
         this.root = root;
     }
 
-    private RuntimeAdjective(List<VocabularyTranslation> translations) {
-        super(translations);
+    private RuntimeAdjective(List<VocabularyTranslation> translations, String portion) {
+        super(translations, portion);
     }
-    public static RuntimeAdjective fromBaseForms(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, List<VocabularyTranslation> translations) throws DeclinedFormDoesNotExistException {
-        RuntimeAdjective adjective = new RuntimeAdjective(translations);
+    public static RuntimeAdjective fromBaseForms(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, List<VocabularyTranslation> translations, String portion) throws DeclinedFormDoesNotExistException {
+        RuntimeAdjective adjective = new RuntimeAdjective(translations, portion);
         adjective.nom_sg_masc = nom_sg_masc;
         adjective.nom_sg_fem = nom_sg_fem;
         adjective.nom_sg_neut = nom_sg_neut;
@@ -68,8 +68,8 @@ public class RuntimeAdjective extends Adjective {
 
         return adjective;
     }
-    public static RuntimeAdjective fromBaseForm(String nom_sg, String gen_sg, List<VocabularyTranslation> translations) throws DeclinedFormDoesNotExistException, ParserException {
-        RuntimeAdjective adjective = new RuntimeAdjective(translations);
+    public static RuntimeAdjective fromBaseForm(String nom_sg, String gen_sg, List<VocabularyTranslation> translations, String portion) throws DeclinedFormDoesNotExistException, ParserException {
+        RuntimeAdjective adjective = new RuntimeAdjective(translations, portion);
         adjective.nom_sg_masc = nom_sg;
         adjective.nom_sg_fem = nom_sg;
         adjective.nom_sg_neut = nom_sg;

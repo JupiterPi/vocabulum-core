@@ -16,13 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Vocabulary {
-    protected int lesson;
-    protected int part;
+    protected String portion;
 
     protected List<VocabularyTranslation> translations;
 
-    protected Vocabulary(List<VocabularyTranslation> translations) {
+    protected Vocabulary(List<VocabularyTranslation> translations, String portion) {
         this.translations = translations;
+        this.portion = portion;
     }
     protected static List<VocabularyTranslation> readTranslations(Document document) {
         List<String> translationsStr = document.getList("translations", String.class);
@@ -33,7 +33,7 @@ public abstract class Vocabulary {
         return translations;
     }
 
-    public static Vocabulary fromString(String str, I18n i18n) throws LexerException, ParserException, DeclinedFormDoesNotExistException, I18nException, VerbFormDoesNotExistException {
+    public static Vocabulary fromString(String str, I18n i18n, String portion) throws LexerException, ParserException, DeclinedFormDoesNotExistException, I18nException, VerbFormDoesNotExistException {
         String[] parts = str.split(" - ");
         String latinStr = parts[0];
         String translationsStr = parts[1];
@@ -46,24 +46,14 @@ public abstract class Vocabulary {
 
         Lexer lexer = new Lexer(latinStr, i18n);
         TokenSequence tokens = lexer.getTokens();
-        Parser parser = new Parser(tokens, translations);
+        Parser parser = new Parser(tokens, translations, portion);
         Vocabulary vocabulary = parser.getVocabulary();
 
         return vocabulary;
     }
 
-    public int getLesson() {
-        return lesson;
-    }
-
-    public int getPart() {
-        return part;
-    }
-
     public String getPortion() {
-        String lessonStr = Integer.toString(lesson);
-        if (lessonStr.length() == 1) lessonStr = "0" + lessonStr;
-        return lessonStr + "." + part;
+        return portion;
     }
 
     public abstract String getBaseForm();
@@ -96,6 +86,7 @@ public abstract class Vocabulary {
         Document document = new Document();
         document.put("kind", getKind().toString().toLowerCase());
         document.put("base_form", getBaseForm());
+        document.put("portion", portion);
         if (formsDocument != null) document.put("forms", formsDocument);
         document.put("translations", getTranslationsToString());
         return document;

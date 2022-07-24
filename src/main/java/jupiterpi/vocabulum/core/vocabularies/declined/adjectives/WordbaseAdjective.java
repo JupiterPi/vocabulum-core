@@ -12,8 +12,8 @@ public class WordbaseAdjective extends Adjective {
     private String baseForm;
     private Document forms;
 
-    public WordbaseAdjective(String baseForm, Document forms, List<VocabularyTranslation> translations) {
-        super(translations);
+    public WordbaseAdjective(String baseForm, Document forms, List<VocabularyTranslation> translations, String portion) {
+        super(translations, portion);
         this.baseForm = baseForm;
         this.forms = forms;
     }
@@ -22,7 +22,8 @@ public class WordbaseAdjective extends Adjective {
         return new WordbaseAdjective(
                 document.getString("base_form"),
                 (Document) document.get("forms"),
-                readTranslations(document));
+                readTranslations(document),
+                document.getString("portion"));
     }
 
     @Override

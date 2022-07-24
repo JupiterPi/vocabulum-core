@@ -1,15 +1,11 @@
 package jupiterpi.vocabulum.core;
 
 import jupiterpi.tools.ui.ConsoleInterface;
-import jupiterpi.vocabulum.core.i18n.I18nException;
-import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
-import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.ta.TAResult;
 import jupiterpi.vocabulum.core.ta.TranslationAssistance;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.Verb;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbForm;
-import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.Adjective;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.AdjectiveForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.Noun;
@@ -17,7 +13,6 @@ import jupiterpi.vocabulum.core.vocabularies.declined.nouns.NounForm;
 import org.bson.Document;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Terminal extends ConsoleInterface {
@@ -48,7 +43,7 @@ public class Terminal extends ConsoleInterface {
                 try {
                     String wordInput = in("> ");
                     if (wordInput.equals("")) break;
-                    Vocabulary vocabulary = Vocabulary.fromString(wordInput, Main.i18n);
+                    Vocabulary vocabulary = Vocabulary.fromString(wordInput, Main.i18n, "terminal");
                     if (vocabulary.getKind() == Vocabulary.Kind.NOUN) {
                         Noun noun = (Noun) vocabulary;
                         while (true) {

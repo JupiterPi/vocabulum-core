@@ -18,19 +18,19 @@ public class RuntimeNoun extends Noun {
     private String root;
     private Gender gender;
 
-    public RuntimeNoun(DeclensionSchema declensionSchema, String nom_sg, String root, Gender gender, List<VocabularyTranslation> translations) {
-        super(translations);
+    public RuntimeNoun(DeclensionSchema declensionSchema, String nom_sg, String root, Gender gender, List<VocabularyTranslation> translations, String portion) {
+        super(translations, portion);
         this.declensionSchema = declensionSchema;
         this.nom_sg = nom_sg;
         this.root = root;
         this.gender = gender;
     }
 
-    private RuntimeNoun(List<VocabularyTranslation> translations) {
-        super(translations);
+    private RuntimeNoun(List<VocabularyTranslation> translations, String portion) {
+        super(translations, portion);
     }
-    public static RuntimeNoun fromGenitive(String nom_sg, String gen_sg, Gender gender, List<VocabularyTranslation> translations) throws DeclinedFormDoesNotExistException, ParserException {
-        RuntimeNoun noun = new RuntimeNoun(translations);
+    public static RuntimeNoun fromGenitive(String nom_sg, String gen_sg, Gender gender, List<VocabularyTranslation> translations, String portion) throws DeclinedFormDoesNotExistException, ParserException {
+        RuntimeNoun noun = new RuntimeNoun(translations, portion);
         noun.nom_sg = nom_sg;
         noun.gender = gender;
         for (DeclensionSchema declensionSchema : DeclensionClasses.getAll()) {

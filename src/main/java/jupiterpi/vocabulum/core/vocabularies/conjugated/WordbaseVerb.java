@@ -12,8 +12,8 @@ public class WordbaseVerb extends Verb {
     private String baseForm;
     private Map<VerbForm, String> forms;
 
-    public WordbaseVerb(String baseForm, Document forms, List<VocabularyTranslation> translations) {
-        super(translations);
+    public WordbaseVerb(String baseForm, Document forms, List<VocabularyTranslation> translations, String portion) {
+        super(translations, portion);
         this.baseForm = baseForm;
 
         this.forms = new HashMap<>();
@@ -39,7 +39,8 @@ public class WordbaseVerb extends Verb {
         return new WordbaseVerb(
                 document.getString("base_form"),
                 (Document) document.get("forms"),
-                readTranslations(document));
+                readTranslations(document),
+                document.getString("portion"));
     }
 
     @Override
