@@ -16,15 +16,15 @@ public class RuntimeVerb extends Verb {
     private String presentRoot;
     private String perfectRoot;
 
-    public RuntimeVerb(ConjugationSchema conjugationSchema, String infinitive, String presentRoot, String perfectRoot, List<VocabularyTranslation> translations) {
-        super(translations);
+    public RuntimeVerb(ConjugationSchema conjugationSchema, String infinitive, String presentRoot, String perfectRoot, List<VocabularyTranslation> translations, String portion) {
+        super(translations, portion);
         this.conjugationSchema = conjugationSchema;
         this.infinitive = infinitive;
         this.presentRoot = presentRoot;
         this.perfectRoot = perfectRoot;
     }
 
-    public static RuntimeVerb fromBaseForms(String infinitive, String first_sg_present, String first_sg_perfect, List<VocabularyTranslation> translations) throws ParserException, VerbFormDoesNotExistException {
+    public static RuntimeVerb fromBaseForms(String infinitive, String first_sg_present, String first_sg_perfect, List<VocabularyTranslation> translations, String portion) throws ParserException, VerbFormDoesNotExistException {
         ConjugationSchema conjugationSchema = ConjugationClasses.a_Conjugation;
 
         String presentRoot = null;
@@ -40,7 +40,7 @@ public class RuntimeVerb extends Verb {
             throw new ParserException("Couldn't read present root from 1. Sg. Pres. form: " + first_sg_present);
         }
 
-        return new RuntimeVerb(conjugationSchema, infinitive, presentRoot, perfectRoot, translations);
+        return new RuntimeVerb(conjugationSchema, infinitive, presentRoot, perfectRoot, translations, portion);
     }
 
     @Override

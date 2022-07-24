@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Adjective extends Vocabulary {
-    protected Adjective(List<VocabularyTranslation> translations) {
-        super(translations);
+    protected Adjective(List<VocabularyTranslation> translations, String portion) {
+        super(translations, portion);
     }
 
     public abstract String makeForm(AdjectiveForm form) throws DeclinedFormDoesNotExistException;

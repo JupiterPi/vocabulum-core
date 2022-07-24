@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Noun extends Vocabulary {
-    protected Noun(List<VocabularyTranslation> translations) {
-        super(translations);
+    protected Noun(List<VocabularyTranslation> translations, String portion) {
+        super(translations, portion);
     }
 
     protected abstract Gender getGender();

@@ -13,8 +13,8 @@ public class WordbaseNoun extends Noun {
     private Gender gender;
     private Document forms;
 
-    public WordbaseNoun(String baseForm, Gender gender, Document forms, List<VocabularyTranslation> translations) {
-        super(translations);
+    public WordbaseNoun(String baseForm, Gender gender, Document forms, List<VocabularyTranslation> translations, String portion) {
+        super(translations, portion);
         this.baseForm = baseForm;
         this.gender = gender;
         this.forms = forms;
@@ -25,7 +25,8 @@ public class WordbaseNoun extends Noun {
                 document.getString("base_form"),
                 Gender.valueOf(document.getString("gender").toUpperCase()),
                 (Document) document.get("forms"),
-                readTranslations(document));
+                readTranslations(document),
+                document.getString("portion"));
     }
 
     @Override

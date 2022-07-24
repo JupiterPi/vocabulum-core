@@ -18,8 +18,8 @@ import java.util.List;
 public class Parser {
     private Vocabulary vocabulary;
 
-    public Parser(TokenSequence tokens, List<VocabularyTranslation> translations) throws ParserException, DeclinedFormDoesNotExistException, I18nException, VerbFormDoesNotExistException {
-        this.vocabulary = parseVocabulary(tokens, translations);
+    public Parser(TokenSequence tokens, List<VocabularyTranslation> translations, String portion) throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
+        this.vocabulary = parseVocabulary(tokens, translations, portion);
     }
 
     public Vocabulary getVocabulary() {
@@ -28,7 +28,7 @@ public class Parser {
 
     /* parser */
 
-    private Vocabulary parseVocabulary(TokenSequence tokens, List<VocabularyTranslation> translations) throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
+    private Vocabulary parseVocabulary(TokenSequence tokens, List<VocabularyTranslation> translations, String portion) throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
 
         // nouns
         if (tokens.size() == 4 && tokens.fitsStartsWith(TokenSequence.fromTypes(
@@ -40,7 +40,8 @@ public class Parser {
                     tokens.get(0).getContent(),
                     tokens.get(2).getContent(),
                     tokens.getI18n().genderFromSymbol(tokens.get(3).getContent()),
-                    translations);
+                    translations, portion
+            );
         }
 
         // adjectives (2-/3-ended)
@@ -54,7 +55,7 @@ public class Parser {
                     tokens.get(0).getContent(),
                     tokens.get(2).getContent(),
                     tokens.get(4).getContent(),
-                    translations
+                    translations, portion
             );
         }
 
@@ -68,7 +69,7 @@ public class Parser {
             return RuntimeAdjective.fromBaseForm(
                     tokens.get(0).getContent(),
                     tokens.get(3).getContent(),
-                    translations
+                    translations, portion
             );
         }
 
@@ -86,7 +87,7 @@ public class Parser {
                     tokens.get(0).getContent(),
                     tokens.get(2).getContent(),
                     tokens.get(4).getContent(),
-                    translations
+                    translations, portion
             );
         }
 
@@ -94,7 +95,7 @@ public class Parser {
         if (tokens.size() == 1 && tokens.fitsStartsWith(TokenSequence.fromTypes(
                 Token.Type.WORD
         ))) {
-            return new Inflexible(tokens.get(0).getContent(), translations);
+            return new Inflexible(tokens.get(0).getContent(), translations, portion);
         }
 
         throw new ParserException("Could not parse token sequence: " + tokens);

@@ -9,14 +9,14 @@ import java.util.List;
 public class Inflexible extends Vocabulary {
     private String word;
 
-    public Inflexible(String word, List<VocabularyTranslation> translations) {
-        super(translations);
+    public Inflexible(String word, List<VocabularyTranslation> translations, String portion) {
+        super(translations, portion);
         this.word = word;
     }
 
     public static Inflexible readFromDocument(Document document) {
         String word = document.getString("base_form");
-        return new Inflexible(word, readTranslations(document));
+        return new Inflexible(word, readTranslations(document), document.getString("portion"));
     }
 
     @Override

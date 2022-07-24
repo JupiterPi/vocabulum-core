@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Verb extends Vocabulary {
-    protected Verb(List<VocabularyTranslation> translations) {
-        super(translations);
+    protected Verb(List<VocabularyTranslation> translations, String portion) {
+        super(translations, portion);
     }
 
     public abstract String makeForm(VerbForm form) throws VerbFormDoesNotExistException;
