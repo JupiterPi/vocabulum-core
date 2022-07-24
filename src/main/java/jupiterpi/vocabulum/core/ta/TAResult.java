@@ -3,6 +3,7 @@ package jupiterpi.vocabulum.core.ta;
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.VocabularyForm;
+import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,7 @@ public class TAResult {
         }
 
         public List<String> getTranslations() {
-            return vocabulary.getTranslations();
+            return vocabulary.getTranslationsToString();
         }
 
         // ---

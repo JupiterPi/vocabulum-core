@@ -6,6 +6,7 @@ import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExis
 import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.ConjugationClasses;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.ConjugationSchema;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.FormInfo;
+import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class RuntimeVerb extends Verb {
     private String presentRoot;
     private String perfectRoot;
 
-    public RuntimeVerb(ConjugationSchema conjugationSchema, String infinitive, String presentRoot, String perfectRoot, List<String> translations) {
+    public RuntimeVerb(ConjugationSchema conjugationSchema, String infinitive, String presentRoot, String perfectRoot, List<VocabularyTranslation> translations) {
         super(translations);
         this.conjugationSchema = conjugationSchema;
         this.infinitive = infinitive;
@@ -23,7 +24,7 @@ public class RuntimeVerb extends Verb {
         this.perfectRoot = perfectRoot;
     }
 
-    public static RuntimeVerb fromBaseForms(String infinitive, String first_sg_present, String first_sg_perfect, List<String> translations) throws ParserException, VerbFormDoesNotExistException {
+    public static RuntimeVerb fromBaseForms(String infinitive, String first_sg_present, String first_sg_perfect, List<VocabularyTranslation> translations) throws ParserException, VerbFormDoesNotExistException {
         ConjugationSchema conjugationSchema = ConjugationClasses.a_Conjugation;
 
         String presentRoot = null;

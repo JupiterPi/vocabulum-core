@@ -2,16 +2,16 @@
   "name": "01-1",
   "i18n": "de",
   "vocabularies": [
-    "sol, solis m. - die Sonne",
-    "silentium, silentii n. - die Ruhe, die Stille, das Schweigen",
-    "villa, villae f. - das (Land)Haus, die Villa",
-    "canis, canis n. - der Hund",
-    "acer, acris, acre - heftig, hart, scharf",
-    "brevis, brevis, breve - kurz",
-    "felix, Gen. felicis - glücklich",
-    "clemens, Gen. clementis - sanft, zart",
-    "celer, celeris, celere - schnell",
-    "pulcher, pulchra, pulchrum - hübsch, schön",
-    "vocare, voco, vocavi, vocatum - rufen, nennen"
+    "sol, solis m. - *die Sonne*",
+    "silentium, silentii n. - *die Ruhe*, *die Stille*, das Schweigen",
+    "villa, villae f. - *das (Land)Haus*, die Villa",
+    "canis, canis n. - *der Hund*",
+    "acer, acris, acre - *heftig*, hart, scharf",
+    "brevis, brevis, breve - *kurz*",
+    "felix, Gen. felicis - *glücklich*",
+    "clemens, Gen. clementis - *sanft*, *zart*",
+    "celer, celeris, celere - *schnell*",
+    "pulcher, pulchra, pulchrum - *hübsch*, schön",
+    "vocare, voco, vocavi, vocatum - *rufen*, *nennen*"
   ]
 }

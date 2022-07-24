@@ -1,6 +1,7 @@
 package jupiterpi.vocabulum.core.vocabularies.inflexible;
 
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
+import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 import org.bson.Document;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 public class Inflexible extends Vocabulary {
     private String word;
 
-    public Inflexible(String word, List<String> translations) {
+    public Inflexible(String word, List<VocabularyTranslation> translations) {
         super(translations);
         this.word = word;
     }
@@ -30,10 +31,6 @@ public class Inflexible extends Vocabulary {
 
     @Override
     public Document generateWordbaseEntry() {
-        Document document = new Document();
-        document.put("kind", "inflexible");
-        document.put("base_form", word);
-        document.put("translations", translations);
-        return document;
+        return assembleWordbaseEntry(null);
     }
 }

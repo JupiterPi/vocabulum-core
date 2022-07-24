@@ -2,13 +2,14 @@ package jupiterpi.vocabulum.core.vocabularies.conjugated;
 
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.*;
+import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Verb extends Vocabulary {
-    protected Verb(List<String> translations) {
+    protected Verb(List<VocabularyTranslation> translations) {
         super(translations);
     }
 
@@ -23,10 +24,6 @@ public abstract class Verb extends Vocabulary {
 
     @Override
     public Document generateWordbaseEntry() {
-        Document document = new Document();
-        document.put("kind", "verb");
-        document.put("base_form", getBaseForm());
-
         Document formsDocument = new Document();
         for (Voice voice : Voice.values()) {
             Document voiceDocument = new Document();
@@ -52,10 +49,7 @@ public abstract class Verb extends Vocabulary {
             }
             formsDocument.put(voice.toString().toLowerCase(), voiceDocument);
         }
-
-        document.put("forms", formsDocument);
-        document.put("translations", translations);
-        return document;
+        return assembleWordbaseEntry(formsDocument);
     }
 
     public List<VerbForm> identifyForm(String word) {

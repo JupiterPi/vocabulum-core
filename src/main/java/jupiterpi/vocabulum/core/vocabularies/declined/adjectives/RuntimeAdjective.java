@@ -9,6 +9,7 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionClasses;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionSchema;
+import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 import org.bson.Document;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class RuntimeAdjective extends Adjective {
     }
     private String root;
 
-    public RuntimeAdjective(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, String root, List<String> translations) {
+    public RuntimeAdjective(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, String root, List<VocabularyTranslation> translations) {
         super(translations);
         this.nom_sg_masc = nom_sg_masc;
         this.nom_sg_fem = nom_sg_fem;
@@ -38,10 +39,10 @@ public class RuntimeAdjective extends Adjective {
         this.root = root;
     }
 
-    private RuntimeAdjective(List<String> translations) {
+    private RuntimeAdjective(List<VocabularyTranslation> translations) {
         super(translations);
     }
-    public static RuntimeAdjective fromBaseForms(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, List<String> translations) throws DeclinedFormDoesNotExistException {
+    public static RuntimeAdjective fromBaseForms(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, List<VocabularyTranslation> translations) throws DeclinedFormDoesNotExistException {
         RuntimeAdjective adjective = new RuntimeAdjective(translations);
         adjective.nom_sg_masc = nom_sg_masc;
         adjective.nom_sg_fem = nom_sg_fem;
@@ -67,7 +68,7 @@ public class RuntimeAdjective extends Adjective {
 
         return adjective;
     }
-    public static RuntimeAdjective fromBaseForm(String nom_sg, String gen_sg, List<String> translations) throws DeclinedFormDoesNotExistException, ParserException {
+    public static RuntimeAdjective fromBaseForm(String nom_sg, String gen_sg, List<VocabularyTranslation> translations) throws DeclinedFormDoesNotExistException, ParserException {
         RuntimeAdjective adjective = new RuntimeAdjective(translations);
         adjective.nom_sg_masc = nom_sg;
         adjective.nom_sg_fem = nom_sg;

@@ -3,6 +3,7 @@ package jupiterpi.vocabulum.core.vocabularies.declined.adjectives;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
+import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 import org.bson.Document;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public class WordbaseAdjective extends Adjective {
     private String baseForm;
     private Document forms;
 
-    public WordbaseAdjective(String baseForm, Document forms, List<String> translations) {
+    public WordbaseAdjective(String baseForm, Document forms, List<VocabularyTranslation> translations) {
         super(translations);
         this.baseForm = baseForm;
         this.forms = forms;

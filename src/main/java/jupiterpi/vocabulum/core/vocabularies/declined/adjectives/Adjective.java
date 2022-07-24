@@ -6,15 +6,14 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
-import jupiterpi.vocabulum.core.vocabularies.declined.nouns.NounForm;
+import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 import org.bson.Document;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public abstract class Adjective extends Vocabulary {
-    protected Adjective(List<String> translations) {
+    protected Adjective(List<VocabularyTranslation> translations) {
         super(translations);
     }
 
@@ -27,10 +26,6 @@ public abstract class Adjective extends Vocabulary {
 
     @Override
     public Document generateWordbaseEntry() {
-        Document document = new Document();
-        document.put("kind", "adjective");
-        document.put("base_form", getBaseForm());
-
         Document formsDocument = new Document();
         for (ComparativeForm comparativeForm : ComparativeForm.values()) {
             Document comparativeFormDocument = new Document();
@@ -54,10 +49,7 @@ public abstract class Adjective extends Vocabulary {
             }
             formsDocument.put(comparativeForm.toString().toLowerCase(), comparativeFormDocument);
         }
-
-        document.put("forms", formsDocument);
-        document.put("translations", translations);
-        return document;
+        return assembleWordbaseEntry(formsDocument);
     }
 
     public List<AdjectiveForm> identifyForm(String word) {

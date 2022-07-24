@@ -1,10 +1,9 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.nouns;
 
-import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
-
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
+import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 import org.bson.Document;
 
 import java.util.List;
@@ -14,7 +13,7 @@ public class WordbaseNoun extends Noun {
     private Gender gender;
     private Document forms;
 
-    public WordbaseNoun(String baseForm, Gender gender, Document forms, List<String> translations) {
+    public WordbaseNoun(String baseForm, Gender gender, Document forms, List<VocabularyTranslation> translations) {
         super(translations);
         this.baseForm = baseForm;
         this.gender = gender;

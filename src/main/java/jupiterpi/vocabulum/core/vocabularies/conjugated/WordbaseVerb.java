@@ -1,6 +1,7 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated;
 
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.*;
+import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 import org.bson.Document;
 
 import java.util.HashMap;
@@ -11,7 +12,7 @@ public class WordbaseVerb extends Verb {
     private String baseForm;
     private Map<VerbForm, String> forms;
 
-    public WordbaseVerb(String baseForm, Document forms, List<String> translations) {
+    public WordbaseVerb(String baseForm, Document forms, List<VocabularyTranslation> translations) {
         super(translations);
         this.baseForm = baseForm;
 
