@@ -51,7 +51,10 @@ public abstract class Adjective extends Vocabulary {
             }
             formsDocument.put(comparativeForm.toString().toLowerCase(), comparativeFormDocument);
         }
-        return assembleWordbaseEntry(formsDocument);
+
+        Document document = assembleWordbaseEntry(formsDocument);
+        document.put("definition_type", definitionType.toString().toLowerCase());
+        return document;
     }
 
     public List<AdjectiveForm> identifyForm(String word) {
