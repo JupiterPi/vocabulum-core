@@ -1,6 +1,5 @@
 package jupiterpi.vocabulum.core.interpreter.parser;
 
-import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
@@ -66,7 +65,7 @@ public class Parser {
                 new Token(Token.Type.CASUS, tokens.getI18n().getCasusSymbol(Casus.GEN), tokens.getI18n()),
                 new Token(Token.Type.WORD)
         ))) {
-            return RuntimeAdjective.fromBaseForm(
+            return RuntimeAdjective.fromGenitive(
                     tokens.get(0).getContent(),
                     tokens.get(3).getContent(),
                     translations, portion

@@ -58,6 +58,8 @@ public abstract class Vocabulary {
 
     public abstract String getBaseForm();
 
+    public abstract String getDefinition(I18n i18n);
+
     public abstract Kind getKind();
     public enum Kind {
         NOUN, ADJECTIVE, VERB, INFLEXIBLE
@@ -76,8 +78,11 @@ public abstract class Vocabulary {
     }
 
     public VocabularyTranslation getTopTranslation() {
-        if (translations.size() == 0) return null;
-        return translations.get(0);
+        for (VocabularyTranslation translation : translations) {
+            if (!translation.isImportant()) continue;
+            return translation;
+        }
+        return null;
     }
 
     public abstract Document generateWordbaseEntry();

@@ -1,5 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated;
 
+import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.*;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
@@ -18,6 +19,18 @@ public abstract class Verb extends Vocabulary {
     @Override
     public Kind getKind() {
         return Kind.VERB;
+    }
+
+    @Override
+    public String getDefinition(I18n i18n) {
+        String first_sg_pres = "-";
+        String first_sg_perfect = "-";
+        try {
+            first_sg_pres = makeForm(new VerbForm(ConjugatedForm.get("1. Sg.")));
+            first_sg_perfect = makeForm(new VerbForm(ConjugatedForm.get("1. Sg."), Mode.INDICATIVE, Tense.PERFECT, Voice.ACTIVE));
+        } catch (VerbFormDoesNotExistException ignored) {}
+        return getBaseForm() + ", " + first_sg_pres + ", " + first_sg_perfect;
+        //TODO update for full form making
     }
 
     public abstract String getBaseForm();

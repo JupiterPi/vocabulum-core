@@ -1,6 +1,5 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.adjectives;
 
-import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
@@ -10,11 +9,13 @@ import java.util.List;
 
 public class WordbaseAdjective extends Adjective {
     private String baseForm;
+    private AdjectiveDefinitionType definitionType;
     private Document forms;
 
-    public WordbaseAdjective(String baseForm, Document forms, List<VocabularyTranslation> translations, String portion) {
-        super(translations, portion);
+    public WordbaseAdjective(String baseForm, Document forms, List<VocabularyTranslation> translations, String portion, AdjectiveDefinitionType definitionType) {
+        super(translations, portion, definitionType);
         this.baseForm = baseForm;
+        this.definitionType = definitionType;
         this.forms = forms;
     }
 
@@ -23,7 +24,8 @@ public class WordbaseAdjective extends Adjective {
                 document.getString("base_form"),
                 (Document) document.get("forms"),
                 readTranslations(document),
-                document.getString("portion"));
+                document.getString("portion"),
+                AdjectiveDefinitionType.valueOf(document.getString("definition_type")));
     }
 
     @Override

@@ -1,5 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.adjectives;
 
+import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
@@ -13,8 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Adjective extends Vocabulary {
-    protected Adjective(List<VocabularyTranslation> translations, String portion) {
+    protected Adjective(List<VocabularyTranslation> translations, String portion, AdjectiveDefinitionType definitionType) {
         super(translations, portion);
+        this.definitionType = definitionType;
     }
 
     public abstract String makeForm(AdjectiveForm form) throws DeclinedFormDoesNotExistException;
@@ -72,5 +74,36 @@ public abstract class Adjective extends Vocabulary {
             } catch (DeclinedFormDoesNotExistException ignored) {}
         }
         return forms;
+    }
+
+    // definition
+
+    protected AdjectiveDefinitionType definitionType;
+
+    protected enum AdjectiveDefinitionType {
+        FROM_BASE_FORMS, FROM_GENITIVE
+    }
+
+    @Override
+    public String getDefinition(I18n i18n) {
+        if (this.definitionType == AdjectiveDefinitionType.FROM_BASE_FORMS) {
+            String nom_sg_masc = "-";
+            String nom_sg_fem = "-";
+            String nom_sg_neut = "-";
+            try {
+                nom_sg_masc = makeForm(new AdjectiveForm(DeclinedForm.get("Nom. Sg. m."), ComparativeForm.POSITIVE));
+                nom_sg_fem = makeForm(new AdjectiveForm(DeclinedForm.get("Nom. Sg. f."), ComparativeForm.POSITIVE));
+                nom_sg_neut = makeForm(new AdjectiveForm(DeclinedForm.get("Nom. Sg. n."), ComparativeForm.POSITIVE));
+            } catch (DeclinedFormDoesNotExistException ignored) {}
+            return nom_sg_masc + ", " + nom_sg_fem + ", " + nom_sg_neut;
+        } else {
+            String nom_sg_masc = "-";
+            String gen_sg_masc = "-";
+            try {
+                nom_sg_masc = makeForm(new AdjectiveForm(DeclinedForm.get("Nom. Sg. m."), ComparativeForm.POSITIVE));
+                gen_sg_masc = makeForm(new AdjectiveForm(DeclinedForm.get("Gen. Sg. m."), ComparativeForm.POSITIVE));
+            } catch (DeclinedFormDoesNotExistException ignored) {}
+            return nom_sg_masc + ", " + i18n.getCasusSymbol(Casus.GEN) + ". " + gen_sg_masc;
+        }
     }
 }
