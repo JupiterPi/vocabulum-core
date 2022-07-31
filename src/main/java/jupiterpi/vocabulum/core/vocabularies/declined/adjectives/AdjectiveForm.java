@@ -9,6 +9,8 @@ import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.VocabularyForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 
+import java.util.Objects;
+
 public class AdjectiveForm implements VocabularyForm {
     private boolean adverb;
     private DeclinedForm declinedForm;
@@ -69,6 +71,14 @@ public class AdjectiveForm implements VocabularyForm {
         return comparativeForm;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AdjectiveForm that = (AdjectiveForm) o;
+        return adverb == that.adverb && Objects.equals(declinedForm, that.declinedForm) && comparativeForm == that.comparativeForm;
+    }
+
     // to string
 
     @Override
@@ -79,7 +89,7 @@ public class AdjectiveForm implements VocabularyForm {
         } else {
             str += declinedForm.formToString(i18n);
         }
-        str += (comparativeForm == DEFAULT_COMPARATIVE_FORM ? " " + i18n.getComparativeFormSymbol(comparativeForm) + "." : "");
+        str += (comparativeForm == DEFAULT_COMPARATIVE_FORM ? "" : " " + i18n.getComparativeFormSymbol(comparativeForm) + ".");
         return str;
     }
 

@@ -27,7 +27,7 @@ public class I18nManager {
         String name = language;
         Document texts = (Document) Database.texts.find(new Document("language", language)).first().get("texts");
         Document str_texts = (Document) Database.texts.find(new Document("language", language)).first().get("str-texts");
-        return new I18n(name, texts, str_texts);
+        return new DbI18n(name, texts, str_texts);
     }
 
     public I18n get(String language) {

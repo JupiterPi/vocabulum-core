@@ -8,145 +8,59 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import org.bson.Document;
 
-public class I18n {
-    private String name;
-    private Document texts;
-    private Document str_texts;
+public interface I18n {
+    String getName();
 
-    public I18n(String name, Document texts, Document str_texts) {
-        this.name = name;
-        this.texts = texts;
-        this.str_texts = str_texts;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Document getTexts() {
-        return texts;
-    }
+    Document getTexts();
 
     // casus
-    public String getCasusSymbol(Casus casus) {
-        Document document = (Document) str_texts.get("casus");
-        return document.getString(casus.toString().toLowerCase());
-    }
-    public Casus casusFromSymbol(String symbol) throws ParserException {
-        for (Casus casus : Casus.values()) {
-            if (getCasusSymbol(casus).equals(symbol)) return casus;
-        }
-        throw new ParserException("Invalid casus: " + symbol);
-    }
+    String getCasusSymbol(Casus casus);
+
+    Casus casusFromSymbol(String symbol) throws ParserException;
 
     // nNumber
-    public String getNumberSymbol(NNumber number) { // is duplicate with cNumber
-        Document document = (Document) str_texts.get("number");
-        return document.getString(number.toString().toLowerCase());
-    }
-    public NNumber nNumberFromSymbol(String symbol) throws ParserException {
-        for (NNumber number : NNumber.values()) {
-            if (getNumberSymbol(number).equals(symbol)) return number;
-        }
-        throw new ParserException("Invalid nNumber: " + symbol);
-    }
+    String getNumberSymbol(NNumber number);
+
+    NNumber nNumberFromSymbol(String symbol) throws ParserException;
 
     // gender
-    public String getGenderSymbol(Gender gender) {
-        Document document = (Document) str_texts.get("gender");
-        return document.getString(gender.toString().toLowerCase());
-    }
-    public Gender genderFromSymbol(String symbol) throws ParserException {
-        for (Gender gender : Gender.values()) {
-            if (getGenderSymbol(gender).equals(symbol)) return gender;
-        }
-        throw new ParserException("Invalid gender: " + symbol);
-    }
+    String getGenderSymbol(Gender gender);
+
+    Gender genderFromSymbol(String symbol) throws ParserException;
 
     // comparative form
-    public String getComparativeFormSymbol(ComparativeForm comparativeForm) {
-        Document document = (Document) str_texts.get("comparative_form");
-        return document.getString(comparativeForm.toString().toLowerCase());
-    }
-    public ComparativeForm comparativeFormFromSymbol(String symbol) throws ParserException {
-        for (ComparativeForm comparativeForm : ComparativeForm.values()) {
-            if (getComparativeFormSymbol(comparativeForm).equals(symbol)) return comparativeForm;
-        }
-        throw new ParserException("Invalid comparative form: " + symbol);
-    }
+    String getComparativeFormSymbol(ComparativeForm comparativeForm);
+
+    ComparativeForm comparativeFormFromSymbol(String symbol) throws ParserException;
 
     // adverb (flag)
-    public String getAdverbSymbol() {
-        return str_texts.getString("adverb");
-    }
+    String getAdverbSymbol();
 
     // person
-    public String getPersonSymbol(Person person) {
-        Document document = (Document) str_texts.get("person");
-        return document.getString(person.toString().toLowerCase());
-    }
-    public Person personFromSymbol(String symbol) throws ParserException {
-        for (Person person : Person.values()) {
-            if (getPersonSymbol(person).equals(symbol)) return person;
-        }
-        throw new ParserException("Invalid person: " + symbol);
-    }
+    String getPersonSymbol(Person person);
+
+    Person personFromSymbol(String symbol) throws ParserException;
 
     // "person" (cosmetic)
-    public String getPersonCosmetic() {
-        return str_texts.getString("person_cosmetic");
-    }
+    String getPersonCosmetic();
 
     // cNumber
-    public String getNumberSymbol(CNumber number) { // is duplicate with nNumber
-        Document document = (Document) str_texts.get("number");
-        return document.getString(number.toString().toLowerCase());
-    }
-    public CNumber cNumberFromSymbol(String symbol) throws ParserException {
-        for (CNumber number : CNumber.values()) {
-            if (getNumberSymbol(number).equals(symbol)) return number;
-        }
-        throw new ParserException("Invalid cNumber: " + symbol);
-    }
+    String getNumberSymbol(CNumber number);
+
+    CNumber cNumberFromSymbol(String symbol) throws ParserException;
 
     // mode
-    public String getModeSymbol(Mode mode) {
-        Document document = (Document) str_texts.get("mode");
-        return document.getString(mode.toString().toLowerCase());
-    }
-    public Mode modeFromSymbol(String symbol) throws ParserException {
-        for (Mode mode : Mode.values()) {
-            if (getModeSymbol(mode).equals(symbol)) return mode;
-        }
-        throw new ParserException("Invalid mode: " + symbol);
-    }
+    String getModeSymbol(Mode mode);
+
+    Mode modeFromSymbol(String symbol) throws ParserException;
 
     // tense
-    public String getTenseSymbol(Tense tense) {
-        Document document = (Document) str_texts.get("tense");
-        return document.getString(tense.toString().toLowerCase());
-    }
-    public Tense tenseFromSymbol(String symbol) throws ParserException {
-        for (Tense tense : Tense.values()) {
-            if (getTenseSymbol(tense).equals(symbol)) return tense;
-        }
-        throw new ParserException("Invalid tense: " + symbol + " in i18n: " + getName());
-    }
+    String getTenseSymbol(Tense tense);
+
+    Tense tenseFromSymbol(String symbol) throws ParserException;
 
     // voice
-    public String getVoiceSymbol(Voice voice) {
-        Document document = (Document) str_texts.get("voice");
-        return document.getString(voice.toString().toLowerCase());
-    }
-    public Voice voiceFromSymbol(String symbol) throws ParserException {
-        for (Voice voice : Voice.values()) {
-            if (getVoiceSymbol(voice).equals(symbol)) return voice;
-        }
-        throw new ParserException("Invalid voice: " + symbol);
-    }
+    String getVoiceSymbol(Voice voice);
 
-    @Override
-    public String toString() {
-        return "I18n{name=" + name + "}";
-    }
+    Voice voiceFromSymbol(String symbol) throws ParserException;
 }

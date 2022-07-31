@@ -46,7 +46,9 @@ public class WordbaseNoun extends Noun {
             throw DeclinedFormDoesNotExistException.forWord(declinedForm, baseForm);
         }
 
-        Document genderForms = (Document) forms.get(declinedForm.getGender().toString().toLowerCase());
+        Gender gender = declinedForm.hasGender() ? declinedForm.getGender() : this.gender;
+
+        Document genderForms = (Document) forms.get(gender.toString().toLowerCase());
         Document numberForms = (Document) genderForms.get(declinedForm.getNumber().toString().toLowerCase());
         String generatedForm = numberForms.getString(declinedForm.getCasus().toString().toLowerCase());
         if (generatedForm.equals("-")) throw DeclinedFormDoesNotExistException.forWord(declinedForm, baseForm);
