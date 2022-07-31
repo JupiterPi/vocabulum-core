@@ -43,7 +43,7 @@ public class Parser {
             );
         }
 
-        // adjectives (2-/3-ended)
+        // adjectives (2-/3-ended: from base forms)
         if (tokens.size() == 5 && tokens.fitsStartsWith(TokenSequence.fromTypes(
                 Token.Type.WORD,
                 Token.Type.COMMA,
@@ -58,7 +58,7 @@ public class Parser {
             );
         }
 
-        // adjectives (1-ended)
+        // adjectives (1-ended: from genitive)
         if (tokens.size() == 4 && tokens.fitsStartsWith(new TokenSequence(
                 new Token(Token.Type.WORD),
                 new Token(Token.Type.COMMA),

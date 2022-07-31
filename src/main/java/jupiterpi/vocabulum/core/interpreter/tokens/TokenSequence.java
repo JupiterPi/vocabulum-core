@@ -66,12 +66,12 @@ public class TokenSequence extends ArrayList<Token> {
         return -1;
     }
 
-    public boolean fitsStartsWith(TokenSequence tokens) {
-        if (this.size() > tokens.size()) return false;
-        for (int i = 0; i < this.size(); i++) {
-            Token token1 = this.get(i);
-            Token token2 = tokens.get(i);
-            if (!token1.fits(token2)) {
+    public boolean fitsStartsWith(TokenSequence target) {
+        if (target.size() > this.size()) return false;
+        for (int i = 0; i < target.size(); i++) {
+            Token token = this.get(i);
+            Token targetToken = target.get(i);
+            if (!token.fits(targetToken)) {
                 return false;
             }
         }
