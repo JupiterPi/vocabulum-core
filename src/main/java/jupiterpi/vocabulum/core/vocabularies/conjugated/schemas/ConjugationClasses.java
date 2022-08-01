@@ -10,9 +10,17 @@ import java.util.List;
 import java.util.Map;
 
 public class ConjugationClasses {
-    private static Map<String, ConjugationSchema> conjugationSchemas;
+    private static ConjugationClasses instance = null;
+    public static ConjugationClasses get() {
+        if (instance == null) instance = new ConjugationClasses();
+        return instance;
+    }
 
-    public static void loadConjugationSchemas() throws LoadingDataException {
+    /////
+
+    private Map<String, ConjugationSchema> conjugationSchemas;
+
+    public void loadConjugationSchemas() throws LoadingDataException {
         conjugationSchemas = new HashMap<>();
         for (Document document : Database.conjugation_schemas.find()) {
             String name = document.getString("name");
@@ -22,15 +30,15 @@ public class ConjugationClasses {
         assignUtilityFields();
     }
 
-    public static ConjugationSchema makeSchema(Document document) throws LoadingDataException {
+    public ConjugationSchema makeSchema(Document document) throws LoadingDataException {
         return SimpleConjugationSchema.readFromDocument(document);
     }
 
-    public static ConjugationSchema get(String name) {
+    public ConjugationSchema get(String name) {
         return conjugationSchemas.get(name);
     }
 
-    public static List<ConjugationSchema> getAll() {
+    public List<ConjugationSchema> getAll() {
         List<ConjugationSchema> schemas = new ArrayList<>();
         for (String key : conjugationSchemas.keySet()) {
             schemas.add(conjugationSchemas.get(key));
@@ -40,13 +48,13 @@ public class ConjugationClasses {
 
     // utility fields
 
-    public static ConjugationSchema a_Conjugation;
-    public static ConjugationSchema e_Conjugation;
-    public static ConjugationSchema ii_Conjugation;
-    public static ConjugationSchema cons_Conjugation;
-    public static ConjugationSchema i_Conjugation;
+    public ConjugationSchema a_Conjugation;
+    public ConjugationSchema e_Conjugation;
+    public ConjugationSchema ii_Conjugation;
+    public ConjugationSchema cons_Conjugation;
+    public ConjugationSchema i_Conjugation;
 
-    private static void assignUtilityFields() {
+    private void assignUtilityFields() {
         a_Conjugation = get("a");
         e_Conjugation = get("e");
         ii_Conjugation = get("ii");

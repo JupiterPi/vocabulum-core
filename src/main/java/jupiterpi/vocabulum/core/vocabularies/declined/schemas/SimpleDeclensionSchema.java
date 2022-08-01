@@ -16,8 +16,8 @@ public class SimpleDeclensionSchema extends DeclensionSchema {
         if (document.containsKey("parent")) {
             hasParent = true;
             String parentName = document.getString("parent");
-            Document parentDocument = DeclensionClasses.getRaw(parentName);
-            DeclensionSchema parent = DeclensionClasses.makeSchema(parentDocument);
+            Document parentDocument = DeclensionClasses.get().getRaw(parentName);
+            DeclensionSchema parent = DeclensionClasses.get().makeSchema(parentDocument);
 
             try {
                 schema.nom_sg = parent.getSuffix(new DeclinedForm(Casus.NOM, NNumber.SG));

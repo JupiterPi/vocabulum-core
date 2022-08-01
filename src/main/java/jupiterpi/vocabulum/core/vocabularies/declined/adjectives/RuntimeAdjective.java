@@ -15,10 +15,10 @@ import org.bson.Document;
 import java.util.List;
 
 public class RuntimeAdjective extends Adjective {
-    private static final DeclensionSchema masculineDeclensionSchema = DeclensionClasses.o_Declension;
-    private static final DeclensionSchema feminineDeclensionSchema = DeclensionClasses.a_Declension;
-    private static final DeclensionSchema neuterDeclensionSchema = DeclensionClasses.o_Declension;
-    private static final DeclensionSchema consonantalDeclensionSchema = DeclensionClasses.cons_adjectives_Declension;
+    private static final DeclensionSchema masculineDeclensionSchema = DeclensionClasses.get().o_Declension;
+    private static final DeclensionSchema feminineDeclensionSchema = DeclensionClasses.get().a_Declension;
+    private static final DeclensionSchema neuterDeclensionSchema = DeclensionClasses.get().o_Declension;
+    private static final DeclensionSchema consonantalDeclensionSchema = DeclensionClasses.get().cons_adjectives_Declension;
 
     private static final Document adjectivesData = Database.other.find(new Document("id", "adjectives")).first();
 

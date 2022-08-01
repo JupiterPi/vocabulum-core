@@ -6,6 +6,7 @@ import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 import org.bson.Document;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Inflexible extends Vocabulary {
     private String word;
@@ -38,5 +39,13 @@ public class Inflexible extends Vocabulary {
     @Override
     public Document generateWordbaseEntry() {
         return assembleWordbaseEntry(null);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Inflexible that = (Inflexible) o;
+        return Objects.equals(word, that.word);
     }
 }

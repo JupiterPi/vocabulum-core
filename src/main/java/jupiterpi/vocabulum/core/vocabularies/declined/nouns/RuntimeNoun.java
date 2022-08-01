@@ -33,7 +33,7 @@ public class RuntimeNoun extends Noun {
         RuntimeNoun noun = new RuntimeNoun(translations, portion);
         noun.nom_sg = nom_sg;
         noun.gender = gender;
-        for (DeclensionSchema declensionSchema : DeclensionClasses.getAll()) {
+        for (DeclensionSchema declensionSchema : DeclensionClasses.get().getAll()) {
             String suffix = declensionSchema.getSuffix(new DeclinedForm(Casus.GEN, NNumber.SG, gender));
             if (gen_sg.endsWith(suffix)) {
                 noun.declensionSchema = declensionSchema;

@@ -25,11 +25,11 @@ public class RuntimeVerb extends Verb {
     }
 
     public static RuntimeVerb fromBaseForms(String infinitive, String first_sg_present, String first_sg_perfect, List<VocabularyTranslation> translations, String portion) throws ParserException, VerbFormDoesNotExistException {
-        ConjugationSchema conjugationSchema = ConjugationClasses.a_Conjugation;
+        ConjugationSchema conjugationSchema = ConjugationClasses.get().a_Conjugation;
 
         String presentRoot = null;
         String perfectRoot = null;
-        for (ConjugationSchema schema : ConjugationClasses.getAll()) {
+        for (ConjugationSchema schema : ConjugationClasses.get().getAll()) {
             FormInfo info = schema.getFormInfo(VerbForm.get("1. Sg. Pres."));
             if (first_sg_present.endsWith(info.getSuffix())) {
                 presentRoot = first_sg_present.substring(0, first_sg_present.length() - info.getSuffix().length());

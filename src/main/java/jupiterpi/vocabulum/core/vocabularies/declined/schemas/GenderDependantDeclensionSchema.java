@@ -17,8 +17,8 @@ public class GenderDependantDeclensionSchema extends DeclensionSchema {
         if (document.containsKey("parent")) {
             hasParent = true;
             String parentName = document.getString("parent");
-            Document parentDocument = DeclensionClasses.getRaw(parentName);
-            DeclensionSchema parent = DeclensionClasses.makeSchema(parentDocument);
+            Document parentDocument = DeclensionClasses.get().getRaw(parentName);
+            DeclensionSchema parent = DeclensionClasses.get().makeSchema(parentDocument);
 
             try {
 

@@ -26,8 +26,8 @@ public class Main {
     public static void main(String[] args) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
         System.out.println("----- Vocabulum Core -----");
 
-        DeclensionClasses.loadDeclensionSchemas();
-        ConjugationClasses.loadConjugationSchemas();
+        DeclensionClasses.get().loadDeclensionSchemas();
+        ConjugationClasses.get().loadConjugationSchemas();
         portionManager = new PortionManager();
         wordbaseManager = new WordbaseManager();
 
