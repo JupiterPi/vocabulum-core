@@ -1,12 +1,12 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.nouns;
 
+import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
-import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionClasses;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionSchema;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 
@@ -33,7 +33,7 @@ public class RuntimeNoun extends Noun {
         RuntimeNoun noun = new RuntimeNoun(translations, portion);
         noun.nom_sg = nom_sg;
         noun.gender = gender;
-        for (DeclensionSchema declensionSchema : DeclensionClasses.get().getAll()) {
+        for (DeclensionSchema declensionSchema : Database.get().getDeclensionClasses().getAll()) {
             String suffix = declensionSchema.getSuffix(new DeclinedForm(Casus.GEN, NNumber.SG, gender));
             if (gen_sg.endsWith(suffix)) {
                 noun.declensionSchema = declensionSchema;

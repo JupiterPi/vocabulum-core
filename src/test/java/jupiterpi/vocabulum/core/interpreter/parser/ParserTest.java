@@ -1,7 +1,11 @@
 package jupiterpi.vocabulum.core.interpreter.parser;
 
+import jupiterpi.vocabulum.core.db.Database;
+import jupiterpi.vocabulum.core.db.LoadingDataException;
 import jupiterpi.vocabulum.core.i18n.I18n;
+import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.i18n.MockI18n;
+import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
@@ -16,6 +20,7 @@ import jupiterpi.vocabulum.core.vocabularies.declined.nouns.Noun;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.RuntimeNoun;
 import jupiterpi.vocabulum.core.vocabularies.inflexible.Inflexible;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -23,10 +28,17 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ParserTest {
     I18n i18n = new MockI18n();
+
+    @BeforeAll
+    static void init() throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
+        Database.get().connectAndLoad("mongodb://localhost");
+        //TODO mock database
+    }
 
     @Nested
     @DisplayName("valid")
@@ -54,7 +66,7 @@ class ParserTest {
                     new Token(Token.Type.WORD, "servi", i18n),
                     new Token(Token.Type.GENDER, "m", i18n)
             ), translations, "test").getVocabulary();
-            assertEquals(e, vocabulary);
+            assertEquals(e.toString(), vocabulary.toString());
         }
 
         @Test
@@ -72,7 +84,7 @@ class ParserTest {
                     new Token(Token.Type.COMMA, ",", i18n),
                     new Token(Token.Type.WORD, "acre", i18n)
             ), translations, "test").getVocabulary();
-            assertEquals(e, vocabulary);
+            assertEquals(e.toString(), vocabulary.toString());
         }
 
         @Test
@@ -86,10 +98,10 @@ class ParserTest {
             Vocabulary vocabulary = new Parser(new TokenSequence(
                     new Token(Token.Type.WORD, "felix", i18n),
                     new Token(Token.Type.COMMA, ",", i18n),
-                    new Token(Token.Type.GENDER, "Gen", i18n),
+                    new Token(Token.Type.CASUS, "Gen", i18n),
                     new Token(Token.Type.WORD, "felicis", i18n)
             ), translations, "test").getVocabulary();
-            assertEquals(e, vocabulary);
+            assertEquals(e.toString(), vocabulary.toString());
         }
 
         @Test
@@ -105,9 +117,11 @@ class ParserTest {
                     new Token(Token.Type.COMMA, ",", i18n),
                     new Token(Token.Type.WORD, "voco", i18n),
                     new Token(Token.Type.COMMA, ",", i18n),
-                    new Token(Token.Type.WORD, "vocavi", i18n)
+                    new Token(Token.Type.WORD, "vocavi", i18n),
+                    new Token(Token.Type.COMMA, ",", i18n),
+                    new Token(Token.Type.WORD, "vocatum", i18n)
             ), translations, "test").getVocabulary();
-            assertEquals(e, vocabulary);
+            assertEquals(e.toString(), vocabulary.toString());
         }
 
         @Test

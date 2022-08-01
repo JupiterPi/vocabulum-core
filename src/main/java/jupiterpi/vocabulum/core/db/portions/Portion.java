@@ -1,7 +1,7 @@
-package jupiterpi.vocabulum.core.portions;
+package jupiterpi.vocabulum.core.db.portions;
 
 import jupiterpi.tools.util.AppendingList;
-import jupiterpi.vocabulum.core.Main;
+import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
@@ -25,7 +25,7 @@ public class Portion {
         String name = document.getString("name");
         portion.name = name;
 
-        I18n i18n = Main.i18nManager.get(document.getString("i18n"));
+        I18n i18n = Database.get().getI18ns().getI18n(document.getString("i18n"));
         List<List<String>> vocabularyBlocks = (List<List<String>>) document.get("vocabularies");
         for (List<String> vocabularies : vocabularyBlocks) {
             List<Vocabulary> vocabularyBlock = new ArrayList<>();

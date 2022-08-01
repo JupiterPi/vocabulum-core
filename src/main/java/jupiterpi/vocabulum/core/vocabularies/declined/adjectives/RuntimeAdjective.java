@@ -7,7 +7,6 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
-import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionClasses;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionSchema;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 import org.bson.Document;
@@ -15,12 +14,12 @@ import org.bson.Document;
 import java.util.List;
 
 public class RuntimeAdjective extends Adjective {
-    private static final DeclensionSchema masculineDeclensionSchema = DeclensionClasses.get().o_Declension;
-    private static final DeclensionSchema feminineDeclensionSchema = DeclensionClasses.get().a_Declension;
-    private static final DeclensionSchema neuterDeclensionSchema = DeclensionClasses.get().o_Declension;
-    private static final DeclensionSchema consonantalDeclensionSchema = DeclensionClasses.get().cons_adjectives_Declension;
+    private static final DeclensionSchema masculineDeclensionSchema = Database.get().getDeclensionClasses().o_Declension;
+    private static final DeclensionSchema feminineDeclensionSchema = Database.get().getDeclensionClasses().a_Declension;
+    private static final DeclensionSchema neuterDeclensionSchema = Database.get().getDeclensionClasses().o_Declension;
+    private static final DeclensionSchema consonantalDeclensionSchema = Database.get().getDeclensionClasses().cons_adjectives_Declension;
 
-    private static final Document adjectivesData = Database.other.find(new Document("id", "adjectives")).first();
+    private static final Document adjectivesData = Database.get().getAdjectivesDocument();
 
     private String nom_sg_masc;
     private String nom_sg_fem;

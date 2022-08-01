@@ -1,6 +1,7 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated.form;
 
 import jupiterpi.vocabulum.core.Main;
+import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
@@ -37,7 +38,7 @@ public class VerbForm implements VocabularyForm {
 
     public static VerbForm get(String expr) {
         try {
-            return fromString(expr, Main.i18nManager.internal);
+            return fromString(expr, Database.get().getI18ns().internal);
         } catch (ParserException | LexerException e) {
             e.printStackTrace();
         }

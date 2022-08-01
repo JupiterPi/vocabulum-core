@@ -1,4 +1,4 @@
-package jupiterpi.vocabulum.core.wordbase;
+package jupiterpi.vocabulum.core.db.wordbase;
 
 import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
@@ -15,9 +15,14 @@ import org.bson.Document;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WordbaseManager {
+public class Wordbase {
+    private Database database;
+    public Wordbase(Database database) {
+        this.database = database;
+    }
+
     public Vocabulary loadVocabulary(String baseForm) {
-        Document vocabularyDocument = Database.wordbase.find(new Document("base_form", baseForm)).first();
+        Document vocabularyDocument = database.collection_wordbase.find(new Document("base_form", baseForm)).first();
         return switch (vocabularyDocument.getString("kind")) {
             case "noun" -> WordbaseNoun.readFromDocument(vocabularyDocument);
             case "adjective" -> WordbaseAdjective.readFromDocument(vocabularyDocument);
@@ -57,9 +62,9 @@ public class WordbaseManager {
         List<VocabularyForm> nullForms = new ArrayList<>();
         nullForms.add(null);
 
-        Database.wordbase.createIndex(new Document("$**", "text"));
+        database.collection_wordbase.createIndex(new Document("$**", "text"));
         List<IdentificationResult> results = new ArrayList<>();
-        for (Document vocabularyDocument : Database.wordbase.find(new Document("$text", new Document("$search", word)))) {
+        for (Document vocabularyDocument : database.collection_wordbase.find(new Document("$text", new Document("$search", word)))) {
             Vocabulary vocabulary = loadVocabulary(vocabularyDocument.getString("base_form"));
             List<VocabularyForm> forms = switch (vocabulary.getKind()) {
                 case NOUN -> new ArrayList<>(((Noun) vocabulary).identifyForm(word));
@@ -74,10 +79,10 @@ public class WordbaseManager {
 
     public void saveVocabulary(Vocabulary vocabulary) {
         Document document = vocabulary.generateWordbaseEntry();
-        Database.wordbase.insertOne(document);
+        database.collection_wordbase.insertOne(document);
     }
 
     public void clearAll() {
-        Database.wordbase.deleteMany(new Document());
+        database.collection_wordbase.deleteMany(new Document());
     }
 }

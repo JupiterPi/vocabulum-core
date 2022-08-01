@@ -1,6 +1,5 @@
-package jupiterpi.vocabulum.core.portions;
+package jupiterpi.vocabulum.core.db.portions;
 
-import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
@@ -11,20 +10,15 @@ import org.bson.Document;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PortionManager {
+public class Portions {
     private Map<String, Portion> portions;
 
-    public PortionManager() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
-        this.portions = readPortions();
-    }
-
-    private Map<String, Portion> readPortions() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
-        Map<String, Portion> portions = new HashMap<>();
-        for (Document portionDocument : Database.portions.find()) {
+    public void loadPortions(Iterable<Document> documents) throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
+        portions = new HashMap<>();
+        for (Document portionDocument : documents) {
             Portion portion = Portion.readFromDocument(portionDocument);
             portions.put(portion.getName(), portion);
         }
-        return portions;
     }
 
     public Portion getPortion(String name) {

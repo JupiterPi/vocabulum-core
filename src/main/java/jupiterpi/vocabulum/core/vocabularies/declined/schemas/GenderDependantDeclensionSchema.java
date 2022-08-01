@@ -1,7 +1,8 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.schemas;
 
-import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
+import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.LoadingDataException;
+import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
@@ -17,8 +18,8 @@ public class GenderDependantDeclensionSchema extends DeclensionSchema {
         if (document.containsKey("parent")) {
             hasParent = true;
             String parentName = document.getString("parent");
-            Document parentDocument = DeclensionClasses.get().getRaw(parentName);
-            DeclensionSchema parent = DeclensionClasses.get().makeSchema(parentDocument);
+            Document parentDocument = Database.get().getDeclensionClasses().getRaw(parentName);
+            DeclensionSchema parent = Database.get().getDeclensionClasses().makeSchema(parentDocument);
 
             try {
 

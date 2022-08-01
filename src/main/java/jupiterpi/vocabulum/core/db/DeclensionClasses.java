@@ -1,7 +1,8 @@
-package jupiterpi.vocabulum.core.vocabularies.declined.schemas;
+package jupiterpi.vocabulum.core.db;
 
-import jupiterpi.vocabulum.core.db.Database;
-import jupiterpi.vocabulum.core.db.LoadingDataException;
+import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionSchema;
+import jupiterpi.vocabulum.core.vocabularies.declined.schemas.GenderDependantDeclensionSchema;
+import jupiterpi.vocabulum.core.vocabularies.declined.schemas.SimpleDeclensionSchema;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -10,25 +11,19 @@ import java.util.List;
 import java.util.Map;
 
 public class DeclensionClasses {
-    private static DeclensionClasses instance = null;
-    public static DeclensionClasses get() {
-        if (instance == null) {
-            instance = new DeclensionClasses();
-        }
-        return instance;
-    }
-
-    /////
-
     private Map<String, Document> declensionSchemasRaw;
     private Map<String, DeclensionSchema> declensionSchemas;
 
-    public void loadDeclensionSchemas() throws LoadingDataException {
+    public void loadDeclensionSchemas(Iterable<Document> documents) throws LoadingDataException {
         declensionSchemasRaw = new HashMap<>();
-        declensionSchemas = new HashMap<>();
-        for (Document document : Database.declension_schemas.find()) {
+        for (Document document : documents) {
             String name = document.getString("name");
             declensionSchemasRaw.put(name, document);
+        }
+
+        declensionSchemas = new HashMap<>();
+        for (Document document : documents) {
+            String name = document.getString("name");
             declensionSchemas.put(name, makeSchema(document));
         }
 

@@ -1,6 +1,7 @@
 package jupiterpi.vocabulum.core;
 
 import jupiterpi.tools.ui.ConsoleInterface;
+import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.ta.TAResult;
 import jupiterpi.vocabulum.core.ta.TranslationAssistance;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
@@ -16,10 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Terminal extends ConsoleInterface {
-    public void run() {
+    public void run(I18n i18n) {
         out("----- Vocabulum Terminal -----");
 
-        Document texts = (Document) Main.i18n.getTexts().get("terminal");
+        Document texts = (Document) i18n.getTexts().get("terminal");
         Document promptTexts = (Document) texts.get("prompt");
         Document translationAssistanceTexts = (Document) texts.get("translation_assistance");
 
@@ -43,14 +44,14 @@ public class Terminal extends ConsoleInterface {
                 try {
                     String wordInput = in("> ");
                     if (wordInput.equals("")) break;
-                    Vocabulary vocabulary = Vocabulary.fromString(wordInput, Main.i18n, "terminal");
+                    Vocabulary vocabulary = Vocabulary.fromString(wordInput, i18n, "terminal");
                     if (vocabulary.getKind() == Vocabulary.Kind.NOUN) {
                         Noun noun = (Noun) vocabulary;
                         while (true) {
                             try {
                                 String formInput = in("[" + NOUN + "] " + noun.getBaseForm() + " > ");
                                 if (formInput.equals("")) break;
-                                NounForm form = NounForm.fromString(formInput, Main.i18n);
+                                NounForm form = NounForm.fromString(formInput, i18n);
                                 out(noun.makeForm(form));
                             } catch (Exception e) {
                                 out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
@@ -62,7 +63,7 @@ public class Terminal extends ConsoleInterface {
                             try {
                                 String formInput = in("[" + ADJECTIVE + "] " + adjective.getBaseForm() + " > ");
                                 if (formInput.equals("")) break;
-                                AdjectiveForm form = AdjectiveForm.fromString(formInput, Main.i18n);
+                                AdjectiveForm form = AdjectiveForm.fromString(formInput, i18n);
                                 out(adjective.makeForm(form));
                             } catch (Exception e) {
                                 out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
@@ -74,14 +75,16 @@ public class Terminal extends ConsoleInterface {
                             try {
                                 String formInput = in("[" + VERB + "] " + verb.getBaseForm() + " > ");
                                 if (formInput.equals("")) break;
-                                VerbForm form = VerbForm.fromString(formInput, Main.i18n);
+                                VerbForm form = VerbForm.fromString(formInput, i18n);
                                 out(verb.makeForm(form));
                             } catch (Exception e) {
+                                e.printStackTrace();
                                 out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
                             }
                         }
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                     out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
                 }
             }
@@ -97,11 +100,11 @@ public class Terminal extends ConsoleInterface {
                 try {
                     String sentence = in("> ");
                     if (sentence.equals("")) break;
-                    TAResult result = TranslationAssistance.runTranslationAssistance(sentence, Main.i18n);
+                    TAResult result = TranslationAssistance.runTranslationAssistance(sentence, i18n);
 
                     int maxLines = 0;
                     for (TAResult.TAResultItem item : result.getItems()) {
-                        if (item.getLines(Main.i18n).size() > maxLines) maxLines = item.getLines(Main.i18n).size();
+                        if (item.getLines(i18n).size() > maxLines) maxLines = item.getLines(i18n).size();
                     }
 
                     List<String> outputLines = new ArrayList<>();
@@ -112,7 +115,7 @@ public class Terminal extends ConsoleInterface {
                     for (TAResult.TAResultItem item : result.getItems()) {
                         int maxLineLength = 0;
                         if (item.getItem().length() > maxLineLength) maxLineLength = item.getItem().length();
-                        for (String line : item.getLines(Main.i18n)) {
+                        for (String line : item.getLines(i18n)) {
                             if (line.length() > maxLineLength) maxLineLength = line.length();
                         }
 
@@ -122,9 +125,9 @@ public class Terminal extends ConsoleInterface {
                         }
                         outputLines.set(0, outputLines.get(0) + "   " + itemLine);
 
-                        int linesCount = item.getLines(Main.i18n).size();
+                        int linesCount = item.getLines(i18n).size();
                         for (int i = 0; i < linesCount; i++) {
-                            String lineLine = item.getLines(Main.i18n).get(i);
+                            String lineLine = item.getLines(i18n).get(i);
                             while (lineLine.length() < maxLineLength) {
                                 lineLine += " ";
                             }

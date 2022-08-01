@@ -1,6 +1,7 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated.form;
 
 import jupiterpi.vocabulum.core.Main;
+import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
@@ -26,7 +27,7 @@ public class ConjugatedForm {
     }
     public static ConjugatedForm get(String str) {
         try {
-            return fromString(str, Main.i18nManager.internal);
+            return fromString(str, Database.get().getI18ns().internal);
         } catch (LexerException | ParserException e) {
             e.printStackTrace();
         }
@@ -68,7 +69,7 @@ public class ConjugatedForm {
 
     @Override
     public String toString() {
-        return "{" + formToString(Main.i18nManager.internal, false) + "}";
+        return "{" + formToString(Database.get().getI18ns().internal, false) + "}";
     }
 
     public String formToString(I18n i18n, boolean userFriendly) {

@@ -1,6 +1,7 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.form;
 
 import jupiterpi.vocabulum.core.Main;
+import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
@@ -32,7 +33,7 @@ public class DeclinedForm {
     }
     public static DeclinedForm get(String str) {
         try {
-            return fromString(str, Main.i18nManager.internal);
+            return fromString(str, Database.get().getI18ns().internal);
         } catch (ParserException | LexerException e) {
             e.printStackTrace();
         }
@@ -121,7 +122,7 @@ public class DeclinedForm {
 
     @Override
     public String toString() {
-        return "{" + formToString(Main.i18nManager.internal) + "}";
+        return "{" + formToString(Database.get().getI18ns().internal) + "}";
     }
 
     public String formToString(I18n i18n) {

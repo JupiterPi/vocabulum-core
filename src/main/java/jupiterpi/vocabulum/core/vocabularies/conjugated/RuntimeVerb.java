@@ -1,9 +1,9 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated;
 
+import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbForm;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.ConjugationClasses;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.ConjugationSchema;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.FormInfo;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
@@ -25,11 +25,11 @@ public class RuntimeVerb extends Verb {
     }
 
     public static RuntimeVerb fromBaseForms(String infinitive, String first_sg_present, String first_sg_perfect, List<VocabularyTranslation> translations, String portion) throws ParserException, VerbFormDoesNotExistException {
-        ConjugationSchema conjugationSchema = ConjugationClasses.get().a_Conjugation;
+        ConjugationSchema conjugationSchema = Database.get().getConjugationClasses().a_Conjugation;
 
         String presentRoot = null;
         String perfectRoot = null;
-        for (ConjugationSchema schema : ConjugationClasses.get().getAll()) {
+        for (ConjugationSchema schema : Database.get().getConjugationClasses().getAll()) {
             FormInfo info = schema.getFormInfo(VerbForm.get("1. Sg. Pres."));
             if (first_sg_present.endsWith(info.getSuffix())) {
                 presentRoot = first_sg_present.substring(0, first_sg_present.length() - info.getSuffix().length());

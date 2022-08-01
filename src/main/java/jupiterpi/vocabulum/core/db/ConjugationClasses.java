@@ -1,7 +1,7 @@
-package jupiterpi.vocabulum.core.vocabularies.conjugated.schemas;
+package jupiterpi.vocabulum.core.db;
 
-import jupiterpi.vocabulum.core.db.Database;
-import jupiterpi.vocabulum.core.db.LoadingDataException;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.ConjugationSchema;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.SimpleConjugationSchema;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -10,19 +10,11 @@ import java.util.List;
 import java.util.Map;
 
 public class ConjugationClasses {
-    private static ConjugationClasses instance = null;
-    public static ConjugationClasses get() {
-        if (instance == null) instance = new ConjugationClasses();
-        return instance;
-    }
-
-    /////
-
     private Map<String, ConjugationSchema> conjugationSchemas;
 
-    public void loadConjugationSchemas() throws LoadingDataException {
+    public void loadConjugationSchemas(Iterable<Document> documents) throws LoadingDataException {
         conjugationSchemas = new HashMap<>();
-        for (Document document : Database.conjugation_schemas.find()) {
+        for (Document document : documents) {
             String name = document.getString("name");
             conjugationSchemas.put(name, makeSchema(document));
         }

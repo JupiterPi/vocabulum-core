@@ -3,6 +3,7 @@ package jupiterpi.vocabulum.core.vocabularies.declined.nouns;
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
+import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.AdjectiveForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
@@ -12,6 +13,7 @@ import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Noun extends Vocabulary {
     protected Noun(List<VocabularyTranslation> translations, String portion) {
