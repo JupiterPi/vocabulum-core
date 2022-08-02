@@ -1,8 +1,7 @@
 package jupiterpi.vocabulum.core.ta;
 
-import jupiterpi.vocabulum.core.Main;
 import jupiterpi.vocabulum.core.db.Database;
-import jupiterpi.vocabulum.core.db.wordbase.Wordbase;
+import jupiterpi.vocabulum.core.db.wordbase.IdentificationResult;
 import jupiterpi.vocabulum.core.i18n.I18n;
 
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ public class TranslationAssistance {
             } else if (word.equals("<dot>")) {
                 items.add(new TAResult.TAPunctuation("."));
             } else {
-                List<Wordbase.IdentificationResult> results = Database.get().getWordbase().identifyWord(word.toLowerCase());
+                List<IdentificationResult> results = Database.get().getWordbase().identifyWord(word.toLowerCase());
                 if (results.size() == 0) {
                     throw new TAException("Cannot identify word: " + word.toLowerCase());
                 } else if (results.size() > 1) {
@@ -31,7 +30,7 @@ public class TranslationAssistance {
                     String resultsString = String.join(", ", resultsList);
                     throw new TAException("Cannot definitely identify word: " + word.toLowerCase() + ". Found: " + resultsString);
                 }
-                Wordbase.IdentificationResult result = results.get(0);
+                IdentificationResult result = results.get(0);
                 items.add(new TAResult.TAWord(word, result.getVocabulary(), result.getForms()));
             }
         }

@@ -1,5 +1,6 @@
-package jupiterpi.vocabulum.core.db;
+package jupiterpi.vocabulum.core.db.classes;
 
+import jupiterpi.vocabulum.core.db.LoadingDataException;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionSchema;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.GenderDependantDeclensionSchema;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.SimpleDeclensionSchema;
@@ -10,10 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DeclensionClasses {
+public class DbDeclensionClasses implements DeclensionClasses {
     private Map<String, Document> declensionSchemasRaw;
     private Map<String, DeclensionSchema> declensionSchemas;
 
+    @Override
     public void loadDeclensionSchemas(Iterable<Document> documents) throws LoadingDataException {
         declensionSchemasRaw = new HashMap<>();
         for (Document document : documents) {
@@ -26,10 +28,9 @@ public class DeclensionClasses {
             String name = document.getString("name");
             declensionSchemas.put(name, makeSchema(document));
         }
-
-        assignUtilityFields();
     }
 
+    @Override
     public DeclensionSchema makeSchema(Document document) throws LoadingDataException {
         String schema = document.getString("schema");
         return switch (schema) {
@@ -39,14 +40,17 @@ public class DeclensionClasses {
         };
     }
 
+    @Override
     public Document getRaw(String name) {
         return declensionSchemasRaw.get(name);
     }
 
+    @Override
     public DeclensionSchema getSchema(String name) {
         return declensionSchemas.get(name);
     }
 
+    @Override
     public List<DeclensionSchema> getAll() {
         List<DeclensionSchema> schemas = new ArrayList<>();
         for (String key : declensionSchemas.keySet()) {
@@ -57,21 +61,29 @@ public class DeclensionClasses {
 
     // utility fields
 
-    public DeclensionSchema a_Declension;
-    public DeclensionSchema o_Declension;
-    public DeclensionSchema cons_Declension;
-    public DeclensionSchema e_Declension;
-    public DeclensionSchema u_Declension;
+    @Override
+    public DeclensionSchema a_Declension() {
+        return getSchema("a");
+    }
+    @Override
+    public DeclensionSchema o_Declension() {
+        return getSchema("o");
+    }
+    @Override
+    public DeclensionSchema cons_Declension() {
+        return getSchema("cons");
+    }
+    @Override
+    public DeclensionSchema e_Declension() {
+        return getSchema("e");
+    }
+    @Override
+    public DeclensionSchema u_Declension() {
+        return getSchema("u");
+    }
 
-    public DeclensionSchema cons_adjectives_Declension;
-
-    private void assignUtilityFields() {
-        a_Declension = getSchema("a");
-        o_Declension = getSchema("o");
-        cons_Declension = getSchema("cons");
-        e_Declension = getSchema("e");
-        u_Declension = getSchema("u");
-
-        cons_adjectives_Declension = getSchema("cons_adjectives");
+    @Override
+    public DeclensionSchema cons_adjectives_Declension() {
+        return getSchema("cons_adjectives");
     }
 }

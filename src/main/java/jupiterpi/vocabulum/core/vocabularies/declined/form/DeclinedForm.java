@@ -33,7 +33,7 @@ public class DeclinedForm {
     }
     public static DeclinedForm get(String str) {
         try {
-            return fromString(str, Database.get().getI18ns().internal);
+            return fromString(str, Database.get().getI18ns().internal());
         } catch (ParserException | LexerException e) {
             e.printStackTrace();
         }
@@ -122,7 +122,7 @@ public class DeclinedForm {
 
     @Override
     public String toString() {
-        return "{" + formToString(Database.get().getI18ns().internal) + "}";
+        return "{" + formToString(Database.get().getI18ns().internal()) + "}";
     }
 
     public String formToString(I18n i18n) {

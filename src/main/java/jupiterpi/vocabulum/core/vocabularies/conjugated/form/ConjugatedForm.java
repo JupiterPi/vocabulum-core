@@ -27,7 +27,7 @@ public class ConjugatedForm {
     }
     public static ConjugatedForm get(String str) {
         try {
-            return fromString(str, Database.get().getI18ns().internal);
+            return fromString(str, Database.get().getI18ns().internal());
         } catch (LexerException | ParserException e) {
             e.printStackTrace();
         }
@@ -69,7 +69,7 @@ public class ConjugatedForm {
 
     @Override
     public String toString() {
-        return "{" + formToString(Database.get().getI18ns().internal, false) + "}";
+        return "{" + formToString(Database.get().getI18ns().internal(), false) + "}";
     }
 
     public String formToString(I18n i18n, boolean userFriendly) {

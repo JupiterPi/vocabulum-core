@@ -2,34 +2,14 @@ package jupiterpi.vocabulum.core.i18n;
 
 import org.bson.Document;
 
-import java.util.HashMap;
-import java.util.Map;
+public interface I18ns {
+    void loadI18ns(Iterable<Document> documents);
 
-public class I18ns {
-    private Map<String, I18n> i18ns;
+    I18n getI18n(String language);
 
-    public void loadI18ns(Iterable<Document> documents) {
-        i18ns = new HashMap<>();
-        for (Document document : documents) {
-            String name = document.getString("language");
-            Document texts = (Document) document.get("texts");
-            Document str_texts = (Document) document.get("str-texts");
-            i18ns.put(name, new DbI18n(name, texts, str_texts));
-        }
-        assignUtilityFields();
-    }
+    // utility fields
 
-    public I18n internal;
-    public I18n en;
-    public I18n de;
-
-    private void assignUtilityFields() {
-        internal = getI18n("int");
-        en = getI18n("en");
-        de = getI18n("de");
-    }
-
-    public I18n getI18n(String language) {
-        return i18ns.get(language);
-    }
+    I18n internal();
+    I18n en();
+    I18n de();
 }

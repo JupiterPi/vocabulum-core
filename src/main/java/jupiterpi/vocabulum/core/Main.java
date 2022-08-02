@@ -25,6 +25,6 @@ public class Main {
         }
 
         Terminal terminal = new Terminal();
-        terminal.run(Database.get().getI18ns().de);
+        terminal.run(Database.get().getI18ns().de());
     }
 }

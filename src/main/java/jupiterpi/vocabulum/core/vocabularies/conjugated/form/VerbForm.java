@@ -38,7 +38,7 @@ public class VerbForm implements VocabularyForm {
 
     public static VerbForm get(String expr) {
         try {
-            return fromString(expr, Database.get().getI18ns().internal);
+            return fromString(expr, Database.get().getI18ns().internal());
         } catch (ParserException | LexerException e) {
             e.printStackTrace();
         }

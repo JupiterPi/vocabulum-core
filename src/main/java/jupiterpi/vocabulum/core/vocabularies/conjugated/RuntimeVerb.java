@@ -25,7 +25,7 @@ public class RuntimeVerb extends Verb {
     }
 
     public static RuntimeVerb fromBaseForms(String infinitive, String first_sg_present, String first_sg_perfect, List<VocabularyTranslation> translations, String portion) throws ParserException, VerbFormDoesNotExistException {
-        ConjugationSchema conjugationSchema = Database.get().getConjugationClasses().a_Conjugation;
+        ConjugationSchema conjugationSchema = Database.get().getConjugationClasses().a_Conjugation();
 
         String presentRoot = null;
         String perfectRoot = null;
