@@ -36,7 +36,7 @@ public abstract class Verb extends Vocabulary {
     public abstract String getBaseForm();
 
     @Override
-    public Document generateWordbaseEntry() {
+    public Document generateWordbaseEntrySpecificPart() {
         Document formsDocument = new Document();
         for (Voice voice : Voice.values()) {
             Document voiceDocument = new Document();
@@ -62,7 +62,10 @@ public abstract class Verb extends Vocabulary {
             }
             formsDocument.put(voice.toString().toLowerCase(), voiceDocument);
         }
-        return assembleWordbaseEntry(formsDocument);
+
+        Document document = new Document();
+        document.put("forms", formsDocument);
+        return document;
     }
 
     public List<VerbForm> identifyForm(String word) {

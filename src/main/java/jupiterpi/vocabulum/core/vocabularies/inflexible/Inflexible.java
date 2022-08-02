@@ -37,8 +37,8 @@ public class Inflexible extends Vocabulary {
     }
 
     @Override
-    public Document generateWordbaseEntry() {
-        return assembleWordbaseEntry(null);
+    public Document generateWordbaseEntrySpecificPart() {
+        return new Document();
     }
 
     @Override

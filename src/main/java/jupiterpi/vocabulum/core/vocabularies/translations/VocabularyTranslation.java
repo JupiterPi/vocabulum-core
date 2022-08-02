@@ -1,5 +1,7 @@
 package jupiterpi.vocabulum.core.vocabularies.translations;
 
+import java.util.Objects;
+
 public class VocabularyTranslation {
     private boolean important;
     private String translation;
@@ -41,6 +43,14 @@ public class VocabularyTranslation {
         } else {
             return translation;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        VocabularyTranslation that = (VocabularyTranslation) o;
+        return important == that.important && Objects.equals(translation, that.translation);
     }
 
     @Override

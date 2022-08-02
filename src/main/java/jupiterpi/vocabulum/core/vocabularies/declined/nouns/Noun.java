@@ -39,7 +39,7 @@ public abstract class Noun extends Vocabulary {
     }
 
     @Override
-    public Document generateWordbaseEntry() {
+    public Document generateWordbaseEntrySpecificPart() {
         Document formsDocument = new Document();
         for (Gender gender : Gender.values()) {
             Document genderDocument = new Document();
@@ -60,7 +60,8 @@ public abstract class Noun extends Vocabulary {
             formsDocument.put(gender.toString().toLowerCase(), genderDocument);
         }
 
-        Document document = assembleWordbaseEntry(formsDocument);
+        Document document = new Document();
+        document.put("forms", formsDocument);
         document.put("gender", getGender().toString().toLowerCase());
         return document;
     }

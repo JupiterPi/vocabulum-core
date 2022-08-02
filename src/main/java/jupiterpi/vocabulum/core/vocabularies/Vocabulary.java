@@ -24,6 +24,7 @@ public abstract class Vocabulary {
         this.translations = translations;
         this.portion = portion;
     }
+
     protected static List<VocabularyTranslation> readTranslations(Document document) {
         List<String> translationsStr = document.getList("translations", String.class);
         List<VocabularyTranslation> translations = new ArrayList<>();
@@ -85,17 +86,16 @@ public abstract class Vocabulary {
         return null;
     }
 
-    public abstract Document generateWordbaseEntry();
-
-    protected Document assembleWordbaseEntry(Document formsDocument) {
-        Document document = new Document();
+    public Document generateWordbaseEntry() {
+        Document document = generateWordbaseEntrySpecificPart();
         document.put("kind", getKind().toString().toLowerCase());
         document.put("base_form", getBaseForm());
         document.put("portion", portion);
-        if (formsDocument != null) document.put("forms", formsDocument);
         document.put("translations", getTranslationsToString());
         return document;
     }
+
+    protected abstract Document generateWordbaseEntrySpecificPart();
 
     @Override
     public String toString() {

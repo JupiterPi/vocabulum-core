@@ -27,7 +27,7 @@ public abstract class Adjective extends Vocabulary {
     }
 
     @Override
-    public Document generateWordbaseEntry() {
+    public Document generateWordbaseEntrySpecificPart() {
         Document formsDocument = new Document();
         for (ComparativeForm comparativeForm : ComparativeForm.values()) {
             Document comparativeFormDocument = new Document();
@@ -52,7 +52,8 @@ public abstract class Adjective extends Vocabulary {
             formsDocument.put(comparativeForm.toString().toLowerCase(), comparativeFormDocument);
         }
 
-        Document document = assembleWordbaseEntry(formsDocument);
+        Document document = new Document();
+        document.put("forms", formsDocument);
         document.put("definition_type", definitionType.toString().toLowerCase());
         return document;
     }

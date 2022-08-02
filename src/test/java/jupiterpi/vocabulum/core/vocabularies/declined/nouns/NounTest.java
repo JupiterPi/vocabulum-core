@@ -1,0 +1,233 @@
+package jupiterpi.vocabulum.core.vocabularies.declined.nouns;
+
+import jupiterpi.vocabulum.core.db.Database;
+import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
+import jupiterpi.vocabulum.core.i18n.I18n;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
+import org.bson.Document;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@ExtendWith(MockDatabaseSetup.class)
+class NounTest {
+    I18n i18n = Database.get().getI18ns().internal();
+
+    @Test
+    void getDefinition() {
+        /*List<VocabularyTranslation> translations = Arrays.asList(
+                new VocabularyTranslation(true, "der Freund"),
+                new VocabularyTranslation(false, "der Kamerade")
+        );*/
+        Noun noun = new Noun(new ArrayList<>(), "test") {
+            @Override
+            protected Gender getGender() {
+                return Gender.MASC;
+            }
+
+            @Override
+            public String makeForm(NounForm form) {
+                return "amici";
+            }
+
+            @Override
+            public String getBaseForm() {
+                return "amicus";
+            }
+        };
+        assertEquals("amicus, amici m.", noun.getDefinition(i18n));
+    }
+
+    @Nested
+    @DisplayName("generateWordbaseEntry()")
+    class GenerateWordbaseEntry {
+
+        @Test
+        @DisplayName("all forms exist")
+        void allFormsExist() {
+            Noun noun = new Noun(new ArrayList<>(), "test") {
+                @Override
+                protected Gender getGender() {
+                    return Gender.MASC;
+                }
+
+                @Override
+                public String makeForm(NounForm form) {
+                    return form.formToString(i18n);
+                }
+
+                @Override
+                public String getBaseForm() {
+                    return "amicus";
+                }
+            };
+            Document e = Document.parse("""
+                    {
+                        "forms": {
+                            "masc": {
+                                "sg": {
+                                    "nom": "Nom. Sg. m.",
+                                    "gen": "Gen. Sg. m.",
+                                    "dat": "Dat. Sg. m.",
+                                    "acc": "Acc. Sg. m.",
+                                    "abl": "Abl. Sg. m."
+                                },
+                                "pl": {
+                                    "nom": "Nom. Pl. m.",
+                                    "gen": "Gen. Pl. m.",
+                                    "dat": "Dat. Pl. m.",
+                                    "acc": "Acc. Pl. m.",
+                                    "abl": "Abl. Pl. m."
+                                }
+                            },
+                            "fem": {
+                                "sg": {
+                                    "nom": "Nom. Sg. f.",
+                                    "gen": "Gen. Sg. f.",
+                                    "dat": "Dat. Sg. f.",
+                                    "acc": "Acc. Sg. f.",
+                                    "abl": "Abl. Sg. f."
+                                },
+                                "pl": {
+                                    "nom": "Nom. Pl. f.",
+                                    "gen": "Gen. Pl. f.",
+                                    "dat": "Dat. Pl. f.",
+                                    "acc": "Acc. Pl. f.",
+                                    "abl": "Abl. Pl. f."
+                                }
+                            },
+                            "neut": {
+                                "sg": {
+                                    "nom": "Nom. Sg. n.",
+                                    "gen": "Gen. Sg. n.",
+                                    "dat": "Dat. Sg. n.",
+                                    "acc": "Acc. Sg. n.",
+                                    "abl": "Abl. Sg. n."
+                                },
+                                "pl": {
+                                    "nom": "Nom. Pl. n.",
+                                    "gen": "Gen. Pl. n.",
+                                    "dat": "Dat. Pl. n.",
+                                    "acc": "Acc. Pl. n.",
+                                    "abl": "Abl. Pl. n."
+                                }
+                            }
+                        },
+                        "gender": "masc"
+                    }
+                    """);
+            assertEquals(e, noun.generateWordbaseEntrySpecificPart());
+        }
+
+        @Test
+        @DisplayName("some forms don't exist")
+        void someFormsDontExist() {
+            Noun noun = new Noun(new ArrayList<>(), "test") {
+                @Override
+                protected Gender getGender() {
+                    return Gender.MASC;
+                }
+
+                @Override
+                public String makeForm(NounForm form) {
+                    if (form.getDeclinedForm().getGender() != Gender.MASC) return "-";
+                    return form.formToString(i18n);
+                }
+
+                @Override
+                public String getBaseForm() {
+                    return "amicus";
+                }
+            };
+            Document e = Document.parse("""
+                    {
+                        "forms": {
+                            "masc": {
+                                "sg": {
+                                    "nom": "Nom. Sg. m.",
+                                    "gen": "Gen. Sg. m.",
+                                    "dat": "Dat. Sg. m.",
+                                    "acc": "Acc. Sg. m.",
+                                    "abl": "Abl. Sg. m."
+                                },
+                                "pl": {
+                                    "nom": "Nom. Pl. m.",
+                                    "gen": "Gen. Pl. m.",
+                                    "dat": "Dat. Pl. m.",
+                                    "acc": "Acc. Pl. m.",
+                                    "abl": "Abl. Pl. m."
+                                }
+                            },
+                            "fem": {
+                                "sg": {
+                                    "nom": "-",
+                                    "gen": "-",
+                                    "dat": "-",
+                                    "acc": "-",
+                                    "abl": "-"
+                                },
+                                "pl": {
+                                    "nom": "-",
+                                    "gen": "-",
+                                    "dat": "-",
+                                    "acc": "-",
+                                    "abl": "-"
+                                }
+                            },
+                            "neut": {
+                                "sg": {
+                                    "nom": "-",
+                                    "gen": "-",
+                                    "dat": "-",
+                                    "acc": "-",
+                                    "abl": "-"
+                                },
+                                "pl": {
+                                    "nom": "-",
+                                    "gen": "-",
+                                    "dat": "-",
+                                    "acc": "-",
+                                    "abl": "-"
+                                }
+                            }
+                        },
+                        "gender": "masc"
+                    }
+                    """);
+            assertEquals(e, noun.generateWordbaseEntrySpecificPart());
+        }
+
+    }
+
+    @Test
+    void identifyForm() {
+        final NounForm abl_pl = new NounForm(new DeclinedForm(Casus.ABL, NNumber.PL, Gender.MASC));
+        Noun noun = new Noun(new ArrayList<>(), "test") {
+            @Override
+            protected Gender getGender() {
+                return Gender.MASC;
+            }
+
+            @Override
+            public String makeForm(NounForm form) {
+                if (form.equals(abl_pl)) return "amicis";
+                else return "";
+            }
+
+            @Override
+            public String getBaseForm() {
+                return "amicus";
+            }
+        };
+        assertEquals(Arrays.asList(abl_pl), noun.identifyForm("amicis"));
+    }
+}
