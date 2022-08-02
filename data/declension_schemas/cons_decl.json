@@ -2,7 +2,7 @@
     "name": "cons",
     "schema": "simple",
     "sg": {
-        "nom": "-",
+        "nom": "",
         "gen": "is",
         "dat": "i",
         "acc": "em",
