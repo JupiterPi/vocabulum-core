@@ -7,12 +7,25 @@ import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExis
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import org.bson.Document;
 
+import java.util.HashMap;
 import java.util.Map;
 
-public interface Portions {
-    void loadPortions(Iterable<Document> documents) throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException;
+public class Portions {
+    private Map<String, Portion> portions;
 
-    Portion getPortion(String name);
+    public void loadPortions(Iterable<Document> documents) throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
+        portions = new HashMap<>();
+        for (Document portionDocument : documents) {
+            Portion portion = Portion.readFromDocument(portionDocument);
+            portions.put(portion.getName(), portion);
+        }
+    }
 
-    Map<String, Portion> getPortions();
+    public Portion getPortion(String name) {
+        return portions.get(name);
+    }
+
+    public Map<String, Portion> getPortions() {
+        return portions;
+    }
 }

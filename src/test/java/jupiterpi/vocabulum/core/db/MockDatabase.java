@@ -1,9 +1,9 @@
 package jupiterpi.vocabulum.core.db;
 
-import jupiterpi.vocabulum.core.db.classes.DbConjugationClasses;
-import jupiterpi.vocabulum.core.db.classes.DbDeclensionClasses;
-import jupiterpi.vocabulum.core.db.portions.DbPortions;
-import jupiterpi.vocabulum.core.i18n.DbI18ns;
+import jupiterpi.vocabulum.core.db.classes.ConjugationClasses;
+import jupiterpi.vocabulum.core.db.classes.DeclensionClasses;
+import jupiterpi.vocabulum.core.db.portions.Portions;
+import jupiterpi.vocabulum.core.i18n.I18ns;
 import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
@@ -94,7 +94,7 @@ public class MockDatabase extends Database {
 
     @Override
     protected void loadI18ns() {
-        this.i18ns = new DbI18ns();
+        this.i18ns = new I18ns();
         this.i18ns.loadI18ns(Arrays.asList(
                 Document.parse("""
                         {
@@ -152,7 +152,7 @@ public class MockDatabase extends Database {
 
     @Override
     protected void loadDeclensionClasses() throws LoadingDataException {
-        this.declensionClasses = new DbDeclensionClasses();
+        this.declensionClasses = new DeclensionClasses();
         this.declensionClasses.loadDeclensionSchemas(Arrays.asList(
                 Document.parse("""
                         {
@@ -342,7 +342,7 @@ public class MockDatabase extends Database {
 
     @Override
     protected void loadConjugationClasses() throws LoadingDataException {
-        this.conjugationClasses = new DbConjugationClasses();
+        this.conjugationClasses = new ConjugationClasses();
         this.conjugationClasses.loadConjugationSchemas(Arrays.asList(
                 Document.parse("""
                         {
@@ -681,7 +681,7 @@ public class MockDatabase extends Database {
 
     @Override
     protected void loadPortions() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
-        this.portions = new DbPortions();
+        this.portions = new Portions();
         this.portions.loadPortions(Arrays.asList(
                 Document.parse("""
                         {

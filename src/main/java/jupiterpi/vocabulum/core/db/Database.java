@@ -5,17 +5,13 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import jupiterpi.vocabulum.core.db.classes.ConjugationClasses;
-import jupiterpi.vocabulum.core.db.classes.DbConjugationClasses;
-import jupiterpi.vocabulum.core.db.classes.DbDeclensionClasses;
 import jupiterpi.vocabulum.core.db.classes.DeclensionClasses;
-import jupiterpi.vocabulum.core.db.portions.DbPortions;
-import jupiterpi.vocabulum.core.db.portions.Portion;
 import jupiterpi.vocabulum.core.db.portions.Portions;
+import jupiterpi.vocabulum.core.db.portions.Portion;
 import jupiterpi.vocabulum.core.db.wordbase.DbWordbase;
 import jupiterpi.vocabulum.core.db.wordbase.Wordbase;
-import jupiterpi.vocabulum.core.i18n.DbI18ns;
-import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.i18n.I18ns;
+import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
@@ -95,7 +91,7 @@ public class Database {
     protected I18ns i18ns;
 
     protected void loadI18ns() {
-        i18ns = new DbI18ns();
+        i18ns = new I18ns();
         Iterable<Document> documents = collection_texts.find();
         i18ns.loadI18ns(documents);
     }
@@ -109,7 +105,7 @@ public class Database {
     protected DeclensionClasses declensionClasses;
 
     protected void loadDeclensionClasses() throws LoadingDataException {
-        declensionClasses = new DbDeclensionClasses();
+        declensionClasses = new DeclensionClasses();
         Iterable<Document> documents = collection_declension_schemas.find();
         declensionClasses.loadDeclensionSchemas(documents);
     }
@@ -123,7 +119,7 @@ public class Database {
     protected ConjugationClasses conjugationClasses;
 
     protected void loadConjugationClasses() throws LoadingDataException {
-        conjugationClasses = new DbConjugationClasses();
+        conjugationClasses = new ConjugationClasses();
         Iterable<Document> documents = collection_conjugation_schemas.find();
         conjugationClasses.loadConjugationSchemas(documents);
     }
@@ -137,7 +133,7 @@ public class Database {
     protected Portions portions;
 
     protected void loadPortions() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
-        portions = new DbPortions();
+        portions = new Portions();
         Iterable<Document> documents = collection_portions.find();
         portions.loadPortions(documents);
     }
