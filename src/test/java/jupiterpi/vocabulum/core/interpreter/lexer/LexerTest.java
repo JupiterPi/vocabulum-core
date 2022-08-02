@@ -1,22 +1,24 @@
 package jupiterpi.vocabulum.core.interpreter.lexer;
 
+import jupiterpi.vocabulum.core.db.Database;
+import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
 import jupiterpi.vocabulum.core.i18n.I18n;
-import jupiterpi.vocabulum.core.i18n.MockI18n;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@ExtendWith(MockDatabaseSetup.class)
 class LexerTest {
-    I18n i18n = new MockI18n();
+    I18n i18n = Database.get().getI18ns().internal();
 
     @Nested
     @DisplayName("valid")
