@@ -81,7 +81,6 @@ public class DbDeclensionClasses implements DeclensionClasses {
     public DeclensionSchema u_Declension() {
         return getSchema("u");
     }
-
     @Override
     public DeclensionSchema cons_adjectives_Declension() {
         return getSchema("cons_adjectives");

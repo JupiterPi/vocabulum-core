@@ -48,6 +48,11 @@ public class Database {
     public MongoCollection<Document> collection_wordbase;
 
     public void connectAndLoad(String mongoConnectUrl) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
+        connect(mongoConnectUrl);
+        load();
+    }
+
+    protected void connect(String mongoConnectUrl) {
         mongoClient = MongoClients.create(mongoConnectUrl);
         database = mongoClient.getDatabase("vocabulum_data");
 
@@ -57,7 +62,9 @@ public class Database {
         collection_texts = database.getCollection("texts");
         collection_portions = database.getCollection("portions");
         collection_wordbase = database.getCollection("wordbase");
+    }
 
+    protected void load() throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
         loadI18ns();
         loadDeclensionClasses();
         loadConjugationClasses();
@@ -87,7 +94,7 @@ public class Database {
 
     protected I18ns i18ns;
 
-    private void loadI18ns() {
+    protected void loadI18ns() {
         i18ns = new DbI18ns();
         Iterable<Document> documents = collection_texts.find();
         i18ns.loadI18ns(documents);
@@ -101,7 +108,7 @@ public class Database {
 
     protected DeclensionClasses declensionClasses;
 
-    private void loadDeclensionClasses() throws LoadingDataException {
+    protected void loadDeclensionClasses() throws LoadingDataException {
         declensionClasses = new DbDeclensionClasses();
         Iterable<Document> documents = collection_declension_schemas.find();
         declensionClasses.loadDeclensionSchemas(documents);
@@ -115,7 +122,7 @@ public class Database {
 
     protected ConjugationClasses conjugationClasses;
 
-    private void loadConjugationClasses() throws LoadingDataException {
+    protected void loadConjugationClasses() throws LoadingDataException {
         conjugationClasses = new DbConjugationClasses();
         Iterable<Document> documents = collection_conjugation_schemas.find();
         conjugationClasses.loadConjugationSchemas(documents);
@@ -129,7 +136,7 @@ public class Database {
 
     protected Portions portions;
 
-    private void loadPortions() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
+    protected void loadPortions() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
         portions = new DbPortions();
         Iterable<Document> documents = collection_portions.find();
         portions.loadPortions(documents);
@@ -145,7 +152,7 @@ public class Database {
 
     protected Wordbase wordbase;
 
-    private void loadWordbase() {
+    protected void loadWordbase() {
         wordbase = new DbWordbase(this);
     }
 
