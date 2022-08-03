@@ -24,10 +24,6 @@ class NounTest {
 
     @Test
     void getDefinition() {
-        /*List<VocabularyTranslation> translations = Arrays.asList(
-                new VocabularyTranslation(true, "der Freund"),
-                new VocabularyTranslation(false, "der Kamerade")
-        );*/
         Noun noun = new Noun(new ArrayList<>(), "test") {
             @Override
             protected Gender getGender() {
@@ -36,7 +32,8 @@ class NounTest {
 
             @Override
             public String makeForm(NounForm form) {
-                return "amici";
+                if (form.equals(new NounForm(new DeclinedForm(Casus.GEN, NNumber.SG)))) return "amici";
+                return null;
             }
 
             @Override
@@ -48,8 +45,8 @@ class NounTest {
     }
 
     @Nested
-    @DisplayName("generateWordbaseEntry()")
-    class GenerateWordbaseEntry {
+    @DisplayName("generateWordbaseEntrySpecificPart()")
+    class GenerateWordbaseEntrySpecificPart {
 
         @Test
         @DisplayName("all forms exist")
@@ -208,26 +205,59 @@ class NounTest {
 
     }
 
-    @Test
-    void identifyForm() {
-        final NounForm abl_pl = new NounForm(new DeclinedForm(Casus.ABL, NNumber.PL, Gender.MASC));
-        Noun noun = new Noun(new ArrayList<>(), "test") {
-            @Override
-            protected Gender getGender() {
-                return Gender.MASC;
-            }
+    @Nested
+    @DisplayName("identifyForm()")
+    class IdentifyForm {
 
-            @Override
-            public String makeForm(NounForm form) {
-                if (form.equals(abl_pl)) return "amicis";
-                else return "";
-            }
+        @Test
+        @DisplayName("one possibility")
+        void onePossibility() {
+            final NounForm abl_pl = new NounForm(new DeclinedForm(Casus.ABL, NNumber.PL, Gender.MASC));
+            Noun noun = new Noun(new ArrayList<>(), "test") {
+                @Override
+                protected Gender getGender() {
+                    return Gender.MASC;
+                }
 
-            @Override
-            public String getBaseForm() {
-                return "amicus";
-            }
-        };
-        assertEquals(Arrays.asList(abl_pl), noun.identifyForm("amicis"));
+                @Override
+                public String makeForm(NounForm form) {
+                    if (form.equals(abl_pl)) return "amicis";
+                    else return "";
+                }
+
+                @Override
+                public String getBaseForm() {
+                    return "amicus";
+                }
+            };
+            assertEquals(Arrays.asList(abl_pl), noun.identifyForm("amicis"));
+        }
+
+        @Test
+        @DisplayName("multiple possibilities")
+        void multiplePossibilities() {
+            final NounForm gen_sg = new NounForm(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC));
+            final NounForm nom_pl = new NounForm(new DeclinedForm(Casus.NOM, NNumber.PL, Gender.MASC));
+            Noun noun = new Noun(new ArrayList<>(), "test") {
+                @Override
+                protected Gender getGender() {
+                    return Gender.MASC;
+                }
+
+                @Override
+                public String makeForm(NounForm form) {
+                    if (form.equals(gen_sg)) return "amici";
+                    if (form.equals(nom_pl)) return "amici";
+                    else return "";
+                }
+
+                @Override
+                public String getBaseForm() {
+                    return "amicus";
+                }
+            };
+            assertEquals(Arrays.asList(gen_sg, nom_pl), noun.identifyForm("amici"));
+        }
+
     }
 }

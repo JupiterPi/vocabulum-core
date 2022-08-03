@@ -36,7 +36,7 @@ public abstract class Adjective extends Vocabulary {
                 for (NNumber number : NNumber.values()) {
                     Document numberDocument = new Document();
                     for (Casus casus : Casus.values()) {
-                        AdjectiveForm form = new AdjectiveForm(new DeclinedForm(casus, number, gender), ComparativeForm.POSITIVE);
+                        AdjectiveForm form = new AdjectiveForm(new DeclinedForm(casus, number, gender), comparativeForm);
                         String generatedForm;
                         try {
                             generatedForm = makeForm(form);

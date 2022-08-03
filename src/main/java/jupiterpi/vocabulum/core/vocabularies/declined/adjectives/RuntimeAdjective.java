@@ -30,6 +30,15 @@ public class RuntimeAdjective extends Adjective {
     }
     private String root;
 
+    public RuntimeAdjective(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, Kind kind, String root, List<VocabularyTranslation> translations, String portion, AdjectiveDefinitionType definitionType) {
+        super(translations, portion, definitionType);
+        this.nom_sg_masc = nom_sg_masc;
+        this.nom_sg_fem = nom_sg_fem;
+        this.nom_sg_neut = nom_sg_neut;
+        this.kind = kind;
+        this.root = root;
+    }
+
     private RuntimeAdjective(List<VocabularyTranslation> translations, String portion, AdjectiveDefinitionType definitionType) {
         super(translations, portion, definitionType);
     }
@@ -119,7 +128,7 @@ public class RuntimeAdjective extends Adjective {
 
                 DeclinedForm declinedForm = form.getDeclinedForm();
                 declinedForm.normalizeGender();
-                if (declinedForm.fits(DeclinedForm.get("Nom. Sg."))) {
+                if (declinedForm.fits(new DeclinedForm(Casus.NOM, NNumber.SG))) {
                     return switch (declinedForm.getGender()) {
                         case MASC -> nom_sg_masc;
                         case FEM -> nom_sg_fem;
