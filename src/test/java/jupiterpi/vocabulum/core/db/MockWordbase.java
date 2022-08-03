@@ -7,25 +7,25 @@ import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import java.util.List;
 
 public class MockWordbase implements Wordbase {
-    //TODO implement
+    //TODO implement actual mock wordbase?
 
     @Override
     public Vocabulary loadVocabulary(String baseForm) {
-        return null;
+        throw new RuntimeException("Not supposed to call mocked Wordbase");
     }
 
     @Override
     public List<IdentificationResult> identifyWord(String word) {
-        return null;
+        throw new RuntimeException("Not supposed to call mocked Wordbase");
     }
 
     @Override
     public void saveVocabulary(Vocabulary vocabulary) {
-
+        throw new RuntimeException("Not supposed to call mocked Wordbase");
     }
 
     @Override
     public void clearAll() {
-
+        throw new RuntimeException("Not supposed to call mocked Wordbase");
     }
 }

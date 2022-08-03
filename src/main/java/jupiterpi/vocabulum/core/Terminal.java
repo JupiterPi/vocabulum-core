@@ -100,7 +100,7 @@ public class Terminal extends ConsoleInterface {
                 try {
                     String sentence = in("> ");
                     if (sentence.equals("")) break;
-                    TAResult result = TranslationAssistance.runTranslationAssistance(sentence, i18n);
+                    TAResult result = new TranslationAssistance(sentence).getResult();
 
                     int maxLines = 0;
                     for (TAResult.TAResultItem item : result.getItems()) {

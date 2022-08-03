@@ -3,15 +3,19 @@ package jupiterpi.vocabulum.core.db;
 import jupiterpi.vocabulum.core.db.classes.ConjugationClasses;
 import jupiterpi.vocabulum.core.db.classes.DeclensionClasses;
 import jupiterpi.vocabulum.core.db.portions.Portions;
-import jupiterpi.vocabulum.core.i18n.I18ns;
+import jupiterpi.vocabulum.core.db.wordbase.IdentificationResult;
+import jupiterpi.vocabulum.core.db.wordbase.Wordbase;
 import jupiterpi.vocabulum.core.i18n.I18nException;
+import jupiterpi.vocabulum.core.i18n.I18ns;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
+import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import org.bson.Document;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class MockDatabase extends Database {
     public static void inject() {
@@ -90,7 +94,6 @@ public class MockDatabase extends Database {
     }
 
     // load classes
-
 
     @Override
     protected void loadI18ns() {
@@ -287,6 +290,13 @@ public class MockDatabase extends Database {
                         }""")
         ));
     }
+    public void reloadI18ns() {
+        loadI18ns();
+    }
+
+    public void injectI18ns(I18ns i18ns) {
+        this.i18ns = i18ns;
+    }
 
     @Override
     protected void loadDeclensionClasses() throws LoadingDataException {
@@ -476,6 +486,13 @@ public class MockDatabase extends Database {
                           }
                         }""")
         ));
+    }
+    public void reloadDeclensionClasses() throws LoadingDataException {
+        loadDeclensionClasses();
+    }
+
+    public void injectDeclensionClasses(DeclensionClasses declensionClasses) {
+        this.declensionClasses = declensionClasses;
     }
 
     @Override
@@ -816,6 +833,13 @@ public class MockDatabase extends Database {
                         }""")
         ));
     }
+    public void reloadConjugationClasses() throws LoadingDataException {
+        loadConjugationClasses();
+    }
+
+    public void injectConjugationClasses(ConjugationClasses conjugationClasses) {
+        this.conjugationClasses = conjugationClasses;
+    }
 
     @Override
     protected void loadPortions() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
@@ -845,10 +869,23 @@ public class MockDatabase extends Database {
                         }""")
         ));
     }
+    public void reloadPortions() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
+        loadPortions();
+    }
+
+    public void injectPortions(Portions portions) {
+        this.portions = portions;
+    }
 
     @Override
     protected void loadWordbase() {
-        super.loadWordbase();
-        //TODO implement mock wordbase
+        this.wordbase = new MockWordbase();
+    }
+    public void reloadWordbase() {
+        loadWordbase();
+    }
+
+    public void injectWordbase(Wordbase wordbase) {
+        this.wordbase = wordbase;
     }
 }
