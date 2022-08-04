@@ -1,8 +1,8 @@
 package jupiterpi.vocabulum.core.db.classes;
 
 import jupiterpi.vocabulum.core.db.LoadingDataException;
+import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionSchema;
-import jupiterpi.vocabulum.core.vocabularies.declined.schemas.GenderDependantDeclensionSchema;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.SimpleDeclensionSchema;
 import org.bson.Document;
 
@@ -25,17 +25,12 @@ public class DeclensionClasses {
         declensionSchemas = new HashMap<>();
         for (Document document : documents) {
             String name = document.getString("name");
-            declensionSchemas.put(name, makeSchema(document));
+            try {
+                declensionSchemas.put(name, SimpleDeclensionSchema.readFromDocument(document));
+            } catch (Exception e) {
+                throw new LoadingDataException(String.format("Could not read declension schema %s: %s \"%s\"", name, e.getClass().getSimpleName(), e.getMessage()));
+            }
         }
-    }
-
-    public DeclensionSchema makeSchema(Document document) throws LoadingDataException {
-        String schema = document.getString("schema");
-        return switch (schema) {
-            case "simple" -> SimpleDeclensionSchema.readFromDocument(document);
-            case "gender_dependant" -> GenderDependantDeclensionSchema.readFromDocument(document);
-            default -> null;
-        };
     }
 
     public Document getRaw(String name) {

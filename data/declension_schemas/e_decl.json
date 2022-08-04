@@ -1,6 +1,6 @@
 {
     "name": "e",
-    "schema": "simple",
+    "schema": "general",
     "sg": {
         "nom": "es",
         "gen": "ei",

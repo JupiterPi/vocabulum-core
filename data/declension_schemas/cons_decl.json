@@ -1,6 +1,6 @@
 {
     "name": "cons",
-    "schema": "simple",
+    "schema": "general",
     "sg": {
         "nom": "",
         "gen": "is",

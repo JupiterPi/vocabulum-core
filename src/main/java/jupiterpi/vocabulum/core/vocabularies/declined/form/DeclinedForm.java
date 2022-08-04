@@ -9,6 +9,8 @@ import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 
+import java.util.Objects;
+
 public class DeclinedForm {
     private Casus casus;
     private NNumber number;
@@ -104,6 +106,11 @@ public class DeclinedForm {
         if (o == null || getClass() != o.getClass()) return false;
         DeclinedForm that = (DeclinedForm) o;
         return casus == that.casus && number == that.number && gender == that.gender;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(casus, number, gender);
     }
 
     public boolean fits(DeclinedForm target) {

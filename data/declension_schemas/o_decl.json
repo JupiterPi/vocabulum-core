@@ -1,6 +1,6 @@
 {
     "name": "o",
-    "schema": "gender_dependant",
+    "schema": "general",
     "masc": {
         "sg": {
             "nom": "us", 

@@ -3,19 +3,16 @@ package jupiterpi.vocabulum.core.db;
 import jupiterpi.vocabulum.core.db.classes.ConjugationClasses;
 import jupiterpi.vocabulum.core.db.classes.DeclensionClasses;
 import jupiterpi.vocabulum.core.db.portions.Portions;
-import jupiterpi.vocabulum.core.db.wordbase.IdentificationResult;
 import jupiterpi.vocabulum.core.db.wordbase.Wordbase;
 import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.i18n.I18ns;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
-import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import org.bson.Document;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class MockDatabase extends Database {
     public static void inject() {
@@ -487,7 +484,7 @@ public class MockDatabase extends Database {
                         }""")
         ));
     }
-    public void reloadDeclensionClasses() throws LoadingDataException {
+    public void reloadDeclensionClasses() throws LoadingDataException, DeclinedFormDoesNotExistException {
         loadDeclensionClasses();
     }
 
