@@ -24,7 +24,6 @@ public class MockDatabaseSetup implements BeforeAllCallback {
     }
 
     private final boolean mockDatabase = true;
-    //TODO actually mock database and fix errors
     private void setup() throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
         if (mockDatabase) MockDatabase.inject();
         Database.get().connectAndLoad("mongodb://localhost");

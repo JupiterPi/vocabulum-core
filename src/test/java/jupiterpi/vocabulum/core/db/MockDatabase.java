@@ -29,7 +29,7 @@ public class MockDatabase extends Database {
 
     @Override
     public void prepareWordbase() {
-        //TODO implement mock wordbase
+        // do nothing
     }
 
     @Override
@@ -302,7 +302,7 @@ public class MockDatabase extends Database {
                 Document.parse("""
                         {
                             "name": "a",
-                            "schema": "simple",
+                            "schema": "general",
                             "sg": {
                                 "nom": "a",\s
                                 "gen": "ae",\s
@@ -374,7 +374,7 @@ public class MockDatabase extends Database {
                 Document.parse("""
                         {
                             "name": "cons",
-                            "schema": "simple",
+                            "schema": "general",
                             "sg": {
                                 "nom": "",
                                 "gen": "is",
@@ -393,7 +393,7 @@ public class MockDatabase extends Database {
                 Document.parse("""
                         {
                             "name": "e",
-                            "schema": "simple",
+                            "schema": "general",
                             "sg": {
                                 "nom": "es",
                                 "gen": "ei",
@@ -412,7 +412,7 @@ public class MockDatabase extends Database {
                 Document.parse("""
                         {
                             "name": "u",
-                            "schema": "simple",
+                            "schema": "general",
                             "sg": {
                                 "nom": "us",
                                 "gen": "us",

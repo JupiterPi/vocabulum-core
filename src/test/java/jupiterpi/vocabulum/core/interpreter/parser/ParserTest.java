@@ -36,12 +36,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ParserTest {
     I18n i18n = Database.get().getI18ns().internal();
 
-    @BeforeAll
-    static void init() throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
-        Database.get().connectAndLoad("mongodb://localhost");
-        //TODO mock database
-    }
-
     @Nested
     @DisplayName("valid")
     class Valid {
