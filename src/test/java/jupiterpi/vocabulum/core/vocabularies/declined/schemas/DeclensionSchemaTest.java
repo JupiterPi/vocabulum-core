@@ -23,7 +23,7 @@ class DeclensionSchemaTest {
         void genderDependantUnsetGender() {
             DeclensionSchema s = new DeclensionSchema("test") {
                 @Override
-                protected String getSuffixRaw(DeclinedForm form) { return null; }
+                protected String getSuffixRaw(DeclinedForm form) { return "-"; }
 
             };
             assertThrows(DeclinedFormDoesNotExistException.class, () -> s.getSuffix(new DeclinedForm(Casus.ABL, NNumber.PL)));
