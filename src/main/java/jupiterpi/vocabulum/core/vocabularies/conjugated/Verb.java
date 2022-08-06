@@ -26,7 +26,7 @@ public abstract class Verb extends Vocabulary {
         String first_sg_pres = "-";
         String first_sg_perfect = "-";
         try {
-            first_sg_pres = makeForm(new VerbForm(ConjugatedForm.get("1. Sg.")));
+            first_sg_pres = makeForm(new VerbForm(ConjugatedForm.get("1. Sg."), Mode.INDICATIVE, Tense.PRESENT, Voice.ACTIVE));
             first_sg_perfect = makeForm(new VerbForm(ConjugatedForm.get("1. Sg."), Mode.INDICATIVE, Tense.PERFECT, Voice.ACTIVE));
         } catch (VerbFormDoesNotExistException ignored) {}
         return getBaseForm() + ", " + first_sg_pres + ", " + first_sg_perfect;

@@ -16,23 +16,32 @@ public class AdjectiveForm implements VocabularyForm {
     private DeclinedForm declinedForm;
     private ComparativeForm comparativeForm;
 
+
+    /* constructors */
+
+    // full
     public AdjectiveForm(boolean adverb, DeclinedForm declinedForm, ComparativeForm comparativeForm) {
         this.adverb = adverb;
         this.declinedForm = declinedForm;
         this.comparativeForm = comparativeForm;
     }
 
+    // for adjectives
     public AdjectiveForm(DeclinedForm declinedForm, ComparativeForm comparativeForm) {
         this.adverb = false;
         this.declinedForm = declinedForm;
         this.comparativeForm = comparativeForm;
     }
 
+    // for adverbs
     public AdjectiveForm(boolean adverb, ComparativeForm comparativeForm) {
         this.adverb = adverb;
         this.declinedForm = null;
         this.comparativeForm = comparativeForm;
     }
+
+
+    /* parser */
 
     public static AdjectiveForm fromString(String expr, I18n i18n) throws ParserException, LexerException {
         return fromTokens(new Lexer(expr, i18n).getTokens());
@@ -58,6 +67,9 @@ public class AdjectiveForm implements VocabularyForm {
 
         return new AdjectiveForm(isAdverb, declinedForm, comparativeForm);
     }
+
+
+    /* getters, equals, toString */
 
     public boolean isAdverb() {
         return adverb;
@@ -85,7 +97,7 @@ public class AdjectiveForm implements VocabularyForm {
     public String formToString(I18n i18n) {
         String str = "";
         if (adverb) {
-            str += i18n.getAdverbSymbol() + ".";
+            str += i18n.getAdverbFlag() + ".";
         } else {
             str += declinedForm.formToString(i18n);
         }

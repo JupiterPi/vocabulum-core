@@ -76,7 +76,7 @@ public class I18n {
     }
 
     // adverb (flag)
-    public String getAdverbSymbol() {
+    public String getAdverbFlag() {
         return str_texts.getString("adverb");
     }
 
@@ -143,6 +143,35 @@ public class I18n {
             if (getVoiceSymbol(voice).equals(symbol)) return voice;
         }
         throw new ParserException("Invalid voice: " + symbol);
+    }
+
+    // infinitive (flag)
+    public String getInfinitiveFlag() {
+        return str_texts.getString("infinitive");
+    }
+
+    // infinitive tense
+    public String getInfinitiveTenseSymbol(InfinitiveTense infinitiveTense) {
+        Document document = (Document) str_texts.get("tense");
+        return document.getString(infinitiveTense.toString().toLowerCase());
+    }
+    public InfinitiveTense infinitiveTenseFromSymbol(String symbol) throws ParserException {
+        for (InfinitiveTense infinitiveTense : InfinitiveTense.values()) {
+            if (getInfinitiveTenseSymbol(infinitiveTense).equals(symbol)) return infinitiveTense;
+        }
+        throw new ParserException("Invalid infinitiveTense: " + symbol);
+    }
+
+    // noun-like form
+    public String getNounLikeFormSymbol(NounLikeForm nounLikeForm) {
+        Document document = (Document) str_texts.get("noun_like_form");
+        return document.getString(nounLikeForm.toString().toLowerCase());
+    }
+    public NounLikeForm nounLikeFormFromSymbol(String symbol) throws ParserException {
+        for (NounLikeForm nounLikeForm : NounLikeForm.values()) {
+            if (getNounLikeFormSymbol(nounLikeForm).equals(symbol)) return nounLikeForm;
+        }
+        throw new ParserException("Invalid noun-like form: " + symbol);
     }
     
     public String toString() {

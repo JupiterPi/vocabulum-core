@@ -4,10 +4,7 @@ import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.util.StringSet;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.form.Mode;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.form.Person;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.form.Tense;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.form.Voice;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.form.*;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.ComparativeForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
@@ -41,7 +38,7 @@ public class Lexer {
                 i18n.getComparativeFormSymbol(ComparativeForm.COMPARATIVE),
                 i18n.getComparativeFormSymbol(ComparativeForm.SUPERLATIVE)
         );
-        adverbSymbol = i18n.getAdverbSymbol();
+        adverbFlag = i18n.getAdverbFlag();
         personSymbols = new StringSet(
                 i18n.getPersonSymbol(Person.FIRST),
                 i18n.getPersonSymbol(Person.SECOND),
@@ -64,6 +61,13 @@ public class Lexer {
                 i18n.getVoiceSymbol(Voice.ACTIVE),
                 i18n.getVoiceSymbol(Voice.PASSIVE)
         );
+        infinitiveFlag = i18n.getInfinitiveFlag();
+        nounLikeForms = new StringSet(
+                i18n.getNounLikeFormSymbol(NounLikeForm.PPP),
+                i18n.getNounLikeFormSymbol(NounLikeForm.PPA),
+                i18n.getNounLikeFormSymbol(NounLikeForm.GERUNDIUM),
+                i18n.getNounLikeFormSymbol(NounLikeForm.GERUNDIVUM)
+        );
 
         generateTokens(expr);
     }
@@ -85,12 +89,14 @@ public class Lexer {
     private final StringSet numberSymbols;
     private final StringSet genderSymbols;
     private final StringSet comparativeFormSymbols;
-    private final String adverbSymbol;
+    private final String adverbFlag;
     private final StringSet personSymbols;
     private final String personCosmetic;
     private final StringSet modeSymbols;
     private final StringSet tenseSymbols;
     private final StringSet voiceSymbols;
+    private final String infinitiveFlag;
+    private final StringSet nounLikeForms;
 
     // buffer
     private String buffer = "";
@@ -147,7 +153,7 @@ public class Lexer {
                 tokens.add(new Token(Token.Type.GENDER, buffer, i18n));
             } else if (comparativeFormSymbols.contains(buffer)) {
                 tokens.add(new Token(Token.Type.COMPARATIVE_FORM, buffer, i18n));
-            } else if (adverbSymbol.equals(buffer)) {
+            } else if (adverbFlag.equals(buffer)) {
                 tokens.add(new Token(Token.Type.ADV_FLAG, buffer, i18n));
             } else if (personSymbols.contains(buffer)) {
                 tokens.add(new Token(Token.Type.PERSON, buffer, i18n));
@@ -159,6 +165,10 @@ public class Lexer {
                 tokens.add(new Token(Token.Type.TENSE, buffer, i18n));
             } else if (voiceSymbols.contains(buffer)) {
                 tokens.add(new Token(Token.Type.VOICE, buffer, i18n));
+            } else if (infinitiveFlag.equals(buffer)) {
+                tokens.add(new Token(Token.Type.INFINITIVE_FLAG, buffer, i18n));
+            } else if (nounLikeForms.contains(buffer)) {
+                tokens.add(new Token(Token.Type.NOUN_LIKE_FORM, buffer, i18n));
             } else {
                 throw new LexerException("Invalid abbreviation: " + buffer);
             }

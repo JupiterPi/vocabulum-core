@@ -144,9 +144,17 @@ public class MockDatabase extends Database {
                             "voice": {
                               "active": "Act",
                               "passive": "Pass"
+                            },
+                            "infinitive": "Inf",
+                            "noun_like_form": {
+                              "ppp": "PPP",
+                              "ppa": "PPA",
+                              "gerundium": "Gerund",
+                              "gerundivum": "Gerundv"
                             }
                           }
-                        }"""),
+                        }
+                        """),
                 Document.parse("""
                         {
                           "language": "de",
@@ -213,9 +221,17 @@ public class MockDatabase extends Database {
                             "voice": {
                               "active": "Akt",
                               "passive": "Pass"
+                            },
+                            "infinitive": "Inf",
+                            "noun_like_form": {
+                              "ppp": "PPP",
+                              "ppa": "PPA",
+                              "gerundium": "Gerund",
+                              "gerundivum": "Gerundv"
                             }
                           }
-                        }"""),
+                        }
+                        """),
                 Document.parse("""
                         {
                           "language": "en",
@@ -282,9 +298,17 @@ public class MockDatabase extends Database {
                             "voice": {
                               "active": "Act",
                               "passive": "Pass"
+                            },
+                            "infinitive": "Inf",
+                            "noun_like_form": {
+                              "ppp": "PPP",
+                              "ppa": "PPA",
+                              "gerundium": "Gerund",
+                              "gerundivum": "Gerundv"
                             }
                           }
-                        }""")
+                        }
+                        """)
         ));
     }
     public void reloadI18ns() {

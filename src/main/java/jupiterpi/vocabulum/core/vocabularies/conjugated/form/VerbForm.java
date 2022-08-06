@@ -1,6 +1,5 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated.form;
 
-import jupiterpi.vocabulum.core.Main;
 import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
@@ -9,15 +8,36 @@ import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.VocabularyForm;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 
 import java.util.Objects;
 
 public class VerbForm implements VocabularyForm {
+    // for Kind.INFINITIVE
+    private boolean infinitive;
+    private InfinitiveTense infinitiveTense;
+
+    // for Kind.BASIC
     private ConjugatedForm conjugatedForm;
     private Mode mode;
     private Tense tense;
     private Voice voice;
 
+    // for Kind.NOUN_LIKE
+    private boolean nounLike;
+    private NounLikeForm nounLikeForm;
+    private DeclinedForm declinedForm;
+
+
+    /* constructors */
+
+    // for Kind.INFINITIVE
+    public VerbForm(InfinitiveTense infinitiveTense) {
+        this.infinitive = true;
+        this.infinitiveTense = infinitiveTense;
+    }
+
+    // for Kind.BASIC
     public VerbForm(ConjugatedForm conjugatedForm, Mode mode, Tense tense, Voice voice) {
         this.conjugatedForm = conjugatedForm;
         this.mode = mode;
@@ -25,12 +45,17 @@ public class VerbForm implements VocabularyForm {
         this.voice = voice;
     }
 
-    public VerbForm(ConjugatedForm conjugatedForm) {
-        this.conjugatedForm = conjugatedForm;
-        this.mode = Mode.INDICATIVE;
-        this.tense = Tense.PRESENT;
-        this.voice = Voice.ACTIVE;
+    // for Kind.NOUN_LIKE
+    public VerbForm(NounLikeForm nounLikeForm, DeclinedForm declinedForm) {
+        this.nounLike = true;
+        this.nounLikeForm = nounLikeForm;
+        this.declinedForm = declinedForm;
     }
+
+
+    /* parser */
+
+    //TODO re-implement
 
     public static VerbForm fromString(String expr, I18n i18n) throws ParserException, LexerException {
         return fromTokens(new Lexer(expr, i18n).getTokens());
@@ -50,6 +75,8 @@ public class VerbForm implements VocabularyForm {
     public static final Voice DEFAULT_VOICE = Voice.ACTIVE;
 
     public static VerbForm fromTokens(TokenSequence tokens) throws ParserException {
+        //TODO use external parser
+
         int voiceIndex = tokens.indexOf(new Token(Token.Type.VOICE));
         Voice voice = DEFAULT_VOICE;
         if (voiceIndex >= 0) {
@@ -76,6 +103,32 @@ public class VerbForm implements VocabularyForm {
         return new VerbForm(conjugatedForm, mode, tense, voice);
     }
 
+
+    /* kinds */
+
+    public enum Kind {
+        INFINITIVE, BASIC, NOUN_LIKE
+    }
+
+    public Kind getKind() {
+        if (infinitive) return Kind.INFINITIVE;
+        if (nounLike) return Kind.NOUN_LIKE;
+        return Kind.BASIC;
+    }
+
+
+    /* getters, equals, toString */
+
+    // getters
+
+    public boolean isInfinitive() {
+        return infinitive;
+    }
+
+    public InfinitiveTense getInfinitiveTense() {
+        return infinitiveTense;
+    }
+
     public ConjugatedForm getConjugatedForm() {
         return conjugatedForm;
     }
@@ -92,23 +145,38 @@ public class VerbForm implements VocabularyForm {
         return voice;
     }
 
+    public boolean isNounLike() {
+        return nounLike;
+    }
+
+    public NounLikeForm getNounLikeForm() {
+        return nounLikeForm;
+    }
+
+    public DeclinedForm getDeclinedForm() {
+        return declinedForm;
+    }
+
+    // equals
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VerbForm verbForm = (VerbForm) o;
-        return Objects.equals(conjugatedForm, verbForm.conjugatedForm) && mode == verbForm.mode && tense == verbForm.tense && voice == verbForm.voice;
+        return infinitive == verbForm.infinitive && nounLike == verbForm.nounLike && infinitiveTense == verbForm.infinitiveTense && Objects.equals(conjugatedForm, verbForm.conjugatedForm) && mode == verbForm.mode && tense == verbForm.tense && voice == verbForm.voice && nounLikeForm == verbForm.nounLikeForm && Objects.equals(declinedForm, verbForm.declinedForm);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(conjugatedForm, mode, tense, voice);
+        return Objects.hash(infinitive, infinitiveTense, conjugatedForm, mode, tense, voice, nounLike, nounLikeForm, declinedForm);
     }
 
     // to string
 
     @Override
     public String formToString(I18n i18n) {
+        //TOOD re-implement
         String str = "";
         str += conjugatedForm.formToString(i18n, true) + " ";
         str += mode != DEFAULT_MODE ? i18n.getModeSymbol(mode) + ". " : "";
@@ -119,6 +187,7 @@ public class VerbForm implements VocabularyForm {
 
     @Override
     public String toString() {
+        //TODO re-implement
         return "Verb{form=" + conjugatedForm.toString() + ",mode=" + mode.toString().toLowerCase() + ",tense=" + tense.toString().toLowerCase() + ",voice=" + voice.toString().toLowerCase() + "}";
     }
 }

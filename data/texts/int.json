@@ -45,6 +45,13 @@
     "voice": {
       "active": "Act",
       "passive": "Pass"
+    },
+    "infinitive": "Inf",
+    "noun_like_form": {
+      "ppp": "PPP",
+      "ppa": "PPA",
+      "gerundium": "Gerund",
+      "gerundivum": "Gerundv"
     }
   }
 }
