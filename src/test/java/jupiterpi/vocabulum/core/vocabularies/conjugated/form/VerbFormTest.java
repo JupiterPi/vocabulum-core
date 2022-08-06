@@ -6,6 +6,10 @@ import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -48,6 +52,33 @@ class VerbFormTest {
     }
 
     @Nested
+    @DisplayName("getKind()")
+    class GetKind {
+
+        @Test
+        @DisplayName("=> Kind.BASIC")
+        void basic() {
+            VerbForm form = new VerbForm(new ConjugatedForm(Person.SECOND, CNumber.PL), Mode.CONJUNCTIVE, Tense.IMPERFECT, Voice.PASSIVE);
+            assertEquals(VerbForm.Kind.BASIC, form.getKind());
+        }
+
+        @Test
+        @DisplayName("=> Kind.INFINITIVE")
+        void infinitive() {
+            VerbForm form = new VerbForm(InfinitiveTense.PERFECT);
+            assertEquals(VerbForm.Kind.INFINITIVE, form.getKind());
+        }
+
+        @Test
+        @DisplayName("=> Kind.NOUN_LIKE")
+        void nounLike() {
+            VerbForm form = new VerbForm(NounLikeForm.PPA, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC));
+            assertEquals(VerbForm.Kind.NOUN_LIKE, form.getKind());
+        }
+
+    }
+
+    @Nested
     @DisplayName("invalid fromTokens()")
     class InvalidFromTokens {
 
@@ -83,18 +114,38 @@ class VerbFormTest {
     @DisplayName("formToString()")
     class FormToString {
 
-        @Test
-        @DisplayName("simple, short form")
-        void simpleShort() {
-            VerbForm form = new VerbForm(new ConjugatedForm(Person.FIRST, CNumber.SG), Mode.INDICATIVE, Tense.PRESENT, Voice.ACTIVE);
-            assertEquals("1. Pers. Sg.", form.formToString(i18n));
+        @Nested
+        @DisplayName("Kind.BASIC")
+        class BasicKind {
+
+            @Test
+            @DisplayName("simple, short form")
+            void simpleShort() {
+                VerbForm form = new VerbForm(new ConjugatedForm(Person.FIRST, CNumber.SG), Mode.INDICATIVE, Tense.PRESENT, Voice.ACTIVE);
+                assertEquals("1. Pers. Sg.", form.formToString(i18n));
+            }
+
+            @Test
+            @DisplayName("fully specified form")
+            void fullySpecified() {
+                VerbForm form = new VerbForm(new ConjugatedForm(Person.SECOND, CNumber.PL), Mode.CONJUNCTIVE, Tense.IMPERFECT, Voice.PASSIVE);
+                assertEquals("2. Pers. Pl. Conj. Imperf. Pass.", form.formToString(i18n));
+            }
+
         }
 
         @Test
-        @DisplayName("fully specified form")
-        void fullySpecified() {
-            VerbForm form = new VerbForm(new ConjugatedForm(Person.SECOND, CNumber.PL), Mode.CONJUNCTIVE, Tense.IMPERFECT, Voice.PASSIVE);
-            assertEquals("2. Pers. Pl. Conj. Imperf. Pass.", form.formToString(i18n));
+        @DisplayName("Kind.INFINITIVE")
+        void infinitiveKind() {
+            VerbForm form = new VerbForm(InfinitiveTense.PERFECT);
+            assertEquals("Inf. Perf.", form.formToString(i18n));
+        }
+
+        @Test
+        @DisplayName("Kind.NOUN_LIKE")
+        void nounLikeKind() {
+            VerbForm form = new VerbForm(NounLikeForm.PPA, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC));
+            assertEquals("PPA. Nom. Sg. m.", form.formToString(i18n));
         }
 
     }

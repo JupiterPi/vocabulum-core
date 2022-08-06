@@ -55,8 +55,6 @@ public class VerbForm implements VocabularyForm {
 
     /* parser */
 
-    //TODO re-implement
-
     public static VerbForm fromString(String expr, I18n i18n) throws ParserException, LexerException {
         return fromTokens(new Lexer(expr, i18n).getTokens());
     }
@@ -75,32 +73,8 @@ public class VerbForm implements VocabularyForm {
     public static final Voice DEFAULT_VOICE = Voice.ACTIVE;
 
     public static VerbForm fromTokens(TokenSequence tokens) throws ParserException {
-        //TODO use external parser
-
-        int voiceIndex = tokens.indexOf(new Token(Token.Type.VOICE));
-        Voice voice = DEFAULT_VOICE;
-        if (voiceIndex >= 0) {
-            voice = tokens.getI18n().voiceFromSymbol(tokens.get(voiceIndex).getContent());
-            tokens.remove(voiceIndex);
-        }
-
-        int tenseIndex = tokens.indexOf(new Token(Token.Type.TENSE));
-        Tense tense = DEFAULT_TENSE;
-        if (tenseIndex >= 0) {
-            tense = tokens.getI18n().tenseFromSymbol(tokens.get(tenseIndex).getContent());
-            tokens.remove(tenseIndex);
-        }
-
-        int modeIndex = tokens.indexOf(new Token(Token.Type.MODE));
-        Mode mode = DEFAULT_MODE;
-        if (modeIndex >= 0) {
-            mode = tokens.getI18n().modeFromSymbol(tokens.get(modeIndex).getContent());
-            tokens.remove(modeIndex);
-        }
-
-        ConjugatedForm conjugatedForm = ConjugatedForm.fromTokens(tokens);
-
-        return new VerbForm(conjugatedForm, mode, tense, voice);
+        VerbFormParser parser = new VerbFormParser(tokens);
+        return parser.getVerbForm();
     }
 
 
@@ -176,18 +150,28 @@ public class VerbForm implements VocabularyForm {
 
     @Override
     public String formToString(I18n i18n) {
-        //TOOD re-implement
-        String str = "";
-        str += conjugatedForm.formToString(i18n, true) + " ";
-        str += mode != DEFAULT_MODE ? i18n.getModeSymbol(mode) + ". " : "";
-        str += tense != DEFAULT_TENSE ? i18n.getTenseSymbol(tense) + ". " : "";
-        str += voice != DEFAULT_VOICE ? i18n.getVoiceSymbol(voice) + ". " : "";
-        return str.substring(0, str.length()-1);
+        if (getKind() == Kind.BASIC) {
+            String str = "";
+            str += conjugatedForm.formToString(i18n, true) + " ";
+            str += mode != DEFAULT_MODE ? i18n.getModeSymbol(mode) + ". " : "";
+            str += tense != DEFAULT_TENSE ? i18n.getTenseSymbol(tense) + ". " : "";
+            str += voice != DEFAULT_VOICE ? i18n.getVoiceSymbol(voice) + ". " : "";
+            return str.substring(0, str.length() - 1);
+        } else {
+            return switch (getKind()) {
+                case BASIC -> null;
+                case INFINITIVE -> i18n.getInfinitiveFlag() + ". " + i18n.getInfinitiveTenseSymbol(infinitiveTense) + ".";
+                case NOUN_LIKE -> i18n.getNounLikeFormSymbol(nounLikeForm) + ". " + declinedForm.formToString(i18n);
+            };
+        }
     }
 
     @Override
     public String toString() {
-        //TODO re-implement
-        return "Verb{form=" + conjugatedForm.toString() + ",mode=" + mode.toString().toLowerCase() + ",tense=" + tense.toString().toLowerCase() + ",voice=" + voice.toString().toLowerCase() + "}";
+        return switch (getKind()) {
+            case BASIC -> "Verb{form=" + conjugatedForm.toString() + ",mode=" + mode.toString().toLowerCase() + ",tense=" + tense.toString().toLowerCase() + ",voice=" + voice.toString().toLowerCase() + "}";
+            case INFINITIVE -> "Verb{infinitive, tense=" + infinitiveTense.toString().toLowerCase() + "}";
+            case NOUN_LIKE -> "Verb{" + nounLikeForm.toString().toLowerCase() + ", form=" + declinedForm.toString() + "}";
+        };
     }
 }
