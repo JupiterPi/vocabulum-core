@@ -4,7 +4,7 @@ import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
-import jupiterpi.vocabulum.core.interpreter.parser.Parser;
+import jupiterpi.vocabulum.core.interpreter.parser.VocabularyParser;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
@@ -47,7 +47,7 @@ public abstract class Vocabulary {
 
         Lexer lexer = new Lexer(latinStr, i18n);
         TokenSequence tokens = lexer.getTokens();
-        Parser parser = new Parser(tokens, translations, portion);
+        VocabularyParser parser = new VocabularyParser(tokens, translations, portion);
         Vocabulary vocabulary = parser.getVocabulary();
 
         return vocabulary;

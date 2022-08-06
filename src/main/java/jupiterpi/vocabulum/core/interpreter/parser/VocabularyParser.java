@@ -14,10 +14,10 @@ import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 
 import java.util.List;
 
-public class Parser {
+public class VocabularyParser {
     private Vocabulary vocabulary;
 
-    public Parser(TokenSequence tokens, List<VocabularyTranslation> translations, String portion) throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
+    public VocabularyParser(TokenSequence tokens, List<VocabularyTranslation> translations, String portion) throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
         this.vocabulary = parseVocabulary(tokens, translations, portion);
     }
 
@@ -97,6 +97,6 @@ public class Parser {
             return new Inflexible(tokens.get(0).getContent(), translations, portion);
         }
 
-        throw new ParserException("Could not parse token sequence: " + tokens);
+        throw new ParserException("Could not parse vocabulary: " + tokens);
     }
 }
