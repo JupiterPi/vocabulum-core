@@ -39,7 +39,7 @@ public class Database {
     public MongoCollection<Document> collection_declension_schemas;
     public MongoCollection<Document> collection_conjugation_schemas;
     public MongoCollection<Document> collection_other;
-    public MongoCollection<Document> collection_texts;
+    public MongoCollection<Document> collection_i18ns;
     public MongoCollection<Document> collection_portions;
     public MongoCollection<Document> collection_wordbase;
 
@@ -55,7 +55,7 @@ public class Database {
         collection_declension_schemas = database.getCollection("declension_schemas");
         collection_conjugation_schemas = database.getCollection("conjugation_schemas");
         collection_other = database.getCollection("other");
-        collection_texts = database.getCollection("texts");
+        collection_i18ns = database.getCollection("i18ns");
         collection_portions = database.getCollection("portions");
         collection_wordbase = database.getCollection("wordbase");
     }
@@ -92,7 +92,7 @@ public class Database {
 
     protected void loadI18ns() {
         i18ns = new I18ns();
-        Iterable<Document> documents = collection_texts.find();
+        Iterable<Document> documents = collection_i18ns.find();
         i18ns.loadI18ns(documents);
     }
 
