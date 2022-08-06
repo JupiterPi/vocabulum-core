@@ -1,11 +1,8 @@
 package jupiterpi.vocabulum.core.interpreter.parser;
 
 import jupiterpi.vocabulum.core.db.Database;
-import jupiterpi.vocabulum.core.db.LoadingDataException;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
 import jupiterpi.vocabulum.core.i18n.I18n;
-import jupiterpi.vocabulum.core.i18n.I18nException;
-import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
@@ -20,7 +17,6 @@ import jupiterpi.vocabulum.core.vocabularies.declined.nouns.Noun;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.RuntimeNoun;
 import jupiterpi.vocabulum.core.vocabularies.inflexible.Inflexible;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -33,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockDatabaseSetup.class)
-class ParserTest {
+class VocabularyParserTest {
     I18n i18n = Database.get().getI18ns().internal();
 
     @Nested
@@ -56,7 +52,7 @@ class ParserTest {
                     "servus", "servi", Gender.MASC,
                     translations, "test"
             );
-            Vocabulary vocabulary = new Parser(new TokenSequence(
+            Vocabulary vocabulary = new VocabularyParser(new TokenSequence(
                     new Token(Token.Type.WORD, "servus", i18n),
                     new Token(Token.Type.COMMA, ",", i18n),
                     new Token(Token.Type.WORD, "servi", i18n),
@@ -73,7 +69,7 @@ class ParserTest {
                     "acer", "acris", "acre",
                     translations, "test"
             );
-            Vocabulary vocabulary = new Parser(new TokenSequence(
+            Vocabulary vocabulary = new VocabularyParser(new TokenSequence(
                     new Token(Token.Type.WORD, "acer", i18n),
                     new Token(Token.Type.COMMA, ",", i18n),
                     new Token(Token.Type.WORD, "acris", i18n),
@@ -91,7 +87,7 @@ class ParserTest {
                     "felix", "felicis",
                     translations, "test"
             );
-            Vocabulary vocabulary = new Parser(new TokenSequence(
+            Vocabulary vocabulary = new VocabularyParser(new TokenSequence(
                     new Token(Token.Type.WORD, "felix", i18n),
                     new Token(Token.Type.COMMA, ",", i18n),
                     new Token(Token.Type.CASUS, "Gen", i18n),
@@ -108,7 +104,7 @@ class ParserTest {
                     "vocare", "voco", "vocavi",
                     translations, "test"
             );
-            Vocabulary vocabulary = new Parser(new TokenSequence(
+            Vocabulary vocabulary = new VocabularyParser(new TokenSequence(
                     new Token(Token.Type.WORD, "vocare", i18n),
                     new Token(Token.Type.COMMA, ",", i18n),
                     new Token(Token.Type.WORD, "voco", i18n),
@@ -125,7 +121,7 @@ class ParserTest {
         void inflexible() throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
             List<VocabularyTranslation> translations = generateTranslations("*und*");
             Inflexible e = new Inflexible("et", translations, "test");
-            Vocabulary vocabulary = new Parser(new TokenSequence(
+            Vocabulary vocabulary = new VocabularyParser(new TokenSequence(
                     new Token(Token.Type.WORD, "et", i18n)
             ), translations, "test").getVocabulary();
             assertEquals(e, vocabulary);
@@ -142,7 +138,7 @@ class ParserTest {
         @DisplayName("invalid token sequence")
         void invalidTokenSequence() {
             assertThrows(ParserException.class, () -> {
-                new Parser(
+                new VocabularyParser(
                         new TokenSequence(
                                 new Token(Token.Type.CASUS, "Acc", i18n),
                                 new Token(Token.Type.GENDER, "m", i18n)

@@ -14,10 +14,10 @@ import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 
 import java.util.List;
 
-public class Parser {
+public class VocabularyParser {
     private Vocabulary vocabulary;
 
-    public Parser(TokenSequence tokens, List<VocabularyTranslation> translations, String portion) throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
+    public VocabularyParser(TokenSequence tokens, List<VocabularyTranslation> translations, String portion) throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
         this.vocabulary = parseVocabulary(tokens, translations, portion);
     }
 
