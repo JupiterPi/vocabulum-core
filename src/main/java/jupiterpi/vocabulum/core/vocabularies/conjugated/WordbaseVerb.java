@@ -1,6 +1,10 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated;
 
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.*;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 import org.bson.Document;
 
@@ -17,6 +21,16 @@ public class WordbaseVerb extends Verb {
         this.baseForm = baseForm;
 
         this.forms = new HashMap<>();
+
+        // Kind.INFINITIVE
+        Document infinitiveFormsDocument = (Document) forms.get("infinitive");
+        for (InfinitiveTense infinitiveTense : InfinitiveTense.values()) {
+            VerbForm form = new VerbForm(infinitiveTense);
+            this.forms.put(form, infinitiveFormsDocument.getString(infinitiveTense.toString().toLowerCase()));
+        }
+
+        // Kind.BASIC
+        Document basicFormsDocument = (Document) forms.get("basic");
         for (Voice voice : Voice.values()) {
             Document voiceDocument = (Document) forms.get(voice.toString().toLowerCase());
             for (Tense tense : Tense.values()) {
@@ -29,6 +43,22 @@ public class WordbaseVerb extends Verb {
                             VerbForm form = new VerbForm(new ConjugatedForm(person, number), mode, tense, voice);
                             this.forms.put(form, numberDocument.getString(person.toString().toLowerCase()));
                         }
+                    }
+                }
+            }
+        }
+
+        // Kind.NOUN_LIKE
+        Document nounLikeFormsDocument = (Document) forms.get("noun_like");
+        for (NounLikeForm nounLikeForm : NounLikeForm.values()) {
+            Document nounLikeFormDocument = (Document) nounLikeFormsDocument.get(nounLikeForm.toString().toLowerCase());
+            for (Gender gender : Gender.values()) {
+                Document genderDocument = (Document) nounLikeFormDocument.get(gender.toString().toLowerCase());
+                for (NNumber number : NNumber.values()) {
+                    Document numberDocument = (Document) genderDocument.get(number.toString().toLowerCase());
+                    for (Casus casus : Casus.values()) {
+                        VerbForm form = new VerbForm(nounLikeForm, new DeclinedForm(casus, number, gender));
+                        this.forms.put(form, numberDocument.getString(casus.toString().toLowerCase()));
                     }
                 }
             }
