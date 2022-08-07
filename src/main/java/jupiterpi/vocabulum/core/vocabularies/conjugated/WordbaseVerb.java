@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 public class WordbaseVerb extends Verb {
+    //TODO write test
+
     private String baseForm;
     private Map<VerbForm, String> forms;
 
@@ -25,8 +27,11 @@ public class WordbaseVerb extends Verb {
         // Kind.INFINITIVE
         Document infinitiveFormsDocument = (Document) forms.get("infinitive");
         for (InfinitiveTense infinitiveTense : InfinitiveTense.values()) {
-            VerbForm form = new VerbForm(infinitiveTense);
-            this.forms.put(form, infinitiveFormsDocument.getString(infinitiveTense.toString().toLowerCase()));
+            Document infinitiveTenseDocument = (Document) infinitiveFormsDocument.get(infinitiveTense.toString().toLowerCase());
+            for (Voice voice : Voice.values()) {
+                VerbForm form = new VerbForm(infinitiveTense, voice);
+                this.forms.put(form, infinitiveTenseDocument.getString(voice.toString().toLowerCase()));
+            }
         }
 
         // Kind.BASIC

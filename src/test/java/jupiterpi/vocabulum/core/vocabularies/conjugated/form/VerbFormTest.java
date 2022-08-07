@@ -65,7 +65,7 @@ class VerbFormTest {
         @Test
         @DisplayName("=> Kind.INFINITIVE")
         void infinitive() {
-            VerbForm form = new VerbForm(InfinitiveTense.PERFECT);
+            VerbForm form = new VerbForm(InfinitiveTense.PERFECT, Voice.PASSIVE);
             assertEquals(VerbForm.Kind.INFINITIVE, form.getKind());
         }
 
@@ -137,8 +137,8 @@ class VerbFormTest {
         @Test
         @DisplayName("Kind.INFINITIVE")
         void infinitiveKind() {
-            VerbForm form = new VerbForm(InfinitiveTense.PERFECT);
-            assertEquals("Inf. Perf.", form.formToString(i18n));
+            VerbForm form = new VerbForm(InfinitiveTense.PERFECT, Voice.PASSIVE);
+            assertEquals("Inf. Perf. Pass.", form.formToString(i18n));
         }
 
         @Test

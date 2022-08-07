@@ -6,6 +6,7 @@ import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.InfinitiveTense;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbForm;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.form.Voice;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
@@ -54,9 +55,19 @@ class VerbTest {
                     {
                       "forms": {
                         "infinitive": {
-                          "present": "Inf. Pres.",
-                          "perfect": "Inf. Perf."
-                        },
+                                "present": {
+                                    "active": "Inf. Pres. Act.",
+                                    "passive": "Inf. Pres. Pass."
+                                },
+                                "perfect": {
+                                    "active": "Inf. Perf. Act.",
+                                    "passive": "Inf. Perf. Pass."
+                                },
+                                "future": {
+                                    "active": "Inf. Fut. Act.",
+                                    "passive": "Inf. Fut. Pass."
+                                }
+                            },
                         "basic": {
                           "active": {
                             "present": {
@@ -473,6 +484,56 @@ class VerbTest {
                                 "dat": "PPA. Dat. Pl. n.",
                                 "acc": "PPA. Acc. Pl. n.",
                                 "abl": "PPA. Abl. Pl. n."
+                              }
+                            }
+                          },
+                          "pfa": {
+                            "masc": {
+                              "sg": {
+                                "nom": "PFA. Nom. Sg. m.",
+                                "gen": "PFA. Gen. Sg. m.",
+                                "dat": "PFA. Dat. Sg. m.",
+                                "acc": "PFA. Acc. Sg. m.",
+                                "abl": "PFA. Abl. Sg. m."
+                              },
+                              "pl": {
+                                "nom": "PFA. Nom. Pl. m.",
+                                "gen": "PFA. Gen. Pl. m.",
+                                "dat": "PFA. Dat. Pl. m.",
+                                "acc": "PFA. Acc. Pl. m.",
+                                "abl": "PFA. Abl. Pl. m."
+                              }
+                            },
+                            "fem": {
+                              "sg": {
+                                "nom": "PFA. Nom. Sg. f.",
+                                "gen": "PFA. Gen. Sg. f.",
+                                "dat": "PFA. Dat. Sg. f.",
+                                "acc": "PFA. Acc. Sg. f.",
+                                "abl": "PFA. Abl. Sg. f."
+                              },
+                              "pl": {
+                                "nom": "PFA. Nom. Pl. f.",
+                                "gen": "PFA. Gen. Pl. f.",
+                                "dat": "PFA. Dat. Pl. f.",
+                                "acc": "PFA. Acc. Pl. f.",
+                                "abl": "PFA. Abl. Pl. f."
+                              }
+                            },
+                            "neut": {
+                              "sg": {
+                                "nom": "PFA. Nom. Sg. n.",
+                                "gen": "PFA. Gen. Sg. n.",
+                                "dat": "PFA. Dat. Sg. n.",
+                                "acc": "PFA. Acc. Sg. n.",
+                                "abl": "PFA. Abl. Sg. n."
+                              },
+                              "pl": {
+                                "nom": "PFA. Nom. Pl. n.",
+                                "gen": "PFA. Gen. Pl. n.",
+                                "dat": "PFA. Dat. Pl. n.",
+                                "acc": "PFA. Acc. Pl. n.",
+                                "abl": "PFA. Abl. Pl. n."
                               }
                             }
                           },
@@ -602,9 +663,19 @@ class VerbTest {
                     {
                       "forms": {
                         "infinitive": {
-                          "present": "-",
-                          "perfect": "-"
-                        },
+                                "present": {
+                                    "active": "-",
+                                    "passive": "-"
+                                },
+                                "perfect": {
+                                    "active": "-",
+                                    "passive": "-"
+                                },
+                                "future": {
+                                    "active": "-",
+                                    "passive": "-"
+                                }
+                            },
                         "basic": {
                           "active": {
                             "present": {
@@ -1024,6 +1095,56 @@ class VerbTest {
                               }
                             }
                           },
+                          "pfa": {
+                            "masc": {
+                              "sg": {
+                                "nom": "PFA. Nom. Sg. m.",
+                                "gen": "PFA. Gen. Sg. m.",
+                                "dat": "PFA. Dat. Sg. m.",
+                                "acc": "PFA. Acc. Sg. m.",
+                                "abl": "PFA. Abl. Sg. m."
+                              },
+                              "pl": {
+                                "nom": "PFA. Nom. Pl. m.",
+                                "gen": "PFA. Gen. Pl. m.",
+                                "dat": "PFA. Dat. Pl. m.",
+                                "acc": "PFA. Acc. Pl. m.",
+                                "abl": "PFA. Abl. Pl. m."
+                              }
+                            },
+                            "fem": {
+                              "sg": {
+                                "nom": "PFA. Nom. Sg. f.",
+                                "gen": "PFA. Gen. Sg. f.",
+                                "dat": "PFA. Dat. Sg. f.",
+                                "acc": "PFA. Acc. Sg. f.",
+                                "abl": "PFA. Abl. Sg. f."
+                              },
+                              "pl": {
+                                "nom": "PFA. Nom. Pl. f.",
+                                "gen": "PFA. Gen. Pl. f.",
+                                "dat": "PFA. Dat. Pl. f.",
+                                "acc": "PFA. Acc. Pl. f.",
+                                "abl": "PFA. Abl. Pl. f."
+                              }
+                            },
+                            "neut": {
+                              "sg": {
+                                "nom": "PFA. Nom. Sg. n.",
+                                "gen": "PFA. Gen. Sg. n.",
+                                "dat": "PFA. Dat. Sg. n.",
+                                "acc": "PFA. Acc. Sg. n.",
+                                "abl": "PFA. Abl. Sg. n."
+                              },
+                              "pl": {
+                                "nom": "PFA. Nom. Pl. n.",
+                                "gen": "PFA. Gen. Pl. n.",
+                                "dat": "PFA. Dat. Pl. n.",
+                                "acc": "PFA. Acc. Pl. n.",
+                                "abl": "PFA. Abl. Pl. n."
+                              }
+                            }
+                          },
                           "gerundium": {
                             "masc": {
                               "sg": {
@@ -1140,7 +1261,7 @@ class VerbTest {
         @Test
         @DisplayName("one possibility")
         void onePossibility() {
-            final VerbForm verbForm = new VerbForm(InfinitiveTense.PRESENT);
+            final VerbForm verbForm = new VerbForm(InfinitiveTense.PRESENT, Voice.ACTIVE);
             Verb verb = new Verb(new ArrayList<>(), "test") {
                 @Override
                 public String makeForm(VerbForm form) {
@@ -1159,8 +1280,8 @@ class VerbTest {
         @Test
         @DisplayName("multiple possibilities")
         void multiplePossibilities() {
-            final VerbForm verbForm1 = new VerbForm(InfinitiveTense.PRESENT);
-            final VerbForm verbForm2 = new VerbForm(InfinitiveTense.PERFECT);
+            final VerbForm verbForm1 = new VerbForm(InfinitiveTense.PRESENT, Voice.ACTIVE);
+            final VerbForm verbForm2 = new VerbForm(InfinitiveTense.PERFECT, Voice.ACTIVE);
             Verb verb = new Verb(new ArrayList<>(), "test") {
                 @Override
                 public String makeForm(VerbForm form) {

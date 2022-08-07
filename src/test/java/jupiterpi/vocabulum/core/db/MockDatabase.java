@@ -146,168 +146,186 @@ public class MockDatabase extends Database {
                               "passive": "Pass"
                             },
                             "infinitive": "Inf",
-                            "noun_like_form": {
-                              "ppp": "PPP",
-                              "ppa": "PPA",
-                              "gerundium": "Gerund",
-                              "gerundivum": "Gerundv"
-                            }
-                          }
-                        }
-                        """),
-                Document.parse("""
-                        {
-                          "language": "de",
-                          "texts": {
-                            "terminal": {
-                              "help-text": "Geben Sie \\"p\\" ein für Prompting, \\"t\\" für Translation Assistance. ",
-                              "unknown-mode-err": "Unbekannter Modus: %s",
-                              "prompt": {
-                                "title": "Prompting",
-                                "help-text": "Funktionsweise: Tippen Sie nach \\">\\" eine Vokabel (bspw. \\"amicus, amici m. - der Freund\\", \\"laetus, laeta, laetum - fröhlich\\" oder \\"felix, Gen. felicis - glücklich\\"). Tippen Sie anschließend nach dem eingerückten \\">\\" die Form, die Sie generieren wollen (bspw. \\"Nom. Sg.\\" oder \\"Gen. Pl. f.\\"). Um zu einem beliebigen Zeitpunkt zurückzugehen, drücken Sie Enter, ohne etwas einzugeben. "
-                              },
-                              "translation_assistance": {
-                                "title": "Translaton Assistance",
-                                "help-text": "Funktionsweise: Geben Sie nach \\">\\" einen Satz ein (bspw. \\"Asinus stat et exspectat.\\") und drücken Sie Enter. Die Translation Assistance wird Ihnen alle verfügbaren Informationen ausgeben, die zum Übersetzen notwendig sind. "
-                              },
-                              "noun": "Sustantiv",
-                              "adjective": "Adjektiv",
-                              "verb": "Verb",
-                              "error": "FEHLER",
-                              "done": "Fertig. "
-                            }
-                          },
-                          "str-texts": {
-                            "casus": {
-                              "nom": "Nom",
-                              "acc": "Akk",
-                              "gen": "Gen",
-                              "dat": "Dat",
-                              "abl": "Abl"
-                            },
-                            "number": {
-                              "sg": "Sg",
-                              "pl": "Pl"
-                            },
-                            "gender": {
-                              "masc": "m",
-                              "fem": "f",
-                              "neut": "n"
-                            },
-                            "comparative_form": {
-                              "positive": "Pos",
-                              "comparative": "Komp",
-                              "superlative": "Sup"
-                            },
-                            "adverb": "Adv",
-                            "person": {
-                              "first": "1",
-                              "second": "2",
-                              "third": "3"
-                            },
-                            "person_cosmetic": "Pers",
-                            "mode": {
-                              "indicative": "Ind",
-                              "conjunctive": "Konj"
-                            },
-                            "tense": {
-                              "present": "Präs",
-                              "imperfect": "Imperf",
-                              "perfect": "Perf",
-                              "pluperfect": "Plusq",
-                              "future_i": "FutI",
-                              "future_ii": "FutII"
-                            },
-                            "voice": {
-                              "active": "Akt",
-                              "passive": "Pass"
-                            },
-                            "infinitive": "Inf",
-                            "noun_like_form": {
-                              "ppp": "PPP",
-                              "ppa": "PPA",
-                              "gerundium": "Gerund",
-                              "gerundivum": "Gerundv"
-                            }
-                          }
-                        }
-                        """),
-                Document.parse("""
-                        {
-                          "language": "en",
-                          "texts": {
-                            "terminal": {
-                              "help-text": "Enter \\"p\\" for Prompting, \\"t\\" for Translation Assistance. ",
-                              "unknown-mode-err": "Unknown mode: %s",
-                              "prompt": {
-                                "title": "Prompting",
-                                "help-text": "Usage: Type a vocabulary after \\">\\" (e. g. \\"amicus, amici m. - friend\\", \\"laetus, laeta, laetum - happy\\" or \\"felix, Gen. felicis - lucky\\"). Then after the indented \\">\\", type the form you want to generate (e. g. \\"Nom. Sg.\\" or \\"Gen. Pl. Fem.\\"). To go back at any time, press Enter without typing something on a prompt. "
-                              },
-                              "translation_assistance": {
-                                "title": "Translaton Assistance",
-                                "help-text": "Usage: Type a sentence after \\">\\" (e. g. \\"Asinus stat es exspectat.\\") and press Enter. Translation Assistance will print you all available information required for translating it."
-                              },
-                              "noun": "Noun",
-                              "adjective": "Adjective",
-                              "verb": "Verb",
-                              "error": "ERROR",
-                              "done": "Done. "
-                            }
-                          },
-                          "str-texts": {
-                            "casus": {
-                              "nom": "Nom",
-                              "acc": "Acc",
-                              "gen": "Gen",
-                              "dat": "Dat",
-                              "abl": "Abl"
-                            },
-                            "number": {
-                              "sg": "Sg",
-                              "pl": "Pl"
-                            },
-                            "gender": {
-                              "masc": "Masc",
-                              "fem": "Fem",
-                              "neut": "Neut"
-                            },
-                            "comparative_form": {
-                              "positive": "Pos",
-                              "comparative": "Comp",
-                              "superlative": "Sup"
-                            },
-                            "adverb": "Adv",
-                            "person": {
-                              "first": "1",
-                              "second": "2",
-                              "third": "3"
-                            },
-                            "person_cosmetic": "Pers",
-                            "mode": {
-                              "indicative": "Ind",
-                              "conjunctive": "Conj"
-                            },
-                            "tense": {
+                            "infinitive_tense": {
                               "present": "Pres",
-                              "imperfect": "Imperf",
                               "perfect": "Perf",
-                              "pluperfect": "Pluperf",
-                              "future_i": "FutI",
-                              "future_ii": "FutII"
+                              "future": "Fut"
                             },
-                            "voice": {
-                              "active": "Act",
-                              "passive": "Pass"
-                            },
-                            "infinitive": "Inf",
                             "noun_like_form": {
                               "ppp": "PPP",
                               "ppa": "PPA",
+                                                 "pfa": "PFA",
                               "gerundium": "Gerund",
                               "gerundivum": "Gerundv"
                             }
                           }
                         }
+                        """),
+                Document.parse("""
+                        {
+                           "language": "de",
+                           "texts": {
+                             "terminal": {
+                               "help-text": "Geben Sie \\"p\\" ein für Prompting, \\"t\\" für Translation Assistance. ",
+                               "unknown-mode-err": "Unbekannter Modus: %s",
+                               "prompt": {
+                                 "title": "Prompting",
+                                 "help-text": "Funktionsweise: Tippen Sie nach \\">\\" eine Vokabel (bspw. \\"amicus, amici m. - der Freund\\", \\"laetus, laeta, laetum - fröhlich\\" oder \\"felix, Gen. felicis - glücklich\\"). Tippen Sie anschließend nach dem eingerückten \\">\\" die Form, die Sie generieren wollen (bspw. \\"Nom. Sg.\\" oder \\"Gen. Pl. f.\\"). Um zu einem beliebigen Zeitpunkt zurückzugehen, drücken Sie Enter, ohne etwas einzugeben. "
+                               },
+                               "translation_assistance": {
+                                 "title": "Translaton Assistance",
+                                 "help-text": "Funktionsweise: Geben Sie nach \\">\\" einen Satz ein (bspw. \\"Asinus stat et exspectat.\\") und drücken Sie Enter. Die Translation Assistance wird Ihnen alle verfügbaren Informationen ausgeben, die zum Übersetzen notwendig sind. "
+                               },
+                               "noun": "Sustantiv",
+                               "adjective": "Adjektiv",
+                               "verb": "Verb",
+                               "error": "FEHLER",
+                               "done": "Fertig. "
+                             }
+                           },
+                           "str-texts": {
+                             "casus": {
+                               "nom": "Nom",
+                               "acc": "Akk",
+                               "gen": "Gen",
+                               "dat": "Dat",
+                               "abl": "Abl"
+                             },
+                             "number": {
+                               "sg": "Sg",
+                               "pl": "Pl"
+                             },
+                             "gender": {
+                               "masc": "m",
+                               "fem": "f",
+                               "neut": "n"
+                             },
+                             "comparative_form": {
+                               "positive": "Pos",
+                               "comparative": "Komp",
+                               "superlative": "Sup"
+                             },
+                             "adverb": "Adv",
+                             "person": {
+                               "first": "1",
+                               "second": "2",
+                               "third": "3"
+                             },
+                             "person_cosmetic": "Pers",
+                             "mode": {
+                               "indicative": "Ind",
+                               "conjunctive": "Konj"
+                             },
+                             "tense": {
+                               "present": "Präs",
+                               "imperfect": "Imperf",
+                               "perfect": "Perf",
+                               "pluperfect": "Plusq",
+                               "future_i": "FutI",
+                               "future_ii": "FutII"
+                             },
+                             "voice": {
+                               "active": "Akt",
+                               "passive": "Pass"
+                             },
+                             "infinitive": "Inf",
+                             "infinitive_tense": {
+                               "present": "Präs",
+                               "perfect": "Perf",
+                               "future": "Fut"
+                             },
+                             "noun_like_form": {
+                               "ppp": "PPP",
+                               "ppa": "PPA",
+                                                  "pfa": "PFA",
+                               "gerundium": "Gerund",
+                               "gerundivum": "Gerundv"
+                             }
+                           }
+                         }
+                        """),
+                Document.parse("""
+                        {
+                           "language": "en",
+                           "texts": {
+                             "terminal": {
+                               "help-text": "Enter \\"p\\" for Prompting, \\"t\\" for Translation Assistance. ",
+                               "unknown-mode-err": "Unknown mode: %s",
+                               "prompt": {
+                                 "title": "Prompting",
+                                 "help-text": "Usage: Type a vocabulary after \\">\\" (e. g. \\"amicus, amici m. - friend\\", \\"laetus, laeta, laetum - happy\\" or \\"felix, Gen. felicis - lucky\\"). Then after the indented \\">\\", type the form you want to generate (e. g. \\"Nom. Sg.\\" or \\"Gen. Pl. Fem.\\"). To go back at any time, press Enter without typing something on a prompt. "
+                               },
+                               "translation_assistance": {
+                                 "title": "Translaton Assistance",
+                                 "help-text": "Usage: Type a sentence after \\">\\" (e. g. \\"Asinus stat es exspectat.\\") and press Enter. Translation Assistance will print you all available information required for translating it."
+                               },
+                               "noun": "Noun",
+                               "adjective": "Adjective",
+                               "verb": "Verb",
+                               "error": "ERROR",
+                               "done": "Done. "
+                             }
+                           },
+                           "str-texts": {
+                             "casus": {
+                               "nom": "Nom",
+                               "acc": "Acc",
+                               "gen": "Gen",
+                               "dat": "Dat",
+                               "abl": "Abl"
+                             },
+                             "number": {
+                               "sg": "Sg",
+                               "pl": "Pl"
+                             },
+                             "gender": {
+                               "masc": "Masc",
+                               "fem": "Fem",
+                               "neut": "Neut"
+                             },
+                             "comparative_form": {
+                               "positive": "Pos",
+                               "comparative": "Comp",
+                               "superlative": "Sup"
+                             },
+                             "adverb": "Adv",
+                             "person": {
+                               "first": "1",
+                               "second": "2",
+                               "third": "3"
+                             },
+                             "person_cosmetic": "Pers",
+                             "mode": {
+                               "indicative": "Ind",
+                               "conjunctive": "Conj"
+                             },
+                             "tense": {
+                               "present": "Pres",
+                               "imperfect": "Imperf",
+                               "perfect": "Perf",
+                               "pluperfect": "Pluperf",
+                               "future_i": "FutI",
+                               "future_ii": "FutII"
+                             },
+                             "voice": {
+                               "active": "Act",
+                               "passive": "Pass"
+                             },
+                             "infinitive": "Inf",
+                             "infinitive_tense": {
+                               "present": "Pres",
+                               "perfect": "Perf",
+                               "future": "Fut"
+                             },
+                             "noun_like_form": {
+                               "ppp": "PPP",
+                               "ppa": "PPA",
+                                                  "pfa": "PFA",
+                               "gerundium": "Gerund",
+                               "gerundivum": "Gerundv"
+                             }
+                           }
+                         }
                         """)
         ));
     }

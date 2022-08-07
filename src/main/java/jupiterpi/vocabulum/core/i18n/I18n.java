@@ -152,7 +152,7 @@ public class I18n {
 
     // infinitive tense
     public String getInfinitiveTenseSymbol(InfinitiveTense infinitiveTense) {
-        Document document = (Document) str_texts.get("tense");
+        Document document = (Document) str_texts.get("infinitive_tense");
         return document.getString(infinitiveTense.toString().toLowerCase());
     }
     public InfinitiveTense infinitiveTenseFromSymbol(String symbol) throws ParserException {

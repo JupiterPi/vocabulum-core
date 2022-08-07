@@ -52,8 +52,12 @@ public abstract class Verb extends Vocabulary {
         // Kind.INFINITIVE
         Document infinitiveFormsDocument = new Document();
         for (InfinitiveTense infinitiveTense : InfinitiveTense.values()) {
-            String form = makeFormOrDash(new VerbForm(infinitiveTense));
-            infinitiveFormsDocument.put(infinitiveTense.toString().toLowerCase(), form);
+            Document infinitiveTenseDocument = new Document();
+            for (Voice voice : Voice.values()) {
+                String form = makeFormOrDash(new VerbForm(infinitiveTense, voice));
+                infinitiveTenseDocument.put(voice.toString().toLowerCase(), form);
+            }
+            infinitiveFormsDocument.put(infinitiveTense.toString().toLowerCase(), infinitiveTenseDocument);
         }
         formsDocument.put("infinitive", infinitiveFormsDocument);
 
@@ -111,10 +115,12 @@ public abstract class Verb extends Vocabulary {
 
         // Kind.INFINITIVE
         for (InfinitiveTense infinitiveTense : InfinitiveTense.values()) {
-            VerbForm form = new VerbForm(infinitiveTense);
-            try {
-                if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
-            } catch (VerbFormDoesNotExistException ignored) {}
+            for (Voice voice : Voice.values()) {
+                VerbForm form = new VerbForm(infinitiveTense, voice);
+                try {
+                    if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
+                } catch (VerbFormDoesNotExistException ignored) {}
+            }
         }
 
         // Kind.BASIC

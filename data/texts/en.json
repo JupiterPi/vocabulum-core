@@ -65,9 +65,15 @@
       "passive": "Pass"
     },
     "infinitive": "Inf",
+    "infinitive_tense": {
+      "present": "Pres",
+      "perfect": "Perf",
+      "future": "Fut"
+    },
     "noun_like_form": {
       "ppp": "PPP",
       "ppa": "PPA",
+      "pfa": "PFA",
       "gerundium": "Gerund",
       "gerundivum": "Gerundv"
     }

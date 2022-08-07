@@ -26,10 +26,11 @@ class VerbFormParserTest {
     void infinitive() throws ParserException {
         TokenSequence tokens = new TokenSequence(
                 new Token(Token.Type.INFINITIVE_FLAG, "Inf", i18n),
-                new Token(Token.Type.TENSE, "Perf", i18n)
+                new Token(Token.Type.TENSE, "Perf", i18n),
+                new Token(Token.Type.VOICE, "Pass", i18n)
         );
         VerbForm verbForm = new VerbFormParser(tokens).getVerbForm();
-        VerbForm e = new VerbForm(InfinitiveTense.PERFECT);
+        VerbForm e = new VerbForm(InfinitiveTense.PERFECT, Voice.PASSIVE);
         assertEquals(e, verbForm);
     }
 

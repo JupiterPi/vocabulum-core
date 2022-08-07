@@ -16,6 +16,7 @@ public class VerbForm implements VocabularyForm {
     // for Kind.INFINITIVE
     private boolean infinitive;
     private InfinitiveTense infinitiveTense;
+    private Voice infinitiveVoice;
 
     // for Kind.BASIC
     private ConjugatedForm conjugatedForm;
@@ -32,9 +33,10 @@ public class VerbForm implements VocabularyForm {
     /* constructors */
 
     // for Kind.INFINITIVE
-    public VerbForm(InfinitiveTense infinitiveTense) {
+    public VerbForm(InfinitiveTense infinitiveTense, Voice infinitiveVoice) {
         this.infinitive = true;
         this.infinitiveTense = infinitiveTense;
+        this.infinitiveVoice = infinitiveVoice;
     }
 
     // for Kind.BASIC
@@ -103,6 +105,10 @@ public class VerbForm implements VocabularyForm {
         return infinitiveTense;
     }
 
+    public Voice getInfinitiveVoice() {
+        return infinitiveVoice;
+    }
+
     public ConjugatedForm getConjugatedForm() {
         return conjugatedForm;
     }
@@ -138,12 +144,12 @@ public class VerbForm implements VocabularyForm {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VerbForm verbForm = (VerbForm) o;
-        return infinitive == verbForm.infinitive && nounLike == verbForm.nounLike && infinitiveTense == verbForm.infinitiveTense && Objects.equals(conjugatedForm, verbForm.conjugatedForm) && mode == verbForm.mode && tense == verbForm.tense && voice == verbForm.voice && nounLikeForm == verbForm.nounLikeForm && Objects.equals(declinedForm, verbForm.declinedForm);
+        return infinitive == verbForm.infinitive && nounLike == verbForm.nounLike && infinitiveTense == verbForm.infinitiveTense && infinitiveVoice == verbForm.infinitiveVoice && Objects.equals(conjugatedForm, verbForm.conjugatedForm) && mode == verbForm.mode && tense == verbForm.tense && voice == verbForm.voice && nounLikeForm == verbForm.nounLikeForm && Objects.equals(declinedForm, verbForm.declinedForm);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(infinitive, infinitiveTense, conjugatedForm, mode, tense, voice, nounLike, nounLikeForm, declinedForm);
+        return Objects.hash(infinitive, infinitiveTense, infinitiveVoice, conjugatedForm, mode, tense, voice, nounLike, nounLikeForm, declinedForm);
     }
 
     // to string
@@ -160,7 +166,7 @@ public class VerbForm implements VocabularyForm {
         } else {
             return switch (getKind()) {
                 case BASIC -> null;
-                case INFINITIVE -> i18n.getInfinitiveFlag() + ". " + i18n.getInfinitiveTenseSymbol(infinitiveTense) + ".";
+                case INFINITIVE -> i18n.getInfinitiveFlag() + ". " + i18n.getInfinitiveTenseSymbol(infinitiveTense) + ". " + i18n.getVoiceSymbol(infinitiveVoice) + ".";
                 case NOUN_LIKE -> i18n.getNounLikeFormSymbol(nounLikeForm) + ". " + declinedForm.formToString(i18n);
             };
         }
@@ -170,7 +176,7 @@ public class VerbForm implements VocabularyForm {
     public String toString() {
         return switch (getKind()) {
             case BASIC -> "Verb{form=" + conjugatedForm.toString() + ",mode=" + mode.toString().toLowerCase() + ",tense=" + tense.toString().toLowerCase() + ",voice=" + voice.toString().toLowerCase() + "}";
-            case INFINITIVE -> "Verb{infinitive, tense=" + infinitiveTense.toString().toLowerCase() + "}";
+            case INFINITIVE -> "Verb{infinitive, tense=" + infinitiveTense.toString().toLowerCase() + ", voice=" + infinitiveVoice.toString().toLowerCase() + "}";
             case NOUN_LIKE -> "Verb{" + nounLikeForm.toString().toLowerCase() + ", form=" + declinedForm.toString() + "}";
         };
     }

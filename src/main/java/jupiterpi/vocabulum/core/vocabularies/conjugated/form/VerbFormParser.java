@@ -21,12 +21,14 @@ public class VerbFormParser {
     private VerbForm parseVerbForm(TokenSequence tokens) throws ParserException {
 
         // Kind.INFINITIVE
-        if (tokens.size() == 2 && tokens.fitsStartsWith(TokenSequence.fromTypes(
+        if (tokens.size() == 3 && tokens.fitsStartsWith(TokenSequence.fromTypes(
                 Token.Type.INFINITIVE_FLAG,
-                Token.Type.TENSE
+                Token.Type.TENSE,
+                Token.Type.VOICE
         ))) {
             InfinitiveTense tense = tokens.getI18n().infinitiveTenseFromSymbol(tokens.get(1).getContent());
-            return new VerbForm(tense);
+            Voice voice = tokens.getI18n().voiceFromSymbol(tokens.get(2).getContent());
+            return new VerbForm(tense, voice);
         }
 
         // Kind.NOUN_LIKE
