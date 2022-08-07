@@ -1,18 +1,18 @@
 {
-    "name": "e",
-    "schema": "general",
-    "sg": {
-        "nom": "es",
-        "gen": "ei",
-        "dat": "ei",
-        "acc": "em",
-        "abl": "e"
-    }, 
-    "pl": {
-        "nom": "es",
-        "gen": "erum",
-        "dat": "ebus",
-        "acc": "es",
-        "abl": "ebus"
-    }
+  "name": "e",
+  "schema": "general",
+  "sg": {
+    "nom": "es",
+    "gen": "ei",
+    "dat": "ei",
+    "acc": "em",
+    "abl": "e"
+  },
+  "pl": {
+    "nom": "es",
+    "gen": "erum",
+    "dat": "ebus",
+    "acc": "es",
+    "abl": "ebus"
+  }
 }

@@ -13,8 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockDatabaseSetup.class)
 class LexerTest {
@@ -107,6 +106,18 @@ class LexerTest {
                     new Token(Token.Type.WORD, "word", i18n),
                     new Token(Token.Type.COMMA, ",", i18n),
                     new Token(Token.Type.WORD, "word", i18n)
+            );
+            assertEquals(e, new Lexer(expr, i18n).getTokens());
+        }
+
+        @Test
+        @DisplayName("InfinitiveTenses should work correctly")
+        void infinitiveTensesShouldWorkCorrectly() throws LexerException {
+            String expr = "Perf. FutI. Fut.";
+            TokenSequence e = new TokenSequence(
+                    new Token(Token.Type.TENSE, "Perf", i18n),
+                    new Token(Token.Type.TENSE, "FutI", i18n),
+                    new Token(Token.Type.TENSE, "Fut", i18n)
             );
             assertEquals(e, new Lexer(expr, i18n).getTokens());
         }

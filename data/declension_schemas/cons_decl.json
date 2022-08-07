@@ -1,18 +1,18 @@
 {
-    "name": "cons",
-    "schema": "general",
-    "sg": {
-        "nom": "",
-        "gen": "is",
-        "dat": "i",
-        "acc": "em",
-        "abl": "e"
-    }, 
-    "pl": {
-        "nom": "es",
-        "gen": "um",
-        "dat": "ibus",
-        "acc": "es",
-        "abl": "ibus"
-    }
+  "name": "cons",
+  "schema": "general",
+  "sg": {
+    "nom": "",
+    "gen": "is",
+    "dat": "i",
+    "acc": "em",
+    "abl": "e"
+  },
+  "pl": {
+    "nom": "es",
+    "gen": "um",
+    "dat": "ibus",
+    "acc": "es",
+    "abl": "ibus"
+  }
 }

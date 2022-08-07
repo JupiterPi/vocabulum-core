@@ -1,52 +1,52 @@
 {
-    "name": "o",
-    "schema": "general",
-    "masc": {
-        "sg": {
-            "nom": "us", 
-            "gen": "i", 
-            "dat": "o", 
-            "acc": "um", 
-            "abl": "o"
-        }, 
-        "pl": {
-            "nom": "i", 
-            "gen": "orum", 
-            "dat": "is", 
-            "acc": "os", 
-            "abl": "is"
-        }
-    }, 
-    "fem": {
-        "sg": {
-            "nom": "-", 
-            "gen": "-", 
-            "dat": "-", 
-            "acc": "-", 
-            "abl": "-"
-        }, 
-        "pl": {
-            "nom": "-", 
-            "gen": "-", 
-            "dat": "-", 
-            "acc": "-", 
-            "abl": "-"
-        }
-    }, 
-    "neut": {
-        "sg": {
-            "nom": "um", 
-            "gen": "i", 
-            "dat": "o", 
-            "acc": "um", 
-            "abl": "o"
-        }, 
-        "pl": {
-            "nom": "a", 
-            "gen": "orum", 
-            "dat": "is", 
-            "acc": "a", 
-            "abl": "is"
-        }
+  "name": "o",
+  "schema": "general",
+  "masc": {
+    "sg": {
+      "nom": "us",
+      "gen": "i",
+      "dat": "o",
+      "acc": "um",
+      "abl": "o"
+    },
+    "pl": {
+      "nom": "i",
+      "gen": "orum",
+      "dat": "is",
+      "acc": "os",
+      "abl": "is"
     }
+  },
+  "fem": {
+    "sg": {
+      "nom": "-",
+      "gen": "-",
+      "dat": "-",
+      "acc": "-",
+      "abl": "-"
+    },
+    "pl": {
+      "nom": "-",
+      "gen": "-",
+      "dat": "-",
+      "acc": "-",
+      "abl": "-"
+    }
+  },
+  "neut": {
+    "sg": {
+      "nom": "um",
+      "gen": "i",
+      "dat": "o",
+      "acc": "um",
+      "abl": "o"
+    },
+    "pl": {
+      "nom": "a",
+      "gen": "orum",
+      "dat": "is",
+      "acc": "a",
+      "abl": "is"
+    }
+  }
 }

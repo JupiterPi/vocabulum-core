@@ -1,18 +1,18 @@
 {
-    "name": "u",
-    "schema": "general",
-    "sg": {
-        "nom": "us",
-        "gen": "us",
-        "dat": "ui",
-        "acc": "um",
-        "abl": "u"
-    }, 
-    "pl": {
-        "nom": "us",
-        "gen": "uum",
-        "dat": "ibus",
-        "acc": "us",
-        "abl": "ibus"
-    }
+  "name": "u",
+  "schema": "general",
+  "sg": {
+    "nom": "us",
+    "gen": "us",
+    "dat": "ui",
+    "acc": "um",
+    "abl": "u"
+  },
+  "pl": {
+    "nom": "us",
+    "gen": "uum",
+    "dat": "ibus",
+    "acc": "us",
+    "abl": "ibus"
+  }
 }
