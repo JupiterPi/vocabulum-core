@@ -84,7 +84,7 @@ public abstract class Adjective extends Vocabulary {
 
     protected AdjectiveDefinitionType definitionType;
 
-    protected enum AdjectiveDefinitionType {
+    public enum AdjectiveDefinitionType {
         FROM_BASE_FORMS, FROM_GENITIVE
     }
 

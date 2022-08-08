@@ -83,6 +83,10 @@ public class Database {
     public Document getAdjectivesDocument() {
         return collection_other.find(new Document("id", "adjectives")).first();
     }
+
+    public Document getVerbsDocument() {
+        return collection_other.find(new Document("id", "verbs")).first();
+    }
     
     /* ----- objects that read the database ----- */
 

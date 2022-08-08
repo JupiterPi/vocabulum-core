@@ -20,12 +20,12 @@ public abstract class Verb extends Vocabulary {
         super(translations, portion);
     }
 
-    public abstract String makeForm(VerbForm form) throws VerbFormDoesNotExistException;
+    public abstract String makeForm(VerbForm form) throws VerbFormDoesNotExistException, DeclinedFormDoesNotExistException;
 
     public String makeFormOrDash(VerbForm form) {
         try {
             return makeForm(form);
-        } catch (VerbFormDoesNotExistException e) {
+        } catch (VerbFormDoesNotExistException | DeclinedFormDoesNotExistException e) {
             return "-";
         }
     }
@@ -37,10 +37,10 @@ public abstract class Verb extends Vocabulary {
 
     @Override
     public String getDefinition(I18n i18n) {
-        String first_sg_pres = makeFormOrDash(new VerbForm(ConjugatedForm.get("1. Sg."), Mode.INDICATIVE, Tense.PRESENT, Voice.ACTIVE));
-        String first_sg_perfect = makeFormOrDash(new VerbForm(ConjugatedForm.get("1. Sg."), Mode.INDICATIVE, Tense.PERFECT, Voice.ACTIVE));
-        return getBaseForm() + ", " + first_sg_pres + ", " + first_sg_perfect;
-        //TODO update for full form making -> write test
+        String first_sg_pres = makeFormOrDash(new VerbForm(new ConjugatedForm(Person.FIRST, CNumber.SG), Mode.INDICATIVE, Tense.PRESENT, Voice.ACTIVE));
+        String first_sg_perfect = makeFormOrDash(new VerbForm(new ConjugatedForm(Person.FIRST, CNumber.SG), Mode.INDICATIVE, Tense.PERFECT, Voice.ACTIVE));
+        String ppp = makeFormOrDash(new VerbForm(NounLikeForm.PPP, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC)));
+        return getBaseForm() + ", " + first_sg_pres + ", " + first_sg_perfect + ", " + ppp;
     }
 
     public abstract String getBaseForm();
@@ -119,7 +119,7 @@ public abstract class Verb extends Vocabulary {
                 VerbForm form = new VerbForm(infinitiveTense, voice);
                 try {
                     if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
-                } catch (VerbFormDoesNotExistException ignored) {}
+                } catch (VerbFormDoesNotExistException | DeclinedFormDoesNotExistException ignored) {}
             }
         }
 
@@ -132,7 +132,7 @@ public abstract class Verb extends Vocabulary {
                             VerbForm form = new VerbForm(new ConjugatedForm(person, number), mode, tense, voice);
                             try {
                                 if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
-                            } catch (VerbFormDoesNotExistException ignored) {}
+                            } catch (VerbFormDoesNotExistException | DeclinedFormDoesNotExistException ignored) {}
                         }
                     }
                 }
@@ -147,7 +147,7 @@ public abstract class Verb extends Vocabulary {
                         VerbForm form = new VerbForm(nounLikeForm, new DeclinedForm(casus, number, gender));
                         try {
                             if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
-                        } catch (VerbFormDoesNotExistException ignored) {}
+                        } catch (VerbFormDoesNotExistException | DeclinedFormDoesNotExistException ignored) {}
                     }
                 }
             }

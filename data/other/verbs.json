@@ -1,0 +1,20 @@
+{
+  "id": "verbs",
+  "noun_like_form_suffixes": {
+    "ppa": {
+      "nom_sg_sign": "ns",
+      "other_sign": "nt"
+    },
+    "pfa": {
+      "sign": "tur",
+      "alt_sign": "sur",
+      "alt_sign_ppp_root_ending": "s"
+    },
+    "gerundium": {
+      "sign": "nd"
+    },
+    "gerundivum": {
+      "sign": "nd"
+    }
+  }
+}

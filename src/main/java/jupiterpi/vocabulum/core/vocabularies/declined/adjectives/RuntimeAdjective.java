@@ -14,10 +14,10 @@ import org.bson.Document;
 import java.util.List;
 
 public class RuntimeAdjective extends Adjective {
-    private static final DeclensionSchema masculineDeclensionSchema = Database.get().getDeclensionClasses().o_Declension();
-    private static final DeclensionSchema feminineDeclensionSchema = Database.get().getDeclensionClasses().a_Declension();
-    private static final DeclensionSchema neuterDeclensionSchema = Database.get().getDeclensionClasses().o_Declension();
-    private static final DeclensionSchema consonantalDeclensionSchema = Database.get().getDeclensionClasses().cons_adjectives_Declension();
+    public static final DeclensionSchema masculineDeclensionSchema = Database.get().getDeclensionClasses().o_Declension();
+    public static final DeclensionSchema feminineDeclensionSchema = Database.get().getDeclensionClasses().a_Declension();
+    public static final DeclensionSchema neuterDeclensionSchema = Database.get().getDeclensionClasses().o_Declension();
+    public static final DeclensionSchema consonantalDeclensionSchema = Database.get().getDeclensionClasses().cons_adjectives_Declension();
 
     private static final Document adjectivesData = Database.get().getAdjectivesDocument();
 

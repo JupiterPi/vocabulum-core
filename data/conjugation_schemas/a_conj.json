@@ -331,5 +331,12 @@
         }
       }
     }
+  },
+  "noun_like": {
+    "ppp": "",
+    "ppa": "Pr+a",
+    "pfa": "Pr+a",
+    "gerundium": "Pr+a",
+    "gerundivum": "Pr+a"
   }
 }

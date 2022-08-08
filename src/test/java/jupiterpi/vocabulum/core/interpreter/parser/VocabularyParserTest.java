@@ -101,7 +101,7 @@ class VocabularyParserTest {
         void verb() throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
             List<VocabularyTranslation> translations = generateTranslations("*rufen*", "nennen");
             Verb e = RuntimeVerb.fromBaseForms(
-                    "vocare", "voco", "vocavi",
+                    "vocare", "voco", "vocavi", "vocatum",
                     translations, "test"
             );
             Vocabulary vocabulary = new VocabularyParser(new TokenSequence(

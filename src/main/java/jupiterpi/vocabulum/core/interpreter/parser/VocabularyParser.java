@@ -86,6 +86,7 @@ public class VocabularyParser {
                     tokens.get(0).getContent(),
                     tokens.get(2).getContent(),
                     tokens.get(4).getContent(),
+                    tokens.get(6).getContent(),
                     translations, portion
             );
         }
