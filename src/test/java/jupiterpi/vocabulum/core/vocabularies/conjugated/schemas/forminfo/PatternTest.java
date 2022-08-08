@@ -35,6 +35,48 @@ class PatternTest {
 
     }
 
+    @Nested
+    @DisplayName("getSuffix()")
+    class GetSuffix {
+
+        @Test
+        @DisplayName("empty")
+        void empty() {
+            Pattern pattern = new Pattern();
+            assertNull(pattern.getSuffix());
+        }
+
+        @Test
+        @DisplayName("only suffix")
+        void onlySuffix() {
+            Pattern pattern = new Pattern(
+                    new Particle(Particle.Type.STRING, "sfx")
+            );
+            assertEquals("sfx", pattern.getSuffix());
+        }
+
+        @Test
+        @DisplayName("something before suffix")
+        void somethingBeforeSuffix() {
+            Pattern pattern = new Pattern(
+                    new Particle(Particle.Type.ROOT, "Pr"),
+                    new Particle(Particle.Type.STRING, "sfx")
+            );
+            assertEquals("sfx", pattern.getSuffix());
+        }
+
+        @Test
+        @DisplayName("no suffix")
+        void noSuffix() {
+            Pattern pattern = new Pattern(
+                    new Particle(Particle.Type.STRING, "sfx"),
+                    new Particle(Particle.Type.ROOT, "Pr")
+            );
+            assertNull(pattern.getSuffix());
+        }
+
+    }
+
     @Test
     void make() {
         Pattern pattern = new Pattern(

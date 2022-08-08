@@ -46,6 +46,7 @@ public class Pattern extends ArrayList<Particle> {
     }
 
     public String getSuffix() {
+        if (size() == 0) return null;
         Particle last = get(size() - 1);
         if (last.getType() == Particle.Type.STRING) {
             return last.getContent();
