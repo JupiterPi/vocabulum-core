@@ -5,7 +5,8 @@ import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbForm;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.ConjugationSchema;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.FormInfo;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.forminfo.Pattern;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.forminfo.VerbInfo;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 
 import java.util.List;
@@ -30,10 +31,10 @@ public class RuntimeVerb extends Verb {
         String presentRoot = null;
         String perfectRoot = null;
         for (ConjugationSchema schema : Database.get().getConjugationClasses().getAll()) {
-            FormInfo info = schema.getFormInfo(VerbForm.get("1. Sg. Pres."));
-            if (first_sg_present.endsWith(info.getSuffix())) {
-                presentRoot = first_sg_present.substring(0, first_sg_present.length() - info.getSuffix().length());
-                perfectRoot = first_sg_perfect.substring(0, first_sg_perfect.length() - schema.getFormInfo(VerbForm.get("1. Sg. Perf.")).getSuffix().length());
+            Pattern pattern = schema.getPattern(VerbForm.get("1. Sg. Pres."));
+            if (first_sg_present.endsWith(pattern.getSuffix())) {
+                presentRoot = first_sg_present.substring(0, first_sg_present.length() - pattern.getSuffix().length());
+                perfectRoot = first_sg_perfect.substring(0, first_sg_perfect.length() - schema.getPattern(VerbForm.get("1. Sg. Perf.")).getSuffix().length());
             }
         }
         if (presentRoot == null) {
@@ -50,15 +51,12 @@ public class RuntimeVerb extends Verb {
 
     @Override
     public String makeForm(VerbForm form) throws VerbFormDoesNotExistException {
-        FormInfo formInfo = conjugationSchema.getFormInfo(form);
-        if (!formInfo.exists()) {
-
-        }
-        String root = switch (formInfo.getRoot()) {
-            case PRESENT -> presentRoot;
-            case PERFECT -> perfectRoot;
-        };
-        String suffix = formInfo.getSuffix();
-        return root + suffix;
+        Pattern pattern = conjugationSchema.getPattern(form);
+        VerbInfo info = new VerbInfo(
+                presentRoot, perfectRoot,
+                "", "", "", "", "", ""
+        );
+        return pattern.make(info);
+        //TODO implement actual
     }
 }

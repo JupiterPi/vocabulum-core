@@ -2,6 +2,7 @@ package jupiterpi.vocabulum.core.vocabularies.conjugated.schemas;
 
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.*;
 import jupiterpi.vocabulum.core.db.LoadingDataException;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.forminfo.Pattern;
 import org.bson.Document;
 
 import java.util.HashMap;
@@ -17,16 +18,14 @@ public class SimpleConjugationSchema extends ConjugationSchema {
                 Document voiceDocument = (Document) document.get(voice.toString().toLowerCase());
                 for (Tense tense : Tense.values()) {
                     Document tenseDocument = (Document) voiceDocument.get(tense.toString().toLowerCase());
-                    FormInfo.Root root = FormInfo.Root.valueOf(tenseDocument.getString("root").toUpperCase());
                     for (Mode mode : Mode.values()) {
                         Document modeDocument = (Document) tenseDocument.get(mode.toString().toLowerCase());
                         for (CNumber number : CNumber.values()) {
                             Document numberDocument = (Document) modeDocument.get(number.toString().toLowerCase());
                             for (Person person : Person.values()) {
-                                String suffix = numberDocument.getString(person.toString().toLowerCase());
-
+                                String pattern = numberDocument.getString(person.toString().toLowerCase());
                                 VerbForm form = new VerbForm(new ConjugatedForm(person, number), mode, tense, voice);
-                                schema.formInfos.put(form, new FormInfo(root, suffix));
+                                schema.patterns.put(form, Pattern.fromString(pattern));
                             }
                         }
                     }
@@ -41,14 +40,14 @@ public class SimpleConjugationSchema extends ConjugationSchema {
 
     private SimpleConjugationSchema(String name) {
         super(name);
-        formInfos = new HashMap<>();
+        patterns = new HashMap<>();
     }
 
-    private Map<VerbForm, FormInfo> formInfos;
+    private Map<VerbForm, Pattern> patterns;
 
     @Override
-    public FormInfo getFormInfo(VerbForm verbForm) throws VerbFormDoesNotExistException {
-        FormInfo formInfo = formInfos.get(verbForm);
+    public Pattern getPattern(VerbForm verbForm) throws VerbFormDoesNotExistException {
+        Pattern formInfo = patterns.get(verbForm);
         if (!formInfo.exists()) throw VerbFormDoesNotExistException.forConjugationSchema(verbForm, this);
         return formInfo;
     }
