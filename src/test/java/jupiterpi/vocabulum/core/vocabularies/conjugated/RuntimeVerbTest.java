@@ -39,7 +39,6 @@ class RuntimeVerbTest {
         @BeforeEach
         void init() {
             verb = new RuntimeVerb(Database.get().getConjugationClasses().a_Conjugation(), "vocare", "voc", "vocav", "vocat", new ArrayList<>(), "test");
-            System.out.println(verb.getDefinition(Database.get().getI18ns().internal()));
         }
 
         @Test

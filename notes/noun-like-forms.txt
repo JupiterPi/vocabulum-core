@@ -1,0 +1,38 @@
+fromBaseForms
+makeForm
+ infinitive
+ basic
+ ppp
+  Nom. Sg. f.
+  Dat. Pl. n.
+ ppa
+  Nom. Sg.
+  other
+ pfa
+  -sur
+  normal (-tur)
+ gerundium
+  infinitive
+  other
+  Dat. Pl.
+ gerundivum
+
+
+
+
+PPA:
+Nom. Sg.:  -ns
+other:     -nt + cons_adjectives_decl
+
+PFA:
+-tur/sur + adjective-a/o
+-> sur if PPP ends in -s
+
+Gerundium:
+Nom. Sg.:  infinitive
+other:     -nd + o_decl
+(!) Dat. forms don't exist
+(!) plural forms don't exist
+
+Gerundivum:
+adjectives with unmodified root
