@@ -54,6 +54,10 @@ class VerbTest {
             Document e = Document.parse("""
                     {
                       "forms": {
+                        "imperative": {
+                           "sg": "Imp. Sg.",
+                           "pl": "Imp. Pl.",
+                        },
                         "infinitive": {
                                 "present": {
                                     "active": "Inf. Pres. Act.",
@@ -662,6 +666,10 @@ class VerbTest {
             Document e = Document.parse("""
                     {
                       "forms": {
+                      "imperative": {
+                           "sg": "Imp. Sg.",
+                           "pl": "Imp. Pl.",
+                        },
                         "infinitive": {
                                 "present": {
                                     "active": "-",

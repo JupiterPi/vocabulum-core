@@ -46,6 +46,7 @@
       "active": "Act",
       "passive": "Pass"
     },
+    "imperative": "Imp",
     "infinitive": "Inf",
     "infinitive_tense": {
       "present": "Pres",

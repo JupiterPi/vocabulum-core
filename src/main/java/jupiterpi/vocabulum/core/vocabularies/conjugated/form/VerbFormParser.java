@@ -20,6 +20,15 @@ public class VerbFormParser {
 
     private VerbForm parseVerbForm(TokenSequence tokens) throws ParserException {
 
+        // Kind.IMPERATIVE
+        if (tokens.size() == 2 && tokens.fitsStartsWith(TokenSequence.fromTypes(
+                Token.Type.IMPERATIVE_FLAG,
+                Token.Type.NUMBER
+        ))) {
+            CNumber number = tokens.getI18n().cNumberFromSymbol(tokens.get(1).getContent());
+            return new VerbForm(number);
+        }
+
         // Kind.INFINITIVE
         if (tokens.size() == 3 && tokens.fitsStartsWith(TokenSequence.fromTypes(
                 Token.Type.INFINITIVE_FLAG,

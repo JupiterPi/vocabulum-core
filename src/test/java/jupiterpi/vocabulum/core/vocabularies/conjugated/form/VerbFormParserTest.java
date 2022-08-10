@@ -22,6 +22,18 @@ class VerbFormParserTest {
     I18n i18n = Database.get().getI18ns().internal();
 
     @Test
+    @DisplayName("imperative")
+    void imperative() throws ParserException {
+        TokenSequence tokens = new TokenSequence(
+                new Token(Token.Type.IMPERATIVE_FLAG, "Imp", i18n),
+                new Token(Token.Type.NUMBER, "Pl", i18n)
+        );
+        VerbForm verbForm = new VerbFormParser(tokens).getVerbForm();
+        VerbForm e = new VerbForm(CNumber.PL);
+        assertEquals(e, verbForm);
+    }
+
+    @Test
     @DisplayName("infinitive")
     void infinitive() throws ParserException {
         TokenSequence tokens = new TokenSequence(

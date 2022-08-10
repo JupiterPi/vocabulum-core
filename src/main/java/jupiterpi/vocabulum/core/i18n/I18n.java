@@ -145,6 +145,11 @@ public class I18n {
         throw new ParserException("Invalid voice: " + symbol);
     }
 
+    // imperative (flag)
+    public String getImperativeFlag() {
+        return str_texts.getString("imperative");
+    }
+
     // infinitive (flag)
     public String getInfinitiveFlag() {
         return str_texts.getString("infinitive");
@@ -159,7 +164,7 @@ public class I18n {
         for (InfinitiveTense infinitiveTense : InfinitiveTense.values()) {
             if (getInfinitiveTenseSymbol(infinitiveTense).equals(symbol)) return infinitiveTense;
         }
-        throw new ParserException("Invalid infinitiveTense: " + symbol);
+        throw new ParserException("Invalid infinitive tense: " + symbol);
     }
 
     // noun-like form

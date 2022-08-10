@@ -172,6 +172,7 @@ public class MockDatabase extends Database {
                               "active": "Act",
                               "passive": "Pass"
                             },
+                                  "imperative": "Imp",
                             "infinitive": "Inf",
                             "infinitive_tense": {
                               "present": "Pres",
@@ -255,6 +256,7 @@ public class MockDatabase extends Database {
                                "active": "Akt",
                                "passive": "Pass"
                              },
+                                   "imperative": "Imp",
                              "infinitive": "Inf",
                              "infinitive_tense": {
                                "present": "Präs",
@@ -338,6 +340,7 @@ public class MockDatabase extends Database {
                                "active": "Act",
                                "passive": "Pass"
                              },
+                                   "imperative": "Imp",
                              "infinitive": "Inf",
                              "infinitive_tense": {
                                "present": "Pres",
@@ -568,6 +571,10 @@ public class MockDatabase extends Database {
                 Document.parse("""
                         {
                           "name": "a",
+                          "imperative": {
+                              "sg": "Pr+a",
+                              "pl": "Pr+ate"
+                            },
                           "infinitive": {
                             "present": {
                               "active": "",

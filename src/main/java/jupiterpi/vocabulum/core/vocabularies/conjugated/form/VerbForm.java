@@ -5,7 +5,6 @@ import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
-import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.VocabularyForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
@@ -13,6 +12,10 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import java.util.Objects;
 
 public class VerbForm implements VocabularyForm {
+    // for Kind.IMPERATIVE
+    private boolean imperative;
+    private CNumber imperativeNumber;
+
     // for Kind.INFINITIVE
     private boolean infinitive;
     private InfinitiveTense infinitiveTense;
@@ -27,10 +30,16 @@ public class VerbForm implements VocabularyForm {
     // for Kind.NOUN_LIKE
     private boolean nounLike;
     private NounLikeForm nounLikeForm;
-    private DeclinedForm declinedForm;
+    private DeclinedForm nounLikeDeclinedForm;
 
 
     /* constructors */
+
+    // for Kind.IMPERATIVE
+    public VerbForm(CNumber imperativeNumber) {
+        this.imperative = true;
+        this.imperativeNumber = imperativeNumber;
+    }
 
     // for Kind.INFINITIVE
     public VerbForm(InfinitiveTense infinitiveTense, Voice infinitiveVoice) {
@@ -48,10 +57,10 @@ public class VerbForm implements VocabularyForm {
     }
 
     // for Kind.NOUN_LIKE
-    public VerbForm(NounLikeForm nounLikeForm, DeclinedForm declinedForm) {
+    public VerbForm(NounLikeForm nounLikeForm, DeclinedForm nounLikeDeclinedForm) {
         this.nounLike = true;
         this.nounLikeForm = nounLikeForm;
-        this.declinedForm = declinedForm;
+        this.nounLikeDeclinedForm = nounLikeDeclinedForm;
     }
 
 
@@ -83,10 +92,11 @@ public class VerbForm implements VocabularyForm {
     /* kinds */
 
     public enum Kind {
-        INFINITIVE, BASIC, NOUN_LIKE
+        IMPERATIVE, INFINITIVE, BASIC, NOUN_LIKE
     }
 
     public Kind getKind() {
+        if (imperative) return Kind.IMPERATIVE;
         if (infinitive) return Kind.INFINITIVE;
         if (nounLike) return Kind.NOUN_LIKE;
         return Kind.BASIC;
@@ -96,6 +106,14 @@ public class VerbForm implements VocabularyForm {
     /* getters, equals, toString */
 
     // getters
+
+    public boolean isImperative() {
+        return imperative;
+    }
+
+    public CNumber getImperativeNumber() {
+        return imperativeNumber;
+    }
 
     public boolean isInfinitive() {
         return infinitive;
@@ -133,8 +151,8 @@ public class VerbForm implements VocabularyForm {
         return nounLikeForm;
     }
 
-    public DeclinedForm getDeclinedForm() {
-        return declinedForm;
+    public DeclinedForm getNounLikeDeclinedForm() {
+        return nounLikeDeclinedForm;
     }
 
     // equals
@@ -144,12 +162,12 @@ public class VerbForm implements VocabularyForm {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VerbForm verbForm = (VerbForm) o;
-        return infinitive == verbForm.infinitive && nounLike == verbForm.nounLike && infinitiveTense == verbForm.infinitiveTense && infinitiveVoice == verbForm.infinitiveVoice && Objects.equals(conjugatedForm, verbForm.conjugatedForm) && mode == verbForm.mode && tense == verbForm.tense && voice == verbForm.voice && nounLikeForm == verbForm.nounLikeForm && Objects.equals(declinedForm, verbForm.declinedForm);
+        return imperative == verbForm.imperative && infinitive == verbForm.infinitive && nounLike == verbForm.nounLike && imperativeNumber == verbForm.imperativeNumber && infinitiveTense == verbForm.infinitiveTense && infinitiveVoice == verbForm.infinitiveVoice && Objects.equals(conjugatedForm, verbForm.conjugatedForm) && mode == verbForm.mode && tense == verbForm.tense && voice == verbForm.voice && nounLikeForm == verbForm.nounLikeForm && Objects.equals(nounLikeDeclinedForm, verbForm.nounLikeDeclinedForm);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(infinitive, infinitiveTense, infinitiveVoice, conjugatedForm, mode, tense, voice, nounLike, nounLikeForm, declinedForm);
+        return Objects.hash(imperative, imperativeNumber, infinitive, infinitiveTense, infinitiveVoice, conjugatedForm, mode, tense, voice, nounLike, nounLikeForm, nounLikeDeclinedForm);
     }
 
     // to string
@@ -166,8 +184,9 @@ public class VerbForm implements VocabularyForm {
         } else {
             return switch (getKind()) {
                 case BASIC -> null;
+                case IMPERATIVE -> i18n.getImperativeFlag() + ". " + i18n.getNumberSymbol(imperativeNumber) + ".";
                 case INFINITIVE -> i18n.getInfinitiveFlag() + ". " + i18n.getInfinitiveTenseSymbol(infinitiveTense) + ". " + i18n.getVoiceSymbol(infinitiveVoice) + ".";
-                case NOUN_LIKE -> i18n.getNounLikeFormSymbol(nounLikeForm) + ". " + declinedForm.formToString(i18n);
+                case NOUN_LIKE -> i18n.getNounLikeFormSymbol(nounLikeForm) + ". " + nounLikeDeclinedForm.formToString(i18n);
             };
         }
     }
@@ -176,8 +195,9 @@ public class VerbForm implements VocabularyForm {
     public String toString() {
         return switch (getKind()) {
             case BASIC -> "Verb{form=" + conjugatedForm.toString() + ",mode=" + mode.toString().toLowerCase() + ",tense=" + tense.toString().toLowerCase() + ",voice=" + voice.toString().toLowerCase() + "}";
+            case IMPERATIVE -> "Verb{imperative, number=" + imperativeNumber.toString().toLowerCase() + "}";
             case INFINITIVE -> "Verb{infinitive, tense=" + infinitiveTense.toString().toLowerCase() + ", voice=" + infinitiveVoice.toString().toLowerCase() + "}";
-            case NOUN_LIKE -> "Verb{" + nounLikeForm.toString().toLowerCase() + ", form=" + declinedForm.toString() + "}";
+            case NOUN_LIKE -> "Verb{" + nounLikeForm.toString().toLowerCase() + ", form=" + nounLikeDeclinedForm.toString() + "}";
         };
     }
 }

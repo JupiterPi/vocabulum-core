@@ -63,6 +63,13 @@ class VerbFormTest {
         }
 
         @Test
+        @DisplayName("=> Kind.IMPERATIVE")
+        void imperative() {
+            VerbForm form = new VerbForm(CNumber.PL);
+            assertEquals(VerbForm.Kind.IMPERATIVE, form.getKind());
+        }
+
+        @Test
         @DisplayName("=> Kind.INFINITIVE")
         void infinitive() {
             VerbForm form = new VerbForm(InfinitiveTense.PERFECT, Voice.PASSIVE);
@@ -132,6 +139,13 @@ class VerbFormTest {
                 assertEquals("2. Pers. Pl. Conj. Imperf. Pass.", form.formToString(i18n));
             }
 
+        }
+
+        @Test
+        @DisplayName("Kind.IMPERATIVE")
+        void imperativeKind() {
+            VerbForm form = new VerbForm(CNumber.PL);
+            assertEquals("Imp. Pl.", form.formToString(i18n));
         }
 
         @Test

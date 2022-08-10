@@ -16,6 +16,10 @@ class SimpleConjugationSchemaTest {
         Document document = Document.parse("""
                 {
                   "name": "a",
+                  "imperative": {
+                      "sg": "Pr+a",
+                      "pl": "Pr+ate"
+                    },
                   "infinitive": {
                     "present": {
                       "active": "",
@@ -359,6 +363,7 @@ class SimpleConjugationSchemaTest {
                 """);
         SimpleConjugationSchema s = SimpleConjugationSchema.readFromDocument(document);
         assertAll(
+                () -> assertEquals(Pattern.fromString("Pr+ate"), s.getPattern(new VerbForm(CNumber.PL))),
                 () -> assertEquals(Pattern.fromString("Pr+ari"), s.getPattern(new VerbForm(InfinitiveTense.PRESENT, Voice.PASSIVE))),
                 () -> assertEquals(Pattern.fromString("Pr+aremini"), s.getPattern(new VerbForm(new ConjugatedForm(Person.SECOND, CNumber.PL), Mode.CONJUNCTIVE, Tense.IMPERFECT, Voice.PASSIVE))),
                 () -> assertEquals(Pattern.fromString("Pr+a"), s.getNounLikeFormRootPattern(NounLikeForm.PPA))

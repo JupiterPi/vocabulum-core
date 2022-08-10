@@ -62,7 +62,9 @@ class LexerTest {
                         Arguments.of("1", Token.Type.PERSON),
                         Arguments.of("Ind", Token.Type.MODE),
                         Arguments.of("Pres", Token.Type.TENSE),
-                        Arguments.of("Act", Token.Type.VOICE)
+                        Arguments.of("Act", Token.Type.VOICE),
+                        Arguments.of("Imp", Token.Type.IMPERATIVE_FLAG),
+                        Arguments.of("Inf", Token.Type.INFINITIVE_FLAG)
                 );
             }
 
@@ -77,7 +79,7 @@ class LexerTest {
         @Test
         @DisplayName("sequence of tokens")
         void sequenceOfTokens() throws LexerException {
-            String expr = "word , Nom. Sg. m. Pos. Adv. 1. Ind. word Pres. Act.";
+            String expr = "word , Nom. Sg. m. Pos. Adv. 1. Ind. word Pres. Act. Imp. Inf.";
             //                  ^ standalone comma               ^ word between abbreviations
             TokenSequence e = new TokenSequence(
                     new Token(Token.Type.WORD, "word", i18n),
@@ -91,7 +93,9 @@ class LexerTest {
                     new Token(Token.Type.MODE, "Ind", i18n),
                     new Token(Token.Type.WORD, "word", i18n),
                     new Token(Token.Type.TENSE, "Pres", i18n),
-                    new Token(Token.Type.VOICE, "Act", i18n)
+                    new Token(Token.Type.VOICE, "Act", i18n),
+                    new Token(Token.Type.IMPERATIVE_FLAG, "Imp", i18n),
+                    new Token(Token.Type.INFINITIVE_FLAG, "Inf", i18n)
             );
             assertEquals(e, new Lexer(expr, i18n).getTokens());
         }

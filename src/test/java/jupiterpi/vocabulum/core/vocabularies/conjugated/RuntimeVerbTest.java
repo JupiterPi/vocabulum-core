@@ -42,6 +42,12 @@ class RuntimeVerbTest {
         }
 
         @Test
+        @DisplayName("imperative")
+        void imperative() throws DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
+            assertEquals("vocate", verb.makeForm(new VerbForm(CNumber.PL)));
+        }
+
+        @Test
         @DisplayName("infinitive")
         void infinitive() throws DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
             assertEquals("vocavisse", verb.makeForm(new VerbForm(InfinitiveTense.PERFECT, Voice.ACTIVE)));

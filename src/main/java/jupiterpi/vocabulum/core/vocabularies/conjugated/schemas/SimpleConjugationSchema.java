@@ -1,6 +1,7 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated.schemas;
 
 import jupiterpi.vocabulum.core.db.LoadingDataException;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.Verb;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.*;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.forminfo.Pattern;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
@@ -16,6 +17,14 @@ public class SimpleConjugationSchema extends ConjugationSchema {
     public static SimpleConjugationSchema readFromDocument(Document document) throws LoadingDataException {
         String name = document.getString("name");
         SimpleConjugationSchema schema = new SimpleConjugationSchema(name);
+
+        // Kind.IMPERATIVE
+        Document imperativeFormsDocument = (Document) document.get("imperative");
+        for (CNumber number : CNumber.values()) {
+            VerbForm form = new VerbForm(number);
+            String pattern = imperativeFormsDocument.getString(number.toString().toLowerCase());
+            schema.patterns.put(form, Pattern.fromString(pattern));
+        }
 
         // Kind.INFINITIVE
         Document infinitiveFormsDocument = (Document) document.get("infinitive");

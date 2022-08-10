@@ -1,6 +1,7 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated;
 
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.*;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.forminfo.Pattern;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
@@ -23,6 +24,13 @@ public class WordbaseVerb extends Verb {
         this.baseForm = baseForm;
 
         this.forms = new HashMap<>();
+
+        // Kind.IMPERATIVE
+        Document imperativeFormsDocument = (Document) forms.get("imperative");
+        for (CNumber number : CNumber.values()) {
+            VerbForm form = new VerbForm(number);
+            this.forms.put(form, imperativeFormsDocument.getString(number.toString().toLowerCase()));
+        }
 
         // Kind.INFINITIVE
         Document infinitiveFormsDocument = (Document) forms.get("infinitive");

@@ -33,7 +33,7 @@ public class Token {
         WORD, COMMA,
         CASUS, NUMBER, GENDER, COMPARATIVE_FORM, ADV_FLAG,
         PERSON, MODE, TENSE, VOICE,
-        INFINITIVE_FLAG, NOUN_LIKE_FORM
+        IMPERATIVE_FLAG, INFINITIVE_FLAG, NOUN_LIKE_FORM
     }
 
     public I18n getI18n() {

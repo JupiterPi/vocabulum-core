@@ -1,5 +1,9 @@
 {
   "name": "a",
+  "imperative": {
+    "sg": "Pr+a",
+    "pl": "Pr+ate"
+  },
   "infinitive": {
     "present": {
       "active": "",

@@ -61,6 +61,7 @@ public class Lexer {
                 i18n.getVoiceSymbol(Voice.ACTIVE),
                 i18n.getVoiceSymbol(Voice.PASSIVE)
         );
+        imperativeFlag = i18n.getImperativeFlag();
         infinitiveFlag = i18n.getInfinitiveFlag();
         infinitiveTenseSymbols = new StringSet(
                 i18n.getInfinitiveTenseSymbol(InfinitiveTense.PRESENT),
@@ -100,6 +101,7 @@ public class Lexer {
     private final StringSet modeSymbols;
     private final StringSet tenseSymbols;
     private final StringSet voiceSymbols;
+    private final String imperativeFlag;
     private final String infinitiveFlag;
     private final StringSet infinitiveTenseSymbols;
     private final StringSet nounLikeForms;
@@ -171,6 +173,8 @@ public class Lexer {
                 tokens.add(new Token(Token.Type.TENSE, buffer, i18n));
             } else if (voiceSymbols.contains(buffer)) {
                 tokens.add(new Token(Token.Type.VOICE, buffer, i18n));
+            } else if (imperativeFlag.equals(buffer)) {
+                tokens.add(new Token(Token.Type.IMPERATIVE_FLAG, buffer, i18n));
             } else if (infinitiveFlag.equals(buffer)) {
                 tokens.add(new Token(Token.Type.INFINITIVE_FLAG, buffer, i18n));
             } else if (infinitiveTenseSymbols.contains(buffer)) {

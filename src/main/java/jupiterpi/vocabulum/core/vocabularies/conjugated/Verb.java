@@ -49,6 +49,14 @@ public abstract class Verb extends Vocabulary {
     public Document generateWordbaseEntrySpecificPart() {
         Document formsDocument = new Document();
 
+        // Kind.IMPERATIVE
+        Document imperativeFormsDocument = new Document();
+        for (CNumber number : CNumber.values()) {
+            String form = makeFormOrDash(new VerbForm(number));
+            imperativeFormsDocument.put(number.toString().toLowerCase(), form);
+        }
+        formsDocument.put("imperative", imperativeFormsDocument);
+
         // Kind.INFINITIVE
         Document infinitiveFormsDocument = new Document();
         for (InfinitiveTense infinitiveTense : InfinitiveTense.values()) {

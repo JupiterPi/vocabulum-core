@@ -83,12 +83,12 @@ public class RuntimeVerb extends Verb {
                 makeNounLikeForm(new VerbForm(NounLikeForm.PFA, new DeclinedForm(Casus.NOM, NNumber.PL, Gender.MASC)))
         );
         return switch (form.getKind()) {
-            case INFINITIVE, BASIC -> makeInfinitiveOrBasicForm(form, info);
+            case IMPERATIVE, INFINITIVE, BASIC -> makeImperativeOrInfinitiveOrBasicForm(form, info);
             case NOUN_LIKE -> makeNounLikeForm(form);
         };
     }
 
-    private String makeInfinitiveOrBasicForm(VerbForm form, VerbInfo info) throws VerbFormDoesNotExistException {
+    private String makeImperativeOrInfinitiveOrBasicForm(VerbForm form, VerbInfo info) throws VerbFormDoesNotExistException {
         Pattern pattern = conjugationSchema.getPattern(form);
         return pattern.make(info);
     }
@@ -110,7 +110,7 @@ public class RuntimeVerb extends Verb {
                     pppRoot + adjective_nom_sg_fem_suffix,
                     pppRoot + adjective_nom_sg_neut_suffix,
                     RuntimeAdjective.Kind.AO, pppRoot, new ArrayList<>(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
-            AdjectiveForm adjectiveForm = new AdjectiveForm(form.getDeclinedForm(), ComparativeForm.POSITIVE);
+            AdjectiveForm adjectiveForm = new AdjectiveForm(form.getNounLikeDeclinedForm(), ComparativeForm.POSITIVE);
             return ppp.makeForm(adjectiveForm);
         } else {
             Document verbsDocument = (Document) Database.get().getVerbsDocument().get("noun_like_form_suffixes");
@@ -122,7 +122,7 @@ public class RuntimeVerb extends Verb {
                 Pattern pattern = conjugationSchema.getNounLikeFormRootPattern(NounLikeForm.PPA);
                 String root = pattern.make(info);
 
-                DeclinedForm declinedForm = form.getDeclinedForm();
+                DeclinedForm declinedForm = form.getNounLikeDeclinedForm();
                 if (declinedForm.fits(new DeclinedForm(Casus.NOM, NNumber.SG))) {
                     return root + nom_sg_sign;
                 } else {
@@ -149,12 +149,12 @@ public class RuntimeVerb extends Verb {
                         root + sign + adjective_nom_sg_fem_suffix,
                         root + sign + adjective_nom_sg_neut_suffix,
                         RuntimeAdjective.Kind.AO, root + sign, new ArrayList<>(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
-                return pfa.makeForm(new AdjectiveForm(form.getDeclinedForm(), ComparativeForm.POSITIVE));
+                return pfa.makeForm(new AdjectiveForm(form.getNounLikeDeclinedForm(), ComparativeForm.POSITIVE));
             } else if (nounLikeForm == NounLikeForm.GERUNDIUM) {
                 Document gerundiumDocument = (Document) verbsDocument.get("gerundium");
                 String sign = gerundiumDocument.getString("sign");
 
-                DeclinedForm declinedForm = form.getDeclinedForm();
+                DeclinedForm declinedForm = form.getNounLikeDeclinedForm();
                 if (declinedForm.getCasus() == Casus.DAT || declinedForm.getNumber() == NNumber.PL) throw new DeclinedFormDoesNotExistException(declinedForm);
                 if (declinedForm.hasGender() && declinedForm.getGender() != Gender.MASC) throw new DeclinedFormDoesNotExistException(declinedForm);
                 declinedForm.normalizeGender();
@@ -181,7 +181,7 @@ public class RuntimeVerb extends Verb {
                         root + sign + adjective_nom_sg_fem_suffix,
                         root + sign + adjective_nom_sg_neut_suffix,
                         RuntimeAdjective.Kind.AO, root + sign, new ArrayList<>(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
-                return pfa.makeForm(new AdjectiveForm(form.getDeclinedForm(), ComparativeForm.POSITIVE));
+                return pfa.makeForm(new AdjectiveForm(form.getNounLikeDeclinedForm(), ComparativeForm.POSITIVE));
             }
         }
         return null;
