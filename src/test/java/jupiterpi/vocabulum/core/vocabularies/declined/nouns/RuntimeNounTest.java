@@ -8,14 +8,12 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
-import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionSchema;
+import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RuntimeNounTest {
     @Test
     void fromGenitive() throws ParserException, DeclinedFormDoesNotExistException {
-        RuntimeNoun n = RuntimeNoun.fromGenitive("amicus", "amici", Gender.MASC, new ArrayList<>(), "test");
+        RuntimeNoun n = RuntimeNoun.fromGenitive("amicus", "amici", Gender.MASC, new TranslationSequence(), "test");
         assertAll(
                 () -> assertEquals("amicus", n.getBaseForm()),
                 () -> assertEquals("amico", n.makeForm(new NounForm(new DeclinedForm(Casus.ABL, NNumber.SG)))),
@@ -42,7 +40,7 @@ class RuntimeNounTest {
             n = new RuntimeNoun(
                     Database.get().getDeclensionClasses().o_Declension(),
                     "amicus", "amic", Gender.MASC,
-                    new ArrayList<>(), "test"
+                    new TranslationSequence(), "test"
             );
         }
 

@@ -8,13 +8,13 @@ import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
+import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 import org.bson.Document;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,8 +24,8 @@ class VocabularyTest {
     @Test
     void readTranslations() {
         Document document = new Document("translations", Arrays.asList("*der Freund*", "der Kamerad"));
-        List<VocabularyTranslation> translations = Vocabulary.readTranslations(document);
-        List<VocabularyTranslation> e = Arrays.asList(
+        TranslationSequence translations = Vocabulary.readTranslations(document);
+        TranslationSequence e = new TranslationSequence(
                 new VocabularyTranslation(true, "der Freund"),
                 new VocabularyTranslation(false, "der Kamerad")
         );
@@ -35,7 +35,7 @@ class VocabularyTest {
     @Test
     void fromString() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
         Vocabulary vocabulary = Vocabulary.fromString("amicus, amici m. - *der Freund*, der Kamerad", Database.get().getI18ns().internal(), "test");
-        List<VocabularyTranslation> translations = Arrays.asList(
+        TranslationSequence translations = new TranslationSequence(
                 new VocabularyTranslation(true, "der Freund"),
                 new VocabularyTranslation(false, "der Kamerad")
         );
@@ -47,7 +47,7 @@ class VocabularyTest {
 
     @Test
     void generateWordbaseEntry() {
-        List<VocabularyTranslation> translations = Arrays.asList(
+        TranslationSequence translations = new TranslationSequence(
                 new VocabularyTranslation(true, "der Freund"),
                 new VocabularyTranslation(false, "der Kamerad")
         );

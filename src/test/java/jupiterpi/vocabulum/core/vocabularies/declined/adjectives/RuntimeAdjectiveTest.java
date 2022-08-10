@@ -7,13 +7,12 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
+import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,7 +26,7 @@ class RuntimeAdjectiveTest {
         @Test
         @DisplayName("a/o")
         void ao() throws DeclinedFormDoesNotExistException {
-            RuntimeAdjective a = RuntimeAdjective.fromBaseForms("pulcher", "pulchra", "pulchrum", new ArrayList<>(), "test");
+            RuntimeAdjective a = RuntimeAdjective.fromBaseForms("pulcher", "pulchra", "pulchrum", new TranslationSequence(), "test");
             assertAll(
                     () -> assertEquals("pulcher", a.getBaseForm()),
                     () -> assertEquals("pulchra", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM), ComparativeForm.POSITIVE))),
@@ -39,7 +38,7 @@ class RuntimeAdjectiveTest {
         @Test
         @DisplayName("cons")
         void cons() throws DeclinedFormDoesNotExistException {
-            RuntimeAdjective a = RuntimeAdjective.fromBaseForms("acer", "acris", "acre", new ArrayList<>(), "test");
+            RuntimeAdjective a = RuntimeAdjective.fromBaseForms("acer", "acris", "acre", new TranslationSequence(), "test");
             assertAll(
                     () -> assertEquals("acer", a.getBaseForm()),
                     () -> assertEquals("acris", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM), ComparativeForm.POSITIVE))),
@@ -52,7 +51,7 @@ class RuntimeAdjectiveTest {
 
     @Test
     void fromGenitive() throws ParserException, DeclinedFormDoesNotExistException {
-        RuntimeAdjective a = RuntimeAdjective.fromGenitive("felix", "felicis", new ArrayList<>(), "test");
+        RuntimeAdjective a = RuntimeAdjective.fromGenitive("felix", "felicis", new TranslationSequence(), "test");
         assertAll(
                 () -> assertEquals("felix", a.getBaseForm()),
                 () -> assertEquals("felicis", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC), ComparativeForm.POSITIVE))),
@@ -71,10 +70,10 @@ class RuntimeAdjectiveTest {
         void init() {
             ao = new RuntimeAdjective(
                     "laetus", "laeta", "laetum", RuntimeAdjective.Kind.AO, "laet",
-                    new ArrayList<>(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
+                    new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
             cons = new RuntimeAdjective(
                     "acer", "acris", "acre", RuntimeAdjective.Kind.CONS, "acr",
-                    new ArrayList<>(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
+                    new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
         }
 
         @Nested

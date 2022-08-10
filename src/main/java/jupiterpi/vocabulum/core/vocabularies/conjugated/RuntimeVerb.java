@@ -18,11 +18,8 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionSchema;
-import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
+import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import org.bson.Document;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RuntimeVerb extends Verb {
     private ConjugationSchema conjugationSchema;
@@ -31,7 +28,7 @@ public class RuntimeVerb extends Verb {
     private String perfectRoot;
     private String pppRoot;
 
-    public RuntimeVerb(ConjugationSchema conjugationSchema, String infinitive, String presentRoot, String perfectRoot, String pppRoot, List<VocabularyTranslation> translations, String portion) {
+    public RuntimeVerb(ConjugationSchema conjugationSchema, String infinitive, String presentRoot, String perfectRoot, String pppRoot, TranslationSequence translations, String portion) {
         super(translations, portion);
         this.conjugationSchema = conjugationSchema;
         this.infinitive = infinitive;
@@ -40,7 +37,7 @@ public class RuntimeVerb extends Verb {
         this.pppRoot = pppRoot;
     }
 
-    public static RuntimeVerb fromBaseForms(String infinitive, String first_sg_present, String first_sg_perfect, String ppp_nom_sg_neut, List<VocabularyTranslation> translations, String portion) throws ParserException, VerbFormDoesNotExistException, DeclinedFormDoesNotExistException {
+    public static RuntimeVerb fromBaseForms(String infinitive, String first_sg_present, String first_sg_perfect, String ppp_nom_sg_neut, TranslationSequence translations, String portion) throws ParserException, VerbFormDoesNotExistException, DeclinedFormDoesNotExistException {
         ConjugationSchema conjugationSchema = Database.get().getConjugationClasses().a_Conjugation();
 
         /* roots */
@@ -109,7 +106,7 @@ public class RuntimeVerb extends Verb {
                     pppRoot + adjective_nom_sg_masc_suffix,
                     pppRoot + adjective_nom_sg_fem_suffix,
                     pppRoot + adjective_nom_sg_neut_suffix,
-                    RuntimeAdjective.Kind.AO, pppRoot, new ArrayList<>(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
+                    RuntimeAdjective.Kind.AO, pppRoot, new TranslationSequence(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
             AdjectiveForm adjectiveForm = new AdjectiveForm(form.getNounLikeDeclinedForm(), ComparativeForm.POSITIVE);
             return ppp.makeForm(adjectiveForm);
         } else {
@@ -148,7 +145,7 @@ public class RuntimeVerb extends Verb {
                         root + sign + adjective_nom_sg_masc_suffix,
                         root + sign + adjective_nom_sg_fem_suffix,
                         root + sign + adjective_nom_sg_neut_suffix,
-                        RuntimeAdjective.Kind.AO, root + sign, new ArrayList<>(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
+                        RuntimeAdjective.Kind.AO, root + sign, new TranslationSequence(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
                 return pfa.makeForm(new AdjectiveForm(form.getNounLikeDeclinedForm(), ComparativeForm.POSITIVE));
             } else if (nounLikeForm == NounLikeForm.GERUNDIUM) {
                 Document gerundiumDocument = (Document) verbsDocument.get("gerundium");
@@ -180,7 +177,7 @@ public class RuntimeVerb extends Verb {
                         root + sign + adjective_nom_sg_masc_suffix,
                         root + sign + adjective_nom_sg_fem_suffix,
                         root + sign + adjective_nom_sg_neut_suffix,
-                        RuntimeAdjective.Kind.AO, root + sign, new ArrayList<>(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
+                        RuntimeAdjective.Kind.AO, root + sign, new TranslationSequence(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
                 return pfa.makeForm(new AdjectiveForm(form.getNounLikeDeclinedForm(), ComparativeForm.POSITIVE));
             }
         }

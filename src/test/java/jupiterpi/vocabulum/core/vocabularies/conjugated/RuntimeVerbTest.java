@@ -9,13 +9,12 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
+import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RuntimeVerbTest {
     @Test
     void fromBaseForms() throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-        RuntimeVerb verb = RuntimeVerb.fromBaseForms("vocare", "voco", "vocavi", "vocatum", new ArrayList<>(), "test");
+        RuntimeVerb verb = RuntimeVerb.fromBaseForms("vocare", "voco", "vocavi", "vocatum", new TranslationSequence(), "test");
         assertAll(
                 () -> assertEquals("vocare", verb.getBaseForm()),
                 () -> assertEquals("voco", verb.makeForm(new VerbForm(new ConjugatedForm(Person.FIRST, CNumber.SG), Mode.INDICATIVE, Tense.PRESENT, Voice.ACTIVE)))
@@ -38,7 +37,7 @@ class RuntimeVerbTest {
 
         @BeforeEach
         void init() {
-            verb = new RuntimeVerb(Database.get().getConjugationClasses().a_Conjugation(), "vocare", "voc", "vocav", "vocat", new ArrayList<>(), "test");
+            verb = new RuntimeVerb(Database.get().getConjugationClasses().a_Conjugation(), "vocare", "voc", "vocav", "vocat", new TranslationSequence(), "test");
         }
 
         @Test
@@ -106,7 +105,7 @@ class RuntimeVerbTest {
                 @Test
                 @DisplayName("with -sur-")
                 void withSur() throws DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-                    verb = new RuntimeVerb(Database.get().getConjugationClasses().a_Conjugation(), "vocare", "voc", "vocav", "vocas", new ArrayList<>(), "test");
+                    verb = new RuntimeVerb(Database.get().getConjugationClasses().a_Conjugation(), "vocare", "voc", "vocav", "vocas", new TranslationSequence(), "test");
                     assertEquals("vocasurus", verb.makeForm(new VerbForm(NounLikeForm.PFA, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))));
                 }
 

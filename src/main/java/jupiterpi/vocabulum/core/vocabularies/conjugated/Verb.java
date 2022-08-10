@@ -8,15 +8,14 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
-import jupiterpi.vocabulum.core.vocabularies.declined.nouns.NounForm;
-import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
+import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Verb extends Vocabulary {
-    protected Verb(List<VocabularyTranslation> translations, String portion) {
+    protected Verb(TranslationSequence translations, String portion) {
         super(translations, portion);
     }
 

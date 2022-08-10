@@ -5,24 +5,17 @@ import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.InfinitiveTense;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbForm;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.Voice;
-import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
-import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
-import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
-import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
-import jupiterpi.vocabulum.core.vocabularies.declined.nouns.Noun;
-import jupiterpi.vocabulum.core.vocabularies.declined.nouns.NounForm;
+import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import org.bson.Document;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockDatabaseSetup.class)
 class VerbTest {
@@ -40,7 +33,7 @@ class VerbTest {
         @Test
         @DisplayName("all forms exist")
         void allFormsExist() {
-            Verb verb = new Verb(new ArrayList<>(), "test") {
+            Verb verb = new Verb(new TranslationSequence(), "test") {
                 @Override
                 public String makeForm(VerbForm form) {
                     return form.formToString(i18n);
@@ -651,7 +644,7 @@ class VerbTest {
         @Test
         @DisplayName("some forms don't exist")
         void someFormsDontExist() {
-            Verb verb = new Verb(new ArrayList<>(), "test") {
+            Verb verb = new Verb(new TranslationSequence(), "test") {
                 @Override
                 public String makeForm(VerbForm form) {
                     if (form.isInfinitive()) return "-";
@@ -1270,7 +1263,7 @@ class VerbTest {
         @DisplayName("one possibility")
         void onePossibility() {
             final VerbForm verbForm = new VerbForm(InfinitiveTense.PRESENT, Voice.ACTIVE);
-            Verb verb = new Verb(new ArrayList<>(), "test") {
+            Verb verb = new Verb(new TranslationSequence(), "test") {
                 @Override
                 public String makeForm(VerbForm form) {
                     if (form.equals(verbForm)) return "theform";
@@ -1290,7 +1283,7 @@ class VerbTest {
         void multiplePossibilities() {
             final VerbForm verbForm1 = new VerbForm(InfinitiveTense.PRESENT, Voice.ACTIVE);
             final VerbForm verbForm2 = new VerbForm(InfinitiveTense.PERFECT, Voice.ACTIVE);
-            Verb verb = new Verb(new ArrayList<>(), "test") {
+            Verb verb = new Verb(new TranslationSequence(), "test") {
                 @Override
                 public String makeForm(VerbForm form) {
                     if (form.equals(verbForm1)) return "theform";

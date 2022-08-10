@@ -16,14 +16,12 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.Noun;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.RuntimeNoun;
 import jupiterpi.vocabulum.core.vocabularies.inflexible.Inflexible;
+import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -36,8 +34,8 @@ class VocabularyParserTest {
     @DisplayName("valid")
     class Valid {
 
-        private List<VocabularyTranslation> generateTranslations(String... translations) {
-            List<VocabularyTranslation> vocabularyTranslations = new ArrayList<>();
+        private TranslationSequence generateTranslations(String... translations) {
+            TranslationSequence vocabularyTranslations = new TranslationSequence();
             for (String translation : translations) {
                 vocabularyTranslations.add(VocabularyTranslation.fromString(translation));
             }
@@ -47,7 +45,7 @@ class VocabularyParserTest {
         @Test
         @DisplayName("noun")
         void noun() throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-            List<VocabularyTranslation> translations = generateTranslations("*der Sklave*", "der Diener");
+            TranslationSequence translations = generateTranslations("*der Sklave*", "der Diener");
             Noun e = RuntimeNoun.fromGenitive(
                     "servus", "servi", Gender.MASC,
                     translations, "test"
@@ -64,7 +62,7 @@ class VocabularyParserTest {
         @Test
         @DisplayName("adjective (2/3-ended: form base forms)")
         void adjectiveFromBaseForms() throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-            List<VocabularyTranslation> translations = generateTranslations("*hart*", "*scharf*");
+            TranslationSequence translations = generateTranslations("*hart*", "*scharf*");
             Adjective e = RuntimeAdjective.fromBaseForms(
                     "acer", "acris", "acre",
                     translations, "test"
@@ -82,7 +80,7 @@ class VocabularyParserTest {
         @Test
         @DisplayName("adjective (1-ended: form genitive)")
         void adjectiveFromGenitive() throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-            List<VocabularyTranslation> translations = generateTranslations("*glücklich*");
+            TranslationSequence translations = generateTranslations("*glücklich*");
             Adjective e = RuntimeAdjective.fromGenitive(
                     "felix", "felicis",
                     translations, "test"
@@ -99,7 +97,7 @@ class VocabularyParserTest {
         @Test
         @DisplayName("verb")
         void verb() throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-            List<VocabularyTranslation> translations = generateTranslations("*rufen*", "nennen");
+            TranslationSequence translations = generateTranslations("*rufen*", "nennen");
             Verb e = RuntimeVerb.fromBaseForms(
                     "vocare", "voco", "vocavi", "vocatum",
                     translations, "test"
@@ -119,7 +117,7 @@ class VocabularyParserTest {
         @Test
         @DisplayName("inflexible")
         void inflexible() throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-            List<VocabularyTranslation> translations = generateTranslations("*und*");
+            TranslationSequence translations = generateTranslations("*und*");
             Inflexible e = new Inflexible("et", translations, "test");
             Vocabulary vocabulary = new VocabularyParser(new TokenSequence(
                     new Token(Token.Type.WORD, "et", i18n)
@@ -143,7 +141,7 @@ class VocabularyParserTest {
                                 new Token(Token.Type.CASUS, "Acc", i18n),
                                 new Token(Token.Type.GENDER, "m", i18n)
                         ),
-                        new ArrayList<>(), "test"
+                        new TranslationSequence(), "test"
                 );
             });
         }

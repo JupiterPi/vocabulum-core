@@ -2,16 +2,15 @@ package jupiterpi.vocabulum.core.vocabularies.inflexible;
 
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
-import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
+import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import org.bson.Document;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Inflexible extends Vocabulary {
     private String word;
 
-    public Inflexible(String word, List<VocabularyTranslation> translations, String portion) {
+    public Inflexible(String word, TranslationSequence translations, String portion) {
         super(translations, portion);
         this.word = word;
     }

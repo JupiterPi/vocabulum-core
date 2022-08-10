@@ -7,16 +7,16 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
+import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import org.bson.Document;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockDatabaseSetup.class)
 class NounTest {
@@ -24,7 +24,7 @@ class NounTest {
 
     @Test
     void getDefinition() {
-        Noun noun = new Noun(new ArrayList<>(), "test") {
+        Noun noun = new Noun(new TranslationSequence(), "test") {
             @Override
             protected Gender getGender() {
                 return Gender.MASC;
@@ -51,7 +51,7 @@ class NounTest {
         @Test
         @DisplayName("all forms exist")
         void allFormsExist() {
-            Noun noun = new Noun(new ArrayList<>(), "test") {
+            Noun noun = new Noun(new TranslationSequence(), "test") {
                 @Override
                 protected Gender getGender() {
                     return Gender.MASC;
@@ -128,7 +128,7 @@ class NounTest {
         @Test
         @DisplayName("some forms don't exist")
         void someFormsDontExist() {
-            Noun noun = new Noun(new ArrayList<>(), "test") {
+            Noun noun = new Noun(new TranslationSequence(), "test") {
                 @Override
                 protected Gender getGender() {
                     return Gender.MASC;
@@ -213,7 +213,7 @@ class NounTest {
         @DisplayName("one possibility")
         void onePossibility() {
             final NounForm abl_pl = new NounForm(new DeclinedForm(Casus.ABL, NNumber.PL, Gender.MASC));
-            Noun noun = new Noun(new ArrayList<>(), "test") {
+            Noun noun = new Noun(new TranslationSequence(), "test") {
                 @Override
                 protected Gender getGender() {
                     return Gender.MASC;
@@ -238,7 +238,7 @@ class NounTest {
         void multiplePossibilities() {
             final NounForm gen_sg = new NounForm(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC));
             final NounForm nom_pl = new NounForm(new DeclinedForm(Casus.NOM, NNumber.PL, Gender.MASC));
-            Noun noun = new Noun(new ArrayList<>(), "test") {
+            Noun noun = new Noun(new TranslationSequence(), "test") {
                 @Override
                 protected Gender getGender() {
                     return Gender.MASC;

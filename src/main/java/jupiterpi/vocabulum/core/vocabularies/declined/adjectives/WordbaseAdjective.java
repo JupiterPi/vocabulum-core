@@ -2,17 +2,15 @@ package jupiterpi.vocabulum.core.vocabularies.declined.adjectives;
 
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
-import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
+import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import org.bson.Document;
-
-import java.util.List;
 
 public class WordbaseAdjective extends Adjective {
     private String baseForm;
     private AdjectiveDefinitionType definitionType;
     private Document forms;
 
-    public WordbaseAdjective(String baseForm, Document forms, List<VocabularyTranslation> translations, String portion, AdjectiveDefinitionType definitionType) {
+    public WordbaseAdjective(String baseForm, Document forms, TranslationSequence translations, String portion, AdjectiveDefinitionType definitionType) {
         super(translations, portion, definitionType);
         this.baseForm = baseForm;
         this.definitionType = definitionType;

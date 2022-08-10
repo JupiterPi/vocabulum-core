@@ -3,12 +3,11 @@ package jupiterpi.vocabulum.core.vocabularies.declined.adjectives;
 import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
 import jupiterpi.vocabulum.core.i18n.I18n;
-import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
-import jupiterpi.vocabulum.core.vocabularies.declined.nouns.NounForm;
+import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 import org.bson.Document;
 import org.junit.jupiter.api.DisplayName;
@@ -16,11 +15,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockDatabaseSetup.class)
 class AdjectiveTest {
@@ -33,7 +30,7 @@ class AdjectiveTest {
         @Test
         @DisplayName("definitionType = from base forms")
         void fromBaseForms() {
-            Adjective adjective = new Adjective(new ArrayList<>(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS) {
+            Adjective adjective = new Adjective(new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS) {
                 @Override
                 public String makeForm(AdjectiveForm form) {
                     if (form.getComparativeForm() != ComparativeForm.POSITIVE) return null;
@@ -59,7 +56,7 @@ class AdjectiveTest {
         @Test
         @DisplayName("definitionType = from genitive")
         void fromGenitive() {
-            Adjective adjective = new Adjective(new ArrayList<>(), "test", Adjective.AdjectiveDefinitionType.FROM_GENITIVE) {
+            Adjective adjective = new Adjective(new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_GENITIVE) {
                 @Override
                 public String makeForm(AdjectiveForm form) {
                     if (form.equals(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC), ComparativeForm.POSITIVE))) {
@@ -83,7 +80,7 @@ class AdjectiveTest {
 
     @Test
     void generateWordbaseEntrySpecificPart() {
-        List<VocabularyTranslation> translations = Arrays.asList(
+        TranslationSequence translations = new TranslationSequence(
                 new VocabularyTranslation(true, "heftig"),
                 new VocabularyTranslation(false, "hart"),
                 new VocabularyTranslation(false, "scharf")
@@ -263,7 +260,7 @@ class AdjectiveTest {
     void identifyForm() {
         AdjectiveForm nom_sg_m_pos = new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC), ComparativeForm.POSITIVE);
         AdjectiveForm adv_comp = new AdjectiveForm(true, ComparativeForm.COMPARATIVE);
-        Adjective adjective = new Adjective(new ArrayList<>(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS) {
+        Adjective adjective = new Adjective(new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS) {
             @Override
             public String makeForm(AdjectiveForm form) {
                 if (form.equals(nom_sg_m_pos) || form.equals(adv_comp)) return "targetform";

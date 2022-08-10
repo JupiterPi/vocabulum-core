@@ -8,7 +8,7 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionSchema;
-import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
+import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import org.bson.Document;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class RuntimeAdjective extends Adjective {
     }
     private String root;
 
-    public RuntimeAdjective(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, Kind kind, String root, List<VocabularyTranslation> translations, String portion, AdjectiveDefinitionType definitionType) {
+    public RuntimeAdjective(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, Kind kind, String root, TranslationSequence translations, String portion, AdjectiveDefinitionType definitionType) {
         super(translations, portion, definitionType);
         this.nom_sg_masc = nom_sg_masc;
         this.nom_sg_fem = nom_sg_fem;
@@ -39,10 +39,10 @@ public class RuntimeAdjective extends Adjective {
         this.root = root;
     }
 
-    private RuntimeAdjective(List<VocabularyTranslation> translations, String portion, AdjectiveDefinitionType definitionType) {
+    private RuntimeAdjective(TranslationSequence translations, String portion, AdjectiveDefinitionType definitionType) {
         super(translations, portion, definitionType);
     }
-    public static RuntimeAdjective fromBaseForms(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, List<VocabularyTranslation> translations, String portion) throws DeclinedFormDoesNotExistException {
+    public static RuntimeAdjective fromBaseForms(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, TranslationSequence translations, String portion) throws DeclinedFormDoesNotExistException {
         RuntimeAdjective adjective = new RuntimeAdjective(translations, portion, AdjectiveDefinitionType.FROM_BASE_FORMS);
         adjective.nom_sg_masc = nom_sg_masc;
         adjective.nom_sg_fem = nom_sg_fem;
@@ -68,7 +68,7 @@ public class RuntimeAdjective extends Adjective {
 
         return adjective;
     }
-    public static RuntimeAdjective fromGenitive(String nom_sg, String gen_sg, List<VocabularyTranslation> translations, String portion) throws DeclinedFormDoesNotExistException, ParserException {
+    public static RuntimeAdjective fromGenitive(String nom_sg, String gen_sg, TranslationSequence translations, String portion) throws DeclinedFormDoesNotExistException, ParserException {
         RuntimeAdjective adjective = new RuntimeAdjective(translations, portion, AdjectiveDefinitionType.FROM_GENITIVE);
         adjective.nom_sg_masc = nom_sg;
         adjective.nom_sg_fem = nom_sg;

@@ -5,18 +5,14 @@ import jupiterpi.vocabulum.core.db.MockDatabase;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
 import jupiterpi.vocabulum.core.db.MockWordbase;
 import jupiterpi.vocabulum.core.db.wordbase.IdentificationResult;
-import jupiterpi.vocabulum.core.db.wordbase.Wordbase;
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
-import jupiterpi.vocabulum.core.vocabularies.VocabularyForm;
-import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.RuntimeAdjective;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
-import jupiterpi.vocabulum.core.vocabularies.declined.nouns.Noun;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.NounForm;
-import jupiterpi.vocabulum.core.vocabularies.declined.nouns.RuntimeNoun;
+import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 import org.bson.Document;
 import org.junit.jupiter.api.*;
@@ -57,7 +53,7 @@ class TranslationAssistanceTest {
 
         @BeforeAll
         static void init() {
-            List<VocabularyTranslation> translations = Arrays.asList(
+            TranslationSequence translations = new TranslationSequence(
                     new VocabularyTranslation(true, "transl1"),
                     new VocabularyTranslation(false, "transl2")
             );

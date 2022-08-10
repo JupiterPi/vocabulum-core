@@ -6,6 +6,7 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
+import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 import org.bson.Document;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,9 +14,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -91,7 +89,7 @@ class WordbaseNounTest {
                 () -> assertEquals("asino", n.makeForm(new NounForm(new DeclinedForm(Casus.ABL, NNumber.SG)))),
                 () -> assertThrows(DeclinedFormDoesNotExistException.class, () -> n.makeForm(new NounForm(new DeclinedForm(Casus.ABL, NNumber.SG, Gender.FEM)))),
                 () -> assertEquals(Gender.MASC, n.getGender()),
-                () -> assertEquals(Arrays.asList(new VocabularyTranslation(true, "der Esel")), n.getTranslations())
+                () -> assertEquals(new TranslationSequence(new VocabularyTranslation(true, "der Esel")), n.getTranslations())
         );
     }
 
@@ -103,7 +101,7 @@ class WordbaseNounTest {
 
         @BeforeEach
         void init() {
-            List<VocabularyTranslation> translations = Arrays.asList(
+            TranslationSequence translations = new TranslationSequence(
                     new VocabularyTranslation(true, "der Esel")
             );
             n = new WordbaseNoun(

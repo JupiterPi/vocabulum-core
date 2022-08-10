@@ -6,18 +6,13 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
-import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
+import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import org.bson.Document;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.text.Normalizer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -206,7 +201,7 @@ class WordbaseAdjectiveTest {
 
         @BeforeEach
         void init() {
-            a = new WordbaseAdjective("pulcher", (Document) sampleDocument.get("forms"), new ArrayList<>(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
+            a = new WordbaseAdjective("pulcher", (Document) sampleDocument.get("forms"), new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
         }
 
         @Test
@@ -372,7 +367,7 @@ class WordbaseAdjectiveTest {
                       }
                     }
                     """);
-            a = new WordbaseAdjective("pulcher", formsDocument, new ArrayList<>(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
+            a = new WordbaseAdjective("pulcher", formsDocument, new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
             assertThrows(DeclinedFormDoesNotExistException.class, () -> {
                 a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM), ComparativeForm.POSITIVE));
             });

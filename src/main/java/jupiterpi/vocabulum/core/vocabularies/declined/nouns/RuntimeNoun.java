@@ -8,9 +8,7 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionSchema;
-import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
-
-import java.util.List;
+import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 
 public class RuntimeNoun extends Noun {
     private DeclensionSchema declensionSchema;
@@ -18,7 +16,7 @@ public class RuntimeNoun extends Noun {
     private String root;
     private Gender gender;
 
-    public RuntimeNoun(DeclensionSchema declensionSchema, String nom_sg, String root, Gender gender, List<VocabularyTranslation> translations, String portion) {
+    public RuntimeNoun(DeclensionSchema declensionSchema, String nom_sg, String root, Gender gender, TranslationSequence translations, String portion) {
         super(translations, portion);
         this.declensionSchema = declensionSchema;
         this.nom_sg = nom_sg;
@@ -26,10 +24,10 @@ public class RuntimeNoun extends Noun {
         this.gender = gender;
     }
 
-    private RuntimeNoun(List<VocabularyTranslation> translations, String portion) {
+    private RuntimeNoun(TranslationSequence translations, String portion) {
         super(translations, portion);
     }
-    public static RuntimeNoun fromGenitive(String nom_sg, String gen_sg, Gender gender, List<VocabularyTranslation> translations, String portion) throws DeclinedFormDoesNotExistException, ParserException {
+    public static RuntimeNoun fromGenitive(String nom_sg, String gen_sg, Gender gender, TranslationSequence translations, String portion) throws DeclinedFormDoesNotExistException, ParserException {
         RuntimeNoun noun = new RuntimeNoun(translations, portion);
         noun.nom_sg = nom_sg;
         noun.gender = gender;
