@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -1275,7 +1275,7 @@ class VerbTest {
                     return "baseform";
                 }
             };
-            assertEquals(Arrays.asList(verbForm), verb.identifyForm("theform"));
+            assertEquals(List.of(verbForm), verb.identifyForm("theform"));
         }
 
         @Test
@@ -1296,7 +1296,7 @@ class VerbTest {
                     return "baseform";
                 }
             };
-            assertEquals(Arrays.asList(verbForm1, verbForm2), verb.identifyForm("theform"));
+            assertEquals(List.of(verbForm1, verbForm2), verb.identifyForm("theform"));
         }
 
     }

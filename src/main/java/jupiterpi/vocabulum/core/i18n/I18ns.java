@@ -3,6 +3,7 @@ package jupiterpi.vocabulum.core.i18n;
 import org.bson.Document;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class I18ns {
@@ -13,8 +14,9 @@ public class I18ns {
         for (Document document : documents) {
             String name = document.getString("language");
             Document texts = (Document) document.get("texts");
+            List<String> translationArticles = document.getList("translation_articles", String.class);
             Document str_texts = (Document) document.get("str-texts");
-            i18ns.put(name, new I18n(name, texts, str_texts));
+            i18ns.put(name, new I18n(name, texts, translationArticles, str_texts));
         }
     }
 

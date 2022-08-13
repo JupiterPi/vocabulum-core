@@ -8,14 +8,18 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import org.bson.Document;
 
+import java.util.List;
+
 public class I18n {
     private String name;
     private Document texts;
+    private List<String> translationArticles;
     private Document str_texts;
 
-    public I18n(String name, Document texts, Document str_texts) {
+    public I18n(String name, Document texts, List<String> translationArticles, Document str_texts) {
         this.name = name;
         this.texts = texts;
+        this.translationArticles = translationArticles;
         this.str_texts = str_texts;
     }
 
@@ -25,6 +29,10 @@ public class I18n {
 
     public Document getTexts() {
         return this.texts;
+    }
+
+    public List<String> getTranslationArticles() {
+        return translationArticles;
     }
 
     // casus

@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -230,7 +230,7 @@ class NounTest {
                     return "amicus";
                 }
             };
-            assertEquals(Arrays.asList(abl_pl), noun.identifyForm("amicis"));
+            assertEquals(List.of(abl_pl), noun.identifyForm("amicis"));
         }
 
         @Test
@@ -256,7 +256,7 @@ class NounTest {
                     return "amicus";
                 }
             };
-            assertEquals(Arrays.asList(gen_sg, nom_pl), noun.identifyForm("amici"));
+            assertEquals(List.of(gen_sg, nom_pl), noun.identifyForm("amici"));
         }
 
     }

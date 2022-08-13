@@ -10,11 +10,14 @@ import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExis
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.ArticlePart;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.PlainTextPart;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.TranslationPartContainer;
 import org.bson.Document;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,22 +25,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(MockDatabaseSetup.class)
 class VocabularyTest {
     @Test
-    void readTranslations() {
-        Document document = new Document("translations", Arrays.asList("*der Freund*", "der Kamerad"));
-        TranslationSequence translations = Vocabulary.readTranslations(document);
-        TranslationSequence e = new TranslationSequence(
-                new VocabularyTranslation(true, "der Freund"),
-                new VocabularyTranslation(false, "der Kamerad")
-        );
-        assertEquals(e, translations);
-    }
-
-    @Test
     void fromString() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
         Vocabulary vocabulary = Vocabulary.fromString("amicus, amici m. - *der Freund*, der Kamerad", Database.get().getI18ns().internal(), "test");
         TranslationSequence translations = new TranslationSequence(
-                new VocabularyTranslation(true, "der Freund"),
-                new VocabularyTranslation(false, "der Kamerad")
+                new VocabularyTranslation(true, new TranslationPartContainer(new ArticlePart("der"), new PlainTextPart("Freund"))),
+                new VocabularyTranslation(false, new TranslationPartContainer(new ArticlePart("der"), new PlainTextPart("Kamerad")))
         );
         assertAll(
                 () -> assertEquals(translations, vocabulary.getTranslations()),
@@ -48,8 +40,8 @@ class VocabularyTest {
     @Test
     void generateWordbaseEntry() {
         TranslationSequence translations = new TranslationSequence(
-                new VocabularyTranslation(true, "der Freund"),
-                new VocabularyTranslation(false, "der Kamerad")
+                new VocabularyTranslation(true, new TranslationPartContainer(new PlainTextPart("der Freund"))),
+                new VocabularyTranslation(false, new TranslationPartContainer(new PlainTextPart("der Kamerad")))
         );
         Vocabulary vocabulary = new Vocabulary(translations, "test") {
             @Override
@@ -74,7 +66,7 @@ class VocabularyTest {
         e.put("kind", "noun");
         e.put("base_form", "amicus");
         e.put("portion", "test");
-        e.put("translations", Arrays.asList("*der Freund*", "der Kamerad"));
+        e.put("translations", List.of("*der Freund*", "der Kamerad"));
         assertEquals(e, vocabulary.generateWordbaseEntry());
     }
 }

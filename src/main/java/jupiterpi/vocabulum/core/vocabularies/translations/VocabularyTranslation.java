@@ -1,49 +1,42 @@
 package jupiterpi.vocabulum.core.vocabularies.translations;
 
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.TranslationPartContainer;
+
 import java.util.Objects;
 
 public class VocabularyTranslation {
     private boolean important;
-    private String translation;
+    private TranslationPartContainer translation;
 
-    public VocabularyTranslation(boolean important, String translation) {
+    /* constructors */
+
+    public VocabularyTranslation(boolean important, TranslationPartContainer translation) {
         this.important = important;
-        this.translation = translation;
-    }
-
-    public VocabularyTranslation(String translation) {
-        this.important = false;
         this.translation = translation;
     }
 
     private VocabularyTranslation() {}
     public static VocabularyTranslation fromString(String str) {
-        VocabularyTranslation translationObj = new VocabularyTranslation();
-        if (str.startsWith("*")) {
-            translationObj.important = true;
-            translationObj.translation = str.substring(1, str.length()-1);
-        } else {
-            translationObj.important = false;
-            translationObj.translation = str;
+        boolean important = str.startsWith("*");
+        String translationStr = str;
+        if (important) {
+            translationStr = str.substring(1, str.length()-1);
         }
-        return translationObj;
+        TranslationPartContainer translation = TranslationPartContainer.fromString(false, translationStr);
+        return new VocabularyTranslation(important, translation);
     }
+
+    /* getters  */
 
     public boolean isImportant() {
         return important;
     }
 
-    public String getTranslation() {
-        return translation;
+    public String getTranslationToString() {
+        return translation.getBasicString();
     }
 
-    public String getFormattedTranslation() {
-        if (isImportant()) {
-            return "*" + translation + "*";
-        } else {
-            return translation;
-        }
-    }
+    /* equals */
 
     @Override
     public boolean equals(Object o) {
@@ -51,6 +44,17 @@ public class VocabularyTranslation {
         if (o == null || getClass() != o.getClass()) return false;
         VocabularyTranslation that = (VocabularyTranslation) o;
         return important == that.important && Objects.equals(translation, that.translation);
+    }
+
+    /* to string */
+
+    public String getFormattedTranslation() {
+        String translation = this.translation.getBasicString();
+        if (isImportant()) {
+            return "*" + translation + "*";
+        } else {
+            return translation;
+        }
     }
 
     @Override

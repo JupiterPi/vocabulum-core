@@ -9,13 +9,15 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.PlainTextPart;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.TranslationPartContainer;
 import org.bson.Document;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -81,9 +83,9 @@ class AdjectiveTest {
     @Test
     void generateWordbaseEntrySpecificPart() {
         TranslationSequence translations = new TranslationSequence(
-                new VocabularyTranslation(true, "heftig"),
-                new VocabularyTranslation(false, "hart"),
-                new VocabularyTranslation(false, "scharf")
+                new VocabularyTranslation(true, new TranslationPartContainer(new PlainTextPart("heftig"))),
+                new VocabularyTranslation(false, new TranslationPartContainer(new PlainTextPart("hart"))),
+                new VocabularyTranslation(false, new TranslationPartContainer(new PlainTextPart("scharf")))
         );
         Adjective adjective = new Adjective(translations, "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS) {
             @Override
@@ -270,6 +272,6 @@ class AdjectiveTest {
             @Override
             public String getBaseForm() { return null; }
         };
-        assertEquals(Arrays.asList(nom_sg_m_pos, adv_comp), adjective.identifyForm("targetform"));
+        assertEquals(List.of(nom_sg_m_pos, adv_comp), adjective.identifyForm("targetform"));
     }
 }

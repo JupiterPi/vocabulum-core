@@ -17,7 +17,7 @@ public class Inflexible extends Vocabulary {
 
     public static Inflexible readFromDocument(Document document) {
         String word = document.getString("base_form");
-        return new Inflexible(word, readTranslations(document), document.getString("portion"));
+        return new Inflexible(word, TranslationSequence.readFromDocument(document), document.getString("portion"));
     }
 
     @Override

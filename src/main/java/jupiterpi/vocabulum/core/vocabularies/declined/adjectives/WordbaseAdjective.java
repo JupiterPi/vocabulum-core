@@ -21,7 +21,7 @@ public class WordbaseAdjective extends Adjective {
         return new WordbaseAdjective(
                 document.getString("base_form"),
                 (Document) document.get("forms"),
-                readTranslations(document),
+                TranslationSequence.readFromDocument(document),
                 document.getString("portion"),
                 AdjectiveDefinitionType.valueOf(document.getString("definition_type").toUpperCase()));
     }

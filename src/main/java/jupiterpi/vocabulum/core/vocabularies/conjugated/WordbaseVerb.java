@@ -80,7 +80,7 @@ public class WordbaseVerb extends Verb {
         return new WordbaseVerb(
                 document.getString("base_form"),
                 (Document) document.get("forms"),
-                readTranslations(document),
+                TranslationSequence.readFromDocument(document),
                 document.getString("portion"));
     }
 

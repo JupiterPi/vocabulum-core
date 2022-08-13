@@ -12,8 +12,7 @@ import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExis
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import org.bson.Document;
 
-import javax.print.Doc;
-import java.util.Arrays;
+import java.util.List;
 
 public class MockDatabase extends Database {
     public static void inject() {
@@ -122,11 +121,14 @@ public class MockDatabase extends Database {
     @Override
     protected void loadI18ns() {
         this.i18ns = new I18ns();
-        this.i18ns.loadI18ns(Arrays.asList(
+        this.i18ns.loadI18ns(List.of(
                 Document.parse("""
                         {
                           "language": "int",
                           "texts": null,
+                            "translation_articles": [
+                              "der", "die", "das"
+                            ],
                           "str-texts": {
                             "casus": {
                               "nom": "Nom",
@@ -211,6 +213,9 @@ public class MockDatabase extends Database {
                                "done": "Fertig. "
                              }
                            },
+                             "translation_articles": [
+                               "der", "die", "das"
+                             ],
                            "str-texts": {
                              "casus": {
                                "nom": "Nom",
@@ -295,6 +300,9 @@ public class MockDatabase extends Database {
                                "done": "Done. "
                              }
                            },
+                               "translation_articles": [
+                                 "the", "a", "an"
+                               ],
                            "str-texts": {
                              "casus": {
                                "nom": "Nom",
@@ -370,7 +378,7 @@ public class MockDatabase extends Database {
     @Override
     protected void loadDeclensionClasses() throws LoadingDataException {
         this.declensionClasses = new DeclensionClasses();
-        this.declensionClasses.loadDeclensionSchemas(Arrays.asList(
+        this.declensionClasses.loadDeclensionSchemas(List.of(
                 Document.parse("""
                         {
                             "name": "a",
@@ -567,7 +575,7 @@ public class MockDatabase extends Database {
     @Override
     protected void loadConjugationClasses() throws LoadingDataException {
         this.conjugationClasses = new ConjugationClasses();
-        this.conjugationClasses.loadConjugationSchemas(Arrays.asList(
+        this.conjugationClasses.loadConjugationSchemas(List.of(
                 Document.parse("""
                         {
                           "name": "a",
@@ -929,7 +937,7 @@ public class MockDatabase extends Database {
     @Override
     protected void loadPortions() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
         this.portions = new Portions();
-        this.portions.loadPortions(Arrays.asList(
+        this.portions.loadPortions(List.of(
                 Document.parse("""
                         {
                           "name": "1",

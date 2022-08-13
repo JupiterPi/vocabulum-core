@@ -2,12 +2,11 @@ package jupiterpi.vocabulum.core.interpreter.tokens;
 
 import jupiterpi.tools.util.AppendingList;
 import jupiterpi.vocabulum.core.i18n.I18n;
-import jupiterpi.vocabulum.core.Main;
 import jupiterpi.vocabulum.core.i18n.I18nException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public class TokenSequence extends ArrayList<Token> {
     public TokenSequence() {}
@@ -15,7 +14,7 @@ public class TokenSequence extends ArrayList<Token> {
         super(c);
     }
     public TokenSequence(Token... tokens) {
-        super(Arrays.asList(tokens));
+        super(List.of(tokens));
     }
 
     public I18n getI18n() {

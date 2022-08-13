@@ -23,7 +23,7 @@ public class WordbaseNoun extends Noun {
                 document.getString("base_form"),
                 Gender.valueOf(document.getString("gender").toUpperCase()),
                 (Document) document.get("forms"),
-                readTranslations(document),
+                TranslationSequence.readFromDocument(document),
                 document.getString("portion"));
     }
 

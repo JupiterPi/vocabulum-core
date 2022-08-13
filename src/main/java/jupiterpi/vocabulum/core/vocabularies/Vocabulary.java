@@ -26,25 +26,11 @@ public abstract class Vocabulary {
         this.portion = portion;
     }
 
-    protected static TranslationSequence readTranslations(Document document) {
-        List<String> translationsStr = document.getList("translations", String.class);
-        TranslationSequence translations = new TranslationSequence();
-        for (String translationStr : translationsStr) {
-            translations.add(VocabularyTranslation.fromString(translationStr));
-        }
-        return translations;
-    }
-
     public static Vocabulary fromString(String str, I18n i18n, String portion) throws LexerException, ParserException, DeclinedFormDoesNotExistException, I18nException, VerbFormDoesNotExistException {
         String[] parts = str.split(" - ");
         String latinStr = parts[0];
         String translationsStr = parts[1];
-
-        TranslationSequence translations = new TranslationSequence();
-        for (String translationStr : translationsStr.split(", ")) {
-            VocabularyTranslation translation = VocabularyTranslation.fromString(translationStr);
-            translations.add(translation);
-        }
+        TranslationSequence translations = TranslationSequence.fromString(translationsStr);
 
         Lexer lexer = new Lexer(latinStr, i18n);
         TokenSequence tokens = lexer.getTokens();

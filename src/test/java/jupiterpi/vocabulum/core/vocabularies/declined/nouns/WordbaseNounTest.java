@@ -8,6 +8,9 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.ArticlePart;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.PlainTextPart;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.TranslationPartContainer;
 import org.bson.Document;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -89,7 +92,7 @@ class WordbaseNounTest {
                 () -> assertEquals("asino", n.makeForm(new NounForm(new DeclinedForm(Casus.ABL, NNumber.SG)))),
                 () -> assertThrows(DeclinedFormDoesNotExistException.class, () -> n.makeForm(new NounForm(new DeclinedForm(Casus.ABL, NNumber.SG, Gender.FEM)))),
                 () -> assertEquals(Gender.MASC, n.getGender()),
-                () -> assertEquals(new TranslationSequence(new VocabularyTranslation(true, "der Esel")), n.getTranslations())
+                () -> assertEquals(new TranslationSequence(new VocabularyTranslation(true, new TranslationPartContainer(new ArticlePart("der"), new PlainTextPart("Esel")))), n.getTranslations())
         );
     }
 
@@ -101,9 +104,7 @@ class WordbaseNounTest {
 
         @BeforeEach
         void init() {
-            TranslationSequence translations = new TranslationSequence(
-                    new VocabularyTranslation(true, "der Esel")
-            );
+            TranslationSequence translations = new TranslationSequence(new VocabularyTranslation(true, new TranslationPartContainer(new PlainTextPart("der Esel"))));
             n = new WordbaseNoun(
                     "asinus", Gender.MASC, (Document) sampleDocument.get("forms"), translations, "test"
             );

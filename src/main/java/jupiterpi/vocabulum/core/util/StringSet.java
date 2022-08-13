@@ -1,13 +1,13 @@
 package jupiterpi.vocabulum.core.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class StringSet extends ArrayList<String> {
     public StringSet() {}
 
     public StringSet(String... items) {
-        super(Arrays.asList(items));
+        super(List.of(items));
     }
 
     public static StringSet getCharacters(String str) {

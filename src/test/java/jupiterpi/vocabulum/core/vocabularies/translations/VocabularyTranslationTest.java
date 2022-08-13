@@ -20,7 +20,7 @@ class VocabularyTranslationTest {
             VocabularyTranslation t = VocabularyTranslation.fromString("*der Freund*");
             assertAll(
                     () -> assertTrue(t.isImportant()),
-                    () -> assertEquals("der Freund", t.getTranslation())
+                    () -> assertEquals("der Freund", t.getTranslationToString())
             );
         }
 
@@ -30,7 +30,7 @@ class VocabularyTranslationTest {
             VocabularyTranslation t = VocabularyTranslation.fromString("der Kamerad");
             assertAll(
                     () -> assertFalse(t.isImportant()),
-                    () -> assertEquals("der Kamerad", t.getTranslation())
+                    () -> assertEquals("der Kamerad", t.getTranslationToString())
             );
         }
 

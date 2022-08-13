@@ -14,6 +14,8 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.NounForm;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.PlainTextPart;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.TranslationPartContainer;
 import org.bson.Document;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +23,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,7 +36,7 @@ class TranslationAssistanceTest {
         Method tokenize = TranslationAssistance.class.getDeclaredMethod("tokenize", String.class);
         tokenize.setAccessible(true);
         List<TranslationAssistance.TAToken> tokens = (List<TranslationAssistance.TAToken>) tokenize.invoke(new TranslationAssistance(""), "word , word . word, word.");
-        assertEquals(Arrays.asList(
+        assertEquals(List.of(
                 new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
                 new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, ","),
                 new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
@@ -54,8 +55,8 @@ class TranslationAssistanceTest {
         @BeforeAll
         static void init() {
             TranslationSequence translations = new TranslationSequence(
-                    new VocabularyTranslation(true, "transl1"),
-                    new VocabularyTranslation(false, "transl2")
+                    new VocabularyTranslation(true, new TranslationPartContainer(new PlainTextPart("transl1"))),
+                    new VocabularyTranslation(false, new TranslationPartContainer(new PlainTextPart("transl2")))
             );
             Vocabulary sampleVocabulary = new Vocabulary(translations, "test") {
                 @Override
@@ -82,10 +83,10 @@ class TranslationAssistanceTest {
             ((MockDatabase) Database.get()).injectWordbase(new MockWordbase() {
                 @Override
                 public List<IdentificationResult> identifyWord(String word) {
-                    IdentificationResult sampleIdentificationResult = new IdentificationResult(sampleVocabulary, Arrays.asList(new NounForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))));
+                    IdentificationResult sampleIdentificationResult = new IdentificationResult(sampleVocabulary, List.of(new NounForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))));
                     return switch (word) {
-                        case "1" -> Arrays.asList(sampleIdentificationResult);
-                        case "2" -> Arrays.asList(sampleIdentificationResult, sampleIdentificationResult);
+                        case "1" -> List.of(sampleIdentificationResult);
+                        case "2" -> List.of(sampleIdentificationResult, sampleIdentificationResult);
                         default -> new ArrayList<>();
                     };
                 }
@@ -118,7 +119,7 @@ class TranslationAssistanceTest {
                         TAResult.TAResultItem item = items.get(0);
                         assertAll(
                                 () -> assertEquals("1", item.getItem()),
-                                () -> assertEquals(Arrays.asList(
+                                () -> assertEquals(List.of(
                                         "Nom. Sg. m.",
                                         "*transl1*",
                                         "transl2"
@@ -136,7 +137,7 @@ class TranslationAssistanceTest {
                         TAResult.TAResultItem item = items.get(2);
                         assertAll(
                                 () -> assertEquals("1", item.getItem()),
-                                () -> assertEquals(Arrays.asList(
+                                () -> assertEquals(List.of(
                                         "Nom. Sg. m.",
                                         "*transl1*",
                                         "transl2"
