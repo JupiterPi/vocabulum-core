@@ -1,8 +1,5 @@
 package jupiterpi.vocabulum.core.vocabularies.translations.parts;
 
-import jupiterpi.vocabulum.core.db.Database;
-import org.bson.Document;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,33 +25,7 @@ public class TranslationPartContainer extends TranslationPart {
     /* parser */
 
     public static TranslationPartContainer fromString(boolean optional, String string) {
-        List<TranslationPart> parts = new ArrayList<>();
-        for (String partString : string.split(" ")) {
-            TranslationPart part = null;
-            if (partString.startsWith("(") && partString.endsWith(")")) {
-                partString = partString.substring(1, partString.length()-1);
-                part = TranslationPartContainer.fromString(true, partString);
-            } else if (partString.equals("...")) {
-                part = new DotsPart();
-            } else if (Database.get().getTranslationsDocument().getList("articles", String.class).contains(partString)) {
-                part = new ArticlePart(partString);
-            } else if (partString.endsWith(".")) {
-                List<Document> abbreviationDocuments = (List<Document>) Database.get().getTranslationsDocument().get("abbreviations");
-                for (Document abbreviationDocument : abbreviationDocuments) {
-                    String abbreviation = abbreviationDocument.getString("abbreviation");
-                    List<String> fullTexts = abbreviationDocument.getList("full", String.class);
-                    if (abbreviation.equals(partString.substring(0, partString.length()-1))) {
-                        part = new AbbreviationPart(abbreviation, fullTexts);
-                        break;
-                    }
-                }
-            }
-            if (part == null) {
-                part = new PlainTextPart(partString);
-            }
-            parts.add(part);
-        }
-        return new TranslationPartContainer(optional, parts);
+        return new TranslationPartContainerParser(optional, string).getTranslationPartContainer();
     }
 
     /* extends TranslationPart */
@@ -79,7 +50,7 @@ public class TranslationPartContainer extends TranslationPart {
         for (TranslationPart part : parts) {
             regexes.add(part.getRegex());
         }
-        String partsRegex = String.join(" ", regexes);
+        String partsRegex = String.join(" *", regexes);
         if (optional) {
             return "(\\(" + partsRegex + "\\)|" + partsRegex + ")?";
         } else {

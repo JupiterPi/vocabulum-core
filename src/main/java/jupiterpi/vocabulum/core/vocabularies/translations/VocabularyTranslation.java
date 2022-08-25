@@ -37,7 +37,11 @@ public class VocabularyTranslation {
     }
 
     public boolean isValid(String input) {
-        return input.matches(translation.getRegex());
+        String regex = translation.getRegex();
+        if (input.contains("Freund")) {
+            System.out.println("freund");
+        }
+        return input.matches(regex);
     }
 
     /* equals */

@@ -122,8 +122,9 @@ public class MockDatabase extends Database {
                 {
                   "id": "translations",
                   "articles": [
-                    "der", "die", "das"
-                  ],
+                      "der", "die", "das",
+                      "ein", "eine"
+                    ],
                   "abbreviations": [
                     {
                       "abbreviation": "m",

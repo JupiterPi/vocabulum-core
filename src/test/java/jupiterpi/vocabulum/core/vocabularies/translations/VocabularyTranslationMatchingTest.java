@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockDatabaseSetup.class)
 public class VocabularyTranslationMatchingTest {
@@ -20,8 +21,8 @@ public class VocabularyTranslationMatchingTest {
         void derDieDas() {
             VocabularyTranslation translation = VocabularyTranslation.fromString("der Freund");
             assertAll(
-                () -> translation.isValid("der Freund"),
-                () -> translation.isValid("Freund")
+                () -> assertTrue(translation.isValid("der Freund")),
+                () -> assertTrue(translation.isValid("Freund"))
             );
         }
 
@@ -30,8 +31,8 @@ public class VocabularyTranslationMatchingTest {
         void einerEineEines() {
             VocabularyTranslation translation = VocabularyTranslation.fromString("ein Freund");
             assertAll(
-                    () -> translation.isValid("ein Freund"),
-                    () -> translation.isValid("Freund")
+                    () -> assertTrue(translation.isValid("ein Freund")),
+                    () -> assertTrue(translation.isValid("Freund"))
             );
         }
 
@@ -46,9 +47,9 @@ public class VocabularyTranslationMatchingTest {
         void wordsSeparated() {
             VocabularyTranslation translation = VocabularyTranslation.fromString("noch (immer)");
             assertAll(
-                    () -> translation.isValid("noch (immer)"),
-                    () -> translation.isValid("noch immer"),
-                    () -> translation.isValid("noch")
+                    () -> assertTrue(translation.isValid("noch (immer)")),
+                    () -> assertTrue(translation.isValid("noch immer")),
+                    () -> assertTrue(translation.isValid("noch"))
             );
         }
 
@@ -57,9 +58,9 @@ public class VocabularyTranslationMatchingTest {
         void wordPartInParens() {
             VocabularyTranslation translation = VocabularyTranslation.fromString("(weg)bringen");
             assertAll(
-                    () -> translation.isValid("(weg)bringen"),
-                    () -> translation.isValid("wegbringen"),
-                    () -> translation.isValid("bringen")
+                    () -> assertTrue(translation.isValid("(weg)bringen")),
+                    () -> assertTrue(translation.isValid("wegbringen")),
+                    () -> assertTrue(translation.isValid("bringen"))
             );
         }
 
@@ -70,8 +71,8 @@ public class VocabularyTranslationMatchingTest {
     void dots() {
         VocabularyTranslation translation = VocabularyTranslation.fromString("von ... weg");
         assertAll(
-                () -> translation.isValid("von ... weg"),
-                () -> translation.isValid("von weg")
+                () -> assertTrue(translation.isValid("von ... weg")),
+                () -> assertTrue(translation.isValid("von weg"))
         );
     }
 
@@ -80,10 +81,10 @@ public class VocabularyTranslationMatchingTest {
     void parensAndDots() {
         VocabularyTranslation translation = VocabularyTranslation.fromString("von (... her)");
         assertAll(
-                () -> translation.isValid("von (... her)"),
-                () -> translation.isValid("von (her)"),
-                () -> translation.isValid("von ... her"),
-                () -> translation.isValid("von her")
+                () -> assertTrue(translation.isValid("von (... her)")),
+                () -> assertTrue(translation.isValid("von (her)")),
+                () -> assertTrue(translation.isValid("von ... her")),
+                () -> assertTrue(translation.isValid("von her"))
         );
     }
 
@@ -92,12 +93,24 @@ public class VocabularyTranslationMatchingTest {
     void abbreviations() {
         VocabularyTranslation translation = VocabularyTranslation.fromString("(m. Akk.) helfen");
         assertAll(
-                () -> translation.isValid("(m. Akk.) helfen"),
-                () -> translation.isValid("m. Akk. helfen"),
-                () -> translation.isValid("(mit Akkusativ) helfen"),
-                () -> translation.isValid("mit Akkusativ helfen"),
-                () -> translation.isValid("helfen")
+                () -> assertTrue(translation.isValid("(m. Akk.) helfen")),
+                () -> assertTrue(translation.isValid("m. Akk. helfen")),
+                () -> assertTrue(translation.isValid("(mit Akkusativ) helfen")),
+                () -> assertTrue(translation.isValid("mit Akkusativ helfen")),
+                () -> assertTrue(translation.isValid("helfen"))
         );
+    }
+    
+    @Nested
+    @DisplayName("whitespaces")
+    class Whitespaces {
+        
+        @Test
+        void t1() {
+            VocabularyTranslation translation = VocabularyTranslation.fromString("von (... her)");
+            assertTrue(translation.isValid("von (...her)"));
+        }
+        
     }
 
 }

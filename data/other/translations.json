@@ -1,7 +1,8 @@
 {
   "id": "translations",
   "articles": [
-    "der", "die", "das"
+    "der", "die", "das",
+    "ein", "eine"
   ],
   "abbreviations": [
     {

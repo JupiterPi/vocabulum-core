@@ -59,7 +59,7 @@ class TranslationPartContainerTest {
                     new DotsPart(),
                     new PlainTextPart("Freund")
             );
-            assertEquals("(\\.\\.\\.)? \\QFreund\\E", container.getRegex());
+            assertEquals("(\\.\\.\\.)? *\\QFreund\\E", container.getRegex());
         }
 
     }
