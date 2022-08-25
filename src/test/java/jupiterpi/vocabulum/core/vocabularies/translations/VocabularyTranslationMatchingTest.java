@@ -87,4 +87,17 @@ public class VocabularyTranslationMatchingTest {
         );
     }
 
+    @Test
+    @DisplayName("abbreviations")
+    void abbreviations() {
+        VocabularyTranslation translation = VocabularyTranslation.fromString("(m. Akk.) helfen");
+        assertAll(
+                () -> translation.isValid("(m. Akk.) helfen"),
+                () -> translation.isValid("m. Akk. helfen"),
+                () -> translation.isValid("(mit Akkusativ) helfen"),
+                () -> translation.isValid("mit Akkusativ helfen"),
+                () -> translation.isValid("helfen")
+        );
+    }
+
 }

@@ -1,6 +1,7 @@
 package jupiterpi.vocabulum.core.vocabularies.translations.parts;
 
 import jupiterpi.vocabulum.core.db.Database;
+import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class TranslationPartContainer extends TranslationPart {
     public static TranslationPartContainer fromString(boolean optional, String string) {
         List<TranslationPart> parts = new ArrayList<>();
         for (String partString : string.split(" ")) {
-            TranslationPart part;
+            TranslationPart part = null;
             if (partString.startsWith("(") && partString.endsWith(")")) {
                 partString = partString.substring(1, partString.length()-1);
                 part = TranslationPartContainer.fromString(true, partString);
@@ -37,7 +38,18 @@ public class TranslationPartContainer extends TranslationPart {
                 part = new DotsPart();
             } else if (Database.get().getTranslationsDocument().getList("articles", String.class).contains(partString)) {
                 part = new ArticlePart(partString);
-            } else {
+            } else if (partString.endsWith(".")) {
+                List<Document> abbreviationDocuments = (List<Document>) Database.get().getTranslationsDocument().get("abbreviations");
+                for (Document abbreviationDocument : abbreviationDocuments) {
+                    String abbreviation = abbreviationDocument.getString("abbreviation");
+                    List<String> fullTexts = abbreviationDocument.getList("full", String.class);
+                    if (abbreviation.equals(partString.substring(0, partString.length()-1))) {
+                        part = new AbbreviationPart(abbreviation, fullTexts);
+                        break;
+                    }
+                }
+            }
+            if (part == null) {
                 part = new PlainTextPart(partString);
             }
             parts.add(part);

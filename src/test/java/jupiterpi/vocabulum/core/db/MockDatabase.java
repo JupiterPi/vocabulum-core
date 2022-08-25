@@ -123,6 +123,82 @@ public class MockDatabase extends Database {
                   "id": "translations",
                   "articles": [
                     "der", "die", "das"
+                  ],
+                  "abbreviations": [
+                    {
+                      "abbreviation": "m",
+                      "full": [
+                        "mit"
+                      ]
+                    },
+                    {
+                      "abbreviation": "u",
+                      "full": [
+                        "und"
+                      ]
+                    },
+                    {
+                      "abbreviation": "jmdn",
+                      "full": [
+                        "jemanden",
+                        "jemand"
+                      ]
+                    },
+                    {
+                      "abbreviation": "jmdm",
+                      "full": [
+                        "jemandem",
+                        "jemand"
+                      ]
+                    },
+                    {
+                      "abbreviation": "Nom",
+                      "full": [
+                        "Nominativ"
+                      ]
+                    },
+                    {
+                      "abbreviation": "Gen",
+                      "full": [
+                        "Genitiv"
+                      ]
+                    },
+                    {
+                      "abbreviation": "Dat",
+                      "full": [
+                        "Dativ"
+                      ]
+                    },
+                    {
+                      "abbreviation": "Akk",
+                      "full": [
+                        "Akkusativ"
+                      ]
+                    },
+                    {
+                      "abbreviation": "Abl",
+                      "full": [
+                        "Ablativ"
+                      ]
+                    },
+                    {
+                      "abbreviation": "Sg",
+                      "full": [
+                        "Singular"
+                      ]
+                    },
+                    {
+                      "abbreviation": "Pl",
+                      "full": [
+                        "Plural"
+                      ]
+                    },
+                    {
+                      "abbreviation": "Subst",
+                      "full": [
+                        "Substantiv"
+                      ]
+                    }
                   ]
                 }
                 """);

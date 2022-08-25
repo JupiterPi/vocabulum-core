@@ -1,0 +1,16 @@
+m:mit
+u:und
+
+jmdn:jemanden,jemand
+jmdm:jemandem,jemand
+
+Nom:Nominativ
+Gen:Genitiv
+Dat:Dativ
+Akk:Akkusativ
+Abl:Ablativ
+
+Sg:Singular
+Pl:Plural
+
+Subst:Substantiv

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Generate Translation Abbreviations | vocabulum-core</title>
+</head>
+
+<body>
+
+
+<script>
+
+function generate() {
+    const json = [];
+    const inputString = document.getElementById("input").value;
+    for (let line of inputString.split("\n")) {
+        if (line == "") continue;
+        const parts = line.split(":");
+        const abbreviation = {
+            abbreviation: parts[0],
+            full: parts[1].split(",")
+        };
+        json.push(abbreviation);
+    }
+    const output = JSON.stringify(json);
+    document.getElementById("output").value = output;
+}
+
+</script>
+
+
+
+<h1>Generate Translation Abbreviations</h1>
+
+<textarea id="input" rows="20", cols="100"></textarea>
+<br>
+<button onclick="generate()">generate</button>
+
+<br><br><br>
+
+<label>Output:</label>
+<br>
+<textarea id="output" rows="20", cols="100" readonly></textarea>
+
+</body>
+
+</html>

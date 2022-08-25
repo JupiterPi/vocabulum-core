@@ -6,6 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DotsPartTest {
     @Test
+    void getBasicString() {
+        DotsPart dotsPart = new DotsPart();
+        assertEquals("...", dotsPart.getBasicString());
+    }
+
+    @Test
     void getRegex() {
         DotsPart dotsPart = new DotsPart();
         assertEquals("(\\.\\.\\.)?", dotsPart.getRegex());

@@ -15,10 +15,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class TranslationPartContainerTest {
     @Test
     void fromString() {
-        TranslationPartContainer part = TranslationPartContainer.fromString(false, "(hi) ... der Freund");
+        TranslationPartContainer part = TranslationPartContainer.fromString(false, "(hi) ... m. der Freund");
         TranslationPartContainer e = new TranslationPartContainer(
                 new TranslationPartContainer(true, List.of(new PlainTextPart("hi"))),
                 new DotsPart(),
+                new AbbreviationPart("m", List.of("mit")),
                 new ArticlePart("der"),
                 new PlainTextPart("Freund")
         );
