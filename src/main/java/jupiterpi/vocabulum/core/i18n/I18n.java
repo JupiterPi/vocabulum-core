@@ -31,10 +31,6 @@ public class I18n {
         return this.texts;
     }
 
-    public List<String> getTranslationArticles() {
-        return translationArticles;
-    }
-
     // casus
     public String getCasusSymbol(Casus casus) {
         Document document = (Document) str_texts.get("casus");

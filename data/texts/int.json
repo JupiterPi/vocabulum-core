@@ -1,9 +1,6 @@
 {
   "language": "int",
   "texts": null,
-  "translation_articles": [
-    "der", "die", "das"
-  ],
   "str-texts": {
     "casus": {
       "nom": "Nom",

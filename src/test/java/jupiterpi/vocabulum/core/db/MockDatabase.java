@@ -116,6 +116,18 @@ public class MockDatabase extends Database {
                 """);
     }
 
+    @Override
+    public Document getTranslationsDocument() {
+        return Document.parse("""
+                {
+                  "id": "translations",
+                  "articles": [
+                    "der", "die", "das"
+                  ]
+                }
+                """);
+    }
+
     // load classes
 
     @Override
@@ -126,9 +138,6 @@ public class MockDatabase extends Database {
                         {
                           "language": "int",
                           "texts": null,
-                            "translation_articles": [
-                              "der", "die", "das"
-                            ],
                           "str-texts": {
                             "casus": {
                               "nom": "Nom",
@@ -213,9 +222,6 @@ public class MockDatabase extends Database {
                                "done": "Fertig. "
                              }
                            },
-                             "translation_articles": [
-                               "der", "die", "das"
-                             ],
                            "str-texts": {
                              "casus": {
                                "nom": "Nom",
@@ -300,9 +306,6 @@ public class MockDatabase extends Database {
                                "done": "Done. "
                              }
                            },
-                               "translation_articles": [
-                                 "the", "a", "an"
-                               ],
                            "str-texts": {
                              "casus": {
                                "nom": "Nom",

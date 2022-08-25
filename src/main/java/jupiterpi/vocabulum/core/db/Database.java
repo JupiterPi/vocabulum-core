@@ -6,12 +6,12 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import jupiterpi.vocabulum.core.db.classes.ConjugationClasses;
 import jupiterpi.vocabulum.core.db.classes.DeclensionClasses;
-import jupiterpi.vocabulum.core.db.portions.Portions;
 import jupiterpi.vocabulum.core.db.portions.Portion;
+import jupiterpi.vocabulum.core.db.portions.Portions;
 import jupiterpi.vocabulum.core.db.wordbase.DbWordbase;
 import jupiterpi.vocabulum.core.db.wordbase.Wordbase;
-import jupiterpi.vocabulum.core.i18n.I18ns;
 import jupiterpi.vocabulum.core.i18n.I18nException;
+import jupiterpi.vocabulum.core.i18n.I18ns;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
@@ -86,6 +86,10 @@ public class Database {
 
     public Document getVerbsDocument() {
         return collection_other.find(new Document("id", "verbs")).first();
+    }
+
+    public Document getTranslationsDocument() {
+        return collection_other.find(new Document("id", "translations")).first();
     }
     
     /* ----- objects that read the database ----- */

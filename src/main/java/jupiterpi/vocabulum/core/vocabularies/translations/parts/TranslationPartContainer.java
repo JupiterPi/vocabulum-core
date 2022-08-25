@@ -35,7 +35,7 @@ public class TranslationPartContainer extends TranslationPart {
                 part = TranslationPartContainer.fromString(true, partString);
             } else if (partString.equals("...")) {
                 part = new DotsPart();
-            } else if (Database.get().getI18ns().internal().getTranslationArticles().contains(partString)) {
+            } else if (Database.get().getTranslationsDocument().getList("articles", String.class).contains(partString)) {
                 part = new ArticlePart(partString);
             } else {
                 part = new PlainTextPart(partString);

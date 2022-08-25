@@ -19,9 +19,6 @@
       "done": "Done. "
     }
   },
-  "translation_articles": [
-    "the", "a", "an"
-  ],
   "str-texts": {
     "casus": {
       "nom": "Nom",
