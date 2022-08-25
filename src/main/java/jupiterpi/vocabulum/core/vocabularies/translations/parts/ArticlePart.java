@@ -15,7 +15,7 @@ public class ArticlePart extends TranslationPart {
     }
 
     @Override
-    public Pattern getRegex() {
-        return Pattern.compile("(" + Pattern.quote(article) + ")?");
+    public String getRegex() {
+        return "(" + Pattern.quote(article) + ")?";
     }
 }

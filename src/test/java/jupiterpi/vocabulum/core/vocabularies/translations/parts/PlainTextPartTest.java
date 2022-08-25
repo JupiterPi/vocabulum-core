@@ -8,6 +8,6 @@ class PlainTextPartTest {
     @Test
     void getRegex() {
         PlainTextPart plainTextPart = new PlainTextPart("Freund.");
-        assertEquals("\\QFreund.\\E", plainTextPart.getRegex().pattern());
+        assertEquals("\\QFreund.\\E", plainTextPart.getRegex());
     }
 }

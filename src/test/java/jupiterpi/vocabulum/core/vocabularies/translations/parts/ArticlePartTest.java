@@ -8,6 +8,6 @@ class ArticlePartTest {
     @Test
     void getRegex() {
         ArticlePart articlePart = new ArticlePart("der");
-        assertEquals("(\\Qder\\E)?", articlePart.getRegex().pattern());
+        assertEquals("(\\Qder\\E)?", articlePart.getRegex());
     }
 }

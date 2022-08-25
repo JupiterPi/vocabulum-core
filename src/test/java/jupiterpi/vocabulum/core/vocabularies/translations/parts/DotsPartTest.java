@@ -8,6 +8,6 @@ class DotsPartTest {
     @Test
     void getRegex() {
         DotsPart dotsPart = new DotsPart();
-        assertEquals("(\\.\\.\\.)?", dotsPart.getRegex().pattern());
+        assertEquals("(\\.\\.\\.)?", dotsPart.getRegex());
     }
 }

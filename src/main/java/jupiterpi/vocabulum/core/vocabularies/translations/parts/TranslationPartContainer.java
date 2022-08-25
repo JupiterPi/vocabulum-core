@@ -5,7 +5,6 @@ import jupiterpi.vocabulum.core.db.Database;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 public class TranslationPartContainer extends TranslationPart {
     private boolean optional;
@@ -63,16 +62,16 @@ public class TranslationPartContainer extends TranslationPart {
     }
 
     @Override
-    public Pattern getRegex() {
+    public String getRegex() {
         List<String> regexes = new ArrayList<>();
         for (TranslationPart part : parts) {
-            regexes.add(part.getRegex().pattern());
+            regexes.add(part.getRegex());
         }
         String partsRegex = String.join(" ", regexes);
         if (optional) {
-            return Pattern.compile("(\\(" + partsRegex + "\\)|" + partsRegex + ")?");
+            return "(\\(" + partsRegex + "\\)|" + partsRegex + ")?";
         } else {
-            return Pattern.compile(partsRegex);
+            return partsRegex;
         }
     }
 

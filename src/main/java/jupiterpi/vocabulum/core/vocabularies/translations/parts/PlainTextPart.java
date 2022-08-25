@@ -15,7 +15,7 @@ public class PlainTextPart extends TranslationPart {
     }
 
     @Override
-    public Pattern getRegex() {
-        return Pattern.compile(Pattern.quote(text));
+    public String getRegex() {
+        return Pattern.quote(text);
     }
 }

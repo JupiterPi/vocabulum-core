@@ -1,11 +1,9 @@
 package jupiterpi.vocabulum.core.vocabularies.translations.parts;
 
-import java.util.regex.Pattern;
-
 public abstract class TranslationPart {
     public abstract String getBasicString();
 
-    public abstract Pattern getRegex();
+    public abstract String getRegex();
 
     @Override
     public String toString() {

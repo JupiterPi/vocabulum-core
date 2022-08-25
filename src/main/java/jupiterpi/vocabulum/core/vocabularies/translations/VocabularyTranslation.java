@@ -26,7 +26,7 @@ public class VocabularyTranslation {
         return new VocabularyTranslation(important, translation);
     }
 
-    /* getters  */
+    /* getters, operations */
 
     public boolean isImportant() {
         return important;
@@ -34,6 +34,10 @@ public class VocabularyTranslation {
 
     public String getTranslationToString() {
         return translation.getBasicString();
+    }
+
+    public boolean isValid(String input) {
+        return input.matches(translation.getRegex());
     }
 
     /* equals */
