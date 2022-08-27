@@ -36,11 +36,12 @@ public class VocabularyTranslation {
         return translation.getBasicString();
     }
 
+    public String getRegex() {
+        return "(?i)" + " *" + translation.getRegex() + " *";
+    }
+
     public boolean isValid(String input) {
-        String regex = translation.getRegex();
-        if (input.contains("Freund")) {
-            System.out.println("freund");
-        }
+        String regex = getRegex();
         return input.matches(regex);
     }
 

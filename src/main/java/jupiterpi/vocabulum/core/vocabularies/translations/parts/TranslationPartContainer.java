@@ -50,11 +50,12 @@ public class TranslationPartContainer extends TranslationPart {
         for (TranslationPart part : parts) {
             regexes.add(part.getRegex());
         }
-        String partsRegex = String.join(" *", regexes);
+        String regex = String.join(" *", regexes);
+        regex = " *" + regex + " *";
         if (optional) {
-            return "(\\(" + partsRegex + "\\)|" + partsRegex + ")?";
+            return "(\\(" + regex + "\\)|" + regex + ")?";
         } else {
-            return partsRegex;
+            return regex;
         }
     }
 

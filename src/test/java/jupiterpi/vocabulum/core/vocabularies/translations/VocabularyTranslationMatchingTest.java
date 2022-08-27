@@ -100,17 +100,32 @@ public class VocabularyTranslationMatchingTest {
                 () -> assertTrue(translation.isValid("helfen"))
         );
     }
-    
+
     @Nested
     @DisplayName("whitespaces")
     class Whitespaces {
-        
+
         @Test
-        void t1() {
+        @DisplayName("valid left out whitespaces")
+        void validLeftOutWhitespaces() {
             VocabularyTranslation translation = VocabularyTranslation.fromString("von (... her)");
             assertTrue(translation.isValid("von (...her)"));
         }
-        
+
+        @Test
+        @DisplayName("additional whitespaces")
+        void additionalWhitespaces() {
+            VocabularyTranslation translation = VocabularyTranslation.fromString("der Freund");
+            assertTrue(translation.isValid("der  Freund"));
+        }
+
+    }
+
+    @Test
+    @DisplayName("capitalization")
+    void capitalization() {
+        VocabularyTranslation translation = VocabularyTranslation.fromString("der Freund");
+        assertTrue(translation.isValid("der freund"));
     }
 
 }
