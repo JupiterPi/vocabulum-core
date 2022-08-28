@@ -2,7 +2,7 @@
   "language": "en",
   "texts": {
     "terminal": {
-      "help-text": "Enter \"p\" for Prompting, \"t\" for Translation Assistance. ",
+      "help-text": "Enter \"p\" for Prompting, \"t\" for Translation Assistance, \"g\" for German translation matching. ",
       "unknown-mode-err": "Unknown mode: %s",
       "prompt": {
         "title": "Prompting",
@@ -11,6 +11,10 @@
       "translation_assistance": {
         "title": "Translaton Assistance",
         "help-text": "Usage: Type a sentence after \">\" (e. g. \"Asinus stat es exspectat.\") and press Enter. Translation Assistance will print you all available information required for translating it."
+      },
+      "german_translation_matching": {
+        "title": "German translation matching",
+        "help-text": "Usage: Type a translation sequence after \">\" (e. g. \"der Freund\" or \"aus, von (... her)\"). Then after the indented \">\", type an input for the translation. The German translation matcher will match your input to the target translation. "
       },
       "noun": "Noun",
       "adjective": "Adjective",

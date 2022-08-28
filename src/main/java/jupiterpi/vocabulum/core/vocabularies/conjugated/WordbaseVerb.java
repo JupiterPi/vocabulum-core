@@ -12,8 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WordbaseVerb extends Verb {
-    //TODO write test
-
     private String baseForm;
     private Map<VerbForm, String> forms;
 
@@ -43,7 +41,7 @@ public class WordbaseVerb extends Verb {
         // Kind.BASIC
         Document basicFormsDocument = (Document) forms.get("basic");
         for (Voice voice : Voice.values()) {
-            Document voiceDocument = (Document) forms.get(voice.toString().toLowerCase());
+            Document voiceDocument = (Document) basicFormsDocument.get(voice.toString().toLowerCase());
             for (Tense tense : Tense.values()) {
                 Document tenseDocument = (Document) voiceDocument.get(tense.toString().toLowerCase());
                 for (Mode mode : Mode.values()) {

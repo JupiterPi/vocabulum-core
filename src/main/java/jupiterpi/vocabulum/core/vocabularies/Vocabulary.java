@@ -74,11 +74,14 @@ public abstract class Vocabulary {
     }
 
     public Document generateWordbaseEntry() {
-        Document document = generateWordbaseEntrySpecificPart();
-        document.put("kind", getKind().toString().toLowerCase());
+        Document document = new Document();document.put("kind", getKind().toString().toLowerCase());
         document.put("base_form", getBaseForm());
         document.put("portion", portion);
         document.put("translations", getTranslationsToString());
+
+        Document specificPart = generateWordbaseEntrySpecificPart();
+        document.putAll(specificPart);
+
         return document;
     }
 

@@ -3,9 +3,12 @@ package jupiterpi.vocabulum.core.vocabularies.conjugated;
 import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
 import jupiterpi.vocabulum.core.i18n.I18n;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.form.InfinitiveTense;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbForm;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.form.Voice;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.form.*;
+import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
+import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import org.bson.Document;
 import org.junit.jupiter.api.DisplayName;
@@ -22,8 +25,44 @@ class VerbTest {
     I18n i18n = Database.get().getI18ns().internal();
 
     @Test
+    void makeFormOrDash() {
+        Verb verb = new Verb(new TranslationSequence(), "test") {
+            @Override
+            public String makeForm(VerbForm form) throws VerbFormDoesNotExistException, DeclinedFormDoesNotExistException {
+                throw new VerbFormDoesNotExistException(form);
+            }
+
+            @Override
+            public String getBaseForm() {
+                return null;
+            }
+        };
+        assertEquals("-", verb.makeFormOrDash(new VerbForm(InfinitiveTense.PRESENT, Voice.ACTIVE)));
+    }
+
+    @Test
     void getDefinition() {
-        //TODO write test when to-do is done
+        Verb verb = new Verb(new TranslationSequence(), "test") {
+            @Override
+            public String makeForm(VerbForm form) throws VerbFormDoesNotExistException {
+                if (form.equals(new VerbForm(InfinitiveTense.PRESENT, Voice.ACTIVE))) {
+                    return "vocare";
+                } else if (form.equals(new VerbForm(new ConjugatedForm(Person.FIRST, CNumber.SG), Mode.INDICATIVE, Tense.PRESENT, Voice.ACTIVE))) {
+                    return "voco";
+                } else if (form.equals(new VerbForm(new ConjugatedForm(Person.FIRST, CNumber.SG), Mode.INDICATIVE, Tense.PERFECT, Voice.ACTIVE))) {
+                    return "vocavi";
+                } else if (form.equals(new VerbForm(NounLikeForm.PPP, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT)))) {
+                    return "vocatum";
+                }
+                throw new VerbFormDoesNotExistException(form);
+            }
+
+            @Override
+            public String getBaseForm() {
+                return "vocare";
+            }
+        };
+        assertEquals("vocare, voco, vocavi, vocatum", verb.getDefinition(i18n));
     }
 
     @Nested

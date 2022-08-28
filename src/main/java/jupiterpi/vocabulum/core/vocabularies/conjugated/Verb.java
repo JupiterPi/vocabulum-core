@@ -38,7 +38,7 @@ public abstract class Verb extends Vocabulary {
     public String getDefinition(I18n i18n) {
         String first_sg_pres = makeFormOrDash(new VerbForm(new ConjugatedForm(Person.FIRST, CNumber.SG), Mode.INDICATIVE, Tense.PRESENT, Voice.ACTIVE));
         String first_sg_perfect = makeFormOrDash(new VerbForm(new ConjugatedForm(Person.FIRST, CNumber.SG), Mode.INDICATIVE, Tense.PERFECT, Voice.ACTIVE));
-        String ppp = makeFormOrDash(new VerbForm(NounLikeForm.PPP, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC)));
+        String ppp = makeFormOrDash(new VerbForm(NounLikeForm.PPP, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT)));
         return getBaseForm() + ", " + first_sg_pres + ", " + first_sg_perfect + ", " + ppp;
     }
 

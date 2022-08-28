@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DbWordbase implements Wordbase {
+    //TODO write test?
+
     private Database database;
     public DbWordbase(Database database) {
         this.database = database;

@@ -21,7 +21,7 @@ public class Main {
         Map<String, Portion> portions = Database.get().getPortions().getPortions();
         for (String key : portions.keySet()) {
             Portion portion = portions.get(key);
-            System.out.println(portion);
+            /*System.out.println(portion);*/
         }
 
         Terminal terminal = new Terminal();

@@ -18,6 +18,11 @@ public class Portion {
     private String name;
     private List<List<Vocabulary>> vocabularyBlocks = new ArrayList<>();
 
+    public Portion(String name, List<List<Vocabulary>> vocabularyBlocks) {
+        this.name = name;
+        this.vocabularyBlocks = vocabularyBlocks;
+    }
+
     private Portion() {}
     public static Portion readFromDocument(Document document) throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
         Portion portion = new Portion();
