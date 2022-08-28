@@ -11,6 +11,7 @@ import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.Adjective;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.AdjectiveForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.Noun;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.NounForm;
+import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class Terminal extends ConsoleInterface {
         Document texts = (Document) i18n.getTexts().get("terminal");
         Document promptTexts = (Document) texts.get("prompt");
         Document translationAssistanceTexts = (Document) texts.get("translation_assistance");
+        Document germanTranslationMatchingTexts = (Document) texts.get("german_translation_matching");
 
         final String NOUN = texts.getString("noun");
         final String ADJECTIVE = texts.getString("adjective");
@@ -32,7 +34,7 @@ public class Terminal extends ConsoleInterface {
         out("");
         out(texts.getString("help-text"));
 
-        String modeInput = in("p/t: ");
+        String modeInput = in("p/t/g: ");
         if (modeInput.equals("p")) {
 
             out("");
@@ -149,6 +151,36 @@ public class Terminal extends ConsoleInterface {
                         out(outputLine);
                     }
                     out("");
+                } catch (Exception e) {
+                    out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
+                }
+            }
+
+        } else if (modeInput.equals("g")) {
+
+            out("");
+            out("--- " + germanTranslationMatchingTexts.getString("title") + " ---");
+            out(germanTranslationMatchingTexts.getString("help-text"));
+            out("");
+
+            while (true) {
+                try {
+                    String targetTranslationInput = in("> ");
+                    if (targetTranslationInput.equals("")) break;
+                    VocabularyTranslation targetTranslation = VocabularyTranslation.fromString(targetTranslationInput);
+
+                    while (true) {
+                        try {
+                            String input = in("  > ");
+                            if (input.isEmpty()) break;
+                            out(targetTranslation.isValid(input)
+                                    ? "    ✅"
+                                    : "    ❌"
+                            );
+                        } catch (Exception e) {
+                            out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
+                        }
+                    }
                 } catch (Exception e) {
                     out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
                 }
