@@ -20,166 +20,177 @@ import static org.junit.jupiter.api.Assertions.*;
 class WordbaseAdjectiveTest {
     Document sampleDocument = Document.parse("""
             {
+              "_id": {
+                "$oid": "630cad4529682e1debfc87bb"
+              },
               "kind": "adjective",
               "base_form": "pulcher",
               "portion": "1",
-              "forms": {
-                "positive": {
-                  "masc": {
-                    "sg": {
-                      "nom": "pulcher",
-                      "acc": "pulchrum",
-                      "gen": "pulchri",
-                      "dat": "pulchro",
-                      "abl": "pulchro"
-                    },
-                    "pl": {
-                      "nom": "pulchri",
-                      "acc": "pulchros",
-                      "gen": "pulchrorum",
-                      "dat": "pulchris",
-                      "abl": "pulchris"
-                    }
-                  },
-                  "fem": {
-                    "sg": {
-                      "nom": "pulchra",
-                      "acc": "pulchram",
-                      "gen": "pulchrae",
-                      "dat": "pulchrae",
-                      "abl": "pulchra"
-                    },
-                    "pl": {
-                      "nom": "pulchrae",
-                      "acc": "pulchras",
-                      "gen": "pulchrarum",
-                      "dat": "pulchris",
-                      "abl": "pulchris"
-                    }
-                  },
-                  "neut": {
-                    "sg": {
-                      "nom": "pulchrum",
-                      "acc": "pulchrum",
-                      "gen": "pulchri",
-                      "dat": "pulchro",
-                      "abl": "pulchro"
-                    },
-                    "pl": {
-                      "nom": "pulchra",
-                      "acc": "pulchra",
-                      "gen": "pulchrorum",
-                      "dat": "pulchris",
-                      "abl": "pulchris"
-                    }
-                  }
-                },
-                "comparative": {
-                  "masc": {
-                    "sg": {
-                      "nom": "pulcher",
-                      "acc": "pulchrum",
-                      "gen": "pulchri",
-                      "dat": "pulchro",
-                      "abl": "pulchro"
-                    },
-                    "pl": {
-                      "nom": "pulchri",
-                      "acc": "pulchros",
-                      "gen": "pulchrorum",
-                      "dat": "pulchris",
-                      "abl": "pulchris"
-                    }
-                  },
-                  "fem": {
-                    "sg": {
-                      "nom": "pulchra",
-                      "acc": "pulchram",
-                      "gen": "pulchrae",
-                      "dat": "pulchrae",
-                      "abl": "pulchra"
-                    },
-                    "pl": {
-                      "nom": "pulchrae",
-                      "acc": "pulchras",
-                      "gen": "pulchrarum",
-                      "dat": "pulchris",
-                      "abl": "pulchris"
-                    }
-                  },
-                  "neut": {
-                    "sg": {
-                      "nom": "pulchrum",
-                      "acc": "pulchrum",
-                      "gen": "pulchri",
-                      "dat": "pulchro",
-                      "abl": "pulchro"
-                    },
-                    "pl": {
-                      "nom": "pulchra",
-                      "acc": "pulchra",
-                      "gen": "pulchrorum",
-                      "dat": "pulchris",
-                      "abl": "pulchris"
-                    }
-                  }
-                },
-                "superlative": {
-                  "masc": {
-                    "sg": {
-                      "nom": "pulcher",
-                      "acc": "pulchrum",
-                      "gen": "pulchri",
-                      "dat": "pulchro",
-                      "abl": "pulchro"
-                    },
-                    "pl": {
-                      "nom": "pulchri",
-                      "acc": "pulchros",
-                      "gen": "pulchrorum",
-                      "dat": "pulchris",
-                      "abl": "pulchris"
-                    }
-                  },
-                  "fem": {
-                    "sg": {
-                      "nom": "pulchra",
-                      "acc": "pulchram",
-                      "gen": "pulchrae",
-                      "dat": "pulchrae",
-                      "abl": "pulchra"
-                    },
-                    "pl": {
-                      "nom": "pulchrae",
-                      "acc": "pulchras",
-                      "gen": "pulchrarum",
-                      "dat": "pulchris",
-                      "abl": "pulchris"
-                    }
-                  },
-                  "neut": {
-                    "sg": {
-                      "nom": "pulchrum",
-                      "acc": "pulchrum",
-                      "gen": "pulchri",
-                      "dat": "pulchro",
-                      "abl": "pulchro"
-                    },
-                    "pl": {
-                      "nom": "pulchra",
-                      "acc": "pulchra",
-                      "gen": "pulchrorum",
-                      "dat": "pulchris",
-                      "abl": "pulchris"
-                    }
-                  }
-                }
-              },
               "translations": [
                 "*hübsch*",
                 "schön"
               ],
-              "definition_type": "from_base_forms"
+              "forms": {
+                "adjectives": {
+                  "positive": {
+                    "masc": {
+                      "sg": {
+                        "nom": "pulcher",
+                        "gen": "pulchri",
+                        "dat": "pulchro",
+                        "acc": "pulchrum",
+                        "abl": "pulchro"
+                      },
+                      "pl": {
+                        "nom": "pulchri",
+                        "gen": "pulchrorum",
+                        "dat": "pulchris",
+                        "acc": "pulchros",
+                        "abl": "pulchris"
+                      }
+                    },
+                    "fem": {
+                      "sg": {
+                        "nom": "pulchra",
+                        "gen": "pulchrae",
+                        "dat": "pulchrae",
+                        "acc": "pulchram",
+                        "abl": "pulchra"
+                      },
+                      "pl": {
+                        "nom": "pulchrae",
+                        "gen": "pulchrarum",
+                        "dat": "pulchris",
+                        "acc": "pulchras",
+                        "abl": "pulchris"
+                      }
+                    },
+                    "neut": {
+                      "sg": {
+                        "nom": "pulchrum",
+                        "gen": "pulchri",
+                        "dat": "pulchro",
+                        "acc": "pulchrum",
+                        "abl": "pulchro"
+                      },
+                      "pl": {
+                        "nom": "pulchra",
+                        "gen": "pulchrorum",
+                        "dat": "pulchris",
+                        "acc": "pulchra",
+                        "abl": "pulchris"
+                      }
+                    }
+                  },
+                  "comparative": {
+                    "masc": {
+                      "sg": {
+                        "nom": "pulchrior",
+                        "gen": "pulchrioris",
+                        "dat": "pulchriori",
+                        "acc": "pulchriorem",
+                        "abl": "pulchriori"
+                      },
+                      "pl": {
+                        "nom": "pulchriores",
+                        "gen": "pulchriorium",
+                        "dat": "pulchrioribus",
+                        "acc": "pulchriores",
+                        "abl": "pulchrioribus"
+                      }
+                    },
+                    "fem": {
+                      "sg": {
+                        "nom": "pulchrior",
+                        "gen": "pulchrioris",
+                        "dat": "pulchriori",
+                        "acc": "pulchriorem",
+                        "abl": "pulchriori"
+                      },
+                      "pl": {
+                        "nom": "pulchriores",
+                        "gen": "pulchriorium",
+                        "dat": "pulchrioribus",
+                        "acc": "pulchriores",
+                        "abl": "pulchrioribus"
+                      }
+                    },
+                    "neut": {
+                      "sg": {
+                        "nom": "pulchrius",
+                        "gen": "pulchrioris",
+                        "dat": "pulchriori",
+                        "acc": "pulchriorem",
+                        "abl": "pulchriori"
+                      },
+                      "pl": {
+                        "nom": "pulchrioria",
+                        "gen": "pulchriorium",
+                        "dat": "pulchrioribus",
+                        "acc": "pulchrioria",
+                        "abl": "pulchrioribus"
+                      }
+                    }
+                  },
+                  "superlative": {
+                    "masc": {
+                      "sg": {
+                        "nom": "pulchrrimus",
+                        "gen": "pulchrrimi",
+                        "dat": "pulchrrimo",
+                        "acc": "pulchrrimum",
+                        "abl": "pulchrrimo"
+                      },
+                      "pl": {
+                        "nom": "pulchrrimi",
+                        "gen": "pulchrrimorum",
+                        "dat": "pulchrrimis",
+                        "acc": "pulchrrimos",
+                        "abl": "pulchrrimis"
+                      }
+                    },
+                    "fem": {
+                      "sg": {
+                        "nom": "pulchrrima",
+                        "gen": "pulchrrimae",
+                        "dat": "pulchrrimae",
+                        "acc": "pulchrrimam",
+                        "abl": "pulchrrima"
+                      },
+                      "pl": {
+                        "nom": "pulchrrimae",
+                        "gen": "pulchrrimarum",
+                        "dat": "pulchrrimis",
+                        "acc": "pulchrrimas",
+                        "abl": "pulchrrimis"
+                      }
+                    },
+                    "neut": {
+                      "sg": {
+                        "nom": "pulchrrimum",
+                        "gen": "pulchrrimi",
+                        "dat": "pulchrrimo",
+                        "acc": "pulchrrimum",
+                        "abl": "pulchrrimo"
+                      },
+                      "pl": {
+                        "nom": "pulchrrima",
+                        "gen": "pulchrrimorum",
+                        "dat": "pulchrrimis",
+                        "acc": "pulchrrima",
+                        "abl": "pulchrrimis"
+                      }
+                    }
+                  }
+                },
+                "adverbs": {
+                  "positive": "pulchre",
+                  "comparative": "pulchrius",
+                  "superlative": "pulchrissime"
+                }
+              },
+              "definition_type": "from_base_forms",
+              "allFormsIndex": "pulcher pulchrior pulchrrimus pulchra pulchrior pulchrrima pulchrum pulchrius pulchrrimum pulchri pulchriores pulchrrimi pulchrae pulchriores pulchrrimae pulchra pulchrioria pulchrrima pulchri pulchrioris pulchrrimi pulchrae pulchrioris pulchrrimae pulchri pulchrioris pulchrrimi pulchrorum pulchriorium pulchrrimorum pulchrarum pulchriorium pulchrrimarum pulchrorum pulchriorium pulchrrimorum pulchro pulchriori pulchrrimo pulchrae pulchriori pulchrrimae pulchro pulchriori pulchrrimo pulchris pulchrioribus pulchrrimis pulchris pulchrioribus pulchrrimis pulchris pulchrioribus pulchrrimis pulchrum pulchriorem pulchrrimum pulchram pulchriorem pulchrrimam pulchrum pulchriorem pulchrrimum pulchros pulchriores pulchrrimos pulchras pulchriores pulchrrimas pulchra pulchrioria pulchrrima pulchro pulchriori pulchrrimo pulchra pulchriori pulchrrima pulchro pulchriori pulchrrimo pulchris pulchrioribus pulchrrimis pulchris pulchrioribus pulchrrimis pulchris pulchrioribus pulchrrimis pulchre pulchrius pulchrissime"
             }
             """);
 
@@ -201,177 +212,200 @@ class WordbaseAdjectiveTest {
 
         @BeforeEach
         void init() {
-            a = new WordbaseAdjective("pulcher", (Document) sampleDocument.get("forms"), new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
+            a = new WordbaseAdjective("pulcher",
+                    (Document) ((Document) sampleDocument.get("forms")).get("adjectives"), (Document) ((Document) sampleDocument.get("forms")).get("adverbs"),
+                    new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
         }
 
         @Test
         @DisplayName("normal")
         void normal() throws DeclinedFormDoesNotExistException {
-            assertEquals("pulchrorum", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.GEN, NNumber.PL, Gender.NEUT), ComparativeForm.SUPERLATIVE)));
+            assertEquals("pulchrrimorum", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.GEN, NNumber.PL, Gender.NEUT), ComparativeForm.SUPERLATIVE)));
         }
 
         @Test
         @DisplayName("does not exist")
         void doesNotExist() {
-            Document formsDocument = Document.parse("""
+            Document adjectiveFormsDocument = Document.parse("""
                     {
-                      "positive": {
-                        "masc": {
-                          "sg": {
-                            "nom": "pulcher",
-                            "acc": "pulchrum",
-                            "gen": "pulchri",
-                            "dat": "pulchro",
-                            "abl": "pulchro"
-                          },
-                          "pl": {
-                            "nom": "pulchri",
-                            "acc": "pulchros",
-                            "gen": "pulchrorum",
-                            "dat": "pulchris",
-                            "abl": "pulchris"
-                          }
-                        },
-                        "fem": {
-                          "sg": {
-                            "nom": "-",
-                            "acc": "-",
-                            "gen": "-",
-                            "dat": "-",
-                            "abl": "-"
-                          },
-                          "pl": {
-                            "nom": "-",
-                            "acc": "-",
-                            "gen": "-",
-                            "dat": "-",
-                            "abl": "-"
-                          }
-                        },
-                        "neut": {
-                          "sg": {
-                            "nom": "pulchrum",
-                            "acc": "pulchrum",
-                            "gen": "pulchri",
-                            "dat": "pulchro",
-                            "abl": "pulchro"
-                          },
-                          "pl": {
-                            "nom": "pulchra",
-                            "acc": "pulchra",
-                            "gen": "pulchrorum",
-                            "dat": "pulchris",
-                            "abl": "pulchris"
-                          }
-                        }
-                      },
-                      "comparative": {
-                        "masc": {
-                          "sg": {
-                            "nom": "pulcher",
-                            "acc": "pulchrum",
-                            "gen": "pulchri",
-                            "dat": "pulchro",
-                            "abl": "pulchro"
-                          },
-                          "pl": {
-                            "nom": "pulchri",
-                            "acc": "pulchros",
-                            "gen": "pulchrorum",
-                            "dat": "pulchris",
-                            "abl": "pulchris"
-                          }
-                        },
-                        "fem": {
-                          "sg": {
-                            "nom": "pulchra",
-                            "acc": "pulchram",
-                            "gen": "pulchrae",
-                            "dat": "pulchrae",
-                            "abl": "pulchra"
-                          },
-                          "pl": {
-                            "nom": "pulchrae",
-                            "acc": "pulchras",
-                            "gen": "pulchrarum",
-                            "dat": "pulchris",
-                            "abl": "pulchris"
-                          }
-                        },
-                        "neut": {
-                          "sg": {
-                            "nom": "pulchrum",
-                            "acc": "pulchrum",
-                            "gen": "pulchri",
-                            "dat": "pulchro",
-                            "abl": "pulchro"
-                          },
-                          "pl": {
-                            "nom": "pulchra",
-                            "acc": "pulchra",
-                            "gen": "pulchrorum",
-                            "dat": "pulchris",
-                            "abl": "pulchris"
-                          }
-                        }
-                      },
-                      "superlative": {
-                        "masc": {
-                          "sg": {
-                            "nom": "pulcher",
-                            "acc": "pulchrum",
-                            "gen": "pulchri",
-                            "dat": "pulchro",
-                            "abl": "pulchro"
-                          },
-                          "pl": {
-                            "nom": "pulchri",
-                            "acc": "pulchros",
-                            "gen": "pulchrorum",
-                            "dat": "pulchris",
-                            "abl": "pulchris"
-                          }
-                        },
-                        "fem": {
-                          "sg": {
-                            "nom": "pulchra",
-                            "acc": "pulchram",
-                            "gen": "pulchrae",
-                            "dat": "pulchrae",
-                            "abl": "pulchra"
-                          },
-                          "pl": {
-                            "nom": "pulchrae",
-                            "acc": "pulchras",
-                            "gen": "pulchrarum",
-                            "dat": "pulchris",
-                            "abl": "pulchris"
-                          }
-                        },
-                        "neut": {
-                          "sg": {
-                            "nom": "pulchrum",
-                            "acc": "pulchrum",
-                            "gen": "pulchri",
-                            "dat": "pulchro",
-                            "abl": "pulchro"
-                          },
-                          "pl": {
-                            "nom": "pulchra",
-                            "acc": "pulchra",
-                            "gen": "pulchrorum",
-                            "dat": "pulchris",
-                            "abl": "pulchris"
-                          }
-                        }
-                      }
-                    }
+                                "positive": {
+                                    "masc": {
+                                        "sg": {
+                                            "nom": "pulcher",
+                                            "gen": "pulchri",
+                                            "dat": "pulchro",
+                                            "acc": "pulchrum",
+                                            "abl": "pulchro"
+                                        },
+                                        "pl": {
+                                            "nom": "pulchri",
+                                            "gen": "pulchrorum",
+                                            "dat": "pulchris",
+                                            "acc": "pulchros",
+                                            "abl": "pulchris"
+                                        }
+                                    },
+                                    "fem": {
+                                        "sg": {
+                                            "nom": "-",
+                                            "gen": "-",
+                                            "dat": "-",
+                                            "acc": "-",
+                                            "abl": "-"
+                                        },
+                                        "pl": {
+                                            "nom": "-",
+                                            "gen": "-",
+                                            "dat": "-",
+                                            "acc": "-",
+                                            "abl": "-"
+                                        }
+                                    },
+                                    "neut": {
+                                        "sg": {
+                                            "nom": "pulchrum",
+                                            "gen": "pulchri",
+                                            "dat": "pulchro",
+                                            "acc": "pulchrum",
+                                            "abl": "pulchro"
+                                        },
+                                        "pl": {
+                                            "nom": "pulchra",
+                                            "gen": "pulchrorum",
+                                            "dat": "pulchris",
+                                            "acc": "pulchra",
+                                            "abl": "pulchris"
+                                        }
+                                    }
+                                },
+                                "comparative": {
+                                    "masc": {
+                                        "sg": {
+                                            "nom": "pulchrior",
+                                            "gen": "pulchrioris",
+                                            "dat": "pulchriori",
+                                            "acc": "pulchriorem",
+                                            "abl": "pulchriori"
+                                        },
+                                        "pl": {
+                                            "nom": "pulchriores",
+                                            "gen": "pulchriorium",
+                                            "dat": "pulchrioribus",
+                                            "acc": "pulchriores",
+                                            "abl": "pulchrioribus"
+                                        }
+                                    },
+                                    "fem": {
+                                        "sg": {
+                                            "nom": "pulchrior",
+                                            "gen": "pulchrioris",
+                                            "dat": "pulchriori",
+                                            "acc": "pulchriorem",
+                                            "abl": "pulchriori"
+                                        },
+                                        "pl": {
+                                            "nom": "pulchriores",
+                                            "gen": "pulchriorium",
+                                            "dat": "pulchrioribus",
+                                            "acc": "pulchriores",
+                                            "abl": "pulchrioribus"
+                                        }
+                                    },
+                                    "neut": {
+                                        "sg": {
+                                            "nom": "pulchrius",
+                                            "gen": "pulchrioris",
+                                            "dat": "pulchriori",
+                                            "acc": "pulchriorem",
+                                            "abl": "pulchriori"
+                                        },
+                                        "pl": {
+                                            "nom": "pulchrioria",
+                                            "gen": "pulchriorium",
+                                            "dat": "pulchrioribus",
+                                            "acc": "pulchrioria",
+                                            "abl": "pulchrioribus"
+                                        }
+                                    }
+                                },
+                                "superlative": {
+                                    "masc": {
+                                        "sg": {
+                                            "nom": "pulchrrimus",
+                                            "gen": "pulchrrimi",
+                                            "dat": "pulchrrimo",
+                                            "acc": "pulchrrimum",
+                                            "abl": "pulchrrimo"
+                                        },
+                                        "pl": {
+                                            "nom": "pulchrrimi",
+                                            "gen": "pulchrrimorum",
+                                            "dat": "pulchrrimis",
+                                            "acc": "pulchrrimos",
+                                            "abl": "pulchrrimis"
+                                        }
+                                    },
+                                    "fem": {
+                                        "sg": {
+                                            "nom": "pulchrrima",
+                                            "gen": "pulchrrimae",
+                                            "dat": "pulchrrimae",
+                                            "acc": "pulchrrimam",
+                                            "abl": "pulchrrima"
+                                        },
+                                        "pl": {
+                                            "nom": "pulchrrimae",
+                                            "gen": "pulchrrimarum",
+                                            "dat": "pulchrrimis",
+                                            "acc": "pulchrrimas",
+                                            "abl": "pulchrrimis"
+                                        }
+                                    },
+                                    "neut": {
+                                        "sg": {
+                                            "nom": "pulchrrimum",
+                                            "gen": "pulchrrimi",
+                                            "dat": "pulchrrimo",
+                                            "acc": "pulchrrimum",
+                                            "abl": "pulchrrimo"
+                                        },
+                                        "pl": {
+                                            "nom": "pulchrrima",
+                                            "gen": "pulchrrimorum",
+                                            "dat": "pulchrrimis",
+                                            "acc": "pulchrrima",
+                                            "abl": "pulchrrimis"
+                                        }
+                                    }
+                                }
+                            }
                     """);
-            a = new WordbaseAdjective("pulcher", formsDocument, new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
+            Document adverbFormsDocument = Document.parse("""
+                    {
+                                "positive": "pulchre",
+                                "comparative": "pulchrius",
+                                "superlative": "pulchrissime"
+                            }
+                    """);
+            a = new WordbaseAdjective("pulcher", adjectiveFormsDocument, adverbFormsDocument, new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
             assertThrows(DeclinedFormDoesNotExistException.class, () -> {
                 a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM), ComparativeForm.POSITIVE));
             });
         }
 
+    }
+
+    @Test
+    @DisplayName("adverbs")
+    void adverbs() throws DeclinedFormDoesNotExistException {
+        Document adverbFormsDocument = Document.parse("""
+                    {
+                                "positive": "pulchre",
+                                "comparative": "pulchrius",
+                                "superlative": "pulchrissime"
+                            }
+                    """);
+        WordbaseAdjective a = new WordbaseAdjective("pulcher", new Document(), adverbFormsDocument, new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
+        assertEquals("pulchrius", a.makeForm(new AdjectiveForm(true, ComparativeForm.COMPARATIVE)));
     }
 }

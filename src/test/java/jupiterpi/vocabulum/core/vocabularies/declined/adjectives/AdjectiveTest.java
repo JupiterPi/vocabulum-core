@@ -101,155 +101,162 @@ class AdjectiveTest {
         Document e = Document.parse("""
                 {
                     "forms": {
-                        "positive": {
-                            "masc": {
-                                "sg": {
-                                    "nom": "Nom. Sg. m.",
-                                    "gen": "Gen. Sg. m.",
-                                    "dat": "Dat. Sg. m.",
-                                    "acc": "Acc. Sg. m.",
-                                    "abl": "Abl. Sg. m."
+                        "adjectives": {
+                            "positive": {
+                                "masc": {
+                                    "sg": {
+                                        "nom": "Nom. Sg. m.",
+                                        "gen": "Gen. Sg. m.",
+                                        "dat": "Dat. Sg. m.",
+                                        "acc": "Acc. Sg. m.",
+                                        "abl": "Abl. Sg. m."
+                                    },
+                                    "pl": {
+                                        "nom": "Nom. Pl. m.",
+                                        "gen": "Gen. Pl. m.",
+                                        "dat": "Dat. Pl. m.",
+                                        "acc": "Acc. Pl. m.",
+                                        "abl": "Abl. Pl. m."
+                                    }
                                 },
-                                "pl": {
-                                    "nom": "Nom. Pl. m.",
-                                    "gen": "Gen. Pl. m.",
-                                    "dat": "Dat. Pl. m.",
-                                    "acc": "Acc. Pl. m.",
-                                    "abl": "Abl. Pl. m."
+                                "fem": {
+                                    "sg": {
+                                        "nom": "Nom. Sg. f.",
+                                        "gen": "Gen. Sg. f.",
+                                        "dat": "Dat. Sg. f.",
+                                        "acc": "Acc. Sg. f.",
+                                        "abl": "Abl. Sg. f."
+                                    },
+                                    "pl": {
+                                        "nom": "Nom. Pl. f.",
+                                        "gen": "Gen. Pl. f.",
+                                        "dat": "Dat. Pl. f.",
+                                        "acc": "Acc. Pl. f.",
+                                        "abl": "Abl. Pl. f."
+                                    }
+                                },
+                                "neut": {
+                                    "sg": {
+                                        "nom": "Nom. Sg. n.",
+                                        "gen": "Gen. Sg. n.",
+                                        "dat": "Dat. Sg. n.",
+                                        "acc": "Acc. Sg. n.",
+                                        "abl": "Abl. Sg. n."
+                                    },
+                                    "pl": {
+                                        "nom": "Nom. Pl. n.",
+                                        "gen": "Gen. Pl. n.",
+                                        "dat": "Dat. Pl. n.",
+                                        "acc": "Acc. Pl. n.",
+                                        "abl": "Abl. Pl. n."
+                                    }
                                 }
                             },
-                            "fem": {
-                                "sg": {
-                                    "nom": "Nom. Sg. f.",
-                                    "gen": "Gen. Sg. f.",
-                                    "dat": "Dat. Sg. f.",
-                                    "acc": "Acc. Sg. f.",
-                                    "abl": "Abl. Sg. f."
+                            "comparative": {
+                                "masc": {
+                                    "sg": {
+                                        "nom": "Nom. Sg. m. Comp.",
+                                        "gen": "Gen. Sg. m. Comp.",
+                                        "dat": "Dat. Sg. m. Comp.",
+                                        "acc": "Acc. Sg. m. Comp.",
+                                        "abl": "Abl. Sg. m. Comp."
+                                    },
+                                    "pl": {
+                                        "nom": "Nom. Pl. m. Comp.",
+                                        "gen": "Gen. Pl. m. Comp.",
+                                        "dat": "Dat. Pl. m. Comp.",
+                                        "acc": "Acc. Pl. m. Comp.",
+                                        "abl": "Abl. Pl. m. Comp."
+                                    }
                                 },
-                                "pl": {
-                                    "nom": "Nom. Pl. f.",
-                                    "gen": "Gen. Pl. f.",
-                                    "dat": "Dat. Pl. f.",
-                                    "acc": "Acc. Pl. f.",
-                                    "abl": "Abl. Pl. f."
+                                "fem": {
+                                    "sg": {
+                                        "nom": "Nom. Sg. f. Comp.",
+                                        "gen": "Gen. Sg. f. Comp.",
+                                        "dat": "Dat. Sg. f. Comp.",
+                                        "acc": "Acc. Sg. f. Comp.",
+                                        "abl": "Abl. Sg. f. Comp."
+                                    },
+                                    "pl": {
+                                        "nom": "Nom. Pl. f. Comp.",
+                                        "gen": "Gen. Pl. f. Comp.",
+                                        "dat": "Dat. Pl. f. Comp.",
+                                        "acc": "Acc. Pl. f. Comp.",
+                                        "abl": "Abl. Pl. f. Comp."
+                                    }
+                                },
+                                "neut": {
+                                    "sg": {
+                                        "nom": "Nom. Sg. n. Comp.",
+                                        "gen": "Gen. Sg. n. Comp.",
+                                        "dat": "Dat. Sg. n. Comp.",
+                                        "acc": "Acc. Sg. n. Comp.",
+                                        "abl": "Abl. Sg. n. Comp."
+                                    },
+                                    "pl": {
+                                        "nom": "Nom. Pl. n. Comp.",
+                                        "gen": "Gen. Pl. n. Comp.",
+                                        "dat": "Dat. Pl. n. Comp.",
+                                        "acc": "Acc. Pl. n. Comp.",
+                                        "abl": "Abl. Pl. n. Comp."
+                                    }
                                 }
                             },
-                            "neut": {
-                                "sg": {
-                                    "nom": "Nom. Sg. n.",
-                                    "gen": "Gen. Sg. n.",
-                                    "dat": "Dat. Sg. n.",
-                                    "acc": "Acc. Sg. n.",
-                                    "abl": "Abl. Sg. n."
+                            "superlative": {
+                                "masc": {
+                                    "sg": {
+                                        "nom": "Nom. Sg. m. Sup.",
+                                        "gen": "Gen. Sg. m. Sup.",
+                                        "dat": "Dat. Sg. m. Sup.",
+                                        "acc": "Acc. Sg. m. Sup.",
+                                        "abl": "Abl. Sg. m. Sup."
+                                    },
+                                    "pl": {
+                                        "nom": "Nom. Pl. m. Sup.",
+                                        "gen": "Gen. Pl. m. Sup.",
+                                        "dat": "Dat. Pl. m. Sup.",
+                                        "acc": "Acc. Pl. m. Sup.",
+                                        "abl": "Abl. Pl. m. Sup."
+                                    }
                                 },
-                                "pl": {
-                                    "nom": "Nom. Pl. n.",
-                                    "gen": "Gen. Pl. n.",
-                                    "dat": "Dat. Pl. n.",
-                                    "acc": "Acc. Pl. n.",
-                                    "abl": "Abl. Pl. n."
+                                "fem": {
+                                    "sg": {
+                                        "nom": "Nom. Sg. f. Sup.",
+                                        "gen": "Gen. Sg. f. Sup.",
+                                        "dat": "Dat. Sg. f. Sup.",
+                                        "acc": "Acc. Sg. f. Sup.",
+                                        "abl": "Abl. Sg. f. Sup."
+                                    },
+                                    "pl": {
+                                        "nom": "Nom. Pl. f. Sup.",
+                                        "gen": "Gen. Pl. f. Sup.",
+                                        "dat": "Dat. Pl. f. Sup.",
+                                        "acc": "Acc. Pl. f. Sup.",
+                                        "abl": "Abl. Pl. f. Sup."
+                                    }
+                                },
+                                "neut": {
+                                    "sg": {
+                                        "nom": "Nom. Sg. n. Sup.",
+                                        "gen": "Gen. Sg. n. Sup.",
+                                        "dat": "Dat. Sg. n. Sup.",
+                                        "acc": "Acc. Sg. n. Sup.",
+                                        "abl": "Abl. Sg. n. Sup."
+                                    },
+                                    "pl": {
+                                        "nom": "Nom. Pl. n. Sup.",
+                                        "gen": "Gen. Pl. n. Sup.",
+                                        "dat": "Dat. Pl. n. Sup.",
+                                        "acc": "Acc. Pl. n. Sup.",
+                                        "abl": "Abl. Pl. n. Sup."
+                                    }
                                 }
                             }
                         },
-                        "comparative": {
-                            "masc": {
-                                "sg": {
-                                    "nom": "Nom. Sg. m. Comp.",
-                                    "gen": "Gen. Sg. m. Comp.",
-                                    "dat": "Dat. Sg. m. Comp.",
-                                    "acc": "Acc. Sg. m. Comp.",
-                                    "abl": "Abl. Sg. m. Comp."
-                                },
-                                "pl": {
-                                    "nom": "Nom. Pl. m. Comp.",
-                                    "gen": "Gen. Pl. m. Comp.",
-                                    "dat": "Dat. Pl. m. Comp.",
-                                    "acc": "Acc. Pl. m. Comp.",
-                                    "abl": "Abl. Pl. m. Comp."
-                                }
-                            },
-                            "fem": {
-                                "sg": {
-                                    "nom": "Nom. Sg. f. Comp.",
-                                    "gen": "Gen. Sg. f. Comp.",
-                                    "dat": "Dat. Sg. f. Comp.",
-                                    "acc": "Acc. Sg. f. Comp.",
-                                    "abl": "Abl. Sg. f. Comp."
-                                },
-                                "pl": {
-                                    "nom": "Nom. Pl. f. Comp.",
-                                    "gen": "Gen. Pl. f. Comp.",
-                                    "dat": "Dat. Pl. f. Comp.",
-                                    "acc": "Acc. Pl. f. Comp.",
-                                    "abl": "Abl. Pl. f. Comp."
-                                }
-                            },
-                            "neut": {
-                                "sg": {
-                                    "nom": "Nom. Sg. n. Comp.",
-                                    "gen": "Gen. Sg. n. Comp.",
-                                    "dat": "Dat. Sg. n. Comp.",
-                                    "acc": "Acc. Sg. n. Comp.",
-                                    "abl": "Abl. Sg. n. Comp."
-                                },
-                                "pl": {
-                                    "nom": "Nom. Pl. n. Comp.",
-                                    "gen": "Gen. Pl. n. Comp.",
-                                    "dat": "Dat. Pl. n. Comp.",
-                                    "acc": "Acc. Pl. n. Comp.",
-                                    "abl": "Abl. Pl. n. Comp."
-                                }
-                            }
-                        },
-                        "superlative": {
-                            "masc": {
-                                "sg": {
-                                    "nom": "Nom. Sg. m. Sup.",
-                                    "gen": "Gen. Sg. m. Sup.",
-                                    "dat": "Dat. Sg. m. Sup.",
-                                    "acc": "Acc. Sg. m. Sup.",
-                                    "abl": "Abl. Sg. m. Sup."
-                                },
-                                "pl": {
-                                    "nom": "Nom. Pl. m. Sup.",
-                                    "gen": "Gen. Pl. m. Sup.",
-                                    "dat": "Dat. Pl. m. Sup.",
-                                    "acc": "Acc. Pl. m. Sup.",
-                                    "abl": "Abl. Pl. m. Sup."
-                                }
-                            },
-                            "fem": {
-                                "sg": {
-                                    "nom": "Nom. Sg. f. Sup.",
-                                    "gen": "Gen. Sg. f. Sup.",
-                                    "dat": "Dat. Sg. f. Sup.",
-                                    "acc": "Acc. Sg. f. Sup.",
-                                    "abl": "Abl. Sg. f. Sup."
-                                },
-                                "pl": {
-                                    "nom": "Nom. Pl. f. Sup.",
-                                    "gen": "Gen. Pl. f. Sup.",
-                                    "dat": "Dat. Pl. f. Sup.",
-                                    "acc": "Acc. Pl. f. Sup.",
-                                    "abl": "Abl. Pl. f. Sup."
-                                }
-                            },
-                            "neut": {
-                                "sg": {
-                                    "nom": "Nom. Sg. n. Sup.",
-                                    "gen": "Gen. Sg. n. Sup.",
-                                    "dat": "Dat. Sg. n. Sup.",
-                                    "acc": "Acc. Sg. n. Sup.",
-                                    "abl": "Abl. Sg. n. Sup."
-                                },
-                                "pl": {
-                                    "nom": "Nom. Pl. n. Sup.",
-                                    "gen": "Gen. Pl. n. Sup.",
-                                    "dat": "Dat. Pl. n. Sup.",
-                                    "acc": "Acc. Pl. n. Sup.",
-                                    "abl": "Abl. Pl. n. Sup."
-                                }
-                            }
+                        "adverbs": {
+                            "positive": "Adv.",
+                            "comparative": "Adv. Comp.",
+                            "superlative": "Adv. Sup."
                         }
                     },
                     "definition_type": "from_base_forms"

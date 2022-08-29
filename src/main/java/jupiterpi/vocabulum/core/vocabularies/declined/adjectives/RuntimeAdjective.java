@@ -166,6 +166,8 @@ public class RuntimeAdjective extends Adjective {
                 // superlative
                 } else {
 
+                    //TODO fix error e. g. "pulchrrimus"
+
                     Document superlativeData = (Document) comparativeFormsData.get("superlative");
 
                     DeclinedForm declinedForm = form.getDeclinedForm();

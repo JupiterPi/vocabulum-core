@@ -36,9 +36,9 @@ public abstract class Adjective extends Vocabulary {
 
     @Override
     public Document generateWordbaseEntrySpecificPart() {
-        //TODO generate wordbase entry: adverb forms --> test, WordbaseAdjective#makeForm
-
         Document formsDocument = new Document();
+
+        Document adjectiveFormsDocument = new Document();
         for (ComparativeForm comparativeForm : ComparativeForm.values()) {
             Document comparativeFormDocument = new Document();
             for (Gender gender : Gender.values()) {
@@ -47,20 +47,23 @@ public abstract class Adjective extends Vocabulary {
                     Document numberDocument = new Document();
                     for (Casus casus : Casus.values()) {
                         AdjectiveForm form = new AdjectiveForm(new DeclinedForm(casus, number, gender), comparativeForm);
-                        String generatedForm;
-                        try {
-                            generatedForm = makeForm(form);
-                        } catch (DeclinedFormDoesNotExistException e) {
-                            generatedForm = "-";
-                        }
-                        numberDocument.put(casus.toString().toLowerCase(), generatedForm);
+                        numberDocument.put(casus.toString().toLowerCase(), makeFormOrDash(form));
                     }
                     genderDocument.put(number.toString().toLowerCase(), numberDocument);
                 }
                 comparativeFormDocument.put(gender.toString().toLowerCase(), genderDocument);
             }
-            formsDocument.put(comparativeForm.toString().toLowerCase(), comparativeFormDocument);
+            adjectiveFormsDocument.put(comparativeForm.toString().toLowerCase(), comparativeFormDocument);
         }
+
+        Document adverbFormsDocument = new Document();
+        for (ComparativeForm comparativeForm : ComparativeForm.values()) {
+            AdjectiveForm adverbForm = new AdjectiveForm(true, comparativeForm);
+            adverbFormsDocument.put(comparativeForm.toString().toLowerCase(), makeFormOrDash(adverbForm));
+        }
+
+        formsDocument.put("adjectives", adjectiveFormsDocument);
+        formsDocument.put("adverbs", adverbFormsDocument);
 
         Document document = new Document();
         document.put("forms", formsDocument);
@@ -93,6 +96,7 @@ public abstract class Adjective extends Vocabulary {
     }
 
     public List<AdjectiveForm> identifyForm(String word, boolean partialSearch) {
+        //TODO adjust order of identified forms
         List<AdjectiveForm> forms = new ArrayList<>();
         for (ComparativeForm comparativeForm : ComparativeForm.values()) {
             for (Gender gender : Gender.values()) {
