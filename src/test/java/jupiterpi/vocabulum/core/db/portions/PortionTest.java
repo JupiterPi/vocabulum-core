@@ -92,6 +92,11 @@ class PortionTest {
             protected Document generateWordbaseEntrySpecificPart() {
                 return new Document();
             }
+
+            @Override
+            protected List<String> getAllFormsToString() {
+                return List.of();
+            }
         };
     }
 }

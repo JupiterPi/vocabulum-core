@@ -2,7 +2,6 @@ package jupiterpi.vocabulum.core.ta;
 
 import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.wordbase.IdentificationResult;
-import jupiterpi.vocabulum.core.i18n.I18n;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +28,7 @@ public class TranslationAssistance {
                 items.add(new TAResult.TAPunctuation(token.getContent()));
             } else {
                 String word = token.getContent();
-                List<IdentificationResult> results = Database.get().getWordbase().identifyWord(word.toLowerCase());
+                List<IdentificationResult> results = Database.get().getWordbase().identifyWord(word.toLowerCase(), false);
                 if (results.size() == 0) {
                     throw new TAException("Cannot identify word: " + word.toLowerCase());
                 } else if (results.size() > 1) {

@@ -15,7 +15,7 @@ public class MockWordbase implements Wordbase {
     }
 
     @Override
-    public List<IdentificationResult> identifyWord(String word) {
+    public List<IdentificationResult> identifyWord(String word, boolean partialSearch) {
         throw new RuntimeException("Not supposed to call mocked Wordbase");
     }
 

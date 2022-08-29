@@ -20,6 +20,14 @@ public abstract class Noun extends Vocabulary {
 
     protected abstract Gender getGender();
 
+    public String makeFormOrDash(NounForm form) {
+        try {
+            return makeForm(form);
+        } catch (DeclinedFormDoesNotExistException e) {
+            return "-";
+        }
+    }
+
     public abstract String makeForm(NounForm form) throws DeclinedFormDoesNotExistException;
 
     @Override
@@ -64,14 +72,34 @@ public abstract class Noun extends Vocabulary {
         return document;
     }
 
-    public List<NounForm> identifyForm(String word) {
+    @Override
+    protected List<String> getAllFormsToString() {
+        List<String> forms = new ArrayList<>();
+        for (Gender gender : Gender.values()) {
+            for (NNumber number : NNumber.values()) {
+                for (Casus casus : Casus.values()) {
+                    NounForm form = new NounForm(new DeclinedForm(casus, number, gender));
+                    try {
+                        forms.add(makeForm(form));
+                    } catch (Exception ignored) {}
+                }
+            }
+        }
+        return forms;
+    }
+
+    public List<NounForm> identifyForm(String word, boolean partialSearch) {
         List<NounForm> forms = new ArrayList<>();
         for (Gender gender : Gender.values()) {
             for (NNumber number : NNumber.values()) {
                 for (Casus casus : Casus.values()) {
                     NounForm form = new NounForm(new DeclinedForm(casus, number, gender));
                     try {
-                        if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
+                        if (partialSearch) {
+                            if (makeForm(form).contains(word)) forms.add(form);
+                        } else {
+                            if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
+                        }
                     } catch (DeclinedFormDoesNotExistException ignored) {}
                 }
             }

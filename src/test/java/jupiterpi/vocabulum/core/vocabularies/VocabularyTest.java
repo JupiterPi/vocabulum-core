@@ -61,12 +61,18 @@ class VocabularyTest {
             protected Document generateWordbaseEntrySpecificPart() {
                 return new Document();
             }
+
+            @Override
+            protected List<String> getAllFormsToString() {
+                return List.of("form1", "form2");
+            }
         };
         Document e = new Document();
         e.put("kind", "noun");
         e.put("base_form", "amicus");
         e.put("portion", "test");
         e.put("translations", List.of("*der Freund*", "der Kamerad"));
+        e.put("allFormsIndex", "form1 form2");
         assertEquals(e, vocabulary.generateWordbaseEntry());
     }
 }

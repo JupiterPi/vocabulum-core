@@ -19,6 +19,14 @@ public abstract class Adjective extends Vocabulary {
         this.definitionType = definitionType;
     }
 
+    public String makeFormOrDash(AdjectiveForm form) {
+        try {
+            return makeForm(form);
+        } catch (DeclinedFormDoesNotExistException e) {
+            return "-";
+        }
+    }
+
     public abstract String makeForm(AdjectiveForm form) throws DeclinedFormDoesNotExistException;
 
     @Override
@@ -28,6 +36,8 @@ public abstract class Adjective extends Vocabulary {
 
     @Override
     public Document generateWordbaseEntrySpecificPart() {
+        //TODO generate wordbase entry: adverb forms --> test, WordbaseAdjective#makeForm
+
         Document formsDocument = new Document();
         for (ComparativeForm comparativeForm : ComparativeForm.values()) {
             Document comparativeFormDocument = new Document();
@@ -58,7 +68,31 @@ public abstract class Adjective extends Vocabulary {
         return document;
     }
 
-    public List<AdjectiveForm> identifyForm(String word) {
+    @Override
+    protected List<String> getAllFormsToString() {
+        List<String> forms = new ArrayList<>();
+        for (Casus casus : Casus.values()) {
+            for (NNumber number : NNumber.values()) {
+                for (Gender gender : Gender.values()) {
+                    for (ComparativeForm comparativeForm : ComparativeForm.values()) {
+                        AdjectiveForm form = new AdjectiveForm(new DeclinedForm(casus, number, gender), comparativeForm);
+                        try {
+                            forms.add(makeForm(form));
+                        } catch (Exception ignored) {}
+                    }
+                }
+            }
+        }
+        for (ComparativeForm comparativeForm : ComparativeForm.values()) {
+            AdjectiveForm form = new AdjectiveForm(true, comparativeForm);
+            try {
+                forms.add(makeForm(form));
+            } catch (Exception ignored) {}
+        }
+        return forms;
+    }
+
+    public List<AdjectiveForm> identifyForm(String word, boolean partialSearch) {
         List<AdjectiveForm> forms = new ArrayList<>();
         for (ComparativeForm comparativeForm : ComparativeForm.values()) {
             for (Gender gender : Gender.values()) {
@@ -66,7 +100,11 @@ public abstract class Adjective extends Vocabulary {
                     for (Casus casus : Casus.values()) {
                         AdjectiveForm form = new AdjectiveForm(new DeclinedForm(casus, number, gender), comparativeForm);
                         try {
-                            if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
+                            if (partialSearch) {
+                                if (makeForm(form).contains(word)) forms.add(form);
+                            } else {
+                                if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
+                            }
                         } catch (DeclinedFormDoesNotExistException ignored) {}
                     }
                 }
@@ -74,7 +112,11 @@ public abstract class Adjective extends Vocabulary {
 
             AdjectiveForm adverbForm = new AdjectiveForm(true, comparativeForm);
             try {
-                if (makeForm(adverbForm).equalsIgnoreCase(word)) forms.add(adverbForm);
+                if (partialSearch) {
+                    if (makeForm(adverbForm).contains(word)) forms.add(adverbForm);
+                } else {
+                    if (makeForm(adverbForm).equalsIgnoreCase(word)) forms.add(adverbForm);
+                }
             } catch (DeclinedFormDoesNotExistException ignored) {}
         }
         return forms;

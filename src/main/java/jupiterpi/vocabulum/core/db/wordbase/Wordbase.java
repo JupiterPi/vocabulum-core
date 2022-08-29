@@ -7,7 +7,7 @@ import java.util.List;
 public interface Wordbase {
     Vocabulary loadVocabulary(String baseForm);
 
-    List<IdentificationResult> identifyWord(String word);
+    List<IdentificationResult> identifyWord(String word, boolean partialSearch);
 
     void saveVocabulary(Vocabulary vocabulary);
 

@@ -74,7 +74,8 @@ public abstract class Vocabulary {
     }
 
     public Document generateWordbaseEntry() {
-        Document document = new Document();document.put("kind", getKind().toString().toLowerCase());
+        Document document = new Document();
+        document.put("kind", getKind().toString().toLowerCase());
         document.put("base_form", getBaseForm());
         document.put("portion", portion);
         document.put("translations", getTranslationsToString());
@@ -82,10 +83,14 @@ public abstract class Vocabulary {
         Document specificPart = generateWordbaseEntrySpecificPart();
         document.putAll(specificPart);
 
+        document.put("allFormsIndex", String.join(" ", getAllFormsToString()));
+
         return document;
     }
 
     protected abstract Document generateWordbaseEntrySpecificPart();
+
+    protected abstract List<String> getAllFormsToString();
 
     @Override
     public String toString() {

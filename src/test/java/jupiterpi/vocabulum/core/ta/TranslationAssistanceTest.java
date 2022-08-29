@@ -78,11 +78,16 @@ class TranslationAssistanceTest {
                 protected Document generateWordbaseEntrySpecificPart() {
                     return new Document();
                 }
+
+                @Override
+                protected List<String> getAllFormsToString() {
+                    return List.of();
+                }
             };
 
             ((MockDatabase) Database.get()).injectWordbase(new MockWordbase() {
                 @Override
-                public List<IdentificationResult> identifyWord(String word) {
+                public List<IdentificationResult> identifyWord(String word, boolean partialSearch) {
                     IdentificationResult sampleIdentificationResult = new IdentificationResult(sampleVocabulary, List.of(new NounForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))));
                     return switch (word) {
                         case "1" -> List.of(sampleIdentificationResult);

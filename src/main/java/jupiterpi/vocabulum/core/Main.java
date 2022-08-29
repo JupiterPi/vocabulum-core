@@ -3,12 +3,14 @@ package jupiterpi.vocabulum.core;
 import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.LoadingDataException;
 import jupiterpi.vocabulum.core.db.portions.Portion;
+import jupiterpi.vocabulum.core.db.wordbase.IdentificationResult;
 import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 
+import java.util.List;
 import java.util.Map;
 
 public class Main {
@@ -24,7 +26,12 @@ public class Main {
             /*System.out.println(portion);*/
         }
 
-        Terminal terminal = new Terminal();
-        terminal.run(Database.get().getI18ns().de());
+        List<IdentificationResult> identificationResults = Database.get().getWordbase().identifyWord("asin", true);
+        for (IdentificationResult identificationResult : identificationResults) {
+            System.out.println(identificationResult.toString());
+        }
+
+        /*Terminal terminal = new Terminal();
+        terminal.run(Database.get().getI18ns().de());*/
     }
 }

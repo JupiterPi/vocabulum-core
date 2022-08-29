@@ -117,7 +117,62 @@ public abstract class Verb extends Vocabulary {
         return document;
     }
 
-    public List<VerbForm> identifyForm(String word) {
+    @Override
+    protected List<String> getAllFormsToString() {
+        List<String> forms = new ArrayList<>();
+
+        // Kind.IMPERATIVE
+        for (CNumber number : CNumber.values()) {
+            VerbForm form = new VerbForm(number);
+            try {
+                forms.add(makeForm(form));
+            } catch (Exception ignored) {}
+        }
+
+        // Kind.INFINITIVE
+        for (InfinitiveTense infinitiveTense : InfinitiveTense.values()) {
+            for (Voice voice : Voice.values()) {
+                VerbForm form = new VerbForm(infinitiveTense, voice);
+                try {
+                    forms.add(makeForm(form));
+                } catch (Exception ignored) {}
+            }
+        }
+
+        // Kind.BASIC
+        for (Voice voice : Voice.values()) {
+            for (Tense tense : Tense.values()) {
+                for (Mode mode : Mode.values()) {
+                    for (CNumber number : CNumber.values()) {
+                        for (Person person : Person.values()) {
+                            VerbForm form = new VerbForm(new ConjugatedForm(person, number), mode, tense, voice);
+                            try {
+                                forms.add(makeForm(form));
+                            } catch (Exception ignored) {}
+                        }
+                    }
+                }
+            }
+        }
+
+        // Kind.NOUN_LIKE
+        for (NounLikeForm nounLikeForm : NounLikeForm.values()) {
+            for (Gender gender : Gender.values()) {
+                for (NNumber number : NNumber.values()) {
+                    for (Casus casus : Casus.values()) {
+                        VerbForm form = new VerbForm(nounLikeForm, new DeclinedForm(casus, number, gender));
+                        try {
+                            forms.add(makeForm(form));
+                        } catch (Exception ignored) {}
+                    }
+                }
+            }
+        }
+
+        return forms;
+    }
+
+    public List<VerbForm> identifyForm(String word, boolean partialSearch) {
         List<VerbForm> forms = new ArrayList<>();
 
         // Kind.INFINITIVE
@@ -125,7 +180,11 @@ public abstract class Verb extends Vocabulary {
             for (Voice voice : Voice.values()) {
                 VerbForm form = new VerbForm(infinitiveTense, voice);
                 try {
-                    if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
+                    if (partialSearch) {
+                        if (makeForm(form).contains(word)) forms.add(form);
+                    } else {
+                        if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
+                    }
                 } catch (VerbFormDoesNotExistException | DeclinedFormDoesNotExistException ignored) {}
             }
         }
@@ -138,7 +197,11 @@ public abstract class Verb extends Vocabulary {
                         for (Person person : Person.values()) {
                             VerbForm form = new VerbForm(new ConjugatedForm(person, number), mode, tense, voice);
                             try {
-                                if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
+                                if (partialSearch) {
+                                    if (makeForm(form).contains(word)) forms.add(form);
+                                } else {
+                                    if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
+                                }
                             } catch (VerbFormDoesNotExistException | DeclinedFormDoesNotExistException ignored) {}
                         }
                     }
@@ -153,7 +216,11 @@ public abstract class Verb extends Vocabulary {
                     for (Casus casus : Casus.values()) {
                         VerbForm form = new VerbForm(nounLikeForm, new DeclinedForm(casus, number, gender));
                         try {
-                            if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
+                            if (partialSearch) {
+                                if (makeForm(form).contains(word)) forms.add(form);
+                            } else {
+                                if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
+                            }
                         } catch (VerbFormDoesNotExistException | DeclinedFormDoesNotExistException ignored) {}
                     }
                 }

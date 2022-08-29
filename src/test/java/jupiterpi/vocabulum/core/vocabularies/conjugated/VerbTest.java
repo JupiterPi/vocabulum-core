@@ -1314,7 +1314,7 @@ class VerbTest {
                     return "baseform";
                 }
             };
-            assertEquals(List.of(verbForm), verb.identifyForm("theform"));
+            assertEquals(List.of(verbForm), verb.identifyForm("theform", false));
         }
 
         @Test
@@ -1335,7 +1335,7 @@ class VerbTest {
                     return "baseform";
                 }
             };
-            assertEquals(List.of(verbForm1, verbForm2), verb.identifyForm("theform"));
+            assertEquals(List.of(verbForm1, verbForm2), verb.identifyForm("theform", false));
         }
 
     }

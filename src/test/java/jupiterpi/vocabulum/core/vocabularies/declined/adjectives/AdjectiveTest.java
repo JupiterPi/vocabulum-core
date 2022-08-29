@@ -272,6 +272,6 @@ class AdjectiveTest {
             @Override
             public String getBaseForm() { return null; }
         };
-        assertEquals(List.of(nom_sg_m_pos, adv_comp), adjective.identifyForm("targetform"));
+        assertEquals(List.of(nom_sg_m_pos, adv_comp), adjective.identifyForm("targetform", false));
     }
 }

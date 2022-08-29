@@ -5,6 +5,7 @@ import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import org.bson.Document;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Inflexible extends Vocabulary {
@@ -38,6 +39,11 @@ public class Inflexible extends Vocabulary {
     @Override
     public Document generateWordbaseEntrySpecificPart() {
         return new Document();
+    }
+
+    @Override
+    protected List<String> getAllFormsToString() {
+        return List.of(word);
     }
 
     @Override

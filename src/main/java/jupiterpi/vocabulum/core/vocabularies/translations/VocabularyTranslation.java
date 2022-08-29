@@ -32,7 +32,7 @@ public class VocabularyTranslation {
         return important;
     }
 
-    public String getTranslationToString() {
+    public String getTranslation() {
         return translation.getBasicString();
     }
 

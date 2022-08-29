@@ -1,5 +1,6 @@
 package jupiterpi.vocabulum.core.db.wordbase;
 
+import com.mongodb.client.FindIterable;
 import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.VocabularyForm;
@@ -23,9 +24,7 @@ public class DbWordbase implements Wordbase {
         this.database = database;
     }
 
-    @Override
-    public Vocabulary loadVocabulary(String baseForm) {
-        Document vocabularyDocument = database.collection_wordbase.find(new Document("base_form", baseForm)).first();
+    private static Vocabulary parseDocument(Document vocabularyDocument) {
         return switch (vocabularyDocument.getString("kind")) {
             case "noun" -> WordbaseNoun.readFromDocument(vocabularyDocument);
             case "adjective" -> WordbaseAdjective.readFromDocument(vocabularyDocument);
@@ -36,18 +35,31 @@ public class DbWordbase implements Wordbase {
     }
 
     @Override
-    public List<IdentificationResult> identifyWord(String word) {
+    public Vocabulary loadVocabulary(String baseForm) {
+        Document vocabularyDocument = database.collection_wordbase.find(new Document("base_form", baseForm)).first();
+        return parseDocument(vocabularyDocument);
+    }
+
+    @Override
+    public List<IdentificationResult> identifyWord(String word, boolean partialSearch) {
         List<VocabularyForm> nullForms = new ArrayList<>();
         nullForms.add(null);
 
-        database.collection_wordbase.createIndex(new Document("$**", "text"));
         List<IdentificationResult> results = new ArrayList<>();
-        for (Document vocabularyDocument : database.collection_wordbase.find(new Document("$text", new Document("$search", word)))) {
+        FindIterable<Document> vocabularyDocuments;
+        if (partialSearch) {
+            vocabularyDocuments = database.collection_wordbase.find(new Document("allFormsIndex", new Document("$regex", ".*" + word + ".*")));
+        } else {
+            /*database.collection_wordbase.createIndex(new Document("$**", "text"));
+            vocabularyDocuments = database.collection_wordbase.find(new Document("$text", new Document("$search", word)));*/
+            vocabularyDocuments = database.collection_wordbase.find(new Document("allFormsIndex", new Document("$regex", "\\b" + word + "\\b")));
+        }
+        for (Document vocabularyDocument : vocabularyDocuments) {
             Vocabulary vocabulary = loadVocabulary(vocabularyDocument.getString("base_form"));
             List<VocabularyForm> forms = switch (vocabulary.getKind()) {
-                case NOUN -> new ArrayList<>(((Noun) vocabulary).identifyForm(word));
-                case ADJECTIVE -> new ArrayList<>(((Adjective) vocabulary).identifyForm(word));
-                case VERB -> new ArrayList<>(((Verb) vocabulary).identifyForm(word));
+                case NOUN -> new ArrayList<>(((Noun) vocabulary).identifyForm(word, partialSearch));
+                case ADJECTIVE -> new ArrayList<>(((Adjective) vocabulary).identifyForm(word, partialSearch));
+                case VERB -> new ArrayList<>(((Verb) vocabulary).identifyForm(word, partialSearch));
                 case INFLEXIBLE -> new ArrayList<>(nullForms);
             };
             results.add(new IdentificationResult(vocabulary, forms));
