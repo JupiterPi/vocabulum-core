@@ -106,7 +106,7 @@ class WordbaseNounTest {
         void init() {
             TranslationSequence translations = new TranslationSequence(new VocabularyTranslation(true, new TranslationPartContainer(new PlainTextPart("der Esel"))));
             n = new WordbaseNoun(
-                    "asinus", Gender.MASC, (Document) sampleDocument.get("forms"), translations, "test"
+                    "asinus", Gender.MASC, "o", (Document) sampleDocument.get("forms"), translations, "test"
             );
         }
 

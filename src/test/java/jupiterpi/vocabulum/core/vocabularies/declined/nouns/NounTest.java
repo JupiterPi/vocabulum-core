@@ -31,6 +31,11 @@ class NounTest {
             }
 
             @Override
+            public String getDeclensionSchema() {
+                return "o";
+            }
+
+            @Override
             public String makeForm(NounForm form) {
                 if (form.equals(new NounForm(new DeclinedForm(Casus.GEN, NNumber.SG)))) return "amici";
                 return null;
@@ -55,6 +60,11 @@ class NounTest {
                 @Override
                 protected Gender getGender() {
                     return Gender.MASC;
+                }
+
+                @Override
+                public String getDeclensionSchema() {
+                    return "o";
                 }
 
                 @Override
@@ -119,7 +129,8 @@ class NounTest {
                                 }
                             }
                         },
-                        "gender": "masc"
+                        "gender": "masc",
+                        "declension_schema": "o"
                     }
                     """);
             assertEquals(e, noun.generateWordbaseEntrySpecificPart());
@@ -132,6 +143,11 @@ class NounTest {
                 @Override
                 protected Gender getGender() {
                     return Gender.MASC;
+                }
+
+                @Override
+                public String getDeclensionSchema() {
+                    return "o";
                 }
 
                 @Override
@@ -197,7 +213,8 @@ class NounTest {
                                 }
                             }
                         },
-                        "gender": "masc"
+                        "gender": "masc",
+                        "declension_schema": "o"
                     }
                     """);
             assertEquals(e, noun.generateWordbaseEntrySpecificPart());
@@ -217,6 +234,11 @@ class NounTest {
                 @Override
                 protected Gender getGender() {
                     return Gender.MASC;
+                }
+
+                @Override
+                public String getDeclensionSchema() {
+                    return "o";
                 }
 
                 @Override
@@ -242,6 +264,11 @@ class NounTest {
                 @Override
                 protected Gender getGender() {
                     return Gender.MASC;
+                }
+
+                @Override
+                public String getDeclensionSchema() {
+                    return "o";
                 }
 
                 @Override

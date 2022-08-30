@@ -9,12 +9,14 @@ import org.bson.Document;
 public class WordbaseNoun extends Noun {
     private String baseForm;
     private Gender gender;
+    private String declensionSchema;
     private Document forms;
 
-    public WordbaseNoun(String baseForm, Gender gender, Document forms, TranslationSequence translations, String portion) {
+    public WordbaseNoun(String baseForm, Gender gender, String declensionSchema, Document forms, TranslationSequence translations, String portion) {
         super(translations, portion);
         this.baseForm = baseForm;
         this.gender = gender;
+        this.declensionSchema = declensionSchema;
         this.forms = forms;
     }
 
@@ -22,6 +24,7 @@ public class WordbaseNoun extends Noun {
         return new WordbaseNoun(
                 document.getString("base_form"),
                 Gender.valueOf(document.getString("gender").toUpperCase()),
+                document.getString("declension_schema"),
                 (Document) document.get("forms"),
                 TranslationSequence.readFromDocument(document),
                 document.getString("portion"));
@@ -35,6 +38,11 @@ public class WordbaseNoun extends Noun {
     @Override
     public Gender getGender() {
         return gender;
+    }
+
+    @Override
+    public String getDeclensionSchema() {
+        return declensionSchema;
     }
 
     @Override

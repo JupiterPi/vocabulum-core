@@ -51,6 +51,11 @@ public class RuntimeNoun extends Noun {
     }
 
     @Override
+    public String getDeclensionSchema() {
+        return declensionSchema.getName();
+    }
+
+    @Override
     public String getBaseForm() {
         return nom_sg;
     }

@@ -69,6 +69,7 @@ public abstract class Noun extends Vocabulary {
         Document document = new Document();
         document.put("forms", formsDocument);
         document.put("gender", getGender().toString().toLowerCase());
+        document.put("declension_schema", getDeclensionSchema());
         return document;
     }
 
@@ -87,6 +88,8 @@ public abstract class Noun extends Vocabulary {
         }
         return forms;
     }
+
+    public abstract String getDeclensionSchema();
 
     public List<NounForm> identifyForm(String word, boolean partialSearch) {
         List<NounForm> forms = new ArrayList<>();
