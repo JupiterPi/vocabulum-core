@@ -11,7 +11,7 @@ import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.Adjective;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.AdjectiveForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.Noun;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.NounForm;
-import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
+import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -167,16 +167,20 @@ public class Terminal extends ConsoleInterface {
                 try {
                     String targetTranslationInput = in("> ");
                     if (targetTranslationInput.equals("")) break;
-                    VocabularyTranslation targetTranslation = VocabularyTranslation.fromString(targetTranslationInput);
+                    TranslationSequence targetTranslation = TranslationSequence.fromString(targetTranslationInput);
 
                     while (true) {
                         try {
                             String input = in("  > ");
                             if (input.isEmpty()) break;
-                            out(targetTranslation.isValid(input)
-                                    ? "    ✅"
-                                    : "    ❌"
-                            );
+                            List<TranslationSequence.ValidatedTranslation> validation = targetTranslation.validateInput(input);
+                            for (TranslationSequence.ValidatedTranslation translation : validation) {
+                                out(
+                                        "    " +
+                                        translation.getVocabularyTranslation().getTranslation() + ": " +
+                                        (translation.isValid() ? "✅" : "❌") + " " + translation.getInput()
+                                );
+                            }
                         } catch (Exception e) {
                             out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
                         }

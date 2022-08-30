@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockDatabaseSetup.class)
 public class VocabularyTranslationMatchingTest {
@@ -126,6 +125,13 @@ public class VocabularyTranslationMatchingTest {
     void capitalization() {
         VocabularyTranslation translation = VocabularyTranslation.fromString("der Freund");
         assertTrue(translation.isValid("der freund"));
+    }
+
+    @Test
+    @DisplayName("empty input")
+    void emptyInput() {
+        VocabularyTranslation translation = VocabularyTranslation.fromString("der Freund");
+        assertFalse(translation.isValid(""));
     }
 
 }
