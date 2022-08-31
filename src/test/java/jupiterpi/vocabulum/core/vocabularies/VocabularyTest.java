@@ -75,4 +75,10 @@ class VocabularyTest {
         e.put("allFormsIndex", "form1 form2");
         assertEquals(e, vocabulary.generateWordbaseEntry());
     }
+
+    @Test
+    void vocabularyToString() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
+        Vocabulary vocabulary = Vocabulary.fromString("amicus, amici m. - *der Freund*, der Kamerad", Database.get().getI18ns().internal(), "test");
+        assertEquals("amicus, amici m. - *der Freund*, der Kamerad", vocabulary.vocabularyToString(Database.get().getI18ns().internal()));
+    }
 }

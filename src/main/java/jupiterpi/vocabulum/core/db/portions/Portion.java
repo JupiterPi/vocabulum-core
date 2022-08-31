@@ -6,6 +6,7 @@ import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
+import jupiterpi.vocabulum.core.sessions.selection.VocabularySelection;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
@@ -14,7 +15,7 @@ import org.bson.Document;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Portion {
+public class Portion implements VocabularySelection {
     private String name;
     private List<List<Vocabulary>> vocabularyBlocks = new ArrayList<>();
 

@@ -92,6 +92,14 @@ public abstract class Vocabulary {
 
     protected abstract List<String> getAllFormsToString();
 
+    public String vocabularyToString(I18n i18n) {
+        List<String> translationsStr = new ArrayList<>();
+        for (VocabularyTranslation translation : translations) {
+            translationsStr.add(translation.getFormattedTranslation());
+        }
+        return getDefinition(i18n) + " - " + String.join(", ", translationsStr);
+    }
+
     @Override
     public String toString() {
         return getKind().toString().toLowerCase() + "(\"" + getBaseForm() + " - " + getTopTranslation().toString() + "\")";

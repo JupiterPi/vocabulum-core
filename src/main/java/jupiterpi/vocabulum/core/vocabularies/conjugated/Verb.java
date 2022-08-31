@@ -44,6 +44,8 @@ public abstract class Verb extends Vocabulary {
 
     public abstract String getBaseForm();
 
+    //TODO have Inf. Pres. Act. in wordbase entry
+
     @Override
     public Document generateWordbaseEntrySpecificPart() {
         Document formsDocument = new Document();
