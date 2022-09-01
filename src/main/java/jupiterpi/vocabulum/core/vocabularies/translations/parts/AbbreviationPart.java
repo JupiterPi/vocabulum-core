@@ -26,4 +26,9 @@ public class AbbreviationPart extends TranslationPart {
         strings = strings.stream().map(Pattern::quote).toList();
         return "(" + String.join("|", strings) + ")";
     }
+
+    @Override
+    public String getNonNullRegex() {
+        return getRegex();
+    }
 }

@@ -5,6 +5,8 @@ public abstract class TranslationPart {
 
     public abstract String getRegex();
 
+    public abstract String getNonNullRegex();
+
     @Override
     public String toString() {
         return getBasicString();

@@ -10,4 +10,9 @@ public class DotsPart extends TranslationPart {
     public String getRegex() {
         return "(\\.\\.\\.)?";
     }
+
+    @Override
+    public String getNonNullRegex() {
+        return "\\.\\.\\.";
+    }
 }

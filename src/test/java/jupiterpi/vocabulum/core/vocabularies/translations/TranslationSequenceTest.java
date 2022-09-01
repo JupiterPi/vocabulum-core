@@ -3,7 +3,7 @@ package jupiterpi.vocabulum.core.vocabularies.translations;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
 import jupiterpi.vocabulum.core.vocabularies.translations.parts.ArticlePart;
 import jupiterpi.vocabulum.core.vocabularies.translations.parts.PlainTextPart;
-import jupiterpi.vocabulum.core.vocabularies.translations.parts.TranslationPartContainer;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.container.TranslationPartContainer;
 import org.bson.Document;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

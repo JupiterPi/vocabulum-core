@@ -16,4 +16,10 @@ class ArticlePartTest {
         ArticlePart articlePart = new ArticlePart("der");
         assertEquals("(\\Qder\\E)?", articlePart.getRegex());
     }
+
+    @Test
+    void getNonNullRegex() {
+        ArticlePart articlePart = new ArticlePart("der");
+        assertEquals("\\Qder\\E", articlePart.getNonNullRegex());
+    }
 }

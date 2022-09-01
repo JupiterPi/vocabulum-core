@@ -16,4 +16,10 @@ class DotsPartTest {
         DotsPart dotsPart = new DotsPart();
         assertEquals("(\\.\\.\\.)?", dotsPart.getRegex());
     }
+
+    @Test
+    void getNonNullRegex() {
+        DotsPart dotsPart = new DotsPart();
+        assertEquals("\\.\\.\\.", dotsPart.getNonNullRegex());
+    }
 }

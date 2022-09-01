@@ -18,4 +18,9 @@ public class PlainTextPart extends TranslationPart {
     public String getRegex() {
         return Pattern.quote(text);
     }
+
+    @Override
+    public String getNonNullRegex() {
+        return getRegex();
+    }
 }

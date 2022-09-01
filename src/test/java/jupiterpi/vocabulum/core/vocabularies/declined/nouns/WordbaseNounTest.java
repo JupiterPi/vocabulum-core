@@ -10,7 +10,7 @@ import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 import jupiterpi.vocabulum.core.vocabularies.translations.parts.ArticlePart;
 import jupiterpi.vocabulum.core.vocabularies.translations.parts.PlainTextPart;
-import jupiterpi.vocabulum.core.vocabularies.translations.parts.TranslationPartContainer;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.container.TranslationPartContainer;
 import org.bson.Document;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

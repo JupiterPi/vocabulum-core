@@ -1,6 +1,7 @@
-package jupiterpi.vocabulum.core.vocabularies.translations.parts;
+package jupiterpi.vocabulum.core.vocabularies.translations.parts.container;
 
 import jupiterpi.vocabulum.core.db.Database;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.*;
 import org.bson.Document;
 
 import java.util.ArrayList;

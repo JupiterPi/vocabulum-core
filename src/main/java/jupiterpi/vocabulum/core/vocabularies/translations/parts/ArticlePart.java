@@ -18,4 +18,9 @@ public class ArticlePart extends TranslationPart {
     public String getRegex() {
         return "(" + Pattern.quote(article) + ")?";
     }
+
+    @Override
+    public String getNonNullRegex() {
+        return Pattern.quote(article);
+    }
 }

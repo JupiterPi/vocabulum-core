@@ -1,8 +1,12 @@
-package jupiterpi.vocabulum.core.vocabularies.translations.parts;
+package jupiterpi.vocabulum.core.vocabularies.translations.parts.container;
+
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.TranslationPart;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TranslationPartContainer extends TranslationPart {
     private boolean optional;
@@ -57,6 +61,42 @@ public class TranslationPartContainer extends TranslationPart {
         } else {
             return regex;
         }
+    }
+
+    @Override
+    public String getNonNullRegex() {
+        List<String> regexes = new ArrayList<>();
+        for (TranslationPart part : parts) {
+            regexes.add(part.getNonNullRegex());
+        }
+        return String.join(" *", regexes);
+    }
+
+    //TODO account for edge cases
+    public List<InputMatchedPart> matchValidInput(String input) {
+        List<InputMatchedPart> inputMatchedParts = new ArrayList<>();
+        String remainingInput = input;
+        for (TranslationPart part : getParts()) {
+            boolean isContainer = part instanceof TranslationPartContainer;
+            Matcher matcher = Pattern.compile((isContainer ? part.getRegex() : part.getNonNullRegex())).matcher(remainingInput);
+            if (matcher.find()) {
+                String inputPart = remainingInput.substring(matcher.start(), matcher.end());
+                remainingInput = remainingInput.substring(0, matcher.start()) + remainingInput.substring(matcher.end());
+                if (isContainer) {
+                    TranslationPartContainer container = (TranslationPartContainer) part;
+                    inputMatchedParts.add(new InputMatchedPart("("));
+                    inputMatchedParts.addAll(container.matchValidInput(inputPart));
+                    inputMatchedParts.add(new InputMatchedPart(")"));
+                } else {
+                    inputMatchedParts.add(new InputMatchedPart(part, true, inputPart));
+                }
+            } else {
+                inputMatchedParts.add(new InputMatchedPart(part, false, ""));
+            }
+            inputMatchedParts.add(new InputMatchedPart(" "));
+        }
+        inputMatchedParts.remove(inputMatchedParts.size()-1);
+        return inputMatchedParts;
     }
 
     /* equals */

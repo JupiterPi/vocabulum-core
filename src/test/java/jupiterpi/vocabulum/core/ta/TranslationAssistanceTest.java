@@ -15,7 +15,7 @@ import jupiterpi.vocabulum.core.vocabularies.declined.nouns.NounForm;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 import jupiterpi.vocabulum.core.vocabularies.translations.parts.PlainTextPart;
-import jupiterpi.vocabulum.core.vocabularies.translations.parts.TranslationPartContainer;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.container.TranslationPartContainer;
 import org.bson.Document;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;

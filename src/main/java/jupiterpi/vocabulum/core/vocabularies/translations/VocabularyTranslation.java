@@ -1,7 +1,9 @@
 package jupiterpi.vocabulum.core.vocabularies.translations;
 
-import jupiterpi.vocabulum.core.vocabularies.translations.parts.TranslationPartContainer;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.container.InputMatchedPart;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.container.TranslationPartContainer;
 
+import java.util.List;
 import java.util.Objects;
 
 public class VocabularyTranslation {
@@ -43,6 +45,10 @@ public class VocabularyTranslation {
     public boolean isValid(String input) {
         String regex = getRegex();
         return input.matches(regex);
+    }
+
+    public List<InputMatchedPart> matchValidInput(String input) {
+        return translation.matchValidInput(input);
     }
 
     /* equals */

@@ -26,9 +26,10 @@ public class SampleSession extends ConsoleInterface {
                     }
                 }
                 float score = ((float) amountRight) / ((float) translations.size());
-                out(score >= 0.5f ? "✅" : "❌");
+                boolean passed = score >= 0.5f;
+                out(passed ? "✅" : "❌");
                 out(vocabulary.vocabularyToString(i18n));
-                session.provideFeedback(vocabulary, score >= 0.5f);
+                session.provideFeedback(vocabulary, passed);
             } while (!session.isRoundDone());
             if (session.isAllDone()) break;
             out("Done with score: " + session.getResult().getScore());
