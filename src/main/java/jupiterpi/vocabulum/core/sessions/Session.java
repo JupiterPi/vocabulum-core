@@ -26,9 +26,16 @@ public class Session {
     public void start() throws SessionLifecycleException {
         if (currentVocabularies != null) throw new SessionLifecycleException("Cannot start: Is running!");
         currentVocabularies = new ArrayList<>(originalVocabularies);
-        restart();
+        restart_2nd();
     }
-    private void restart() throws SessionLifecycleException {
+
+    public void restart() throws SessionLifecycleException {
+        if (!isAllDone()) throw new SessionLifecycleException("Cannot restart: Is not all done!");
+        currentVocabularies = originalVocabularies;
+        restart_2nd();
+    }
+
+    private void restart_2nd() throws SessionLifecycleException {
         Collections.shuffle(currentVocabularies);
         wrongVocabularies = new ArrayList<>();
         nextVocabulary = null;
@@ -55,7 +62,7 @@ public class Session {
                 result = new Result(done, (done ? 1f : 1f - (((float) wrongVocabularies.size()) / ((float) currentVocabularies.size()))));
                 if (!done) {
                     currentVocabularies = wrongVocabularies;
-                    restart();
+                    restart_2nd();
                 }
             }
         }
