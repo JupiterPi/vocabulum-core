@@ -1,54 +1,77 @@
 package jupiterpi.vocabulum.core.sessions.selection;
 
-import jupiterpi.vocabulum.core.i18n.I18n;
+import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
+import jupiterpi.vocabulum.core.testutil.TestUtil;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
-import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
-import org.bson.Document;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockDatabaseSetup.class)
 class VocabularySelectionsTest {
-    @Test
-    void union() {
-        Vocabulary a1 = makeDummyVocabulary("a1");
-        Vocabulary a2 = makeDummyVocabulary("a2");
-        Vocabulary b1 = makeDummyVocabulary("b1");
-        Vocabulary b2 = makeDummyVocabulary("b2");
-        VocabularySelection a = new BasicVocabularySelection(a1, a2);
-        VocabularySelection b = new BasicVocabularySelection(b1, b2);
-        VocabularySelection e = new BasicVocabularySelection(a1, a2, b1, b2);
-        assertEquals(e, VocabularySelections.union(a, b));
+    @Nested
+    @DisplayName("equal()")
+    class Equal {
+
+        Vocabulary a = TestUtil.makeVocabulary("a");
+        Vocabulary b = TestUtil.makeVocabulary("b");
+        Vocabulary c = TestUtil.makeVocabulary("c");
+
+        @Test
+        @DisplayName("different size")
+        void differentSize() {
+            assertFalse(VocabularySelections.equal(
+                    TestUtil.makeVocabularySelection(a, b),
+                    TestUtil.makeVocabularySelection(a, b, c)
+            ));
+        }
+
+        @Test
+        @DisplayName("different order")
+        void differentOrder() {
+            assertTrue(VocabularySelections.equal(
+                    TestUtil.makeVocabularySelection(a, b),
+                    TestUtil.makeVocabularySelection(b, a)
+            ));
+        }
+
     }
 
-    private Vocabulary makeDummyVocabulary(String name) {
-        return new Vocabulary(TranslationSequence.fromString("*" + name + "*"), name) {
-            @Override
-            public String getBaseForm() {
-                return name;
-            }
+    @Nested
+    @DisplayName("getPortionBasedString()")
+    class GetString {
 
-            @Override
-            public String getDefinition(I18n i18n) {
-                return name;
-            }
+        @Test
+        @DisplayName("StringifiableVocabularySelection")
+        void stringifiableVocabularySelection() {
+            StringifiableVocabularySelection stringifiableVocabularySelection = new StringifiableVocabularySelection() {
+                @Override
+                public List<Vocabulary> getVocabularies() {
+                    return List.of();
+                }
 
-            @Override
-            public Kind getKind() {
-                return Kind.NOUN;
-            }
+                @Override
+                public String getString() {
+                    return "string";
+                }
+            };
+            assertEquals("string", VocabularySelections.getPortionBasedString(stringifiableVocabularySelection));
+        }
 
-            @Override
-            protected Document generateWordbaseEntrySpecificPart() {
-                return null;
-            }
+        @Test
+        @DisplayName("other VocabularySelection")
+        void otherVocabularySelection() {
+            VocabularySelection vocabularySelection = TestUtil.makeVocabularySelection(
+                    TestUtil.makeVocabulary("a"),
+                    TestUtil.makeVocabulary("b")
+            );
+            assertEquals("a+b", VocabularySelections.getPortionBasedString(vocabularySelection));
+        }
 
-            @Override
-            protected List<String> getAllFormsToString() {
-                return null;
-            }
-        };
     }
 }
