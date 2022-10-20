@@ -8,6 +8,7 @@ import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.VocabularyForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 public class NounForm implements VocabularyForm {
@@ -55,5 +56,19 @@ public class NounForm implements VocabularyForm {
     @Override
     public String toString() {
         return "Noun{form=" + declinedForm.toString() + "}";
+    }
+
+    // compare
+
+    /*@Override
+    public int compareTo(NounForm o) {
+        return getDeclinedForm().compareTo(o.getDeclinedForm());
+    }*/
+
+    public static Comparator<NounForm> comparator() {
+        return Comparator
+                .comparing((NounForm o) -> o.getDeclinedForm().getCasus())
+                .thenComparing(o -> o.getDeclinedForm().getNumber())
+                .thenComparing(o -> o.getDeclinedForm().getGender());
     }
 }

@@ -9,6 +9,7 @@ import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.VocabularyForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 public class AdjectiveForm implements VocabularyForm {
@@ -109,5 +110,44 @@ public class AdjectiveForm implements VocabularyForm {
     public String toString() {
         String adverbDeclinedFormStr = adverb ? "adverb" : "form=" + declinedForm.toString();
         return "Adjective{" + adverbDeclinedFormStr + ",comparative=" + comparativeForm.toString().toLowerCase() + "}";
+    }
+
+    // compare
+
+    /*@Override
+    public int compareTo(AdjectiveForm o) {
+        if (isAdverb() == o.isAdverb()) {
+            if (!isAdverb()) {
+                return (getDeclinedForm().getCasus().compareTo(o.getDeclinedForm().getCasus()) * NNumber.values().length)
+                        + (getDeclinedForm().getNumber().compareTo(o.getDeclinedForm().getNumber()) * Gender.values().length)
+                        + (getDeclinedForm().getGender().compareTo(o.getDeclinedForm().getGender()) * ComparativeForm.values().length)
+                        + (getComparativeForm().compareTo(o.getComparativeForm()));
+            } else {
+                return getComparativeForm().compareTo(o.getComparativeForm());
+            }
+        } else {
+            return Boolean.compare(isAdverb(), o.isAdverb()) * 1000;
+        }
+    }*/
+
+    public static Comparator<AdjectiveForm> comparator() {
+        return (o1, o2) -> {
+            if (o1.isAdverb() == o2.isAdverb()) {
+                if (!o1.isAdverb()) {
+                    return Comparator
+                            .comparing((AdjectiveForm o) -> o.getDeclinedForm().getCasus())
+                            .thenComparing(o -> o.getDeclinedForm().getNumber())
+                            .thenComparing(o -> o.getDeclinedForm().getGender())
+                            .thenComparing(AdjectiveForm::getComparativeForm)
+                            .compare(o1, o2);
+                } else {
+                    return Comparator
+                            .comparing(AdjectiveForm::getComparativeForm)
+                            .compare(o1, o2);
+                }
+            } else {
+                return Boolean.compare(o1.isAdverb(), o2.isAdverb());
+            }
+        };
     }
 }

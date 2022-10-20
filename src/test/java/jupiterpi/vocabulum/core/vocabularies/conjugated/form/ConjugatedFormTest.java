@@ -94,4 +94,6 @@ class ConjugatedFormTest {
         }
 
     }
+
+    // no specific test for compareTo(): harmless bugs will be seen in production
 }

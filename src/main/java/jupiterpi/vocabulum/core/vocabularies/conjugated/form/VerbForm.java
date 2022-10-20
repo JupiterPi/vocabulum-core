@@ -9,6 +9,8 @@ import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.VocabularyForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 
 public class VerbForm implements VocabularyForm {
@@ -198,6 +200,96 @@ public class VerbForm implements VocabularyForm {
             case IMPERATIVE -> "Verb{imperative, number=" + imperativeNumber.toString().toLowerCase() + "}";
             case INFINITIVE -> "Verb{infinitive, tense=" + infinitiveTense.toString().toLowerCase() + ", voice=" + infinitiveVoice.toString().toLowerCase() + "}";
             case NOUN_LIKE -> "Verb{" + nounLikeForm.toString().toLowerCase() + ", form=" + nounLikeDeclinedForm.toString() + "}";
+        };
+    }
+
+    // compare
+
+    /*@Override
+    public int old_compareTo(VerbForm o) {
+        List<Kind> kindsInOrder = List.of(Kind.INFINITIVE, Kind.BASIC, Kind.NOUN_LIKE, Kind.IMPERATIVE);
+        int compareKind = (kindsInOrder.indexOf(getKind()) - kindsInOrder.indexOf(o.getKind()));
+        if (compareKind == 0) {
+            switch (getKind()) {
+                case INFINITIVE -> {
+                    return (infinitiveTense.compareTo(o.getInfinitiveTense()) * Voice.values().length)
+                            + (infinitiveVoice.compareTo(o.getInfinitiveVoice()));
+                }
+                case BASIC -> {
+                    return (getVoice().compareTo(o.getVoice()) * Tense.values().length)
+                           + (getTense().compareTo(o.getTense()) * Mode.values().length)
+                           + (getMode().compareTo(o.getMode()) * CNumber.values().length)
+                           + getConjugatedForm().compareTo(o.getConjugatedForm());
+                }
+                case NOUN_LIKE -> {
+                    return (getNounLikeForm().compareTo(o.getNounLikeForm()) * Casus.values().length)
+                           + getNounLikeDeclinedForm().compareTo(o.getNounLikeDeclinedForm());
+                }
+                case IMPERATIVE -> {
+                    return getImperativeNumber().compareTo(o.getImperativeNumber());
+                }
+            }
+        } else {
+            return compareKind * 1000;
+        }
+        return 0;
+    }
+
+    @Override
+    public int compareTo(VerbForm o) {
+        List<Kind> kindsInOrder = List.of(Kind.INFINITIVE, Kind.BASIC, Kind.NOUN_LIKE, Kind.IMPERATIVE);
+        int compareKind = (kindsInOrder.indexOf(getKind()) - kindsInOrder.indexOf(o.getKind()));
+        if (compareKind == 0) {
+            switch (getKind()) {
+                case INFINITIVE -> {
+                    List<InfinitiveTense> infinitiveTenses = List.of(InfinitiveTense.values());
+                    infinitiveTenses.indexOf(getInfinitiveTense()) - infinitiveTenses.indexOf(o.getInfinitiveTense())
+                    if (infinitiveTenses.indexOf(getInfinitiveTense()) - infinitiveTenses.indexOf(o.getInfinitiveTense()) >)
+                }
+            }
+        } else {
+            return compareKind;
+        }
+    }*/
+
+    public static Comparator<VerbForm> comparator() {
+        return (o1, o2) -> {
+            List<Kind> kindsInOrder = List.of(Kind.INFINITIVE, Kind.BASIC, Kind.NOUN_LIKE, Kind.IMPERATIVE);
+            int compareKind = (kindsInOrder.indexOf(o1.getKind()) - kindsInOrder.indexOf(o2.getKind()));
+            if (compareKind == 0) {
+                switch (o1.getKind()) {
+                    case INFINITIVE -> {
+                        return Comparator
+                                .comparing(VerbForm::getInfinitiveVoice)
+                                .thenComparing(VerbForm::getInfinitiveTense)
+                                .compare(o1, o2);
+                    }
+                    case BASIC -> {
+                        return Comparator
+                                .comparing(VerbForm::getVoice)
+                                .thenComparing(VerbForm::getMode)
+                                .thenComparing(VerbForm::getTense)
+                                .thenComparing(VerbForm::getConjugatedForm)
+                                .compare(o1, o2);
+                    }
+                    case NOUN_LIKE -> {
+                        return Comparator
+                                .comparing(VerbForm::getNounLikeForm)
+                                .thenComparing(o -> o.getNounLikeDeclinedForm().getCasus())
+                                .thenComparing(o -> o.getNounLikeDeclinedForm().getNumber())
+                                .thenComparing(o -> o.getNounLikeDeclinedForm().getGender())
+                                .compare(o1, o2);
+                    }
+                    case IMPERATIVE -> {
+                        return Comparator
+                                .comparing(VerbForm::getImperativeNumber)
+                                .compare(o1, o2);
+                    }
+                }
+            } else {
+                return compareKind;
+            }
+            return 0;
         };
     }
 }

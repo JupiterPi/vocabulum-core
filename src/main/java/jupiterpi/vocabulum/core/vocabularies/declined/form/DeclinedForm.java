@@ -1,6 +1,5 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.form;
 
-import jupiterpi.vocabulum.core.Main;
 import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
@@ -11,7 +10,7 @@ import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 
 import java.util.Objects;
 
-public class DeclinedForm {
+public class DeclinedForm implements Comparable<DeclinedForm> {
     private Casus casus;
     private NNumber number;
     private Gender gender;
@@ -138,5 +137,16 @@ public class DeclinedForm {
             str += " " + gender.toString().substring(0, 1).toLowerCase() + ".";
         }
         return str;
+    }
+
+    // sorting
+
+
+    @Override
+    public int compareTo(DeclinedForm o) {
+        return
+                (getCasus().compareTo(o.getCasus()) * NNumber.values().length)
+                + (getNumber().compareTo(o.getNumber()) * Gender.values().length)
+                + (getGender().compareTo(o.getGender()));
     }
 }

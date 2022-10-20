@@ -10,7 +10,7 @@ import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 
 import java.util.Objects;
 
-public class ConjugatedForm {
+public class ConjugatedForm implements Comparable<ConjugatedForm> {
     private Person person;
     private CNumber number;
 
@@ -80,5 +80,13 @@ public class ConjugatedForm {
             + (userFriendly ? i18n.getPersonCosmetic() + ". " : "")
             + number.toString().substring(0, 1).toUpperCase() + number.toString().substring(1).toLowerCase()
             + ".";
+    }
+
+    // compare
+
+    @Override
+    public int compareTo(ConjugatedForm o) {
+        return (number.compareTo(o.getNumber()) * Person.values().length)
+               + (person.compareTo(o.getPerson()));
     }
 }

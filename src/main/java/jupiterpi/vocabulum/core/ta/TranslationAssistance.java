@@ -20,7 +20,7 @@ public class TranslationAssistance {
 
     /* run */
 
-    public void runTranslationAssistance(String sentence) throws TAException {
+    private void runTranslationAssistance(String sentence) throws TAException {
         List<TAToken> tokens = tokenize(sentence);
         List<TAResult.TAResultItem> items = new ArrayList<>();
         for (TAToken token : tokens) {

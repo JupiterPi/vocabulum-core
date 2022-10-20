@@ -47,6 +47,12 @@ class RuntimeVerbTest {
         }
 
         @Test
+        @DisplayName("base infinitive")
+        void baseInfinitive() throws DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
+            assertEquals("vocare", verb.makeForm(new VerbForm(InfinitiveTense.PRESENT, Voice.ACTIVE)));
+        }
+
+        @Test
         @DisplayName("infinitive")
         void infinitive() throws DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
             assertEquals("vocavisse", verb.makeForm(new VerbForm(InfinitiveTense.PERFECT, Voice.ACTIVE)));

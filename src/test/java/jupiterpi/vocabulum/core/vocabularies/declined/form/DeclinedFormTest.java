@@ -135,4 +135,34 @@ class DeclinedFormTest {
         }
 
     }
+
+    @Nested
+    @DisplayName("compare")
+    class Compare {
+
+        @Test
+        @DisplayName("only positive")
+        void onlyPositive() {
+            DeclinedForm f1 = new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC);
+            DeclinedForm f2 = new DeclinedForm(Casus.ABL, NNumber.PL, Gender.FEM);
+            assertTrue(f2.compareTo(f1) > 0);
+        }
+
+        @Test
+        @DisplayName("decided by lower level")
+        void decidedByLowerLevel() {
+            DeclinedForm f1 = new DeclinedForm(Casus.ABL, NNumber.PL, Gender.FEM);
+            DeclinedForm f2 = new DeclinedForm(Casus.ABL, NNumber.PL, Gender.NEUT);
+            assertTrue(f2.compareTo(f1) > 0);
+        }
+
+        @Test
+        @DisplayName("with negatives")
+        void withNegatives() {
+            DeclinedForm f1 = new DeclinedForm(Casus.ABL, NNumber.SG, Gender.MASC);
+            DeclinedForm f2 = new DeclinedForm(Casus.GEN, NNumber.PL, Gender.FEM);
+            assertTrue(f2.compareTo(f1) < 0);
+        }
+
+    }
 }

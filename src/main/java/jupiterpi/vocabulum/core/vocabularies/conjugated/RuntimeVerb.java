@@ -2,9 +2,7 @@ package jupiterpi.vocabulum.core.vocabularies.conjugated;
 
 import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.form.NounLikeForm;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbForm;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.form.*;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.ConjugationSchema;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.forminfo.Pattern;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.forminfo.VerbInfo;
@@ -86,6 +84,9 @@ public class RuntimeVerb extends Verb {
     }
 
     private String makeImperativeOrInfinitiveOrBasicForm(VerbForm form, VerbInfo info) throws VerbFormDoesNotExistException {
+        if (form.equals(new VerbForm(InfinitiveTense.PRESENT, Voice.ACTIVE))) {
+            return infinitive;
+        }
         Pattern pattern = conjugationSchema.getPattern(form);
         return pattern.make(info);
     }
