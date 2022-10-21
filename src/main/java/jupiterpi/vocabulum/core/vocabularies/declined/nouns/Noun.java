@@ -107,6 +107,7 @@ public abstract class Noun extends Vocabulary {
                 }
             }
         }
+        forms.sort(NounForm.comparator());
         return forms;
     }
 }

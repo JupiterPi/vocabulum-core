@@ -96,7 +96,6 @@ public abstract class Adjective extends Vocabulary {
     }
 
     public List<AdjectiveForm> identifyForm(String word, boolean partialSearch) {
-        //TODO adjust order of identified forms
         List<AdjectiveForm> forms = new ArrayList<>();
         for (ComparativeForm comparativeForm : ComparativeForm.values()) {
             for (Gender gender : Gender.values()) {
@@ -123,6 +122,7 @@ public abstract class Adjective extends Vocabulary {
                 }
             } catch (DeclinedFormDoesNotExistException ignored) {}
         }
+        forms.sort(AdjectiveForm.comparator());
         return forms;
     }
 

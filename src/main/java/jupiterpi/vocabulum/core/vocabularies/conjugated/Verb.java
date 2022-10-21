@@ -227,6 +227,7 @@ public abstract class Verb extends Vocabulary {
             }
         }
 
+        forms.sort(VerbForm.comparator());
         return forms;
     }
 }

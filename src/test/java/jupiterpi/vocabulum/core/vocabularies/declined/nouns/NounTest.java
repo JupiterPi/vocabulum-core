@@ -283,7 +283,7 @@ class NounTest {
                     return "amicus";
                 }
             };
-            assertEquals(List.of(gen_sg, nom_pl), noun.identifyForm("amici", false));
+            assertEquals(List.of(nom_pl, gen_sg), noun.identifyForm("amici", false));
         }
 
     }

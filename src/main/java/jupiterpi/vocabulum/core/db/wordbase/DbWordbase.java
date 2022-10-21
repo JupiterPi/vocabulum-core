@@ -6,12 +6,9 @@ import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.VocabularyForm;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.Verb;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.WordbaseVerb;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.Adjective;
-import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.AdjectiveForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.WordbaseAdjective;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.Noun;
-import jupiterpi.vocabulum.core.vocabularies.declined.nouns.NounForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.WordbaseNoun;
 import jupiterpi.vocabulum.core.vocabularies.inflexible.Inflexible;
 import org.bson.Document;
@@ -59,25 +56,12 @@ public class DbWordbase implements Wordbase {
         }
         for (Document vocabularyDocument : vocabularyDocuments) {
             Vocabulary vocabulary = loadVocabulary(vocabularyDocument.getString("base_form"));
-            List<VocabularyForm> forms = new ArrayList<>();
-            switch (vocabulary.getKind()) {
-                case NOUN -> {
-                    ArrayList<NounForm> nounForms = new ArrayList<>(((Noun) vocabulary).identifyForm(word, partialSearch));
-                    nounForms.sort(NounForm.comparator());
-                    forms = new ArrayList<>(nounForms);
-                }
-                case ADJECTIVE -> {
-                    ArrayList<AdjectiveForm> adjectiveForms = new ArrayList<>(((Adjective) vocabulary).identifyForm(word, partialSearch));
-                    adjectiveForms.sort(AdjectiveForm.comparator());
-                    forms = new ArrayList<>(adjectiveForms);
-                }
-                case VERB -> {
-                    ArrayList<VerbForm> verbForms = new ArrayList<>(((Verb) vocabulary).identifyForm(word, partialSearch));
-                    verbForms.sort(VerbForm.comparator());
-                    forms = new ArrayList<>(verbForms);
-                }
-                case INFLEXIBLE -> forms = new ArrayList<>(nullForms);
-            }
+            List<VocabularyForm> forms = switch (vocabulary.getKind()) {
+                case NOUN -> new ArrayList<>(((Noun) vocabulary).identifyForm(word, partialSearch));
+                case ADJECTIVE -> new ArrayList<>(((Adjective) vocabulary).identifyForm(word, partialSearch));
+                case VERB -> new ArrayList<>(((Verb) vocabulary).identifyForm(word, partialSearch));
+                case INFLEXIBLE -> new ArrayList<>(nullForms);
+            };
             results.add(new IdentificationResult(vocabulary, forms));
         }
         return results;
