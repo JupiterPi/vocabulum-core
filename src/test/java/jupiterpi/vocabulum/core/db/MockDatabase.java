@@ -3,11 +3,13 @@ package jupiterpi.vocabulum.core.db;
 import jupiterpi.vocabulum.core.db.classes.ConjugationClasses;
 import jupiterpi.vocabulum.core.db.classes.DeclensionClasses;
 import jupiterpi.vocabulum.core.db.portions.Portions;
+import jupiterpi.vocabulum.core.db.users.Users;
 import jupiterpi.vocabulum.core.db.wordbase.Wordbase;
 import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.i18n.I18ns;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
+import jupiterpi.vocabulum.core.users.User;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import org.bson.Document;
@@ -1060,5 +1062,18 @@ public class MockDatabase extends Database {
 
     public void injectWordbase(Wordbase wordbase) {
         this.wordbase = wordbase;
+    }
+
+    @Override
+    protected void loadUsers(Class<? extends User> userClass) {
+        users = new MockUsers();
+    }
+
+    public void reloadUsers() {
+        loadUsers(null);
+    }
+
+    public void injectUsers(Users users) {
+        this.users = users;
     }
 }

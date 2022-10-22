@@ -8,12 +8,15 @@ import jupiterpi.vocabulum.core.db.classes.ConjugationClasses;
 import jupiterpi.vocabulum.core.db.classes.DeclensionClasses;
 import jupiterpi.vocabulum.core.db.portions.Portion;
 import jupiterpi.vocabulum.core.db.portions.Portions;
+import jupiterpi.vocabulum.core.db.users.DbUsers;
+import jupiterpi.vocabulum.core.db.users.Users;
 import jupiterpi.vocabulum.core.db.wordbase.DbWordbase;
 import jupiterpi.vocabulum.core.db.wordbase.Wordbase;
 import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.i18n.I18ns;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
+import jupiterpi.vocabulum.core.users.User;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
@@ -42,10 +45,11 @@ public class Database {
     public MongoCollection<Document> collection_i18ns;
     public MongoCollection<Document> collection_portions;
     public MongoCollection<Document> collection_wordbase;
+    public MongoCollection<Document> collection_users;
 
-    public void connectAndLoad(String mongoConnectUrl) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
+    public void connectAndLoad(String mongoConnectUrl, Class<? extends User> userClass) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException, ReflectiveOperationException {
         connect(mongoConnectUrl);
-        load();
+        load(userClass);
     }
 
     protected void connect(String mongoConnectUrl) {
@@ -58,15 +62,17 @@ public class Database {
         collection_i18ns = database.getCollection("i18ns");
         collection_portions = database.getCollection("portions");
         collection_wordbase = database.getCollection("wordbase");
+        collection_users = database.getCollection("users");
     }
 
-    protected void load() throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
+    protected void load(Class<? extends User> userClass) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException, ReflectiveOperationException {
         loadI18ns();
         loadDeclensionClasses();
         loadConjugationClasses();
         loadPortions();
 
         loadWordbase();
+        loadUsers(userClass);
     }
 
     public void prepareWordbase() {
@@ -162,5 +168,17 @@ public class Database {
 
     public Wordbase getWordbase() {
         return wordbase;
+    }
+
+    // Users
+
+    protected Users users;
+
+    protected void loadUsers(Class<? extends User> userClass) throws ReflectiveOperationException {
+        users = new DbUsers(this, userClass);
+    }
+
+    public Users getUsers() {
+        return users;
     }
 }
