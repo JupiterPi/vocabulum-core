@@ -40,7 +40,21 @@ public class Attachments {
         return attachments.get(name);
     }
 
+    public void removeAttachment(String name) {
+        attachments.remove(name);
+    }
+
+    public Document consumeAttachment(String name) {
+        Document attachment = getAttachment(name);
+        removeAttachment(name);
+        return attachment;
+    }
+
     public void addAttachment(String name, Document attachment) {
         this.attachments.put(name, attachment);
+    }
+
+    public void addAttachments(Attachments attachments) {
+        this.attachments.putAll(attachments.attachments);
     }
 }

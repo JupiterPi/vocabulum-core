@@ -11,6 +11,7 @@ public class User {
     // has to be unique too
     protected String email;
     protected String password;
+    protected Attachments remainingAttachments = Attachments.empty();
 
     protected User(String username, String email, String password) {
         this.name = username;
@@ -29,10 +30,12 @@ public class User {
     public static <T extends User> T readFromDocument(Document document, Class<T> userClass) throws ReflectiveOperationException {
         Constructor<T> constructor = userClass.getDeclaredConstructor(Attachments.class);
         constructor.setAccessible(true);
-        T user = constructor.newInstance(Attachments.fromDocument((Document) document.get("attachments")));
+        Attachments attachments = Attachments.fromDocument((Document) document.get("attachments"));
+        T user = constructor.newInstance(attachments);
         user.name = document.getString("name");
         user.email = document.getString("email");
         user.password = document.getString("password");
+        user.remainingAttachments = attachments;
         return user;
     }
 
@@ -41,7 +44,10 @@ public class User {
         document.put("name", name);
         document.put("email", email);
         document.put("password", password);
-        document.put("attachments", generateAttachments().getDocument());
+
+        Attachments attachments = generateAttachments();
+        attachments.addAttachments(remainingAttachments);
+        document.put("attachments", attachments.getDocument());
         return document;
     }
     protected Attachments generateAttachments() { return Attachments.empty(); }

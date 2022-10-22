@@ -68,7 +68,7 @@ class UserTest {
 
             public MyUser(Attachments attachments) {
                 super(attachments);
-                myString = attachments.getAttachment("myattachment").getString("mykey");
+                myString = attachments.consumeAttachment("myattachment").getString("mykey");
             }
 
             public String getMyString() {
@@ -122,6 +122,28 @@ class UserTest {
                       }
                     }
                     """);
+            assertEquals(e, user.toDocument());
+        }
+
+        @Test
+        @DisplayName("remaining attachments")
+        void remainingAttachments() throws ReflectiveOperationException {
+            Document e = Document.parse("""
+                    {
+                      "name": "Adam01",
+                      "email": "a.andrews@email.com",
+                      "password": "ILoveVocabulum<3",
+                      "attachments": {
+                        "myattachment": {
+                          "mykey": "mystring"
+                        },
+                        "unknown_attachment": {
+                          "key": "value"
+                        }
+                      }
+                    }
+                    """);
+            MyUser user = User.readFromDocument(e, MyUser.class);
             assertEquals(e, user.toDocument());
         }
 

@@ -3,8 +3,7 @@ package jupiterpi.vocabulum.core.util;
 import org.bson.Document;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class AttachmentsTest {
     @Test
@@ -42,5 +41,14 @@ class AttachmentsTest {
                   }
                 }
                 """), attachments.getDocument());
+    }
+
+    @Test
+    void consumeAttachment() {
+        Attachments attachments = Attachments.empty();
+        attachments.addAttachment("a1", new Document("key", "value"));
+        Document consumedAttachment = attachments.consumeAttachment("a1");
+        assertEquals(new Document("key", "value"), consumedAttachment);
+        assertNull(attachments.getAttachment("a1"));
     }
 }
