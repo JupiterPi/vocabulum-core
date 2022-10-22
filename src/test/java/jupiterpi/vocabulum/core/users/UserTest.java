@@ -1,5 +1,6 @@
 package jupiterpi.vocabulum.core.users;
 
+import jupiterpi.vocabulum.core.sessions.SessionConfiguration;
 import jupiterpi.vocabulum.core.util.Attachments;
 import org.bson.Document;
 import org.junit.jupiter.api.DisplayName;
@@ -30,13 +31,25 @@ class UserTest {
                   "name": "Adam01",
                   "email": "a.andrews@email.com",
                   "password": "ILoveVocabulum<3",
+                  "sessionHistory": [
+                    {
+                      "time": NumberLong(0),
+                      "sessionConfiguration": {
+                          "selection": "sol+villa",
+                          "attachments": {}
+                      },
+                      "firstResult": 30,
+                      "totalAttempts": 10
+                    }
+                  ],
                   "attachments": {}
                 }
-                """), User.class);
+                """), User.class, SessionConfiguration.class);
         assertAll(
             () -> assertEquals("Adam01", user.getName()),
             () -> assertEquals("a.andrews@email.com", user.getEmail()),
-            () -> assertEquals("ILoveVocabulum<3", user.getPassword())
+            () -> assertEquals("ILoveVocabulum<3", user.getPassword()),
+            () -> assertEquals(1, user.getSessionHistory().size())
         );
     }
 
@@ -48,6 +61,7 @@ class UserTest {
                   "name": "Adam01",
                   "email": "a.andrews@email.com",
                   "password": "ILoveVocabulum<3",
+                  "sessionHistory": [],
                   "attachments": {}
                 }
                 """);
@@ -91,17 +105,29 @@ class UserTest {
                       "name": "Adam01",
                       "email": "a.andrews@email.com",
                       "password": "ILoveVocabulum<3",
+                      "sessionHistory": [
+                        {
+                          "time": NumberLong(0),
+                          "sessionConfiguration": {
+                              "selection": "sol+villa",
+                              "attachments": {}
+                          },
+                          "firstResult": 30,
+                          "totalAttempts": 10
+                        }
+                      ],
                       "attachments": {
                         "myattachment": {
                           "mykey": "mystring"
                         }
                       }
                     }
-                    """), MyUser.class);
+                    """), MyUser.class, SessionConfiguration.class);
             assertAll(
                     () -> assertEquals("Adam01", myUser.getName()),
                     () -> assertEquals("a.andrews@email.com", myUser.getEmail()),
                     () -> assertEquals("ILoveVocabulum<3", myUser.getPassword()),
+                    () -> assertEquals(1, myUser.getSessionHistory().size()),
                     () -> assertEquals("mystring", myUser.getMyString())
             );
         }
@@ -115,6 +141,7 @@ class UserTest {
                       "name": "Adam01",
                       "email": "a.andrews@email.com",
                       "password": "ILoveVocabulum<3",
+                      "sessionHistory": [],
                       "attachments": {
                         "myattachment": {
                           "mykey": "mystring"
@@ -133,6 +160,7 @@ class UserTest {
                       "name": "Adam01",
                       "email": "a.andrews@email.com",
                       "password": "ILoveVocabulum<3",
+                      "sessionHistory": [],
                       "attachments": {
                         "myattachment": {
                           "mykey": "mystring"
@@ -143,7 +171,7 @@ class UserTest {
                       }
                     }
                     """);
-            MyUser user = User.readFromDocument(e, MyUser.class);
+            MyUser user = User.readFromDocument(e, MyUser.class, SessionConfiguration.class);
             assertEquals(e, user.toDocument());
         }
 

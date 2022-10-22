@@ -1,9 +1,12 @@
 package jupiterpi.vocabulum.core.users;
 
+import jupiterpi.vocabulum.core.sessions.SessionConfiguration;
 import jupiterpi.vocabulum.core.util.Attachments;
 import org.bson.Document;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
     // unique identifier
@@ -11,6 +14,9 @@ public class User {
     // has to be unique too
     protected String email;
     protected String password;
+
+    protected List<SessionHistoryItem> sessionHistory = new ArrayList<>();
+
     protected Attachments remainingAttachments = Attachments.empty();
 
     protected User(String username, String email, String password) {
@@ -27,7 +33,7 @@ public class User {
 
     protected User(Attachments attachments) {}
 
-    public static <T extends User> T readFromDocument(Document document, Class<T> userClass) throws ReflectiveOperationException {
+    public static <T extends User> T readFromDocument(Document document, Class<T> userClass, Class<? extends SessionConfiguration> sessionConfigurationClass) throws ReflectiveOperationException {
         Constructor<T> constructor = userClass.getDeclaredConstructor(Attachments.class);
         constructor.setAccessible(true);
         Attachments attachments = Attachments.fromDocument((Document) document.get("attachments"));
@@ -36,6 +42,12 @@ public class User {
         user.email = document.getString("email");
         user.password = document.getString("password");
         user.remainingAttachments = attachments;
+
+        user.sessionHistory = new ArrayList<>();
+        for (Document d : (List<Document>) document.get("sessionHistory")) {
+            user.sessionHistory.add(SessionHistoryItem.fromDocument(d, sessionConfigurationClass));
+        }
+
         return user;
     }
 
@@ -44,6 +56,12 @@ public class User {
         document.put("name", name);
         document.put("email", email);
         document.put("password", password);
+
+        List<Document> sessionHistoryDocuments = new ArrayList<>();
+        for (SessionHistoryItem sessionHistoryItem : sessionHistory) {
+            sessionHistoryDocuments.add(sessionHistoryItem.getDocument());
+        }
+        document.put("sessionHistory", sessionHistoryDocuments);
 
         Attachments attachments = generateAttachments();
         attachments.addAttachments(remainingAttachments);
@@ -66,6 +84,10 @@ public class User {
         return password;
     }
 
+    public List<SessionHistoryItem> getSessionHistory() {
+        return sessionHistory;
+    }
+
     /* setters (changers) */
 
     public void changeName(String newName) {
@@ -78,6 +100,10 @@ public class User {
 
     public void changePassword(String newPassword) {
         this.password = newPassword;
+    }
+
+    public void setSessionHistory(List<SessionHistoryItem> sessionHistory) {
+        this.sessionHistory = sessionHistory;
     }
 
     /* other getters */

@@ -16,6 +16,7 @@ import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.i18n.I18ns;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
+import jupiterpi.vocabulum.core.sessions.SessionConfiguration;
 import jupiterpi.vocabulum.core.users.User;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
@@ -47,9 +48,9 @@ public class Database {
     public MongoCollection<Document> collection_wordbase;
     public MongoCollection<Document> collection_users;
 
-    public void connectAndLoad(String mongoConnectUrl, Class<? extends User> userClass) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException, ReflectiveOperationException {
+    public void connectAndLoad(String mongoConnectUrl, Class<? extends User> userClass, Class<? extends SessionConfiguration> sessionConfigurationClass) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException, ReflectiveOperationException {
         connect(mongoConnectUrl);
-        load(userClass);
+        load(userClass, sessionConfigurationClass);
     }
 
     protected void connect(String mongoConnectUrl) {
@@ -65,14 +66,14 @@ public class Database {
         collection_users = database.getCollection("users");
     }
 
-    protected void load(Class<? extends User> userClass) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException, ReflectiveOperationException {
+    protected void load(Class<? extends User> userClass, Class<? extends SessionConfiguration> sessionConfigurationClass) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException, ReflectiveOperationException {
         loadI18ns();
         loadDeclensionClasses();
         loadConjugationClasses();
         loadPortions();
 
         loadWordbase();
-        loadUsers(userClass);
+        loadUsers(userClass, sessionConfigurationClass);
     }
 
     public void prepareWordbase() {
@@ -174,8 +175,8 @@ public class Database {
 
     protected Users users;
 
-    protected void loadUsers(Class<? extends User> userClass) throws ReflectiveOperationException {
-        users = new DbUsers(this, userClass);
+    protected void loadUsers(Class<? extends User> userClass, Class<? extends SessionConfiguration> sessionConfigurationClass) throws ReflectiveOperationException {
+        users = new DbUsers(this, userClass, sessionConfigurationClass);
     }
 
     public Users getUsers() {

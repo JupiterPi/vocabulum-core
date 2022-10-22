@@ -9,6 +9,7 @@ import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.i18n.I18ns;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
+import jupiterpi.vocabulum.core.sessions.SessionConfiguration;
 import jupiterpi.vocabulum.core.users.User;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
@@ -1065,12 +1066,12 @@ public class MockDatabase extends Database {
     }
 
     @Override
-    protected void loadUsers(Class<? extends User> userClass) {
+    protected void loadUsers(Class<? extends User> userClass, Class<? extends SessionConfiguration> sessionConfigurationClass) {
         users = new MockUsers();
     }
 
     public void reloadUsers() {
-        loadUsers(null);
+        loadUsers(null, null);
     }
 
     public void injectUsers(Users users) {

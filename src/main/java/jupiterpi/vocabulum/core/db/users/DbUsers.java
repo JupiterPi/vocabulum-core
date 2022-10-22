@@ -1,6 +1,7 @@
 package jupiterpi.vocabulum.core.db.users;
 
 import jupiterpi.vocabulum.core.db.Database;
+import jupiterpi.vocabulum.core.sessions.SessionConfiguration;
 import jupiterpi.vocabulum.core.users.User;
 import org.bson.Document;
 
@@ -12,8 +13,9 @@ public class DbUsers implements Users {
 
     private List<User> users;
     private Class<? extends User> userClass;
+    private Class<? extends SessionConfiguration> sessionConfigurationClass;
 
-    public DbUsers(Database database, Class<? extends User> userClass) throws ReflectiveOperationException {
+    public DbUsers(Database database, Class<? extends User> userClass, Class<? extends SessionConfiguration> sessionConfigurationClass) throws ReflectiveOperationException {
         this.database = database;
         this.userClass = userClass;
         loadUsers();
@@ -22,7 +24,7 @@ public class DbUsers implements Users {
     public void loadUsers() throws ReflectiveOperationException {
         users = new ArrayList<>();
         for (Document document : database.collection_users.find()) {
-            User user = User.readFromDocument(document, userClass);
+            User user = User.readFromDocument(document, userClass, sessionConfigurationClass);
             users.add(user);
         }
     }
