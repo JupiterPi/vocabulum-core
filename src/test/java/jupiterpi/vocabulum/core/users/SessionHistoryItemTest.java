@@ -22,7 +22,7 @@ class SessionHistoryItemTest {
                 {
                     "time": NumberLong(0),
                     "sessionConfiguration": {
-                        "selection": "sol+villa",
+                        "selection": "sol,villa",
                         "attachments": {}
                     },
                     "firstResult": 30,
@@ -31,7 +31,7 @@ class SessionHistoryItemTest {
                 """), SessionConfiguration.class);
         assertAll(
             () -> assertEquals(new Date(0), sessionHistoryItem.getTime()),
-            () -> assertEquals("sol+villa", VocabularySelections.getPortionBasedString(sessionHistoryItem.getSessionConfiguration().getSelection())),
+            () -> assertEquals("sol,villa", VocabularySelections.getPortionBasedString(sessionHistoryItem.getSessionConfiguration().getSelection())),
             () -> assertEquals(0.3f, sessionHistoryItem.getFirstResult()),
             () -> assertEquals(10, sessionHistoryItem.getTotalAttempts())
         );
@@ -41,13 +41,13 @@ class SessionHistoryItemTest {
     void getDocument() {
         SessionHistoryItem sessionHistoryItem = new SessionHistoryItem(
                 new Date(0),
-                new SessionConfiguration(PortionBasedVocabularySelection.fromString("sol+villa")),
+                new SessionConfiguration(PortionBasedVocabularySelection.fromString("sol,villa")),
                 0.3f, 10);
         Document e = Document.parse("""
                 {
                     "time": NumberLong(0),
                     "sessionConfiguration": {
-                        "selection": "sol+villa",
+                        "selection": "sol,villa",
                         "attachments": {}
                     },
                     "firstResult": 30,
@@ -89,7 +89,7 @@ class SessionHistoryItemTest {
                 {
                     "time": NumberLong(0),
                     "sessionConfiguration": {
-                      "selection": "sol+villa",
+                      "selection": "sol,villa",
                       "attachments": {
                         "myattachment": {
                           "mykey": "mystring"

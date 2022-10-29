@@ -27,7 +27,7 @@ public class PortionBlocksSelection implements StringifiableVocabularySelection 
 
     @Override
     public String getString() {
-        String portionName = "'" + portion.getName() + "'";
+        String portionName = PortionBasedVocabularySelectionParser.NON_NUMBER_PORTION_NAME_TOKEN + portion.getName() + PortionBasedVocabularySelectionParser.NON_NUMBER_PORTION_NAME_TOKEN;
         try {
             Integer.parseInt(portion.getName());
             portionName = portion.getName();
@@ -37,7 +37,7 @@ public class PortionBlocksSelection implements StringifiableVocabularySelection 
             for (Integer block : blocks) {
                 blockStrs.add(Integer.toString(block + 1));
             }
-            return portionName + "_" + String.join(",", blockStrs);
+            return portionName + PortionBasedVocabularySelectionParser.BLOCKS_TOKEN + String.join(PortionBasedVocabularySelectionParser.BLOCKS_SEPARATOR_TOKEN, blockStrs);
         } else {
             return portionName;
         }

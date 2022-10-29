@@ -70,7 +70,7 @@ class VocabularySelectionsTest {
                     TestUtil.makeVocabulary("a"),
                     TestUtil.makeVocabulary("b")
             );
-            assertEquals("a+b", VocabularySelections.getPortionBasedString(vocabularySelection));
+            assertEquals("a,b", VocabularySelections.getPortionBasedString(vocabularySelection));
         }
 
     }

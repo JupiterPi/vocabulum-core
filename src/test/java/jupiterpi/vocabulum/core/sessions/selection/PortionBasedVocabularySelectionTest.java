@@ -31,6 +31,6 @@ class PortionBasedVocabularySelectionTest {
                 new PortionBasedVocabularySelection.Part(false, v),
                 new PortionBasedVocabularySelection.Part(true, v)
         ));
-        assertEquals("v+v-v", selection.getString());
+        assertEquals("v,v-v", selection.getString());
     }
 }

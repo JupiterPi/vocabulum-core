@@ -46,21 +46,21 @@ class PortionBasedVocabularySelectionParserTest {
         @Test
         @DisplayName("joined portions")
         void joinedPortions() {
-            PortionBasedVocabularySelection selection = makeParser("'A'+37").getPortionBasedVocabularySelection();
+            PortionBasedVocabularySelection selection = makeParser("'A',37").getPortionBasedVocabularySelection();
             assertEquals(List.of(a_asinus, b_stare, c_et, d_exspectare), selection.getVocabularies());
         }
 
         @Test
         @DisplayName("single block specified")
         void singleBlockSpecified() {
-            PortionBasedVocabularySelection selection = makeParser("38_1").getPortionBasedVocabularySelection();
+            PortionBasedVocabularySelection selection = makeParser("38:1").getPortionBasedVocabularySelection();
             assertEquals(List.of(a_asinus, b_stare), selection.getVocabularies());
         }
 
         @Test
         @DisplayName("multiple blocks specified")
         void multipleBlocksSpecified() {
-            PortionBasedVocabularySelection selection = makeParser("38_1,3").getPortionBasedVocabularySelection();
+            PortionBasedVocabularySelection selection = makeParser("38:1_3").getPortionBasedVocabularySelection();
             assertEquals(List.of(a_asinus, b_stare, c_et, d_exspectare), selection.getVocabularies());
         }
 
@@ -88,7 +88,7 @@ class PortionBasedVocabularySelectionParserTest {
         @Test
         @DisplayName("everything")
         void everything() {
-            PortionBasedVocabularySelection selection = makeParser("38_1-asinus").getPortionBasedVocabularySelection();
+            PortionBasedVocabularySelection selection = makeParser("38:1-asinus").getPortionBasedVocabularySelection();
             assertEquals(List.of(b_stare), selection.getVocabularies());
         }
 

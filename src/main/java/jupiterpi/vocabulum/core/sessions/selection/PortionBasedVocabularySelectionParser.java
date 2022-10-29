@@ -19,6 +19,12 @@ public abstract class PortionBasedVocabularySelectionParser {
 
     /* parser */
 
+    static final String JOIN_TOKEN = ",";
+    static final String SUBTRACT_TOKEN = "-";
+    static final String BLOCKS_TOKEN = ":";
+    static final String BLOCKS_SEPARATOR_TOKEN = "_";
+    static final String NON_NUMBER_PORTION_NAME_TOKEN = "'";
+
     private List<PortionBasedVocabularySelection.Part> parts = new ArrayList<>();
 
     private String buffer = "";
@@ -26,9 +32,9 @@ public abstract class PortionBasedVocabularySelectionParser {
 
     private List<PortionBasedVocabularySelection.Part> parseParts(String str) {
         for (String c : str.split("")) {
-            if (c.equals("-") || c.equals("+")) {
+            if (c.equals(JOIN_TOKEN) || c.equals(SUBTRACT_TOKEN)) {
                 flushBuffer();
-                subtract = c.equals("-");
+                subtract = c.equals(SUBTRACT_TOKEN);
                 continue;
             }
             buffer += c;
@@ -41,13 +47,13 @@ public abstract class PortionBasedVocabularySelectionParser {
         if (buffer.isEmpty()) return;
         VocabularySelection selection;
 
-        String[] parts = buffer.split("_");
+        String[] parts = buffer.split(BLOCKS_TOKEN);
         String basePart = parts[0];
 
         boolean isPortion = false;
         String portionName = null;
-        if (basePart.contains("'")) {
-            portionName = basePart.split("'")[1];
+        if (basePart.contains(NON_NUMBER_PORTION_NAME_TOKEN)) {
+            portionName = basePart.split(NON_NUMBER_PORTION_NAME_TOKEN)[1];
             isPortion = true;
         }
         try {
@@ -62,7 +68,7 @@ public abstract class PortionBasedVocabularySelectionParser {
 
             if (parts.length > 1) {
                 String blocksPart = parts[1];
-                for (String blockStr : blocksPart.split(",")) {
+                for (String blockStr : blocksPart.split(BLOCKS_SEPARATOR_TOKEN)) {
                     blocks.add(Integer.parseInt(blockStr) - 1);
                 }
             } else {

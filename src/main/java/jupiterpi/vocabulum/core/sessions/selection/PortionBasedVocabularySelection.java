@@ -95,7 +95,7 @@ public class PortionBasedVocabularySelection implements StringifiableVocabularyS
         String str = "";
         for (int i = 0; i < parts.size(); i++) {
             Part part = parts.get(i);
-            if (i > 0 || part.subtract) str += part.subtract ? "-" : "+";
+            if (i > 0 || part.subtract) str += part.subtract ? PortionBasedVocabularySelectionParser.SUBTRACT_TOKEN : PortionBasedVocabularySelectionParser.JOIN_TOKEN;
             str += VocabularySelections.getPortionBasedString(part.selection);
         }
         return str;

@@ -20,19 +20,19 @@ class SessionConfigurationTest {
     void fromDocument() throws ReflectiveOperationException {
         SessionConfiguration sessionConfiguration = SessionConfiguration.fromDocument(Document.parse("""
                 {
-                    "selection": "sol+villa",
+                    "selection": "sol,villa",
                     "attachments": {}
                 }
                 """), SessionConfiguration.class);
-        assertEquals("sol+villa", VocabularySelections.getPortionBasedString(sessionConfiguration.getSelection()));
+        assertEquals("sol,villa", VocabularySelections.getPortionBasedString(sessionConfiguration.getSelection()));
     }
 
     @Test
     void getDocument() {
-        SessionConfiguration sessionConfiguration = new SessionConfiguration(PortionBasedVocabularySelection.fromString("sol+villa"));
+        SessionConfiguration sessionConfiguration = new SessionConfiguration(PortionBasedVocabularySelection.fromString("sol,villa"));
         Document document = sessionConfiguration.getDocument();
         assertAll(
-            () -> assertEquals("sol+villa", document.getString("selection")),
+            () -> assertEquals("sol,villa", document.getString("selection")),
             () -> assertEquals(new Document(), document.get("attachments"))
         );
     }
@@ -71,7 +71,7 @@ class SessionConfigurationTest {
         void read() throws ReflectiveOperationException {
             MySessionConfiguration sessionConfiguration = SessionConfiguration.fromDocument(Document.parse("""
                     {
-                      "selection": "sol+villa",
+                      "selection": "sol,villa",
                       "attachments": {
                         "myattachment": {
                           "mykey": "mystring"
@@ -80,7 +80,7 @@ class SessionConfigurationTest {
                     }
                     """), MySessionConfiguration.class);
             assertAll(
-                    () -> assertEquals("sol+villa", VocabularySelections.getPortionBasedString(sessionConfiguration.getSelection())),
+                    () -> assertEquals("sol,villa", VocabularySelections.getPortionBasedString(sessionConfiguration.getSelection())),
                     () -> assertEquals("mystring", sessionConfiguration.getMyString())
             );
         }
@@ -88,10 +88,10 @@ class SessionConfigurationTest {
         @Test
         @DisplayName("generate document")
         void generateDocument() {
-            MySessionConfiguration sessionConfiguration = new MySessionConfiguration(PortionBasedVocabularySelection.fromString("sol+villa"), "mystring");
+            MySessionConfiguration sessionConfiguration = new MySessionConfiguration(PortionBasedVocabularySelection.fromString("sol,villa"), "mystring");
             Document e = Document.parse("""
                     {
-                      "selection": "sol+villa",
+                      "selection": "sol,villa",
                       "attachments": {
                         "myattachment": {
                           "mykey": "mystring"
@@ -107,7 +107,7 @@ class SessionConfigurationTest {
         void remainingAttachments() throws ReflectiveOperationException {
             Document e = Document.parse("""
                     {
-                      "selection": "sol+villa",
+                      "selection": "sol,villa",
                       "attachments": {
                         "myattachment": {
                           "mykey": "mystring"
