@@ -43,7 +43,11 @@ class ParticleTest {
 
         @BeforeEach
         void init() {
-            info = new VerbInfo("voc", "vocav", "vocatum", "vocati", "vocans", "vocantes", "vocaturus", "vocaturi");
+            info = new VerbInfo(
+                    "voc", "vocav",
+                    "vocatum", "vocati", "vocans", "vocantes", "vocaturus", "vocaturi",
+                    true, true
+            );
         }
 
         @Test

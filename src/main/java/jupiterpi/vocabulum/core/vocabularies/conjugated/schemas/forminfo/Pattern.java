@@ -3,18 +3,27 @@ package jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.forminfo;
 import java.util.ArrayList;
 import java.util.List;
 
-// Conjugation schema Pattern:
-//
-// - every form consists of parts
-// - parts in FormInfos are separated by "+"
-// - parts can be:
-//   - just text
-//   - "Pr", "Pf" -> will be replaced with that tense's root
-//   - "PPP", "PPA", "PFA" -> will be replaced with that noun-like form (in Nom. Sg. m.)
-// - exceptions:
-//   - "-" -> form does not exist
-//  (- "." -> get form info from parent)
-
+/**
+ * Conjugation schema Pattern:
+ * <p>
+ * - every form consists of parts
+ * <p>
+ * - parts in FormInfos are separated by "+"
+ * <p>
+ * - parts can be:
+ * <p>
+ *   - just text
+ *   <p>
+ *   - "Pr", "Pf" -> will be replaced with that tense's root
+ *   <p>
+ *   - "PPP", "PPA", "PFA" -> will be replaced with that noun-like form (in Nom. Sg. m.)
+ *   <p>
+ * - exceptions:
+ * <p>
+ *   - "-" -> form does not exist
+ *   <p>
+ *  (- "." -> get form info from parent)
+ */
 public class Pattern extends ArrayList<Particle> {
     private boolean exists = true;
 
@@ -61,7 +70,9 @@ public class Pattern extends ArrayList<Particle> {
         }
         String str = "";
         for (Particle particle : this) {
-            str += particle.make(info);
+            String particleStr = particle.make(info);
+            if (particleStr == null) return null;
+            str += particleStr;
         }
         return str;
     }

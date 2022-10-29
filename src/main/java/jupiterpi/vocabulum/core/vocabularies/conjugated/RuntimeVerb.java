@@ -41,12 +41,14 @@ public class RuntimeVerb extends Verb {
         /* roots */
 
         String presentRoot = null;
-        String perfectRoot = null;
+        String perfectRoot = "-";
         for (ConjugationSchema schema : Database.get().getConjugationClasses().getAll()) {
             Pattern pattern = schema.getPattern(VerbForm.get("1. Sg. Pres."));
             if (first_sg_present.endsWith(pattern.getSuffix())) {
                 presentRoot = first_sg_present.substring(0, first_sg_present.length() - pattern.getSuffix().length());
-                perfectRoot = first_sg_perfect.substring(0, first_sg_perfect.length() - schema.getPattern(VerbForm.get("1. Sg. Perf.")).getSuffix().length());
+                if (!first_sg_perfect.equals("-")) {
+                    perfectRoot = first_sg_perfect.substring(0, first_sg_perfect.length() - schema.getPattern(VerbForm.get("1. Sg. Perf.")).getSuffix().length());
+                }
             }
         }
         if (presentRoot == null) {
@@ -55,8 +57,11 @@ public class RuntimeVerb extends Verb {
 
         /* ppp*/
 
-        String nom_sg_neut_suffix = RuntimeAdjective.neuterDeclensionSchema.getSuffix(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT));
-        String pppRoot = ppp_nom_sg_neut.substring(0, ppp_nom_sg_neut.length() - nom_sg_neut_suffix.length());
+        String pppRoot = "-";
+        if (!ppp_nom_sg_neut.equals("-")) {
+            String nom_sg_neut_suffix = RuntimeAdjective.neuterDeclensionSchema.getSuffix(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT));
+            pppRoot = ppp_nom_sg_neut.substring(0, ppp_nom_sg_neut.length() - nom_sg_neut_suffix.length());
+        }
 
         return new RuntimeVerb(conjugationSchema, infinitive, presentRoot, perfectRoot, pppRoot, translations, portion);
     }
@@ -75,7 +80,8 @@ public class RuntimeVerb extends Verb {
                 makeNounLikeForm(new VerbForm(NounLikeForm.PPA, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))),
                 makeNounLikeForm(new VerbForm(NounLikeForm.PPA, new DeclinedForm(Casus.NOM, NNumber.PL, Gender.MASC))),
                 makeNounLikeForm(new VerbForm(NounLikeForm.PFA, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))),
-                makeNounLikeForm(new VerbForm(NounLikeForm.PFA, new DeclinedForm(Casus.NOM, NNumber.PL, Gender.MASC)))
+                makeNounLikeForm(new VerbForm(NounLikeForm.PFA, new DeclinedForm(Casus.NOM, NNumber.PL, Gender.MASC))),
+                !perfectRoot.equals("-"), !pppRoot.equals("-")
         );
         return switch (form.getKind()) {
             case IMPERATIVE, INFINITIVE, BASIC -> makeImperativeOrInfinitiveOrBasicForm(form, info);
@@ -94,7 +100,8 @@ public class RuntimeVerb extends Verb {
     private String makeNounLikeForm(VerbForm form) throws DeclinedFormDoesNotExistException {
         VerbInfo info = new VerbInfo(
                 presentRoot, perfectRoot,
-                "", "", "", "", "", ""
+                "", "", "", "", "", "",
+                !perfectRoot.equals("-"), !pppRoot.equals("-")
         );
 
         String adjective_nom_sg_masc_suffix = RuntimeAdjective.masculineDeclensionSchema.getSuffix(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC));

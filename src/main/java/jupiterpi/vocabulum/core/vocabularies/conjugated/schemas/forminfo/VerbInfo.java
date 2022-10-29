@@ -11,7 +11,10 @@ public class VerbInfo {
     private String pfa_sg;
     private String pfa_pl;
 
-    public VerbInfo(String presentRoot, String perfectRoot, String ppp_sg, String ppp_pl, String ppa_sg, String ppa_pl, String pfa_sg, String pfa_pl) {
+    private boolean perfectExists;
+    private boolean pppExists;
+
+    public VerbInfo(String presentRoot, String perfectRoot, String ppp_sg, String ppp_pl, String ppa_sg, String ppa_pl, String pfa_sg, String pfa_pl, boolean perfectExists, boolean pppExists) {
         this.presentRoot = presentRoot;
         this.perfectRoot = perfectRoot;
         this.ppp_sg = ppp_sg;
@@ -20,6 +23,8 @@ public class VerbInfo {
         this.ppa_pl = ppa_pl;
         this.pfa_sg = pfa_sg;
         this.pfa_pl = pfa_pl;
+        this.perfectExists = perfectExists;
+        this.pppExists = pppExists;
     }
 
     public String getPresentRoot() {
@@ -52,5 +57,13 @@ public class VerbInfo {
 
     public String getPfa_pl() {
         return pfa_pl;
+    }
+
+    public boolean perfectExists() {
+        return perfectExists;
+    }
+
+    public boolean pppExists() {
+        return pppExists;
     }
 }

@@ -52,10 +52,10 @@ public class Particle {
             case STRING -> content;
             case ROOT -> switch (content) {
                 case ROOT_PRESENT -> info.getPresentRoot();
-                case ROOT_PERFECT -> info.getPerfectRoot();
+                case ROOT_PERFECT -> info.perfectExists() ? info.getPerfectRoot() : null;
                 default -> null;
             };
-            case PARTICIPLE -> switch (content) {
+            case PARTICIPLE -> info.pppExists() ? switch (content) {
                 case PARTICIPLE_PPP_SG -> info.getPpp_sg();
                 case PARTICIPLE_PPP_PL -> info.getPpp_pl();
                 case PARTICIPLE_PPA_SG -> info.getPpa_sg();
@@ -63,7 +63,7 @@ public class Particle {
                 case PARTICIPLE_PFA_SG -> info.getPfa_sg();
                 case PARTICIPLE_PFA_PL -> info.getPfa_pl();
                 default -> null;
-            };
+            } : null;
         };
     }
 
