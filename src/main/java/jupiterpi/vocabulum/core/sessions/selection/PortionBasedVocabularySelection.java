@@ -10,17 +10,17 @@ import java.util.List;
 /**
  * 37 -> Portion 37
  * <p>
- * 'A' -> Portion A (for non-number names)
+ * "A" -> Portion A (for non-number names)
  * <p>
- * 37+38 -> Portion 37 and portion 38 are joined
+ * 37,38 -> Portion 37 and portion 38 are joined
  * <p>
- * 37_1,2 -> Blocks 1 (index 0) and 2 (index 1) of portion 37 are joined
+ * 37:1_2 -> Blocks 1 (index 0) and 2 (index 1) of portion 37 are joined
  * <p>
- * 37+et -> Portion 37 and "et"
+ * 37,et -> Portion 37 and "et"
  * <p>
  * 37-et -> Portion 37 without "et"
  * <p>
- * 37_1,2-agere -> Blocks 1 and 2 of portion 37 without "agere"
+ * 37:1_2-agere -> Blocks 1 and 2 of portion 37 without "agere"
  */
 public class PortionBasedVocabularySelection implements StringifiableVocabularySelection {
     private List<Part> parts;

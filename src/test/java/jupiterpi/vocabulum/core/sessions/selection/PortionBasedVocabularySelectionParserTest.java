@@ -39,14 +39,14 @@ class PortionBasedVocabularySelectionParserTest {
         @Test
         @DisplayName("portion designated by string")
         void portionDesignatedByString() {
-            PortionBasedVocabularySelection selection = makeParser("'A'").getPortionBasedVocabularySelection();
+            PortionBasedVocabularySelection selection = makeParser("\"A\"").getPortionBasedVocabularySelection();
             assertEquals(List.of(a_asinus, b_stare), selection.getVocabularies());
         }
 
         @Test
         @DisplayName("joined portions")
         void joinedPortions() {
-            PortionBasedVocabularySelection selection = makeParser("'A',37").getPortionBasedVocabularySelection();
+            PortionBasedVocabularySelection selection = makeParser("\"A\",37").getPortionBasedVocabularySelection();
             assertEquals(List.of(a_asinus, b_stare, c_et, d_exspectare), selection.getVocabularies());
         }
 

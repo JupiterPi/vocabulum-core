@@ -42,7 +42,7 @@ class PortionBlocksSelectionTest {
                     List.of(c),
                     List.of(d)
             )), List.of(0, 2));
-            assertEquals("'A':1_3", blocksSelection.getString());
+            assertEquals("\"A\":1_3", blocksSelection.getString());
         }
 
         @Test

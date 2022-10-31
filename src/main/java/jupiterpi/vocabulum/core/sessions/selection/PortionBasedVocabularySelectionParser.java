@@ -23,7 +23,7 @@ public abstract class PortionBasedVocabularySelectionParser {
     static final String SUBTRACT_TOKEN = "-";
     static final String BLOCKS_TOKEN = ":";
     static final String BLOCKS_SEPARATOR_TOKEN = "_";
-    static final String NON_NUMBER_PORTION_NAME_TOKEN = "'";
+    static final String NON_NUMBER_PORTION_NAME_TOKEN = "\"";
 
     private List<PortionBasedVocabularySelection.Part> parts = new ArrayList<>();
 
