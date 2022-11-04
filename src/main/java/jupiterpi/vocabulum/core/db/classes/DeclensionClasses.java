@@ -1,7 +1,6 @@
 package jupiterpi.vocabulum.core.db.classes;
 
 import jupiterpi.vocabulum.core.db.LoadingDataException;
-import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionSchema;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.SimpleDeclensionSchema;
 import org.bson.Document;
@@ -47,6 +46,15 @@ public class DeclensionClasses {
             schemas.add(declensionSchemas.get(key));
         }
         return schemas;
+    }
+
+    public List<DeclensionSchema> getAllForNouns() {
+        List<DeclensionSchema> schemasForNouns = new ArrayList<>();
+        for (DeclensionSchema declensionSchema : getAll()) {
+            if (declensionSchema.getName().equals("cons_adjectives")) continue;
+            schemasForNouns.add(declensionSchema);
+        }
+        return schemasForNouns;
     }
 
     // utility fields

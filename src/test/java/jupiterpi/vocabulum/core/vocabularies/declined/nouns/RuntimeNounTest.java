@@ -19,14 +19,33 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockDatabaseSetup.class)
 class RuntimeNounTest {
-    @Test
-    void fromGenitive() throws ParserException, DeclinedFormDoesNotExistException {
-        RuntimeNoun n = RuntimeNoun.fromGenitive("amicus", "amici", Gender.MASC, new TranslationSequence(), "test");
-        assertAll(
-                () -> assertEquals("amicus", n.getBaseForm()),
-                () -> assertEquals("amico", n.makeForm(new NounForm(new DeclinedForm(Casus.ABL, NNumber.SG)))),
-                () -> assertEquals(Gender.MASC, n.getGender())
-        );
+    @Nested
+    @DisplayName("fromGenitive()")
+    class FromGenitive {
+
+        @Test
+        @DisplayName("simple")
+        void simple() throws ParserException, DeclinedFormDoesNotExistException {
+            RuntimeNoun n = RuntimeNoun.fromGenitive("amicus", "amici", Gender.MASC, new TranslationSequence(), "test");
+            assertAll(
+                    () -> assertEquals("amicus", n.getBaseForm()),
+                    () -> assertEquals("amico", n.makeForm(new NounForm(new DeclinedForm(Casus.ABL, NNumber.SG)))),
+                    () -> assertEquals(Gender.MASC, n.getGender()),
+                    () -> assertEquals("o", n.getDeclensionSchema())
+            );
+        }
+
+        @Test
+        @DisplayName("not mixed up with cons_adjectives")
+        void notMixedUpWithConsAdjectives() throws ParserException, DeclinedFormDoesNotExistException {
+            RuntimeNoun n = RuntimeNoun.fromGenitive("sol", "solis", Gender.MASC, new TranslationSequence(), "test");
+            assertAll(
+                    () -> assertEquals("sol", n.getBaseForm()),
+                    () -> assertEquals(Gender.MASC, n.getGender()),
+                    () -> assertEquals("cons", n.getDeclensionSchema())
+            );
+        }
+
     }
 
     @Nested
