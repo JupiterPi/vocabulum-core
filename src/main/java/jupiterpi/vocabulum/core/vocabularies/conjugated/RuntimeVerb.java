@@ -191,4 +191,9 @@ public class RuntimeVerb extends Verb {
         }
         return null;
     }
+
+    @Override
+    public String getConjugationSchema() {
+        return conjugationSchema.getName();
+    }
 }

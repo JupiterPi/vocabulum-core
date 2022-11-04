@@ -114,6 +114,7 @@ public abstract class Verb extends Vocabulary {
 
         Document document = new Document();
         document.put("forms", formsDocument);
+        document.put("conjugation_schema", getConjugationSchema());
         return document;
     }
 
@@ -171,6 +172,8 @@ public abstract class Verb extends Vocabulary {
 
         return forms;
     }
+
+    public abstract String getConjugationSchema();
 
     public List<VerbForm> identifyForm(String word, boolean partialSearch) {
         List<VerbForm> forms = new ArrayList<>();

@@ -13,11 +13,13 @@ import java.util.Map;
 
 public class WordbaseVerb extends Verb {
     private String baseForm;
+    private String conjugationSchema;
     private Map<VerbForm, String> forms;
 
-    public WordbaseVerb(String baseForm, Document forms, TranslationSequence translations, String portion) {
+    public WordbaseVerb(String baseForm, String conjugationSchema, Document forms, TranslationSequence translations, String portion) {
         super(translations, portion);
         this.baseForm = baseForm;
+        this.conjugationSchema = conjugationSchema;
 
         this.forms = new HashMap<>();
 
@@ -77,6 +79,7 @@ public class WordbaseVerb extends Verb {
     public static WordbaseVerb readFromDocument(Document document) {
         return new WordbaseVerb(
                 document.getString("base_form"),
+                document.getString("conjugation_schema"),
                 (Document) document.get("forms"),
                 TranslationSequence.readFromDocument(document),
                 document.getString("portion"));
@@ -90,5 +93,10 @@ public class WordbaseVerb extends Verb {
     @Override
     public String makeForm(VerbForm form) {
         return forms.get(form);
+    }
+
+    @Override
+    public String getConjugationSchema() {
+        return conjugationSchema;
     }
 }

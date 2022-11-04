@@ -36,6 +36,11 @@ class VerbTest {
             public String getBaseForm() {
                 return null;
             }
+
+            @Override
+            public String getConjugationSchema() {
+                return "test";
+            }
         };
         assertEquals("-", verb.makeFormOrDash(new VerbForm(InfinitiveTense.PRESENT, Voice.ACTIVE)));
     }
@@ -61,6 +66,11 @@ class VerbTest {
             public String getBaseForm() {
                 return "vocare";
             }
+
+            @Override
+            public String getConjugationSchema() {
+                return "test";
+            }
         };
         assertEquals("vocare, voco, vocavi, vocatum", verb.getDefinition(i18n));
     }
@@ -81,6 +91,11 @@ class VerbTest {
                 @Override
                 public String getBaseForm() {
                     return "baseform";
+                }
+
+                @Override
+                public String getConjugationSchema() {
+                    return "test";
                 }
             };
             Document e = Document.parse("""
@@ -674,7 +689,8 @@ class VerbTest {
                             }
                           }
                         }
-                      }
+                      },
+                      "conjugation_schema": "test"
                     }
                     """);
             assertEquals(e, verb.generateWordbaseEntrySpecificPart());
@@ -693,6 +709,11 @@ class VerbTest {
                 @Override
                 public String getBaseForm() {
                     return "baseform";
+                }
+
+                @Override
+                public String getConjugationSchema() {
+                    return "test";
                 }
             };
             Document e = Document.parse("""
@@ -1286,7 +1307,8 @@ class VerbTest {
                             }
                           }
                         }
-                      }
+                      },
+                      "conjugation_schema": "test"
                     }
                     """);
             assertEquals(e, verb.generateWordbaseEntrySpecificPart());
@@ -1313,6 +1335,11 @@ class VerbTest {
                 public String getBaseForm() {
                     return "baseform";
                 }
+
+                @Override
+                public String getConjugationSchema() {
+                    return "test";
+                }
             };
             assertEquals(List.of(verbForm), verb.identifyForm("theform", false));
         }
@@ -1333,6 +1360,11 @@ class VerbTest {
                 @Override
                 public String getBaseForm() {
                     return "baseform";
+                }
+
+                @Override
+                public String getConjugationSchema() {
+                    return "test";
                 }
             };
             assertEquals(List.of(verbForm1, verbForm2), verb.identifyForm("theform", false));
