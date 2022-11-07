@@ -14,11 +14,19 @@ function generate() {
     const json = [];
     const inputString = document.getElementById("input").value;
     for (let line of inputString.split("\n")) {
-        if (line == "") continue;
+        if (line === "") continue;
+
+        let optional = false;
+        if (line.indexOf("?") === 0) {
+            line = line.substring(1);
+            optional = true;
+        }
+
         const parts = line.split(":");
         const abbreviation = {
-            abbreviation: parts[0],
-            full: parts[1].split(",")
+            primaryKeyword: parts[0],
+            secondaryKeywords: parts[1] === "-" ? [] : parts[1].split(","),
+            optional
         };
         json.push(abbreviation);
     }

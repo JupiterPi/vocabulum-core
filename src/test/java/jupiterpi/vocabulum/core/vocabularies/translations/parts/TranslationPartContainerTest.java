@@ -3,6 +3,8 @@ package jupiterpi.vocabulum.core.vocabularies.translations.parts;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
 import jupiterpi.vocabulum.core.vocabularies.translations.parts.container.InputMatchedPart;
 import jupiterpi.vocabulum.core.vocabularies.translations.parts.container.TranslationPartContainer;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.keywords.Keyword;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.keywords.KeywordPart;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -21,7 +23,7 @@ class TranslationPartContainerTest {
         TranslationPartContainer e = new TranslationPartContainer(
                 new TranslationPartContainer(true, List.of(new PlainTextPart("hi"))),
                 new DotsPart(),
-                new AbbreviationPart("m", List.of("mit")),
+                new KeywordPart(new Keyword("m.", List.of("mit"), false)),
                 new ArticlePart("der"),
                 new PlainTextPart("Freund")
         );

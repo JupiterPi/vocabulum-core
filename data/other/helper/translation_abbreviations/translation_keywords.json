@@ -1,0 +1,99 @@
+[
+  {
+    "primaryKeyword": "m.",
+    "secondaryKeywords": [
+      "mit"
+    ],
+    "optional": false
+  },
+  {
+    "primaryKeyword": "und",
+    "secondaryKeywords": [
+      "u.",
+      "&"
+    ],
+    "optional": false
+  },
+  {
+    "primaryKeyword": "jmdn.",
+    "secondaryKeywords": [
+      "jemanden",
+      "jemand"
+    ],
+    "optional": false
+  },
+  {
+    "primaryKeyword": "jmdm.",
+    "secondaryKeywords": [
+      "jemandem",
+      "jemand"
+    ],
+    "optional": false
+  },
+  {
+    "primaryKeyword": "Nom.",
+    "secondaryKeywords": [
+      "Nominativ"
+    ],
+    "optional": false
+  },
+  {
+    "primaryKeyword": "Gen.",
+    "secondaryKeywords": [
+      "Genitiv"
+    ],
+    "optional": false
+  },
+  {
+    "primaryKeyword": "Dat.",
+    "secondaryKeywords": [
+      "Dativ"
+    ],
+    "optional": false
+  },
+  {
+    "primaryKeyword": "Akk.",
+    "secondaryKeywords": [
+      "Akkusativ"
+    ],
+    "optional": false
+  },
+  {
+    "primaryKeyword": "Abl.",
+    "secondaryKeywords": [
+      "Ablativ"
+    ],
+    "optional": false
+  },
+  {
+    "primaryKeyword": "Sg.",
+    "secondaryKeywords": [
+      "Singular"
+    ],
+    "optional": false
+  },
+  {
+    "primaryKeyword": "Pl.",
+    "secondaryKeywords": [
+      "Plural"
+    ],
+    "optional": false
+  },
+  {
+    "primaryKeyword": "Subst",
+    "secondaryKeywords": [
+      "Substantiv"
+    ],
+    "optional": false
+  },
+  {
+    "primaryKeyword": "auch",
+    "secondaryKeywords": [],
+    "optional": true
+  },
+  {
+    "primaryKeyword": "doppeltem",
+    "secondaryKeywords": [],
+    "optional": false
+  }
+]

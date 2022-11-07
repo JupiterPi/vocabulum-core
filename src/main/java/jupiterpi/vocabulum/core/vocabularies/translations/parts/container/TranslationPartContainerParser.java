@@ -1,7 +1,12 @@
 package jupiterpi.vocabulum.core.vocabularies.translations.parts.container;
 
 import jupiterpi.vocabulum.core.db.Database;
-import jupiterpi.vocabulum.core.vocabularies.translations.parts.*;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.ArticlePart;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.DotsPart;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.PlainTextPart;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.TranslationPart;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.keywords.Keyword;
+import jupiterpi.vocabulum.core.vocabularies.translations.parts.keywords.KeywordPart;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -19,6 +24,8 @@ public class TranslationPartContainerParser {
     }
 
     /* parser */
+
+    private final List<Keyword> keywords = Keyword.fromDocuments((List<Document>) Database.get().getTranslationsDocument().get("keywords"));
 
     private List<TranslationPart> parts = new ArrayList<>();
 
@@ -65,13 +72,10 @@ public class TranslationPartContainerParser {
             part = new DotsPart();
         } else if (Database.get().getTranslationsDocument().getList("articles", String.class).contains(buffer)) {
             part = new ArticlePart(buffer);
-        } else if (buffer.endsWith(".")) {
-            List<Document> abbreviationDocuments = (List<Document>) Database.get().getTranslationsDocument().get("abbreviations");
-            for (Document abbreviationDocument : abbreviationDocuments) {
-                String abbreviation = abbreviationDocument.getString("abbreviation");
-                List<String> fullTexts = abbreviationDocument.getList("full", String.class);
-                if (abbreviation.equals(buffer.substring(0, buffer.length()-1))) {
-                    part = new AbbreviationPart(abbreviation, fullTexts);
+        } else {
+            for (Keyword keyword : keywords) {
+                if (keyword.matches(buffer)) {
+                    part = new KeywordPart(keyword);
                     break;
                 }
             }

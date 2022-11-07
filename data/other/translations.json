@@ -4,80 +4,103 @@
     "der", "die", "das",
     "ein", "eine"
   ],
-  "abbreviations": [
+  "keywords": [
     {
-      "abbreviation": "m",
-      "full": [
+      "primaryKeyword": "m.",
+      "secondaryKeywords": [
         "mit"
-      ]
+      ],
+      "optional": false
     },
     {
-      "abbreviation": "u",
-      "full": [
-        "und"
-      ]
+      "primaryKeyword": "und",
+      "secondaryKeywords": [
+        "u.",
+        "&"
+      ],
+      "optional": false
     },
     {
-      "abbreviation": "jmdn",
-      "full": [
+      "primaryKeyword": "jmdn.",
+      "secondaryKeywords": [
         "jemanden",
         "jemand"
-      ]
+      ],
+      "optional": false
     },
     {
-      "abbreviation": "jmdm",
-      "full": [
+      "primaryKeyword": "jmdm.",
+      "secondaryKeywords": [
         "jemandem",
         "jemand"
-      ]
+      ],
+      "optional": false
     },
     {
-      "abbreviation": "Nom",
-      "full": [
+      "primaryKeyword": "Nom.",
+      "secondaryKeywords": [
         "Nominativ"
-      ]
+      ],
+      "optional": false
     },
     {
-      "abbreviation": "Gen",
-      "full": [
+      "primaryKeyword": "Gen.",
+      "secondaryKeywords": [
         "Genitiv"
-      ]
+      ],
+      "optional": false
     },
     {
-      "abbreviation": "Dat",
-      "full": [
+      "primaryKeyword": "Dat.",
+      "secondaryKeywords": [
         "Dativ"
-      ]
+      ],
+      "optional": false
     },
     {
-      "abbreviation": "Akk",
-      "full": [
+      "primaryKeyword": "Akk.",
+      "secondaryKeywords": [
         "Akkusativ"
-      ]
+      ],
+      "optional": false
     },
     {
-      "abbreviation": "Abl",
-      "full": [
+      "primaryKeyword": "Abl.",
+      "secondaryKeywords": [
         "Ablativ"
-      ]
+      ],
+      "optional": false
     },
     {
-      "abbreviation": "Sg",
-      "full": [
+      "primaryKeyword": "Sg.",
+      "secondaryKeywords": [
         "Singular"
-      ]
+      ],
+      "optional": false
     },
     {
-      "abbreviation": "Pl",
-      "full": [
+      "primaryKeyword": "Pl.",
+      "secondaryKeywords": [
         "Plural"
-      ]
+      ],
+      "optional": false
     },
     {
-      "abbreviation": "Subst",
-      "full": [
+      "primaryKeyword": "Subst",
+      "secondaryKeywords": [
         "Substantiv"
-      ]
+      ],
+      "optional": false
+    },
+    {
+      "primaryKeyword": "auch",
+      "secondaryKeywords": [],
+      "optional": true
+    },
+    {
+      "primaryKeyword": "doppeltem",
+      "secondaryKeywords": [],
+      "optional": false
     }
   ]
 }

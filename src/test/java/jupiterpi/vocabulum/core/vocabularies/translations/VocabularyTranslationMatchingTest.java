@@ -100,6 +100,18 @@ public class VocabularyTranslationMatchingTest {
         );
     }
 
+    @Test
+    @DisplayName("other keywords")
+    void otherKeywords() {
+        VocabularyTranslation translation = VocabularyTranslation.fromString("Pl. auch viele");
+        assertAll(
+            () -> assertTrue(translation.isValid("Pl. auch viele")),
+            () -> assertTrue(translation.isValid("Plural auch viele")),
+            () -> assertTrue(translation.isValid("Pl. viele")),
+            () -> assertFalse(translation.isValid("viele"))
+        );
+    }
+
     @Nested
     @DisplayName("whitespaces")
     class Whitespaces {

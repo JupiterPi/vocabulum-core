@@ -123,88 +123,111 @@ public class MockDatabase extends Database {
     public Document getTranslationsDocument() {
         return Document.parse("""
                 {
-                  "id": "translations",
-                  "articles": [
-                      "der", "die", "das",
-                      "ein", "eine"
-                    ],
-                  "abbreviations": [
-                    {
-                      "abbreviation": "m",
-                      "full": [
-                        "mit"
-                      ]
-                    },
-                    {
-                      "abbreviation": "u",
-                      "full": [
-                        "und"
-                      ]
-                    },
-                    {
-                      "abbreviation": "jmdn",
-                      "full": [
-                        "jemanden",
-                        "jemand"
-                      ]
-                    },
-                    {
-                      "abbreviation": "jmdm",
-                      "full": [
-                        "jemandem",
-                        "jemand"
-                      ]
-                    },
-                    {
-                      "abbreviation": "Nom",
-                      "full": [
-                        "Nominativ"
-                      ]
-                    },
-                    {
-                      "abbreviation": "Gen",
-                      "full": [
-                        "Genitiv"
-                      ]
-                    },
-                    {
-                      "abbreviation": "Dat",
-                      "full": [
-                        "Dativ"
-                      ]
-                    },
-                    {
-                      "abbreviation": "Akk",
-                      "full": [
-                        "Akkusativ"
-                      ]
-                    },
-                    {
-                      "abbreviation": "Abl",
-                      "full": [
-                        "Ablativ"
-                      ]
-                    },
-                    {
-                      "abbreviation": "Sg",
-                      "full": [
-                        "Singular"
-                      ]
-                    },
-                    {
-                      "abbreviation": "Pl",
-                      "full": [
-                        "Plural"
-                      ]
-                    },
-                    {
-                      "abbreviation": "Subst",
-                      "full": [
-                        "Substantiv"
-                      ]
-                    }
-                  ]
-                }
+                   "id": "translations",
+                   "articles": [
+                     "der", "die", "das",
+                     "ein", "eine"
+                   ],
+                   "keywords": [
+                     {
+                       "primaryKeyword": "m.",
+                       "secondaryKeywords": [
+                         "mit"
+                       ],
+                       "optional": false
+                     },
+                     {
+                       "primaryKeyword": "und",
+                       "secondaryKeywords": [
+                         "u.",
+                         "&"
+                       ],
+                       "optional": false
+                     },
+                     {
+                       "primaryKeyword": "jmdn.",
+                       "secondaryKeywords": [
+                         "jemanden",
+                         "jemand"
+                       ],
+                       "optional": false
+                     },
+                     {
+                       "primaryKeyword": "jmdm.",
+                       "secondaryKeywords": [
+                         "jemandem",
+                         "jemand"
+                       ],
+                       "optional": false
+                     },
+                     {
+                       "primaryKeyword": "Nom.",
+                       "secondaryKeywords": [
+                         "Nominativ"
+                       ],
+                       "optional": false
+                     },
+                     {
+                       "primaryKeyword": "Gen.",
+                       "secondaryKeywords": [
+                         "Genitiv"
+                       ],
+                       "optional": false
+                     },
+                     {
+                       "primaryKeyword": "Dat.",
+                       "secondaryKeywords": [
+                         "Dativ"
+                       ],
+                       "optional": false
+                     },
+                     {
+                       "primaryKeyword": "Akk.",
+                       "secondaryKeywords": [
+                         "Akkusativ"
+                       ],
+                       "optional": false
+                     },
+                     {
+                       "primaryKeyword": "Abl.",
+                       "secondaryKeywords": [
+                         "Ablativ"
+                       ],
+                       "optional": false
+                     },
+                     {
+                       "primaryKeyword": "Sg.",
+                       "secondaryKeywords": [
+                         "Singular"
+                       ],
+                       "optional": false
+                     },
+                     {
+                       "primaryKeyword": "Pl.",
+                       "secondaryKeywords": [
+                         "Plural"
+                       ],
+                       "optional": false
+                     },
+                     {
+                       "primaryKeyword": "Subst",
+                       "secondaryKeywords": [
+                         "Substantiv"
+                       ],
+                       "optional": false
+                     },
+                     {
+                       "primaryKeyword": "auch",
+                       "secondaryKeywords": [],
+                       "optional": true
+                     },
+                     {
+                       "primaryKeyword": "doppeltem",
+                       "secondaryKeywords": [],
+                       "optional": false
+                     }
+                   ]
+                 }
                 """);
     }
 
