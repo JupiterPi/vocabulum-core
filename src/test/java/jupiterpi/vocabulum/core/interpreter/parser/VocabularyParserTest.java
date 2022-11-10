@@ -37,7 +37,7 @@ class VocabularyParserTest {
         private TranslationSequence generateTranslations(String... translations) {
             TranslationSequence vocabularyTranslations = new TranslationSequence();
             for (String translation : translations) {
-                vocabularyTranslations.add(VocabularyTranslation.fromString(translation));
+                vocabularyTranslations.add(VocabularyTranslation.fromString(translation).get(0));
             }
             return vocabularyTranslations;
         }

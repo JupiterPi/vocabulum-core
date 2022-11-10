@@ -3,6 +3,7 @@ package jupiterpi.vocabulum.core.vocabularies.translations;
 import jupiterpi.vocabulum.core.vocabularies.translations.parts.container.InputMatchedPart;
 import jupiterpi.vocabulum.core.vocabularies.translations.parts.container.TranslationPartContainer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,14 +19,17 @@ public class VocabularyTranslation {
     }
 
     private VocabularyTranslation() {}
-    public static VocabularyTranslation fromString(String str) {
+    public static List<VocabularyTranslation> fromString(String str) {
         boolean important = str.startsWith("*");
-        String translationStr = str;
         if (important) {
-            translationStr = str.substring(1, str.length()-1);
+            str = str.substring(1, str.length()-1);
         }
-        TranslationPartContainer translation = TranslationPartContainer.fromString(false, translationStr);
-        return new VocabularyTranslation(important, translation);
+        List<VocabularyTranslation> translations = new ArrayList<>();
+        for (String translationStr : new ExchangeablesPreprocessor(str).getResult()) {
+            TranslationPartContainer translation = TranslationPartContainer.fromString(false, translationStr);
+            translations.add(new VocabularyTranslation(important, translation));
+        }
+        return translations;
     }
 
     /* getters, operations */

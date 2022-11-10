@@ -18,7 +18,7 @@ public class VocabularyTranslationMatchingTest {
         @Test
         @DisplayName("der/die/das")
         void derDieDas() {
-            VocabularyTranslation translation = VocabularyTranslation.fromString("der Freund");
+            VocabularyTranslation translation = VocabularyTranslation.fromString("der Freund").get(0);
             assertAll(
                 () -> assertTrue(translation.isValid("der Freund")),
                 () -> assertTrue(translation.isValid("Freund"))
@@ -28,7 +28,7 @@ public class VocabularyTranslationMatchingTest {
         @Test
         @DisplayName("einer/eine/eines")
         void einerEineEines() {
-            VocabularyTranslation translation = VocabularyTranslation.fromString("ein Freund");
+            VocabularyTranslation translation = VocabularyTranslation.fromString("ein Freund").get(0);
             assertAll(
                     () -> assertTrue(translation.isValid("ein Freund")),
                     () -> assertTrue(translation.isValid("Freund"))
@@ -44,7 +44,7 @@ public class VocabularyTranslationMatchingTest {
         @Test
         @DisplayName("words separated")
         void wordsSeparated() {
-            VocabularyTranslation translation = VocabularyTranslation.fromString("noch (immer)");
+            VocabularyTranslation translation = VocabularyTranslation.fromString("noch (immer)").get(0);
             assertAll(
                     () -> assertTrue(translation.isValid("noch (immer)")),
                     () -> assertTrue(translation.isValid("noch immer")),
@@ -55,7 +55,7 @@ public class VocabularyTranslationMatchingTest {
         @Test
         @DisplayName("word part in parens")
         void wordPartInParens() {
-            VocabularyTranslation translation = VocabularyTranslation.fromString("(weg)bringen");
+            VocabularyTranslation translation = VocabularyTranslation.fromString("(weg)bringen").get(0);
             assertAll(
                     () -> assertTrue(translation.isValid("(weg)bringen")),
                     () -> assertTrue(translation.isValid("wegbringen")),
@@ -68,7 +68,7 @@ public class VocabularyTranslationMatchingTest {
     @Test
     @DisplayName("dots")
     void dots() {
-        VocabularyTranslation translation = VocabularyTranslation.fromString("von ... weg");
+        VocabularyTranslation translation = VocabularyTranslation.fromString("von ... weg").get(0);
         assertAll(
                 () -> assertTrue(translation.isValid("von ... weg")),
                 () -> assertTrue(translation.isValid("von weg"))
@@ -78,7 +78,7 @@ public class VocabularyTranslationMatchingTest {
     @Test
     @DisplayName("parens and dots")
     void parensAndDots() {
-        VocabularyTranslation translation = VocabularyTranslation.fromString("von (... her)");
+        VocabularyTranslation translation = VocabularyTranslation.fromString("von (... her)").get(0);
         assertAll(
                 () -> assertTrue(translation.isValid("von (... her)")),
                 () -> assertTrue(translation.isValid("von (her)")),
@@ -90,7 +90,7 @@ public class VocabularyTranslationMatchingTest {
     @Test
     @DisplayName("abbreviations")
     void abbreviations() {
-        VocabularyTranslation translation = VocabularyTranslation.fromString("(m. Akk.) helfen");
+        VocabularyTranslation translation = VocabularyTranslation.fromString("(m. Akk.) helfen").get(0);
         assertAll(
                 () -> assertTrue(translation.isValid("(m. Akk.) helfen")),
                 () -> assertTrue(translation.isValid("m. Akk. helfen")),
@@ -103,7 +103,7 @@ public class VocabularyTranslationMatchingTest {
     @Test
     @DisplayName("other keywords")
     void otherKeywords() {
-        VocabularyTranslation translation = VocabularyTranslation.fromString("Pl. auch viele");
+        VocabularyTranslation translation = VocabularyTranslation.fromString("Pl. auch viele").get(0);
         assertAll(
             () -> assertTrue(translation.isValid("Pl. auch viele")),
             () -> assertTrue(translation.isValid("Plural auch viele")),
@@ -119,14 +119,14 @@ public class VocabularyTranslationMatchingTest {
         @Test
         @DisplayName("valid left out whitespaces")
         void validLeftOutWhitespaces() {
-            VocabularyTranslation translation = VocabularyTranslation.fromString("von (... her)");
+            VocabularyTranslation translation = VocabularyTranslation.fromString("von (... her)").get(0);
             assertTrue(translation.isValid("von (...her)"));
         }
 
         @Test
         @DisplayName("additional whitespaces")
         void additionalWhitespaces() {
-            VocabularyTranslation translation = VocabularyTranslation.fromString("der Freund");
+            VocabularyTranslation translation = VocabularyTranslation.fromString("der Freund").get(0);
             assertTrue(translation.isValid("der  Freund"));
         }
 
@@ -135,14 +135,14 @@ public class VocabularyTranslationMatchingTest {
     @Test
     @DisplayName("capitalization")
     void capitalization() {
-        VocabularyTranslation translation = VocabularyTranslation.fromString("der Freund");
+        VocabularyTranslation translation = VocabularyTranslation.fromString("der Freund").get(0);
         assertTrue(translation.isValid("der freund"));
     }
 
     @Test
     @DisplayName("empty input")
     void emptyInput() {
-        VocabularyTranslation translation = VocabularyTranslation.fromString("der Freund");
+        VocabularyTranslation translation = VocabularyTranslation.fromString("der Freund").get(0);
         assertFalse(translation.isValid(""));
     }
 

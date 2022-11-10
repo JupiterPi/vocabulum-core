@@ -27,6 +27,18 @@ class TranslationSequenceTest {
         assertEquals(e, translations);
     }
 
+    @Test
+    @DisplayName("exchangeables")
+    void exchangeables() {
+        TranslationSequence s = TranslationSequence.fromString("*er/sie läuft*, wir laufen");
+        TranslationSequence e = new TranslationSequence(
+                VocabularyTranslation.fromString("*er läuft*").get(0),
+                VocabularyTranslation.fromString("*sie läuft*").get(0),
+                VocabularyTranslation.fromString("wir laufen").get(0)
+        );
+        assertEquals(e, s);
+    }
+
     @Nested
     @DisplayName("validateInput()")
     class ValidateInput {
@@ -34,9 +46,9 @@ class TranslationSequenceTest {
         @Test
         @DisplayName("normal")
         void normal() {
-            VocabularyTranslation t1 = VocabularyTranslation.fromString("aus");
-            VocabularyTranslation t2 = VocabularyTranslation.fromString("weg");
-            VocabularyTranslation t3 = VocabularyTranslation.fromString("von (... her)");
+            VocabularyTranslation t1 = VocabularyTranslation.fromString("aus").get(0);
+            VocabularyTranslation t2 = VocabularyTranslation.fromString("weg").get(0);
+            VocabularyTranslation t3 = VocabularyTranslation.fromString("von (... her)").get(0);
             TranslationSequence s = new TranslationSequence(t1, t2, t3);
             List<TranslationSequence.ValidatedTranslation> e = List.of(
                     new TranslationSequence.ValidatedTranslation(false, "", t1),
@@ -49,10 +61,10 @@ class TranslationSequenceTest {
         @Test
         @DisplayName("other separators")
         void otherSeparators() {
-            VocabularyTranslation t1 = VocabularyTranslation.fromString("t1");
-            VocabularyTranslation t2 = VocabularyTranslation.fromString("t2");
-            VocabularyTranslation t3 = VocabularyTranslation.fromString("t3");
-            VocabularyTranslation t4 = VocabularyTranslation.fromString("t4");
+            VocabularyTranslation t1 = VocabularyTranslation.fromString("t1").get(0);
+            VocabularyTranslation t2 = VocabularyTranslation.fromString("t2").get(0);
+            VocabularyTranslation t3 = VocabularyTranslation.fromString("t3").get(0);
+            VocabularyTranslation t4 = VocabularyTranslation.fromString("t4").get(0);
             TranslationSequence s = new TranslationSequence(t1, t2, t3, t4);
             List<TranslationSequence.ValidatedTranslation> e = List.of(
                     new TranslationSequence.ValidatedTranslation(true, "t1", t1),

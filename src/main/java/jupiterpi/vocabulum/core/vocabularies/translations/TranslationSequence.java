@@ -13,9 +13,8 @@ public class TranslationSequence extends ArrayList<VocabularyTranslation> {
 
     public static TranslationSequence fromString(String str) {
         TranslationSequence translationSequence = new TranslationSequence();
-        for (String translationStr : str.split(", ")) {
-            VocabularyTranslation translation = VocabularyTranslation.fromString(translationStr);
-            translationSequence.add(translation);
+        for (String translationStr : str.split(", ")) { //TODO don't split case 1 exchangeables
+            translationSequence.addAll(VocabularyTranslation.fromString(translationStr));
         }
         return translationSequence;
     }
@@ -23,7 +22,7 @@ public class TranslationSequence extends ArrayList<VocabularyTranslation> {
         List<String> translationsStr = document.getList("translations", String.class);
         TranslationSequence translations = new TranslationSequence();
         for (String translationStr : translationsStr) {
-            translations.add(VocabularyTranslation.fromString(translationStr));
+            translations.addAll(VocabularyTranslation.fromString(translationStr));
         }
         return translations;
     }

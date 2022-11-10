@@ -72,7 +72,7 @@ class PortionTest {
     }
 
     Vocabulary getUtilVocabulary(String base_form) {
-        return new Vocabulary(new TranslationSequence(VocabularyTranslation.fromString("*" + base_form + "*")), "test") {
+        return new Vocabulary(new TranslationSequence(VocabularyTranslation.fromString("*" + base_form + "*").get(0)), "test") {
             @Override
             public String getBaseForm() {
                 return base_form;

@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockDatabaseSetup.class)
@@ -17,8 +19,10 @@ class VocabularyTranslationTest {
         @Test
         @DisplayName("important = true")
         void importantTrue() {
-            VocabularyTranslation t = VocabularyTranslation.fromString("*der Freund*");
+            List<VocabularyTranslation> ts = VocabularyTranslation.fromString("*der Freund*");
+            VocabularyTranslation t = ts.get(0);
             assertAll(
+                    () -> assertEquals(1, ts.size()),
                     () -> assertTrue(t.isImportant()),
                     () -> assertEquals("der Freund", t.getTranslation())
             );
@@ -27,8 +31,10 @@ class VocabularyTranslationTest {
         @Test
         @DisplayName("important = false")
         void importantFalse() {
-            VocabularyTranslation t = VocabularyTranslation.fromString("der Kamerad");
+            List<VocabularyTranslation> ts = VocabularyTranslation.fromString("der Kamerad");
+            VocabularyTranslation t = ts.get(0);
             assertAll(
+                    () -> assertEquals(1, ts.size()),
                     () -> assertFalse(t.isImportant()),
                     () -> assertEquals("der Kamerad", t.getTranslation())
             );
