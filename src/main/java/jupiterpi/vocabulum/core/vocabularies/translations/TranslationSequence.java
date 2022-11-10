@@ -13,7 +13,7 @@ public class TranslationSequence extends ArrayList<VocabularyTranslation> {
 
     public static TranslationSequence fromString(String str) {
         TranslationSequence translationSequence = new TranslationSequence();
-        for (String translationStr : str.split(", ")) { //TODO don't split case 1 exchangeables
+        for (String translationStr : new TranslationSequenceSplitter(str).getResult()) {
             translationSequence.addAll(VocabularyTranslation.fromString(translationStr));
         }
         return translationSequence;
