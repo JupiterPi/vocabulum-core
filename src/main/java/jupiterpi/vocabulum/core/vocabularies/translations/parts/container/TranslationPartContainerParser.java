@@ -25,14 +25,25 @@ public class TranslationPartContainerParser {
 
     /* parser */
 
-    private final List<Keyword> keywords = Keyword.fromDocuments((List<Document>) Database.get().getTranslationsDocument().get("keywords"));
-
     private List<TranslationPart> parts = new ArrayList<>();
+
+    private TranslationPartContainer parseTranslationPartContainer(boolean optional, String string) {
+        parseString(string);
+        handleSpecialMeaningIndicators();
+        return new TranslationPartContainer(optional, parts);
+    }
+
+    /* parse string */
+
+    private final List<Keyword> keywords = Keyword.fromDocuments((List<Document>) Database.get().getTranslationsDocument().get("keywords"));
 
     private String buffer = "";
     private boolean inParens = false;
 
-    private TranslationPartContainer parseTranslationPartContainer(boolean optional, String string) {
+    private void parseString(String string) {
+        if (string.contains("Barbar")) {
+            System.out.println("b");
+        }
         for (String c : string.split("")) {
             if (inParens) {
                 if (c.equals(")")) {
@@ -60,8 +71,6 @@ public class TranslationPartContainerParser {
             buffer += c;
         }
         flushBuffer();
-
-        return new TranslationPartContainer(optional, parts);
     }
 
     private void flushBuffer() {
@@ -86,5 +95,32 @@ public class TranslationPartContainerParser {
         parts.add(part);
 
         buffer = "";
+    }
+
+    /* special meaning indicators */
+
+    private void handleSpecialMeaningIndicators() {
+        List<TranslationPart> newParts = new ArrayList<>();
+        for (int i = 0; i < parts.size();) {
+            if (i <= parts.size()-2) { // 2 parts
+                if (
+                        List.of("Sg.", "Pl.").contains(parts.get(i).getBasicString())
+                                && parts.get(i + 1).getBasicString().equals("auch")) { // Sg./Pl. auch
+                    newParts.add(new TranslationPartContainer(true, List.of(parts.get(i), parts.get(i + 1))));
+                    i += 2;
+                    continue;
+                }
+            }
+
+            // 1 part
+            if (parts.get(i).getBasicString().equals("Subst.")) { // Subst.
+                newParts.add(new TranslationPartContainer(true, List.of(parts.get(i))));
+                i += 1; continue;
+            }
+
+            newParts.add(parts.get(i));
+            i++;
+        }
+        parts = newParts;
     }
 }
