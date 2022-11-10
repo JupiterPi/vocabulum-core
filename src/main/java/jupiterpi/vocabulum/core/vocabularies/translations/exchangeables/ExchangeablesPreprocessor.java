@@ -1,4 +1,4 @@
-package jupiterpi.vocabulum.core.vocabularies.translations;
+package jupiterpi.vocabulum.core.vocabularies.translations.exchangeables;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
  * <p>
  * 1) (an-, er-, zu)hören --> anhören, erhören, zuhören, hören
  * <p>
- * 2) ich sage/behaupte --> ich sage, ich behaupte
+ * 2) ich sage/behaupte --> ich sage, ich behaupte // ich [renne weg/flüchte --> ich renne weg, ich flüchte
  * <p>
  * 3) irgendein(e) --> irgendein, irgendeine
  * */

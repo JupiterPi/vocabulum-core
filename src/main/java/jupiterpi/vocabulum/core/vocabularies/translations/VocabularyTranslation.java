@@ -1,5 +1,7 @@
 package jupiterpi.vocabulum.core.vocabularies.translations;
 
+import jupiterpi.vocabulum.core.vocabularies.translations.exchangeables.ExchangeablesPreprocessor;
+import jupiterpi.vocabulum.core.vocabularies.translations.exchangeables.StringWithImportance;
 import jupiterpi.vocabulum.core.vocabularies.translations.parts.container.InputMatchedPart;
 import jupiterpi.vocabulum.core.vocabularies.translations.parts.container.TranslationPartContainer;
 
@@ -20,14 +22,11 @@ public class VocabularyTranslation {
 
     private VocabularyTranslation() {}
     public static List<VocabularyTranslation> fromString(String str) {
-        boolean important = str.startsWith("*");
-        if (important) {
-            str = str.substring(1, str.length()-1);
-        }
+        StringWithImportance string = StringWithImportance.fromString(str);
         List<VocabularyTranslation> translations = new ArrayList<>();
-        for (String translationStr : new ExchangeablesPreprocessor(str).getResult()) {
+        for (String translationStr : new ExchangeablesPreprocessor(string.getString()).getResult()) {
             TranslationPartContainer translation = TranslationPartContainer.fromString(false, translationStr);
-            translations.add(new VocabularyTranslation(important, translation));
+            translations.add(new VocabularyTranslation(string.isImportant(), translation));
         }
         return translations;
     }
