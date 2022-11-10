@@ -107,8 +107,17 @@ public class VocabularyTranslationMatchingTest {
         assertAll(
             () -> assertTrue(translation.isValid("Pl. auch viele")),
             () -> assertTrue(translation.isValid("Plural auch viele")),
-            () -> assertTrue(translation.isValid("Pl. viele")),
-            () -> assertFalse(translation.isValid("viele"))
+            () -> assertTrue(translation.isValid("Pl. viele"))
+        );
+    }
+
+    @Test
+    @DisplayName("special meaning indicators")
+    void specialMeaningIndicators() {
+        VocabularyTranslation translation = VocabularyTranslation.fromString("Subst. der Barbar").get(0);
+        assertAll(
+            () -> assertTrue(translation.isValid("Subst. der Barbar")),
+            () -> assertTrue(translation.isValid("der Barbar"))
         );
     }
 
