@@ -48,7 +48,11 @@ public class ExchangeablesPreprocessor {
 
                 // case 3)
                 int beforeParenIndex = str.indexOf("(") - 1;
-                if (beforeParenIndex >= 0 && str.charAt(beforeParenIndex) != ' ') {
+                int afterParenIndex = str.indexOf(")") + 1;
+                if (
+                        (beforeParenIndex >= 0 && str.charAt(beforeParenIndex) != ' ')
+                        || (afterParenIndex < str.length() && str.charAt(afterParenIndex) != ' ')
+                ) {
                     return List.of(
                             beforeParens + afterParens,
                             beforeParens + inParens + afterParens

@@ -82,6 +82,14 @@ class ExchangeablesPreprocessorTest {
             ), new ExchangeablesPreprocessor("irgendein(e)").getResult());
         }
 
+        @Test
+        @DisplayName("in front")
+        void inFront() {
+            assertEquals(List.of(
+                    "bringen", "wegbringen"
+            ), new ExchangeablesPreprocessor("(weg)bringen").getResult());
+        }
+
     }
 
     @Test

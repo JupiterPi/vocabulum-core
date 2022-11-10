@@ -52,7 +52,7 @@ public class VocabularyTranslationMatchingTest {
             );
         }
 
-        @Test
+        /*@Test
         @DisplayName("word part in parens")
         void wordPartInParens() {
             VocabularyTranslation translation = VocabularyTranslation.fromString("(weg)bringen").get(0);
@@ -61,7 +61,8 @@ public class VocabularyTranslationMatchingTest {
                     () -> assertTrue(translation.isValid("wegbringen")),
                     () -> assertTrue(translation.isValid("bringen"))
             );
-        }
+        }*/
+        // --> is now resolved as an exchangeable
 
     }
 
