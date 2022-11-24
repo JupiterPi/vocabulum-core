@@ -4,6 +4,7 @@ import jupiterpi.tools.ui.ConsoleInterface;
 import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.sessions.Session;
+import jupiterpi.vocabulum.core.sessions.SessionRound;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 
@@ -14,8 +15,9 @@ public class SampleSession extends ConsoleInterface {
         Session session = new Session(Database.get().getPortions().getPortion("A"));
         session.start();
         while (true) {
+            SessionRound round = new SessionRound(session.getCurrentVocabularies());
             do {
-                Vocabulary vocabulary = session.getNextVocabulary();
+                Vocabulary vocabulary = round.getNextVocabulary();
                 String prompt = vocabulary.getBaseForm();
                 String input = in(prompt + " > ");
                 List<TranslationSequence.ValidatedTranslation> translations = vocabulary.getTranslations().validateInput(input);
@@ -29,9 +31,10 @@ public class SampleSession extends ConsoleInterface {
                 boolean passed = score >= 0.5f;
                 out(passed ? "✅" : "❌");
                 out(vocabulary.vocabularyToString(i18n));
-                session.provideFeedback(vocabulary, passed);
-            } while (!session.isRoundDone());
-            if (session.isAllDone()) break;
+                round.provideFeedback(vocabulary, passed);
+            } while (!round.isDone());
+            session.provideFeedback(round.getFeedback());
+            if (session.isDone()) break;
             out("Done with score: " + session.getResult().getScore());
             out("Repeating wrong vocabularies...");
         }

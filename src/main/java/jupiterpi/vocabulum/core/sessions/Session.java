@@ -6,6 +6,7 @@ import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class Session {
     //TODO write test?
@@ -19,8 +20,6 @@ public class Session {
     /* runtime */
 
     private List<Vocabulary> currentVocabularies = null;
-    private List<Vocabulary> wrongVocabularies;
-    private Vocabulary nextVocabulary = null;
     private Result result = null;
 
     public void start() throws SessionLifecycleException {
@@ -30,72 +29,70 @@ public class Session {
     }
 
     public void restart() throws SessionLifecycleException {
-        if (!isAllDone()) throw new SessionLifecycleException("Cannot restart: Is not all done!");
+        if (!isDone()) throw new SessionLifecycleException("Cannot restart: Is not done!");
         currentVocabularies = originalVocabularies;
         restart_2nd();
     }
 
-    private void restart_2nd() throws SessionLifecycleException {
+    private void restart_2nd() {
         Collections.shuffle(currentVocabularies);
-        wrongVocabularies = new ArrayList<>();
-        nextVocabulary = null;
-        nextVocabulary();
     }
 
-    public Vocabulary getNextVocabulary() throws SessionLifecycleException {
+    public List<Vocabulary> getCurrentVocabularies() throws SessionLifecycleException {
         result = null;
-        if (nextVocabulary == null) {
-            throw new SessionLifecycleException("Cannot get next vocabulary: Not started yet");
+        if (currentVocabularies == null) {
+            throw new SessionLifecycleException("Cannot get next vocabularies: Not started yet");
         }
-        return nextVocabulary;
+        return currentVocabularies;
     }
 
-    private void nextVocabulary() throws SessionLifecycleException {
-        if (nextVocabulary == null) {
-            nextVocabulary = currentVocabularies.get(0);
-        } else {
-            int currentIndex = currentVocabularies.indexOf(nextVocabulary);
-            if (currentIndex != currentVocabularies.size() - 1) {
-                nextVocabulary = currentVocabularies.get(currentIndex + 1);
-            } else {
-                boolean done = wrongVocabularies.size() == 0;
-                result = new Result(done, (done ? 1f : 1f - (((float) wrongVocabularies.size()) / ((float) currentVocabularies.size()))));
-                if (!done) {
-                    currentVocabularies = wrongVocabularies;
-                    restart_2nd();
-                }
-            }
-        }
-    }
-
-    public void provideFeedback(Vocabulary vocabulary, boolean passed) throws SessionLifecycleException {
-        if (nextVocabulary == null) {
+    public void provideFeedback(Map<Vocabulary, Feedback> feedback) throws SessionLifecycleException {
+        if (currentVocabularies == null) {
             throw new SessionLifecycleException("Cannot provide feedback now: First vocabulary not drawn");
         }
-        if (nextVocabulary != vocabulary) {
-            throw new SessionLifecycleException("Current vocabulary is " + nextVocabulary + ", cannot provide feedback for: " + vocabulary);
+        List<Vocabulary> wrongVocabularies = new ArrayList<>();
+        for (Vocabulary vocabulary : feedback.keySet()) {
+            if (!currentVocabularies.contains(vocabulary)) {
+                throw new SessionLifecycleException("Cannot provide feedback for " + vocabulary + ", it's not in the current vocabularies.");
+            }
+            if (!feedback.get(vocabulary).isPassed()) {
+                wrongVocabularies.add(vocabulary);
+            }
         }
-        if (!passed) {
-            wrongVocabularies.add(vocabulary);
+        boolean done = wrongVocabularies.size() == 0;
+        result = new Result(done, (done ? 1f : 1f - (((float) wrongVocabularies.size()) / ((float) currentVocabularies.size()))));
+        if (!done) {
+            currentVocabularies = wrongVocabularies;
+            restart_2nd();
         }
-        nextVocabulary();
-    }
-
-    public boolean isRoundDone() {
-        return result != null;
-    }
-    public boolean isAllDone() {
-        if (result == null) return false;
-        return result.isDone();
     }
 
     public Result getResult() {
         return result;
     }
 
+    public boolean isDone() {
+        if (result == null) return false;
+        return result.isDone();
+    }
+
+    /* classes */
+
     public static class SessionLifecycleException extends Exception {
         public SessionLifecycleException(String message) {
             super(message);
+        }
+    }
+
+    public static class Feedback {
+        private boolean passed;
+
+        public Feedback(boolean passed) {
+            this.passed = passed;
+        }
+
+        public boolean isPassed() {
+            return passed;
         }
     }
 
