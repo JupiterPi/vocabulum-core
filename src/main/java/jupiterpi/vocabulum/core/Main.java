@@ -7,8 +7,6 @@ import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.sessions.Session;
-import jupiterpi.vocabulum.core.sessions.SessionConfiguration;
-import jupiterpi.vocabulum.core.users.User;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 
@@ -18,7 +16,7 @@ public class Main {
     public static void main(String[] args) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException, Session.SessionLifecycleException, ReflectiveOperationException {
         System.out.println("----- Vocabulum Core -----");
 
-        Database.get().connectAndLoad("mongodb://localhost", User.class, SessionConfiguration.class);
+        Database.get().connectAndLoad("mongodb://localhost");
         Database.get().prepareWordbase();
 
         Map<String, Portion> portions = Database.get().getPortions().getPortions();

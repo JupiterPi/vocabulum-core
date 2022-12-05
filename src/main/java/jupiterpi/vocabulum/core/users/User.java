@@ -1,54 +1,41 @@
 package jupiterpi.vocabulum.core.users;
 
-import jupiterpi.vocabulum.core.sessions.SessionConfiguration;
-import jupiterpi.vocabulum.core.util.Attachments;
 import org.bson.Document;
-
-import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.List;
 
 public class User {
     // unique but mutable
-    protected String name;
+    private String name;
     // unique identifier
-    protected String email;
-    protected String password;
+    private String email;
+    private String password;
+    private boolean isProUser;
+    private String discordUsername;
 
-    protected List<SessionHistoryItem> sessionHistory = new ArrayList<>();
-
-    protected Attachments remainingAttachments = Attachments.empty();
-
-    protected User(String username, String email, String password) {
-        this.name = username;
+    public User(String name, String email, String password, boolean isProUser, String discordUsername) {
+        this.name = name;
         this.email = email;
         this.password = password;
+        this.isProUser = isProUser;
+        this.discordUsername = discordUsername;
     }
 
-    public static User createUser(String username, String email, String password) {
-        return new User(username, email, password);
+    public static User createUser(String name, String email, String password) {
+        return new User(
+                name, email, password,
+                false, ""
+        );
     }
 
     /* Documents */
 
-    protected User(Attachments attachments) {}
-
-    public static <T extends User> T readFromDocument(Document document, Class<T> userClass, Class<? extends SessionConfiguration> sessionConfigurationClass) throws ReflectiveOperationException {
-        Constructor<T> constructor = userClass.getDeclaredConstructor(Attachments.class);
-        constructor.setAccessible(true);
-        Attachments attachments = Attachments.fromDocument((Document) document.get("attachments"));
-        T user = constructor.newInstance(attachments);
-        user.name = document.getString("name");
-        user.email = document.getString("email");
-        user.password = document.getString("password");
-        user.remainingAttachments = attachments;
-
-        user.sessionHistory = new ArrayList<>();
-        for (Document d : (List<Document>) document.get("sessionHistory")) {
-            user.sessionHistory.add(SessionHistoryItem.fromDocument(d, sessionConfigurationClass));
-        }
-
-        return user;
+    public static User readFromDocument(Document document) throws ReflectiveOperationException {
+        return new User(
+                document.getString("name"),
+                document.getString("email"),
+                document.getString("password"),
+                document.getBoolean("isProUser"),
+                document.getString("discordUsername")
+        );
     }
 
     public Document toDocument() {
@@ -56,19 +43,10 @@ public class User {
         document.put("name", name);
         document.put("email", email);
         document.put("password", password);
-
-        List<Document> sessionHistoryDocuments = new ArrayList<>();
-        for (SessionHistoryItem sessionHistoryItem : sessionHistory) {
-            sessionHistoryDocuments.add(sessionHistoryItem.getDocument());
-        }
-        document.put("sessionHistory", sessionHistoryDocuments);
-
-        Attachments attachments = generateAttachments();
-        attachments.addAttachments(remainingAttachments);
-        document.put("attachments", attachments.getDocument());
+        document.put("isProUser", isProUser);
+        document.put("discordUsername", discordUsername);
         return document;
     }
-    protected Attachments generateAttachments() { return Attachments.empty(); }
 
     /* getters */
 
@@ -84,8 +62,12 @@ public class User {
         return password;
     }
 
-    public List<SessionHistoryItem> getSessionHistory() {
-        return sessionHistory;
+    public boolean isProUser() {
+        return isProUser;
+    }
+
+    public String getDiscordUsername() {
+        return discordUsername;
     }
 
     /* setters (changers) */
@@ -98,8 +80,12 @@ public class User {
         this.password = newPassword;
     }
 
-    public void setSessionHistory(List<SessionHistoryItem> sessionHistory) {
-        this.sessionHistory = sessionHistory;
+    public void changeIsProUser(boolean newIsProUser) {
+        this.isProUser = newIsProUser;
+    }
+
+    public void changeDiscordUsername(String newDiscordUsername) {
+        this.discordUsername = newDiscordUsername;
     }
 
     /* other getters */

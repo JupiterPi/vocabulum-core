@@ -11,7 +11,7 @@ public class MockUsers implements Users {
 
     public MockUsers() {
         users = new ArrayList<>();
-        users.add(User.createUser("adam", "a.andrews@email.com", "ILoveVocabulum<3"));
+        users.add(User.createUser("Adam01", "a.andrews@email.com", "ILoveVocabulum<3"));
     }
 
     public MockUsers(List<User> users) {
