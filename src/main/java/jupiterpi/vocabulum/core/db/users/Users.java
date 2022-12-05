@@ -11,5 +11,5 @@ public interface Users {
 
     boolean addUser(User user);
 
-    boolean modifyUser(String name, User user);
+    boolean modifyUser(User user);
 }

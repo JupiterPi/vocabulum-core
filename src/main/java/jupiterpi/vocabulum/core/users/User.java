@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-    // unique identifier
+    // unique but mutable
     protected String name;
-    // has to be unique too
+    // unique identifier
     protected String email;
     protected String password;
 
@@ -92,10 +92,6 @@ public class User {
 
     public void changeName(String newName) {
         this.name = newName;
-    }
-
-    public void changeEmail(String newEmail) {
-        this.email = newEmail;
     }
 
     public void changePassword(String newPassword) {

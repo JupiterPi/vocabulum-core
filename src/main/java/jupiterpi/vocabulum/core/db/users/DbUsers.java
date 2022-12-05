@@ -35,9 +35,9 @@ public class DbUsers implements Users {
     }
 
     @Override
-    public User getUser(String name) {
+    public User getUser(String email) {
         for (User user : users) {
-            if (user.getName().equals(name)) return user;
+            if (user.getEmail().equals(email)) return user;
         }
         return null;
     }
@@ -53,14 +53,14 @@ public class DbUsers implements Users {
     }
 
     @Override
-    public boolean modifyUser(String name, User user) {
-        if (getUser(user.getName()) != null) {
-            database.collection_users.replaceOne(new Document("name", name), user.toDocument());
+    public boolean modifyUser(User user) {
+        if (getUser(user.getEmail()) != null) {
+            database.collection_users.replaceOne(new Document("email", user.getEmail()), user.toDocument());
 
             int index = -1;
             for (int i = 0; i < users.size(); i++) {
                 User u = users.get(i);
-                if (u.getName().equals(name)) {
+                if (u.getEmail().equals(user.getEmail())) {
                     index = i;
                     break;
                 }

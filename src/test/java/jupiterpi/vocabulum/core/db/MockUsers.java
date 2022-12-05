@@ -24,9 +24,9 @@ public class MockUsers implements Users {
     }
 
     @Override
-    public User getUser(String name) {
+    public User getUser(String email) {
         for (User user : users) {
-            if (user.getName().equals(name)) return user;
+            if (user.getEmail().equals(email)) return user;
         }
         return null;
     }
@@ -39,8 +39,8 @@ public class MockUsers implements Users {
     }
 
     @Override
-    public boolean modifyUser(String name, User user) {
-        User originalUser = getUser(name);
+    public boolean modifyUser(User user) {
+        User originalUser = getUser(user.getEmail());
         if (originalUser == null) return false;
         int index = users.indexOf(originalUser);
         users.remove(originalUser);
