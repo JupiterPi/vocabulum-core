@@ -16,6 +16,8 @@ public abstract class EntityProvider {
 
     public abstract void modifyDocument(String documentId, Document document);
 
+    public abstract void deleteDocument(String documentId);
+
     public static EntityProvider fromMongoCollection(MongoCollection<Document> collection) {
         return new EntityProvider() {
             @Override
@@ -40,6 +42,11 @@ public abstract class EntityProvider {
             @Override
             public void modifyDocument(String documentId, Document document) {
                 collection.replaceOne(new Document("_id", new ObjectId(documentId)), document);
+            }
+
+            @Override
+            public void deleteDocument(String documentId) {
+                collection.findOneAndDelete(new Document("_id", new ObjectId(documentId)));
             }
         };
     }

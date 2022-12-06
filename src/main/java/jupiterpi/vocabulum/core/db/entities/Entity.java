@@ -51,4 +51,10 @@ public abstract class Entity {
     }
 
     protected abstract Document toDocument();
+
+    public void deleteEntity() {
+        if (usesProvider()) {
+            entityProvider.deleteDocument(documentId);
+        }
+    }
 }

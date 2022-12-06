@@ -24,6 +24,9 @@ public class MockEntityProvider {
 
             @Override
             public void modifyDocument(String documentId, Document document) {}
+
+            @Override
+            public void deleteDocument(String documentId) {}
         };
     }
 }

@@ -1,10 +1,11 @@
 package jupiterpi.vocabulum.core.db.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class EntityCollection<T extends Entity> {
     protected EntityProvider entityProvider;
-    protected List<T> entities;
+    protected List<T> entities = new ArrayList<>();
 
     protected EntityCollection(EntityProvider entityProvider) {
         this.entityProvider = entityProvider;
@@ -12,6 +13,12 @@ public abstract class EntityCollection<T extends Entity> {
 
     protected void addEntity(T entity) {
         if (!entity.hasProvider()) entity.attachProvider(entityProvider);
+        entities.add(entity);
+    }
+
+    protected void removeEntity(T entity) {
+        entities.remove(entity);
+        entity.deleteEntity();
     }
 
     public void load() {
