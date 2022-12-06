@@ -173,7 +173,7 @@ public class Database {
 
     protected Users users;
 
-    protected void loadUsers() throws ReflectiveOperationException {
+    protected void loadUsers() {
         users = new DbUsers(this);
     }
 

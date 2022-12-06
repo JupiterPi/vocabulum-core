@@ -1,8 +1,10 @@
 package jupiterpi.vocabulum.core.users;
 
+import jupiterpi.vocabulum.core.db.entities.Entity;
+import jupiterpi.vocabulum.core.db.entities.EntityProvider;
 import org.bson.Document;
 
-public class User {
+public class User extends Entity {
     // unique but mutable
     private String name;
     // unique identifier
@@ -11,7 +13,8 @@ public class User {
     private boolean isProUser;
     private String discordUsername;
 
-    public User(String name, String email, String password, boolean isProUser, String discordUsername) {
+    private User(String name, String email, String password, boolean isProUser, String discordUsername) {
+        super();
         this.name = name;
         this.email = email;
         this.password = password;
@@ -26,18 +29,24 @@ public class User {
         );
     }
 
-    /* Documents */
+    /* Entity */
 
-    public static User readFromDocument(Document document) throws ReflectiveOperationException {
-        return new User(
-                document.getString("name"),
-                document.getString("email"),
-                document.getString("password"),
-                document.getBoolean("isProUser"),
-                document.getString("discordUsername")
-        );
+    private User(EntityProvider entityProvider, String documentId) {
+        super(entityProvider, documentId);
+    }
+    public static User readEntity(EntityProvider entityProvider, String documentId) {
+        return new User(entityProvider, documentId);
+    }
+    @Override
+    protected void loadFromDocument(Document document) {
+        name = document.getString("name");
+        email = document.getString("email");
+        password = document.getString("password");
+        isProUser = document.getBoolean("isProUser");
+        discordUsername = document.getString("discordUsername");
     }
 
+    @Override
     public Document toDocument() {
         Document document = new Document();
         document.put("name", name);
@@ -70,22 +79,26 @@ public class User {
         return discordUsername;
     }
 
-    /* setters (changers) */
+    /* setters */
 
-    public void changeName(String newName) {
-        this.name = newName;
+    public User setName(String name) {
+        this.name = name;
+        return this;
     }
 
-    public void changePassword(String newPassword) {
-        this.password = newPassword;
+    public User setPassword(String password) {
+        this.password = password;
+        return this;
     }
 
-    public void changeIsProUser(boolean newIsProUser) {
-        this.isProUser = newIsProUser;
+    public User setIsProUser(boolean isProUser) {
+        this.isProUser = isProUser;
+        return this;
     }
 
-    public void changeDiscordUsername(String newDiscordUsername) {
-        this.discordUsername = newDiscordUsername;
+    public User setDiscordUsername(String discordUsername) {
+        this.discordUsername = discordUsername;
+        return this;
     }
 
     /* other getters */

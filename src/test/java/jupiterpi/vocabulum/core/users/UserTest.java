@@ -1,5 +1,6 @@
 package jupiterpi.vocabulum.core.users;
 
+import jupiterpi.vocabulum.core.db.entities.MockEntityProvider;
 import org.bson.Document;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,16 +25,16 @@ class UserTest {
     }
 
     @Test
-    void readFromDocument() throws ReflectiveOperationException {
-        User user = User.readFromDocument(Document.parse("""
-                {
-                  "name": "Adam01",
-                  "email": "a.andrews@email.com",
-                  "password": "ILoveVocabulum<3",
-                  "isProUser": true,
-                  "discordUsername": "Adam01#0000"
-                }
-                """));
+    void readFromDocument() {
+        User user = User.readEntity(MockEntityProvider.withSingleDocument(Document.parse("""
+                        {
+                          "name": "Adam01",
+                          "email": "a.andrews@email.com",
+                          "password": "ILoveVocabulum<3",
+                          "isProUser": true,
+                          "discordUsername": "Adam01#0000"
+                        }
+                        """)), "");
         assertAll(
             () -> assertEquals("Adam01", user.getName()),
             () -> assertEquals("a.andrews@email.com", user.getEmail()),
@@ -45,7 +46,9 @@ class UserTest {
 
     @Test
     void toDocument() {
-        User user = new User("Adam01", "a.andrews@email.com", "ILoveVocabulum<3", true, "Adam01#0000");
+        User user = User.createUser("Adam01", "a.andrews@email.com", "ILoveVocabulum<3");
+        user.setIsProUser(true);
+        user.setDiscordUsername("Adam01#0000");
         Document e = Document.parse("""
                 {
                   "name": "Adam01",

@@ -11,5 +11,7 @@ public interface Users {
 
     boolean addUser(User user);
 
-    boolean modifyUser(User user);
+    void load();
+
+    void save();
 }
