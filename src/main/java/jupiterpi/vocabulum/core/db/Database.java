@@ -1,11 +1,9 @@
 package jupiterpi.vocabulum.core.db;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.*;
 import jupiterpi.vocabulum.core.db.classes.ConjugationClasses;
 import jupiterpi.vocabulum.core.db.classes.DeclensionClasses;
+import jupiterpi.vocabulum.core.db.lectures.Lectures;
 import jupiterpi.vocabulum.core.db.portions.Portion;
 import jupiterpi.vocabulum.core.db.portions.Portions;
 import jupiterpi.vocabulum.core.db.users.DbUsers;
@@ -43,6 +41,7 @@ public class Database {
     public MongoCollection<Document> collection_other;
     public MongoCollection<Document> collection_i18ns;
     public MongoCollection<Document> collection_portions;
+    public MongoCollection<Document> collection_lectures;
     public MongoCollection<Document> collection_wordbase;
     public MongoCollection<Document> collection_users;
 
@@ -60,6 +59,7 @@ public class Database {
         collection_other = database.getCollection("other");
         collection_i18ns = database.getCollection("i18ns");
         collection_portions = database.getCollection("portions");
+        collection_lectures = database.getCollection("lectures");
         collection_wordbase = database.getCollection("wordbase");
         collection_users = database.getCollection("users");
     }
@@ -69,6 +69,7 @@ public class Database {
         loadDeclensionClasses();
         loadConjugationClasses();
         loadPortions();
+        loadLectures();
 
         loadWordbase();
         loadUsers();
@@ -153,6 +154,20 @@ public class Database {
 
     public Portions getPortions() {
         return portions;
+    }
+
+    // Lectures
+
+    protected Lectures lectures;
+
+    protected void loadLectures() {
+        lectures = new Lectures();
+        FindIterable<Document> documents = collection_lectures.find();
+        lectures.loadLectures(documents);
+    }
+
+    public Lectures getLectures() {
+        return lectures;
     }
 
     /* ----- objects that also modify the database ----- */

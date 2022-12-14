@@ -2,6 +2,7 @@ package jupiterpi.vocabulum.core.db;
 
 import jupiterpi.vocabulum.core.db.classes.ConjugationClasses;
 import jupiterpi.vocabulum.core.db.classes.DeclensionClasses;
+import jupiterpi.vocabulum.core.db.lectures.Lectures;
 import jupiterpi.vocabulum.core.db.portions.Portions;
 import jupiterpi.vocabulum.core.db.users.Users;
 import jupiterpi.vocabulum.core.db.wordbase.Wordbase;
@@ -1072,6 +1073,27 @@ public class MockDatabase extends Database {
 
     public void injectPortions(Portions portions) {
         this.portions = portions;
+    }
+
+    @Override
+    protected void loadLectures() {
+        this.lectures = new Lectures();
+        this.lectures.loadLectures(List.of(
+                Document.parse("""
+                        {
+                          "name": "L1",
+                          "text": "Sol ardet, silentium est; villa sub sole iacet.\\nEtiam canis tacet, asinus non iam clamat.\\nQuintus stat et exspectat.\\nUbi est Flavia?\\nCur amica non venit?\\nNon placet stare et exspectare,\\nnon placet esse sine amica,\\nnon placet villa sine amica,\\nnon placet sol,\\nnon placet silentium.\\nSubito canis latrat, etiam asinus clamat.\\nQuid est? Ecce! Quis venit?"
+                        }
+                        """)
+        ));
+    }
+
+    public void reloadLectures() {
+        loadLectures();
+    }
+
+    public void injectLectures(Lectures lectures) {
+        this.lectures = lectures;
     }
 
     @Override
