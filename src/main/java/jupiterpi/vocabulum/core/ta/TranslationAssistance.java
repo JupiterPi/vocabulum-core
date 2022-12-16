@@ -6,6 +6,8 @@ import jupiterpi.vocabulum.core.db.wordbase.IdentificationResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TranslationAssistance {
     private TAResult result;
@@ -45,18 +47,26 @@ public class TranslationAssistance {
     }
 
     private List<TAToken> tokenize(String sentence) {
-        sentence = sentence.replace(",", " <comma> ");
-        sentence = sentence.replace(".", " <dot>");
+        Pattern regex = Pattern.compile("(\\.+|,|;|-+|[?!]+|\"|'|'')");
+        Matcher matcher = regex.matcher(sentence);
+        StringBuffer sb = new StringBuffer();
+        if (matcher.find()) {
+            do {
+                matcher.appendReplacement(sb, " <" + matcher.group().trim() + "> ");
+            } while (matcher.find());
+            sentence = sb.toString();
+        }
+
         String[] words = sentence.split(" ");
 
         List<TAToken> tokens = new ArrayList<>();
         for (String word : words) {
             if (word.isEmpty()) continue;
-            tokens.add(switch (word) {
-                case "<comma>" -> new TAToken(TAToken.TAWordType.PUNCTUATION, ",");
-                case "<dot>" -> new TAToken(TAToken.TAWordType.PUNCTUATION, ".");
-                default -> new TAToken(TAToken.TAWordType.WORD, word);
-            });
+            if (word.matches("<.*>")) {
+                tokens.add(new TAToken(TAToken.TAWordType.PUNCTUATION, word.substring(1, word.length()-1)));
+            } else {
+                tokens.add(new TAToken(TAToken.TAWordType.WORD, word));
+            }
         }
         return tokens;
     }

@@ -31,21 +31,50 @@ import static org.junit.jupiter.api.Assertions.*;
 class TranslationAssistanceTest {
     I18n i18n = Database.get().getI18ns().internal();
 
-    @Test
-    void tokenize() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, TAException {
-        Method tokenize = TranslationAssistance.class.getDeclaredMethod("tokenize", String.class);
-        tokenize.setAccessible(true);
-        List<TranslationAssistance.TAToken> tokens = (List<TranslationAssistance.TAToken>) tokenize.invoke(new TranslationAssistance(""), "word , word . word, word.");
-        assertEquals(List.of(
-                new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
-                new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, ","),
-                new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
-                new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, "."),
-                new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
-                new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, ","),
-                new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
-                new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, ".")
-        ), tokens);
+    @Nested
+    @DisplayName("tokenize()")
+    class Tokenize {
+
+        @Test
+        @DisplayName("normal")
+        void normal() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, TAException {
+            Method tokenize = TranslationAssistance.class.getDeclaredMethod("tokenize", String.class);
+            tokenize.setAccessible(true);
+            List<TranslationAssistance.TAToken> tokens = (List<TranslationAssistance.TAToken>) tokenize.invoke(new TranslationAssistance(""), "word , word . word, word.");
+            assertEquals(List.of(
+                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
+                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, ","),
+                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
+                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, "."),
+                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
+                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, ","),
+                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
+                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, ".")
+            ), tokens);
+        }
+
+        @Test
+        @DisplayName("other punctuation marks")
+        void otherPunctuationMarks() throws NoSuchMethodException, TAException, InvocationTargetException, IllegalAccessException {
+            Method tokenize = TranslationAssistance.class.getDeclaredMethod("tokenize", String.class);
+            tokenize.setAccessible(true);
+            List<TranslationAssistance.TAToken> tokens = (List<TranslationAssistance.TAToken>) tokenize.invoke(new TranslationAssistance(""), "word; word - word --word?! word... word\"");
+            assertEquals(List.of(
+                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
+                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, ";"),
+                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
+                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, "-"),
+                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
+                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, "--"),
+                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
+                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, "?!"),
+                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
+                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, "..."),
+                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
+                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, "\"")
+            ), tokens);
+        }
+
     }
 
     @Nested
