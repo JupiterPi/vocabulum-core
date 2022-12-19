@@ -62,6 +62,7 @@ public class DbWordbase implements Wordbase {
                 case VERB -> new ArrayList<>(((Verb) vocabulary).identifyForm(word, partialSearch));
                 case INFLEXIBLE -> new ArrayList<>(nullForms);
             };
+            if (forms.size() == 0) continue;
             results.add(new IdentificationResult(vocabulary, forms));
         }
         return results;
