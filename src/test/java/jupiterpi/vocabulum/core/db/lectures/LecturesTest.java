@@ -22,7 +22,9 @@ class LecturesTest {
             () -> assertEquals(2, lines.size()),
             () -> assertEquals("Etiam canis tacet, asinus non iam clamat.", lines.get(0).getLine()),
             () -> assertEquals(34, lines.get(0).getStartIndex()),
-            () -> assertEquals(40, lines.get(0).getEndIndex())
+            () -> assertEquals(40, lines.get(0).getEndIndex()),
+            () -> assertEquals(Database.get().getLectures().getLecture("L1"), lines.get(0).getLecture()),
+            () -> assertEquals(1, lines.get(0).getLineIndex())
         );
     }
 

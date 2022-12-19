@@ -50,7 +50,10 @@ public class Lectures {
                 }
                 if (foundItem != null) {
                     String itemStr = foundItem.getItem();
-                    exampleLines.add(new ExampleLine(line, line.indexOf(itemStr), line.indexOf(itemStr) + itemStr.length()));
+                    exampleLines.add(new ExampleLine(
+                            line, line.indexOf(itemStr), line.indexOf(itemStr) + itemStr.length(),
+                            lecture, i
+                    ));
                 }
             }
         }
@@ -61,11 +64,15 @@ public class Lectures {
         private String line;
         private int startIndex;
         private int endIndex;
+        private Lecture lecture;
+        private int lineIndex;
 
-        public ExampleLine(String line, int startIndex, int endIndex) {
+        public ExampleLine(String line, int startIndex, int endIndex, Lecture lecture, int lineIndex) {
             this.line = line;
             this.startIndex = startIndex;
             this.endIndex = endIndex;
+            this.lecture = lecture;
+            this.lineIndex = lineIndex;
         }
 
         public String getLine() {
@@ -78,6 +85,14 @@ public class Lectures {
 
         public int getEndIndex() {
             return endIndex;
+        }
+
+        public Lecture getLecture() {
+            return lecture;
+        }
+
+        public int getLineIndex() {
+            return lineIndex;
         }
     }
 }
