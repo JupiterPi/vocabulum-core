@@ -6,6 +6,7 @@ import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
 import jupiterpi.vocabulum.core.db.MockWordbase;
 import jupiterpi.vocabulum.core.db.wordbase.IdentificationResult;
 import jupiterpi.vocabulum.core.i18n.I18n;
+import jupiterpi.vocabulum.core.ta.result.TAResult;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
@@ -25,7 +26,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockDatabaseSetup.class)
 class TranslationAssistanceTest {
@@ -37,44 +39,43 @@ class TranslationAssistanceTest {
 
         @Test
         @DisplayName("normal")
-        void normal() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, TAException {
+        void normal() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
             Method tokenize = TranslationAssistance.class.getDeclaredMethod("tokenize", String.class);
             tokenize.setAccessible(true);
-            List<TranslationAssistance.TAToken> tokens = (List<TranslationAssistance.TAToken>) tokenize.invoke(new TranslationAssistance(""), "word , word . word, word.");
+            List<TAToken> tokens = (List<TAToken>) tokenize.invoke(new TranslationAssistance(""), "word , word . word, word.");
             assertEquals(List.of(
-                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
-                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, ","),
-                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
-                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, "."),
-                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
-                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, ","),
-                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
-                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, ".")
+                    new TAToken(TAToken.TAWordType.WORD, "word"),
+                    new TAToken(TAToken.TAWordType.PUNCTUATION, ","),
+                    new TAToken(TAToken.TAWordType.WORD, "word"),
+                    new TAToken(TAToken.TAWordType.PUNCTUATION, "."),
+                    new TAToken(TAToken.TAWordType.WORD, "word"),
+                    new TAToken(TAToken.TAWordType.PUNCTUATION, ","),
+                    new TAToken(TAToken.TAWordType.WORD, "word"),
+                    new TAToken(TAToken.TAWordType.PUNCTUATION, ".")
             ), tokens);
         }
 
         @Test
         @DisplayName("other punctuation marks")
-        void otherPunctuationMarks() throws NoSuchMethodException, TAException, InvocationTargetException, IllegalAccessException {
+        void otherPunctuationMarks() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
             Method tokenize = TranslationAssistance.class.getDeclaredMethod("tokenize", String.class);
             tokenize.setAccessible(true);
-            List<TranslationAssistance.TAToken> tokens = (List<TranslationAssistance.TAToken>) tokenize.invoke(new TranslationAssistance(""), "word; word - word --word?! word... word\"");
+            List<TAToken> tokens = (List<TAToken>) tokenize.invoke(new TranslationAssistance(""), "word; word - word --word?! word... word\"");
             assertEquals(List.of(
-                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
-                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, ";"),
-                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
-                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, "-"),
-                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
-                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, "--"),
-                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
-                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, "?!"),
-                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
-                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, "..."),
-                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.WORD, "word"),
-                    new TranslationAssistance.TAToken(TranslationAssistance.TAToken.TAWordType.PUNCTUATION, "\"")
+                    new TAToken(TAToken.TAWordType.WORD, "word"),
+                    new TAToken(TAToken.TAWordType.PUNCTUATION, ";"),
+                    new TAToken(TAToken.TAWordType.WORD, "word"),
+                    new TAToken(TAToken.TAWordType.PUNCTUATION, "-"),
+                    new TAToken(TAToken.TAWordType.WORD, "word"),
+                    new TAToken(TAToken.TAWordType.PUNCTUATION, "--"),
+                    new TAToken(TAToken.TAWordType.WORD, "word"),
+                    new TAToken(TAToken.TAWordType.PUNCTUATION, "?!"),
+                    new TAToken(TAToken.TAWordType.WORD, "word"),
+                    new TAToken(TAToken.TAWordType.PUNCTUATION, "..."),
+                    new TAToken(TAToken.TAWordType.WORD, "word"),
+                    new TAToken(TAToken.TAWordType.PUNCTUATION, "\"")
             ), tokens);
         }
-
     }
 
     @Nested
@@ -128,24 +129,8 @@ class TranslationAssistanceTest {
         }
 
         @Test
-        @DisplayName("cannot identify")
-        void cannotIdentify() {
-            assertThrows(TAException.class, () -> {
-                TranslationAssistance ta = new TranslationAssistance("0");
-            });
-        }
-
-        @Test
-        @DisplayName("multiple results")
-        void multipleResults() {
-            assertThrows(TAException.class, () -> {
-                TranslationAssistance ta = new TranslationAssistance("2");
-            });
-        }
-
-        @Test
         @DisplayName("normal")
-        void normal() throws TAException {
+        void normal() {
             TranslationAssistance ta = new TranslationAssistance("1, 1.");
             List<TAResult.TAResultItem> items = ta.getResult().getItems();
             assertAll(
@@ -184,6 +169,54 @@ class TranslationAssistanceTest {
                                 () -> assertEquals(".", item.getItem()),
                                 () -> assertEquals(List.of(), item.getLines(i18n))
                         );
+                    }
+            );
+        }
+
+        @Test
+        @DisplayName("multiple results")
+        void multipleResults() {
+            TranslationAssistance ta = new TranslationAssistance("2.");
+            List<TAResult.TAResultItem> items = ta.getResult().getItems();
+            assertAll(
+                () -> {
+                    TAResult.TAResultItem item = items.get(0);
+                    assertAll(
+                        () -> assertEquals("2", item.getItem()),
+                        () -> assertEquals(List.of(
+                                "Nom. Sg. m.",
+                                "*transl1*",
+                                "transl2",
+                                "",
+                                "Nom. Sg. m.",
+                                "*transl1*",
+                                "transl2"
+                        ), item.getLines(i18n))
+                    );
+                },
+                () -> {
+                    TAResult.TAResultItem item = items.get(1);
+                    assertEquals(".", item.getItem());
+                }
+            );
+        }
+
+        @Test
+        @DisplayName("not found")
+        void notFound() {
+            TranslationAssistance ta = new TranslationAssistance("0.");
+            List<TAResult.TAResultItem> items = ta.getResult().getItems();
+            assertAll(
+                    () -> {
+                        TAResult.TAResultItem item = items.get(0);
+                        assertAll(
+                                () -> assertEquals("0", item.getItem()),
+                                () -> assertEquals(List.of(), item.getLines(i18n))
+                        );
+                    },
+                    () -> {
+                        TAResult.TAResultItem item = items.get(1);
+                        assertEquals(".", item.getItem());
                     }
             );
         }
