@@ -20,6 +20,11 @@ public class TAResultWord implements TAResult.TAResultItem {
         return word;
     }
 
+    @Override
+    public String toString() {
+        return word + ": " + String.join(", ", possibleWords.stream().map(possibleWord -> possibleWord.getVocabulary().toString()).toList());
+    }
+
     public List<PossibleWord> getPossibleWords() {
         return possibleWords;
     }

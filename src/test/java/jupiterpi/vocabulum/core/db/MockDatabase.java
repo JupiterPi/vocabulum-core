@@ -1064,7 +1064,18 @@ public class MockDatabase extends Database {
                               "vocare, voco, vocavi, vocatum - *rufen*, *nennen*"
                             ]
                           ]
-                        }""")
+                        }"""),
+                Document.parse("""
+                        {
+                          "name": "L1",
+                          "i18n": "de",
+                          "vocabularies": [
+                            [
+                              "clamare, clamo, clamavi, clamatum - *rufen*, schreien"
+                            ]
+                          ]
+                        }
+                        """)
         ));
     }
     public void reloadPortions() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
