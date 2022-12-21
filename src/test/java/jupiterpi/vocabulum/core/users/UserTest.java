@@ -20,7 +20,8 @@ class UserTest {
                 () -> assertFalse(user.fits("name", "PASSWORD123")),
                 () -> assertFalse(user.fits("NAME", "password123")),
                 () -> assertFalse(user.isProUser()),
-                () -> assertEquals("", user.getDiscordUsername())
+                () -> assertEquals("", user.getDiscordUsername()),
+                () -> assertFalse(user.isAdmin())
         );
     }
 
@@ -32,7 +33,8 @@ class UserTest {
                           "email": "a.andrews@email.com",
                           "password": "ILoveVocabulum<3",
                           "isProUser": true,
-                          "discordUsername": "Adam01#0000"
+                          "discordUsername": "Adam01#0000",
+                          "isAdmin": true
                         }
                         """)), "");
         assertAll(
@@ -40,7 +42,8 @@ class UserTest {
             () -> assertEquals("a.andrews@email.com", user.getEmail()),
             () -> assertEquals("ILoveVocabulum<3", user.getPassword()),
             () -> assertTrue(user.isProUser()),
-            () -> assertEquals("Adam01#0000", user.getDiscordUsername())
+            () -> assertEquals("Adam01#0000", user.getDiscordUsername()),
+            () -> assertTrue(user.isAdmin())
         );
     }
 
@@ -55,7 +58,8 @@ class UserTest {
                   "email": "a.andrews@email.com",
                   "password": "ILoveVocabulum<3",
                   "isProUser": true,
-                  "discordUsername": "Adam01#0000"
+                  "discordUsername": "Adam01#0000",
+                  "isAdmin": false
                 }
                 """);
         assertEquals(e, user.toDocument());

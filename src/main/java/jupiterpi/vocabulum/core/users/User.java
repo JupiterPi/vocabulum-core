@@ -12,20 +12,22 @@ public class User extends Entity {
     private String password;
     private boolean isProUser;
     private String discordUsername;
+    private boolean isAdmin;
 
-    private User(String name, String email, String password, boolean isProUser, String discordUsername) {
+    private User(String name, String email, String password, boolean isProUser, String discordUsername, boolean isAdmin) {
         super();
         this.name = name;
         this.email = email;
         this.password = password;
         this.isProUser = isProUser;
         this.discordUsername = discordUsername;
+        this.isAdmin = isAdmin;
     }
 
     public static User createUser(String name, String email, String password) {
         return new User(
                 name, email, password,
-                false, ""
+                false, "", false
         );
     }
 
@@ -44,6 +46,7 @@ public class User extends Entity {
         password = document.getString("password");
         isProUser = document.getBoolean("isProUser");
         discordUsername = document.getString("discordUsername");
+        isAdmin = document.getBoolean("isAdmin");
     }
 
     @Override
@@ -54,6 +57,7 @@ public class User extends Entity {
         document.put("password", password);
         document.put("isProUser", isProUser);
         document.put("discordUsername", discordUsername);
+        document.put("isAdmin", isAdmin);
         return document;
     }
 
@@ -77,6 +81,10 @@ public class User extends Entity {
 
     public String getDiscordUsername() {
         return discordUsername;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
     }
 
     /* setters */
