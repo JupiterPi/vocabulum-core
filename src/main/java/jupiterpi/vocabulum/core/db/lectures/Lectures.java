@@ -6,6 +6,8 @@ import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import org.bson.Document;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Lectures {
     private Map<String, Lecture> lectures;
@@ -50,8 +52,13 @@ public class Lectures {
                 }
                 if (foundItem != null) {
                     String itemStr = foundItem.getItem();
+
+                    Matcher matcher = Pattern.compile("\\b" + Pattern.quote(itemStr) + "\\b").matcher(line);
+                    matcher.find();
+                    int index = matcher.start();
+
                     exampleLines.add(new ExampleLine(
-                            line, line.indexOf(itemStr), line.indexOf(itemStr) + itemStr.length(),
+                            line, index, index + itemStr.length(),
                             lecture, i
                     ));
                 }

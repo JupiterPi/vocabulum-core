@@ -1067,6 +1067,20 @@ public class MockDatabase extends Database {
                         }"""),
                 Document.parse("""
                         {
+                          "name": "A",
+                          "i18n": "de",
+                          "vocabularies": [
+                            [
+                              "asinus, asini m. - *der Esel*",
+                              "stare, sto, stavi, statum - *dastehen*, aufrecht stehen",
+                              "et - *und*",
+                              "exspectare, exspecto, exspectavi, exspectatum - *erwarten*, warten auf"
+                            ]
+                          ]
+                        }
+                        """),
+                Document.parse("""
+                        {
                           "name": "L1",
                           "i18n": "de",
                           "vocabularies": [
