@@ -23,7 +23,7 @@ public abstract class EntityProvider {
             @Override
             public List<String> getAvailableDocumentIds() {
                 List<String> documentIds = new ArrayList<>();
-                for (String id : collection.distinct("_id", ObjectId.class).map(objectId -> objectId.toString())) {
+                for (String id : collection.distinct("_id", ObjectId.class).map(objectId -> objectId.toHexString())) {
                     documentIds.add(id);
                 }
                 return documentIds;

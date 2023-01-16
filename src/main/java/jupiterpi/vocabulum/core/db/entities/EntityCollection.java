@@ -25,6 +25,8 @@ public abstract class EntityCollection<T extends Entity> {
         for (T entity : entities) {
             entity.loadEntity();
         }
+
+        List<T> unlistedEntities = new ArrayList<>(entities);
         for (String documentId : entityProvider.getAvailableDocumentIds()) {
             boolean exists = false;
             for (T entity : entities) {
@@ -32,18 +34,19 @@ public abstract class EntityCollection<T extends Entity> {
                     exists = true;
                     break;
                 }
+                unlistedEntities.remove(entity);
             }
             if (!exists) {
                 addEntity(createEntityWithDocumentId(documentId));
             }
         }
+        for (T entity : unlistedEntities) {
+            entity.attachProvider(null);
+            entities.remove(entity);
+        }
     }
 
     protected abstract T createEntityWithDocumentId(String documentId);
-
-    public void loadEntities() {
-        entities.forEach(Entity::loadEntity);
-    }
 
     public void saveEntities() {
         entities.forEach(Entity::saveEntity);
