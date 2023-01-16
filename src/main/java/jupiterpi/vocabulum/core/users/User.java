@@ -4,22 +4,25 @@ import jupiterpi.vocabulum.core.db.entities.Entity;
 import jupiterpi.vocabulum.core.db.entities.EntityProvider;
 import org.bson.Document;
 
+import java.util.Date;
+import java.util.Objects;
+
 public class User extends Entity {
     // unique but mutable
     private String name;
     // unique identifier
     private String email;
     private String password;
-    private boolean isProUser;
+    private Date proExpiration;
     private String discordUsername;
     private boolean isAdmin;
 
-    private User(String name, String email, String password, boolean isProUser, String discordUsername, boolean isAdmin) {
+    private User(String name, String email, String password, Date proExpiration, String discordUsername, boolean isAdmin) {
         super();
         this.name = name;
         this.email = email;
         this.password = password;
-        this.isProUser = isProUser;
+        this.proExpiration = proExpiration;
         this.discordUsername = discordUsername;
         this.isAdmin = isAdmin;
     }
@@ -27,7 +30,7 @@ public class User extends Entity {
     public static User createUser(String name, String email, String password) {
         return new User(
                 name, email, password,
-                false, "", false
+                null, "", false
         );
     }
 
@@ -44,7 +47,7 @@ public class User extends Entity {
         name = document.getString("name");
         email = document.getString("email");
         password = document.getString("password");
-        isProUser = document.getBoolean("isProUser");
+        proExpiration = document.getDate("proExpiration");
         discordUsername = document.getString("discordUsername");
         isAdmin = document.getBoolean("isAdmin");
     }
@@ -55,7 +58,7 @@ public class User extends Entity {
         document.put("name", name);
         document.put("email", email);
         document.put("password", password);
-        document.put("isProUser", isProUser);
+        document.put("proExpiration", proExpiration);
         document.put("discordUsername", discordUsername);
         document.put("isAdmin", isAdmin);
         return document;
@@ -75,8 +78,8 @@ public class User extends Entity {
         return password;
     }
 
-    public boolean isProUser() {
-        return isProUser;
+    public Date getProExpiration() {
+        return proExpiration;
     }
 
     public String getDiscordUsername() {
@@ -99,8 +102,8 @@ public class User extends Entity {
         return this;
     }
 
-    public User setIsProUser(boolean isProUser) {
-        this.isProUser = isProUser;
+    public User setProExpiration(Date proExpiration) {
+        this.proExpiration = proExpiration;
         return this;
     }
 
@@ -117,5 +120,20 @@ public class User extends Entity {
 
     public boolean fits(String name, String password) {
         return this.name.equals(name) && this.password.equals(password);
+    }
+
+    public boolean isProUser() {
+        if (proExpiration == null) return false;
+        return new Date().getTime() <= proExpiration.getTime();
+    }
+
+    /* equals */
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return isAdmin == user.isAdmin && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(proExpiration, user.proExpiration) && Objects.equals(discordUsername, user.discordUsername);
     }
 }

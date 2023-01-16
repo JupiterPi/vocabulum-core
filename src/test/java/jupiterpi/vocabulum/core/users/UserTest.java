@@ -5,6 +5,10 @@ import org.bson.Document;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Date;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
@@ -19,7 +23,7 @@ class UserTest {
                 () -> assertTrue(user.fits("name", "password123")),
                 () -> assertFalse(user.fits("name", "PASSWORD123")),
                 () -> assertFalse(user.fits("NAME", "password123")),
-                () -> assertFalse(user.isProUser()),
+                () -> assertNull(user.getProExpiration()),
                 () -> assertEquals("", user.getDiscordUsername()),
                 () -> assertFalse(user.isAdmin())
         );
@@ -32,7 +36,7 @@ class UserTest {
                           "name": "Adam01",
                           "email": "a.andrews@email.com",
                           "password": "ILoveVocabulum<3",
-                          "isProUser": true,
+                          "proExpiration": {"$date": "2022-12-28T00:03:00Z"},
                           "discordUsername": "Adam01#0000",
                           "isAdmin": true
                         }
@@ -41,7 +45,7 @@ class UserTest {
             () -> assertEquals("Adam01", user.getName()),
             () -> assertEquals("a.andrews@email.com", user.getEmail()),
             () -> assertEquals("ILoveVocabulum<3", user.getPassword()),
-            () -> assertTrue(user.isProUser()),
+            () -> assertEquals(new Date(1672185780000L), user.getProExpiration()),
             () -> assertEquals("Adam01#0000", user.getDiscordUsername()),
             () -> assertTrue(user.isAdmin())
         );
@@ -50,19 +54,30 @@ class UserTest {
     @Test
     void toDocument() {
         User user = User.createUser("Adam01", "a.andrews@email.com", "ILoveVocabulum<3");
-        user.setIsProUser(true);
+        user.setProExpiration(new Date(1672185780000L));
         user.setDiscordUsername("Adam01#0000");
         Document e = Document.parse("""
                 {
                   "name": "Adam01",
                   "email": "a.andrews@email.com",
                   "password": "ILoveVocabulum<3",
-                  "isProUser": true,
+                  "proExpiration": {"$date": "2022-12-28T00:03:00Z"},
                   "discordUsername": "Adam01#0000",
                   "isAdmin": false
                 }
                 """);
         assertEquals(e, user.toDocument());
+    }
+
+    @Test
+    @DisplayName("correctly transfer non-pro proExpiration field (null)")
+    void correctlyTransferNonProProExpirationField() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        User user = User.createUser("Adam01", "a.andrews@gmail.com", "ILoveVocabulum<3");
+        Method toDocument = User.class.getDeclaredMethod("toDocument");
+        toDocument.setAccessible(true);
+        Document document = (Document) toDocument.invoke(user);
+        User user1 = User.readEntity(MockEntityProvider.withSingleDocument(document), "");
+        assertEquals(user, user1);
     }
 
 }
