@@ -31,10 +31,10 @@ class PortionTest {
               "i18n": "de",
               "vocabularies": [
                 [
-                  "asinus, asini m. - *der Esel*",
-                  "stare, sto, stavi, statum - *dastehen*, aufrecht stehen",
-                  "et - *und*",
-                  "exspectare, exspecto, exspectavi, exspectatum - *erwarten*, warten auf"
+                  "asinus, asini m. -- *der Esel*",
+                  "stare, sto, stavi, statum -- *dastehen*, aufrecht stehen",
+                  "et -- *und*",
+                  "exspectare, exspecto, exspectavi, exspectatum -- *erwarten*, warten auf"
                 ]
               ]
             }

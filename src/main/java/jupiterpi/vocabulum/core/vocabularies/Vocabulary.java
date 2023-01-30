@@ -27,7 +27,7 @@ public abstract class Vocabulary {
     }
 
     public static Vocabulary fromString(String str, I18n i18n, String portion) throws LexerException, ParserException, DeclinedFormDoesNotExistException, I18nException, VerbFormDoesNotExistException {
-        String[] parts = str.split(" - ");
+        String[] parts = str.split(" -- ");
         String latinStr = parts[0];
         String translationsStr = parts[1];
         TranslationSequence translations = TranslationSequence.fromString(translationsStr);

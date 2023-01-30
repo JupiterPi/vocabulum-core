@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class VocabularyTest {
     @Test
     void fromString() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
-        Vocabulary vocabulary = Vocabulary.fromString("amicus, amici m. - *der Freund*, der Kamerad", Database.get().getI18ns().internal(), "test");
+        Vocabulary vocabulary = Vocabulary.fromString("amicus, amici m. -- *der Freund*, der Kamerad", Database.get().getI18ns().internal(), "test");
         TranslationSequence translations = new TranslationSequence(
                 new VocabularyTranslation(true, new TranslationPartContainer(new ArticlePart("der"), new PlainTextPart("Freund"))),
                 new VocabularyTranslation(false, new TranslationPartContainer(new ArticlePart("der"), new PlainTextPart("Kamerad")))
@@ -78,7 +78,7 @@ class VocabularyTest {
 
     @Test
     void vocabularyToString() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
-        Vocabulary vocabulary = Vocabulary.fromString("amicus, amici m. - *der Freund*, der Kamerad", Database.get().getI18ns().internal(), "test");
+        Vocabulary vocabulary = Vocabulary.fromString("amicus, amici m. -- *der Freund*, der Kamerad", Database.get().getI18ns().internal(), "test");
         assertEquals("amicus, amici m. - *der Freund*, der Kamerad", vocabulary.vocabularyToString(Database.get().getI18ns().internal()));
     }
 }

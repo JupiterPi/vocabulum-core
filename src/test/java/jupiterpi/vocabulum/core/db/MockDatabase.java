@@ -1045,51 +1045,77 @@ public class MockDatabase extends Database {
         this.portions.loadPortions(List.of(
                 Document.parse("""
                         {
-                          "name": "1",
-                          "i18n": "de",
-                          "vocabularies": [
-                            [
-                              "sol, solis m. - *die Sonne*",
-                              "silentium, silentii n. - *die Ruhe*, *die Stille*, das Schweigen",
-                              "villa, villae f. - *das (Land)Haus*, die Villa",
-                              "canis, canis n. - *der Hund*",
-                              "acer, acris, acre - *heftig*, hart, scharf"
-                            ],
-                            [
-                              "brevis, brevis, breve - *kurz*",
-                              "felix, Gen. felicis - *glücklich*",
-                              "clemens, Gen. clementis - *sanft*, *zart*",
-                              "celer, celeris, celere - *schnell*",
-                              "pulcher, pulchra, pulchrum - *hübsch*, schön",
-                              "vocare, voco, vocavi, vocatum - *rufen*, *nennen*"
-                            ]
-                          ]
-                        }"""),
+                           "name": "1",
+                           "i18n": "de",
+                           "vocabularies": [
+                             [
+                               "sol, solis m. -- *die Sonne*",
+                               "silentium, silentii n. -- *die Ruhe*, *die Stille*, das Schweigen",
+                               "villa, villae f. -- *das (Land)Haus*, die Villa",
+                               "canis, canis n. -- *der Hund*",
+                               "acer, acris, acre -- *heftig*, hart, scharf"
+                             ],
+                             [
+                               "brevis, brevis, breve -- *kurz*",
+                               "felix, Gen. felicis -- *glücklich*",
+                               "clemens, Gen. clementis -- *sanft*, *zart*",
+                               "celer, celeris, celere -- *schnell*",
+                               "pulcher, pulchra, pulchrum -- *hübsch*, schön",
+                               "vocare, voco, vocavi, vocatum -- *rufen*, *nennen*"
+                             ]
+                           ]
+                         }"""),
                 Document.parse("""
                         {
-                          "name": "A",
-                          "i18n": "de",
-                          "vocabularies": [
-                            [
-                              "asinus, asini m. - *der Esel*",
-                              "stare, sto, stavi, statum - *dastehen*, aufrecht stehen",
-                              "et - *und*",
-                              "exspectare, exspecto, exspectavi, exspectatum - *erwarten*, warten auf"
-                            ]
-                          ]
-                        }
+                           "name": "A",
+                           "i18n": "de",
+                           "vocabularies": [
+                             [
+                               "asinus, asini m. -- *der Esel*",
+                               "stare, sto, stavi, statum -- *dastehen*, aufrecht stehen",
+                               "et -- *und*",
+                               "exspectare, exspecto, exspectavi, exspectatum -- *erwarten*, warten auf"
+                             ]
+                           ]
+                         }
                         """),
                 Document.parse("""
                         {
-                          "name": "L1",
+                           "name": "L1",
+                           "i18n": "de",
+                           "vocabularies": [
+                             [
+                               "clamare, clamo, clamavi, clamatum -- *rufen*, schreien"
+                             ]
+                           ]
+                         }
+                        """)/*,
+                Document.parse("""
+                        {
+                          "name": "2",
                           "i18n": "de",
                           "vocabularies": [
                             [
-                              "clamare, clamo, clamavi, clamatum - *rufen*, schreien"
+                              "a/ab (m. Abl.) -- *von (... her)*, von ... weg, *seit* [9]",
+                              "abducere, abduco, abduxi, abductum -- *wegführen*, (weg)bringen, verschleppen [6]",
+                              "abesse, absum, afui [\\"ab\\"+esse] -- *abwesend sein*, fehlen, entfernt sein [20]",
+                              "abire, abeo, abii, abitum -- *(weg)gehen* [20]",
+                              "abstinentia, abstinentiae f. -- *die Enthaltsamkeit* [36]",
+                              "accedere, accedo, accessi, accessum -- *herantreten*, hingehen",
+                              "accendere, accendo, accendi, accensum -- *in Brand setzen*, entflammen, aufregen [29]",
+                              "accidere, accidit, accidit, - -- *sich ereignen*, *zustoßen* [22]",
+                              "accipere, accipio, accepi, acceptum --*annehmen*, empfangen, aufnehmen [20]",
+                              "accurrere, accurro, accurri, accursum -- *herbeilaufen*, angelaufen kommen [5]",
+                              "acer, acris, acre; Gen. acris -- *heftig*, hart, scharf [15]",
+                              "acies, aciei f. -- *das (kampfbereite) Heer*, die Schlachtordnung [26]",
+                              "ad (m. Akk.) -- *zu*, *zu ... hin*, *an*, *bei* [6]",
+                              "addere, addo, addidi, additum -- *hinzufügen* [10]",
+                              "adducere, adduco, adduxi, adductum -- *heranführen*, *veranlassen* [27]",
+                              "adeo (Adv.) -- *so sehr* [30]"
                             ]
                           ]
                         }
-                        """)
+                        """)*/
         ));
     }
     public void reloadPortions() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
