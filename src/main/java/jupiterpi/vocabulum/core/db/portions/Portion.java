@@ -1,6 +1,5 @@
 package jupiterpi.vocabulum.core.db.portions;
 
-import jupiterpi.tools.util.AppendingList;
 import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.i18n.I18nException;
@@ -68,9 +67,7 @@ public class Portion implements VocabularySelection {
             block.forEach((vocabulary -> vocabularies.add(vocabulary.toString())));
             blockStrs.add(String.join(",", vocabularies));
         }
-        AppendingList list = new AppendingList();
-        list.addAll(blockStrs);
-        String blocksStr = list.render(" // ");
+        String blocksStr = String.join(" // ", blockStrs);
         return "Portion{name=" + name + ",vocabularies=[" + blocksStr + "]}";
     }
 }

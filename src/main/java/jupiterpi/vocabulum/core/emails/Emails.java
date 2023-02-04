@@ -1,7 +1,6 @@
 package jupiterpi.vocabulum.core.emails;
 
-import jupiterpi.tools.files.Path;
-import jupiterpi.tools.files.TextFile;
+import jupiterpi.vocabulum.core.util.TextFile;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -22,17 +21,15 @@ public class Emails {
 
     // ----------
 
-    private final Path emailDir = Path.getRunningDirectory().subdir("emails");
+    private final String emailDir = "./emails";
 
-    private final Path configFile = emailDir.copy().file("config.txt");
     private List<String> getConfig() {
-        return new TextFile(configFile).getFile();
+        return TextFile.readLines(emailDir + "/config.txt");
     }
     // properties in order: 0) sender email, 1) sender password, 2) verification email subject
 
-    private final Path verificationHTML = emailDir.copy().file("verification_email.html");
     private String getVerificationHTML() {
-        return new TextFile(verificationHTML).getFileForOutput();
+        return TextFile.readFile(emailDir + "/verification_email.html");
     }
 
     public void sendVerificationEmail(String recipient) throws MessagingException {

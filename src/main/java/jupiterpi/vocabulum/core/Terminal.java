@@ -1,9 +1,9 @@
 package jupiterpi.vocabulum.core;
 
-import jupiterpi.tools.ui.ConsoleInterface;
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.ta.TranslationAssistance;
 import jupiterpi.vocabulum.core.ta.result.TAResult;
+import jupiterpi.vocabulum.core.util.ConsoleInterface;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.Verb;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbForm;

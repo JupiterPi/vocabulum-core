@@ -1,12 +1,12 @@
 package jupiterpi.vocabulum.core.interpreter.tokens;
 
-import jupiterpi.tools.util.AppendingList;
 import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.i18n.I18nException;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TokenSequence extends ArrayList<Token> {
     public TokenSequence() {}
@@ -79,10 +79,7 @@ public class TokenSequence extends ArrayList<Token> {
 
     @Override
     public String toString() {
-        AppendingList tokensStr = new AppendingList();
-        for (Token token : this) {
-            tokensStr.add(token.toString());
-        }
-        return "TokenSequence{i18n=" + (getI18n() == null ? "null" : getI18n().getName()) + ",tokens=[" + tokensStr.render(", ") + "]}";
+        String tokensStr = this.stream().map(Token::toString).collect(Collectors.joining(", "));
+        return "TokenSequence{i18n=" + (getI18n() == null ? "null" : getI18n().getName()) + ",tokens=[" + tokensStr + "]}";
     }
 }

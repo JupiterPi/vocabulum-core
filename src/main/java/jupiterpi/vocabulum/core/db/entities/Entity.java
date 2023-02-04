@@ -9,6 +9,9 @@ public abstract class Entity {
     protected Entity() {}
 
     protected Entity(EntityProvider entityProvider, String documentId) {
+        hydrate(entityProvider, documentId);
+    }
+    protected void hydrate(EntityProvider entityProvider, String documentId) {
         this.entityProvider = entityProvider;
         this.documentId = documentId;
         loadEntity();
