@@ -1,0 +1,25 @@
+[
+  {
+    "name": "9",
+    "i18n": "de",
+    "vocabularies": [
+      "a/ab (m. Abl.) -- *von (... her)*, von ... weg, *seit*",
+      "other, vocabulary m. -- *something*"
+    ]
+  },
+  {
+    "name": "6",
+    "i18n": "de",
+    "vocabularies": [
+      "abducere, abduco, abduxi, abductum -- *wegführen*, (weg)bringen, verschleppen"
+    ]
+  },
+  {
+    "name": "20",
+    "i18n": "de",
+    "vocabularies": [
+      "abesse, absum, afui, - -- *abwesend sein*, fehlen, entfernt sein",
+      "decimus, decima, decimum -- *der zehnte*"
+    ]
+  }
+]

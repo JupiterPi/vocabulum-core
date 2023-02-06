@@ -1,5 +1,7 @@
 const fs = require("fs")
 
+// read portions
+
 const portions = new Map()
 
 fs.readdirSync("./dictionary/").forEach(file => {
@@ -17,17 +19,26 @@ fs.readdirSync("./dictionary/").forEach(file => {
     })
 })
 
+// create folder
+
 if (fs.existsSync("./portions")) {
     fs.rmSync("./portions", {recursive: true})
 }
 fs.mkdirSync("./portions")
 
+// output to files
+
+const allPortions = []
 portions.forEach( (vocabularies, portion) => {
-    fs.writeFileSync("./portions/" + portion + ".json", JSON.stringify(
-        {
-            name: portion,
-            i18n: "de",
-            vocabularies: vocabularies
-        }
-    , null, 2))
+  allPortions.push({
+    name: portion,
+    i18n: "de",
+    vocabularies: vocabularies
+  })
 })
+
+allPortions.forEach(portion => {
+  fs.writeFileSync("./portions/" + portion.name + ".json", JSON.stringify(portion, null, 2))
+})
+
+fs.writeFileSync("./portions.json", JSON.stringify(allPortions, null, 2))
