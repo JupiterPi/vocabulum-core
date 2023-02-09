@@ -1,7 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.form;
 
-import jupiterpi.vocabulum.core.db.Database;
-import jupiterpi.vocabulum.core.i18n.I18n;
+import jupiterpi.vocabulum.core.i18n.Symbols;
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
@@ -29,16 +28,8 @@ public class DeclinedForm implements Comparable<DeclinedForm> {
 
     private DeclinedForm() {}
 
-    public static DeclinedForm fromString(String str, I18n i18n) throws LexerException, ParserException {
-        return fromTokens(new Lexer(str, i18n).getTokens());
-    }
-    public static DeclinedForm get(String str) {
-        try {
-            return fromString(str, Database.get().getI18ns().internal());
-        } catch (ParserException | LexerException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public static DeclinedForm fromString(String str) throws LexerException, ParserException {
+        return fromTokens(new Lexer(str).getTokens());
     }
 
     public static DeclinedForm fromTokens(TokenSequence tokens) throws ParserException {
@@ -47,11 +38,11 @@ public class DeclinedForm implements Comparable<DeclinedForm> {
             throw new ParserException("Invalid form: " + tokens);
         }
         if (tokens.get(0).getType() == Token.Type.CASUS && tokens.get(1).getType() == Token.Type.NUMBER) {
-            form.casus = tokens.getI18n().casusFromSymbol(tokens.get(0).getContent());
-            form.number = tokens.getI18n().nNumberFromSymbol(tokens.get(1).getContent());
+            form.casus = Symbols.get().casusFromSymbol(tokens.get(0).getContent());
+            form.number = Symbols.get().nNumberFromSymbol(tokens.get(1).getContent());
             if (tokens.size() > 2) {
                 if (tokens.get(2).getType() == Token.Type.GENDER) {
-                    form.gender = tokens.getI18n().genderFromSymbol(tokens.get(2).getContent());
+                    form.gender = Symbols.get().genderFromSymbol(tokens.get(2).getContent());
                 } else {
                     throw new ParserException("Invalid form: " + tokens);
                 }
@@ -128,11 +119,11 @@ public class DeclinedForm implements Comparable<DeclinedForm> {
 
     @Override
     public String toString() {
-        return "{" + formToString(Database.get().getI18ns().internal()) + "}";
+        return "{" + formToString() + "}";
     }
 
-    public String formToString(I18n i18n) {
-        String str = i18n.getCasusSymbol(casus) + ". " + i18n.getNumberSymbol(number) + ".";
+    public String formToString() {
+        String str = Symbols.get().getCasusSymbol(casus) + ". " + Symbols.get().getNumberSymbol(number) + ".";
         if (gender != null) {
             str += " " + gender.toString().substring(0, 1).toLowerCase() + ".";
         }

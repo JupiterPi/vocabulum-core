@@ -1,5 +1,6 @@
 package jupiterpi.vocabulum.core.interpreter.parser;
 
+import jupiterpi.vocabulum.core.i18n.Symbols;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
@@ -36,7 +37,7 @@ public class VocabularyParser {
             return RuntimeNoun.fromGenitive(
                     tokens.get(0).getContent(),
                     tokens.get(2).getContent(),
-                    tokens.getI18n().genderFromSymbol(tokens.get(3).getContent()),
+                    Symbols.get().genderFromSymbol(tokens.get(3).getContent()),
                     translations, portion
             );
         }
@@ -60,7 +61,7 @@ public class VocabularyParser {
         if (tokens.size() == 4 && tokens.fitsStartsWith(new TokenSequence(
                 new Token(Token.Type.WORD),
                 new Token(Token.Type.COMMA),
-                new Token(Token.Type.CASUS, tokens.getI18n().getCasusSymbol(Casus.GEN), tokens.getI18n()),
+                new Token(Token.Type.CASUS, Symbols.get().getCasusSymbol(Casus.GEN)),
                 new Token(Token.Type.WORD)
         ))) {
             return RuntimeAdjective.fromGenitive(

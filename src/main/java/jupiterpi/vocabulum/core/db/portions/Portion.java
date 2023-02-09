@@ -1,8 +1,5 @@
 package jupiterpi.vocabulum.core.db.portions;
 
-import jupiterpi.vocabulum.core.db.Database;
-import jupiterpi.vocabulum.core.i18n.I18n;
-import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.sessions.selection.VocabularySelection;
@@ -24,18 +21,17 @@ public class Portion implements VocabularySelection {
     }
 
     private Portion() {}
-    public static Portion readFromDocument(Document document) throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
+    public static Portion readFromDocument(Document document) throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
         Portion portion = new Portion();
 
         String name = document.getString("name");
         portion.name = name;
 
-        I18n i18n = Database.get().getI18ns().getI18n(document.getString("i18n"));
         List<List<String>> vocabularyBlocks = (List<List<String>>) document.get("vocabularies");
         for (List<String> vocabularies : vocabularyBlocks) {
             List<Vocabulary> vocabularyBlock = new ArrayList<>();
             for (String vocabulary : vocabularies) {
-                vocabularyBlock.add(Vocabulary.fromString(vocabulary, i18n, name));
+                vocabularyBlock.add(Vocabulary.fromString(vocabulary, name));
             }
             portion.vocabularyBlocks.add(vocabularyBlock);
         }

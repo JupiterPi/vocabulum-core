@@ -1,8 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated;
 
-import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
-import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.*;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
@@ -22,8 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockDatabaseSetup.class)
 class VerbTest {
-    I18n i18n = Database.get().getI18ns().internal();
-
     @Test
     void makeFormOrDash() {
         Verb verb = new Verb(new TranslationSequence(), "test") {
@@ -72,7 +68,7 @@ class VerbTest {
                 return "test";
             }
         };
-        assertEquals("vocare, voco, vocavi, vocatum", verb.getDefinition(i18n));
+        assertEquals("vocare, voco, vocavi, vocatum", verb.getDefinition());
     }
 
     @Nested
@@ -85,7 +81,7 @@ class VerbTest {
             Verb verb = new Verb(new TranslationSequence(), "test") {
                 @Override
                 public String makeForm(VerbForm form) {
-                    return form.formToString(i18n);
+                    return form.formToString();
                 }
 
                 @Override
@@ -107,15 +103,15 @@ class VerbTest {
                         },
                         "infinitive": {
                                 "present": {
-                                    "active": "Inf. Pres. Act.",
-                                    "passive": "Inf. Pres. Pass."
+                                    "active": "Inf. Präs. Akt.",
+                                    "passive": "Inf. Präs. Pass."
                                 },
                                 "perfect": {
-                                    "active": "Inf. Perf. Act.",
+                                    "active": "Inf. Perf. Akt.",
                                     "passive": "Inf. Perf. Pass."
                                 },
                                 "future": {
-                                    "active": "Inf. Fut. Act.",
+                                    "active": "Inf. Fut. Akt.",
                                     "passive": "Inf. Fut. Pass."
                                 }
                             },
@@ -136,14 +132,14 @@ class VerbTest {
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj.",
-                                  "second": "2. Pers. Sg. Conj.",
-                                  "third": "3. Pers. Sg. Conj."
+                                  "first": "1. Pers. Sg. Konj.",
+                                  "second": "2. Pers. Sg. Konj.",
+                                  "third": "3. Pers. Sg. Konj."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj.",
-                                  "second": "2. Pers. Pl. Conj.",
-                                  "third": "3. Pers. Pl. Conj."
+                                  "first": "1. Pers. Pl. Konj.",
+                                  "second": "2. Pers. Pl. Konj.",
+                                  "third": "3. Pers. Pl. Konj."
                                 }
                               }
                             },
@@ -162,14 +158,14 @@ class VerbTest {
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. Imperf.",
-                                  "second": "2. Pers. Sg. Conj. Imperf.",
-                                  "third": "3. Pers. Sg. Conj. Imperf."
+                                  "first": "1. Pers. Sg. Konj. Imperf.",
+                                  "second": "2. Pers. Sg. Konj. Imperf.",
+                                  "third": "3. Pers. Sg. Konj. Imperf."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. Imperf.",
-                                  "second": "2. Pers. Pl. Conj. Imperf.",
-                                  "third": "3. Pers. Pl. Conj. Imperf."
+                                  "first": "1. Pers. Pl. Konj. Imperf.",
+                                  "second": "2. Pers. Pl. Konj. Imperf.",
+                                  "third": "3. Pers. Pl. Konj. Imperf."
                                 }
                               }
                             },
@@ -188,40 +184,40 @@ class VerbTest {
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. Perf.",
-                                  "second": "2. Pers. Sg. Conj. Perf.",
-                                  "third": "3. Pers. Sg. Conj. Perf."
+                                  "first": "1. Pers. Sg. Konj. Perf.",
+                                  "second": "2. Pers. Sg. Konj. Perf.",
+                                  "third": "3. Pers. Sg. Konj. Perf."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. Perf.",
-                                  "second": "2. Pers. Pl. Conj. Perf.",
-                                  "third": "3. Pers. Pl. Conj. Perf."
+                                  "first": "1. Pers. Pl. Konj. Perf.",
+                                  "second": "2. Pers. Pl. Konj. Perf.",
+                                  "third": "3. Pers. Pl. Konj. Perf."
                                 }
                               }
                             },
                             "pluperfect": {
                               "indicative": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Pluperf.",
-                                  "second": "2. Pers. Sg. Pluperf.",
-                                  "third": "3. Pers. Sg. Pluperf."
+                                  "first": "1. Pers. Sg. Plusq.",
+                                  "second": "2. Pers. Sg. Plusq.",
+                                  "third": "3. Pers. Sg. Plusq."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Pluperf.",
-                                  "second": "2. Pers. Pl. Pluperf.",
-                                  "third": "3. Pers. Pl. Pluperf."
+                                  "first": "1. Pers. Pl. Plusq.",
+                                  "second": "2. Pers. Pl. Plusq.",
+                                  "third": "3. Pers. Pl. Plusq."
                                 }
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. Pluperf.",
-                                  "second": "2. Pers. Sg. Conj. Pluperf.",
-                                  "third": "3. Pers. Sg. Conj. Pluperf."
+                                  "first": "1. Pers. Sg. Konj. Plusq.",
+                                  "second": "2. Pers. Sg. Konj. Plusq.",
+                                  "third": "3. Pers. Sg. Konj. Plusq."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. Pluperf.",
-                                  "second": "2. Pers. Pl. Conj. Pluperf.",
-                                  "third": "3. Pers. Pl. Conj. Pluperf."
+                                  "first": "1. Pers. Pl. Konj. Plusq.",
+                                  "second": "2. Pers. Pl. Konj. Plusq.",
+                                  "third": "3. Pers. Pl. Konj. Plusq."
                                 }
                               }
                             },
@@ -240,14 +236,14 @@ class VerbTest {
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. FutI.",
-                                  "second": "2. Pers. Sg. Conj. FutI.",
-                                  "third": "3. Pers. Sg. Conj. FutI."
+                                  "first": "1. Pers. Sg. Konj. FutI.",
+                                  "second": "2. Pers. Sg. Konj. FutI.",
+                                  "third": "3. Pers. Sg. Konj. FutI."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. FutI.",
-                                  "second": "2. Pers. Pl. Conj. FutI.",
-                                  "third": "3. Pers. Pl. Conj. FutI."
+                                  "first": "1. Pers. Pl. Konj. FutI.",
+                                  "second": "2. Pers. Pl. Konj. FutI.",
+                                  "third": "3. Pers. Pl. Konj. FutI."
                                 }
                               }
                             },
@@ -266,14 +262,14 @@ class VerbTest {
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. FutII.",
-                                  "second": "2. Pers. Sg. Conj. FutII.",
-                                  "third": "3. Pers. Sg. Conj. FutII."
+                                  "first": "1. Pers. Sg. Konj. FutII.",
+                                  "second": "2. Pers. Sg. Konj. FutII.",
+                                  "third": "3. Pers. Sg. Konj. FutII."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. FutII.",
-                                  "second": "2. Pers. Pl. Conj. FutII.",
-                                  "third": "3. Pers. Pl. Conj. FutII."
+                                  "first": "1. Pers. Pl. Konj. FutII.",
+                                  "second": "2. Pers. Pl. Konj. FutII.",
+                                  "third": "3. Pers. Pl. Konj. FutII."
                                 }
                               }
                             }
@@ -294,14 +290,14 @@ class VerbTest {
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. Pass.",
-                                  "second": "2. Pers. Sg. Conj. Pass.",
-                                  "third": "3. Pers. Sg. Conj. Pass."
+                                  "first": "1. Pers. Sg. Konj. Pass.",
+                                  "second": "2. Pers. Sg. Konj. Pass.",
+                                  "third": "3. Pers. Sg. Konj. Pass."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. Pass.",
-                                  "second": "2. Pers. Pl. Conj. Pass.",
-                                  "third": "3. Pers. Pl. Conj. Pass."
+                                  "first": "1. Pers. Pl. Konj. Pass.",
+                                  "second": "2. Pers. Pl. Konj. Pass.",
+                                  "third": "3. Pers. Pl. Konj. Pass."
                                 }
                               }
                             },
@@ -320,14 +316,14 @@ class VerbTest {
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. Imperf. Pass.",
-                                  "second": "2. Pers. Sg. Conj. Imperf. Pass.",
-                                  "third": "3. Pers. Sg. Conj. Imperf. Pass."
+                                  "first": "1. Pers. Sg. Konj. Imperf. Pass.",
+                                  "second": "2. Pers. Sg. Konj. Imperf. Pass.",
+                                  "third": "3. Pers. Sg. Konj. Imperf. Pass."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. Imperf. Pass.",
-                                  "second": "2. Pers. Pl. Conj. Imperf. Pass.",
-                                  "third": "3. Pers. Pl. Conj. Imperf. Pass."
+                                  "first": "1. Pers. Pl. Konj. Imperf. Pass.",
+                                  "second": "2. Pers. Pl. Konj. Imperf. Pass.",
+                                  "third": "3. Pers. Pl. Konj. Imperf. Pass."
                                 }
                               }
                             },
@@ -346,40 +342,40 @@ class VerbTest {
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. Perf. Pass.",
-                                  "second": "2. Pers. Sg. Conj. Perf. Pass.",
-                                  "third": "3. Pers. Sg. Conj. Perf. Pass."
+                                  "first": "1. Pers. Sg. Konj. Perf. Pass.",
+                                  "second": "2. Pers. Sg. Konj. Perf. Pass.",
+                                  "third": "3. Pers. Sg. Konj. Perf. Pass."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. Perf. Pass.",
-                                  "second": "2. Pers. Pl. Conj. Perf. Pass.",
-                                  "third": "3. Pers. Pl. Conj. Perf. Pass."
+                                  "first": "1. Pers. Pl. Konj. Perf. Pass.",
+                                  "second": "2. Pers. Pl. Konj. Perf. Pass.",
+                                  "third": "3. Pers. Pl. Konj. Perf. Pass."
                                 }
                               }
                             },
                             "pluperfect": {
                               "indicative": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Pluperf. Pass.",
-                                  "second": "2. Pers. Sg. Pluperf. Pass.",
-                                  "third": "3. Pers. Sg. Pluperf. Pass."
+                                  "first": "1. Pers. Sg. Plusq. Pass.",
+                                  "second": "2. Pers. Sg. Plusq. Pass.",
+                                  "third": "3. Pers. Sg. Plusq. Pass."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Pluperf. Pass.",
-                                  "second": "2. Pers. Pl. Pluperf. Pass.",
-                                  "third": "3. Pers. Pl. Pluperf. Pass."
+                                  "first": "1. Pers. Pl. Plusq. Pass.",
+                                  "second": "2. Pers. Pl. Plusq. Pass.",
+                                  "third": "3. Pers. Pl. Plusq. Pass."
                                 }
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. Pluperf. Pass.",
-                                  "second": "2. Pers. Sg. Conj. Pluperf. Pass.",
-                                  "third": "3. Pers. Sg. Conj. Pluperf. Pass."
+                                  "first": "1. Pers. Sg. Konj. Plusq. Pass.",
+                                  "second": "2. Pers. Sg. Konj. Plusq. Pass.",
+                                  "third": "3. Pers. Sg. Konj. Plusq. Pass."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. Pluperf. Pass.",
-                                  "second": "2. Pers. Pl. Conj. Pluperf. Pass.",
-                                  "third": "3. Pers. Pl. Conj. Pluperf. Pass."
+                                  "first": "1. Pers. Pl. Konj. Plusq. Pass.",
+                                  "second": "2. Pers. Pl. Konj. Plusq. Pass.",
+                                  "third": "3. Pers. Pl. Konj. Plusq. Pass."
                                 }
                               }
                             },
@@ -398,14 +394,14 @@ class VerbTest {
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. FutI. Pass.",
-                                  "second": "2. Pers. Sg. Conj. FutI. Pass.",
-                                  "third": "3. Pers. Sg. Conj. FutI. Pass."
+                                  "first": "1. Pers. Sg. Konj. FutI. Pass.",
+                                  "second": "2. Pers. Sg. Konj. FutI. Pass.",
+                                  "third": "3. Pers. Sg. Konj. FutI. Pass."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. FutI. Pass.",
-                                  "second": "2. Pers. Pl. Conj. FutI. Pass.",
-                                  "third": "3. Pers. Pl. Conj. FutI. Pass."
+                                  "first": "1. Pers. Pl. Konj. FutI. Pass.",
+                                  "second": "2. Pers. Pl. Konj. FutI. Pass.",
+                                  "third": "3. Pers. Pl. Konj. FutI. Pass."
                                 }
                               }
                             },
@@ -424,14 +420,14 @@ class VerbTest {
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. FutII. Pass.",
-                                  "second": "2. Pers. Sg. Conj. FutII. Pass.",
-                                  "third": "3. Pers. Sg. Conj. FutII. Pass."
+                                  "first": "1. Pers. Sg. Konj. FutII. Pass.",
+                                  "second": "2. Pers. Sg. Konj. FutII. Pass.",
+                                  "third": "3. Pers. Sg. Konj. FutII. Pass."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. FutII. Pass.",
-                                  "second": "2. Pers. Pl. Conj. FutII. Pass.",
-                                  "third": "3. Pers. Pl. Conj. FutII. Pass."
+                                  "first": "1. Pers. Pl. Konj. FutII. Pass.",
+                                  "second": "2. Pers. Pl. Konj. FutII. Pass.",
+                                  "third": "3. Pers. Pl. Konj. FutII. Pass."
                                 }
                               }
                             }
@@ -444,14 +440,14 @@ class VerbTest {
                                 "nom": "PPP. Nom. Sg. m.",
                                 "gen": "PPP. Gen. Sg. m.",
                                 "dat": "PPP. Dat. Sg. m.",
-                                "acc": "PPP. Acc. Sg. m.",
+                                "acc": "PPP. Akk. Sg. m.",
                                 "abl": "PPP. Abl. Sg. m."
                               },
                               "pl": {
                                 "nom": "PPP. Nom. Pl. m.",
                                 "gen": "PPP. Gen. Pl. m.",
                                 "dat": "PPP. Dat. Pl. m.",
-                                "acc": "PPP. Acc. Pl. m.",
+                                "acc": "PPP. Akk. Pl. m.",
                                 "abl": "PPP. Abl. Pl. m."
                               }
                             },
@@ -460,14 +456,14 @@ class VerbTest {
                                 "nom": "PPP. Nom. Sg. f.",
                                 "gen": "PPP. Gen. Sg. f.",
                                 "dat": "PPP. Dat. Sg. f.",
-                                "acc": "PPP. Acc. Sg. f.",
+                                "acc": "PPP. Akk. Sg. f.",
                                 "abl": "PPP. Abl. Sg. f."
                               },
                               "pl": {
                                 "nom": "PPP. Nom. Pl. f.",
                                 "gen": "PPP. Gen. Pl. f.",
                                 "dat": "PPP. Dat. Pl. f.",
-                                "acc": "PPP. Acc. Pl. f.",
+                                "acc": "PPP. Akk. Pl. f.",
                                 "abl": "PPP. Abl. Pl. f."
                               }
                             },
@@ -476,14 +472,14 @@ class VerbTest {
                                 "nom": "PPP. Nom. Sg. n.",
                                 "gen": "PPP. Gen. Sg. n.",
                                 "dat": "PPP. Dat. Sg. n.",
-                                "acc": "PPP. Acc. Sg. n.",
+                                "acc": "PPP. Akk. Sg. n.",
                                 "abl": "PPP. Abl. Sg. n."
                               },
                               "pl": {
                                 "nom": "PPP. Nom. Pl. n.",
                                 "gen": "PPP. Gen. Pl. n.",
                                 "dat": "PPP. Dat. Pl. n.",
-                                "acc": "PPP. Acc. Pl. n.",
+                                "acc": "PPP. Akk. Pl. n.",
                                 "abl": "PPP. Abl. Pl. n."
                               }
                             }
@@ -494,14 +490,14 @@ class VerbTest {
                                 "nom": "PPA. Nom. Sg. m.",
                                 "gen": "PPA. Gen. Sg. m.",
                                 "dat": "PPA. Dat. Sg. m.",
-                                "acc": "PPA. Acc. Sg. m.",
+                                "acc": "PPA. Akk. Sg. m.",
                                 "abl": "PPA. Abl. Sg. m."
                               },
                               "pl": {
                                 "nom": "PPA. Nom. Pl. m.",
                                 "gen": "PPA. Gen. Pl. m.",
                                 "dat": "PPA. Dat. Pl. m.",
-                                "acc": "PPA. Acc. Pl. m.",
+                                "acc": "PPA. Akk. Pl. m.",
                                 "abl": "PPA. Abl. Pl. m."
                               }
                             },
@@ -510,14 +506,14 @@ class VerbTest {
                                 "nom": "PPA. Nom. Sg. f.",
                                 "gen": "PPA. Gen. Sg. f.",
                                 "dat": "PPA. Dat. Sg. f.",
-                                "acc": "PPA. Acc. Sg. f.",
+                                "acc": "PPA. Akk. Sg. f.",
                                 "abl": "PPA. Abl. Sg. f."
                               },
                               "pl": {
                                 "nom": "PPA. Nom. Pl. f.",
                                 "gen": "PPA. Gen. Pl. f.",
                                 "dat": "PPA. Dat. Pl. f.",
-                                "acc": "PPA. Acc. Pl. f.",
+                                "acc": "PPA. Akk. Pl. f.",
                                 "abl": "PPA. Abl. Pl. f."
                               }
                             },
@@ -526,14 +522,14 @@ class VerbTest {
                                 "nom": "PPA. Nom. Sg. n.",
                                 "gen": "PPA. Gen. Sg. n.",
                                 "dat": "PPA. Dat. Sg. n.",
-                                "acc": "PPA. Acc. Sg. n.",
+                                "acc": "PPA. Akk. Sg. n.",
                                 "abl": "PPA. Abl. Sg. n."
                               },
                               "pl": {
                                 "nom": "PPA. Nom. Pl. n.",
                                 "gen": "PPA. Gen. Pl. n.",
                                 "dat": "PPA. Dat. Pl. n.",
-                                "acc": "PPA. Acc. Pl. n.",
+                                "acc": "PPA. Akk. Pl. n.",
                                 "abl": "PPA. Abl. Pl. n."
                               }
                             }
@@ -544,14 +540,14 @@ class VerbTest {
                                 "nom": "PFA. Nom. Sg. m.",
                                 "gen": "PFA. Gen. Sg. m.",
                                 "dat": "PFA. Dat. Sg. m.",
-                                "acc": "PFA. Acc. Sg. m.",
+                                "acc": "PFA. Akk. Sg. m.",
                                 "abl": "PFA. Abl. Sg. m."
                               },
                               "pl": {
                                 "nom": "PFA. Nom. Pl. m.",
                                 "gen": "PFA. Gen. Pl. m.",
                                 "dat": "PFA. Dat. Pl. m.",
-                                "acc": "PFA. Acc. Pl. m.",
+                                "acc": "PFA. Akk. Pl. m.",
                                 "abl": "PFA. Abl. Pl. m."
                               }
                             },
@@ -560,14 +556,14 @@ class VerbTest {
                                 "nom": "PFA. Nom. Sg. f.",
                                 "gen": "PFA. Gen. Sg. f.",
                                 "dat": "PFA. Dat. Sg. f.",
-                                "acc": "PFA. Acc. Sg. f.",
+                                "acc": "PFA. Akk. Sg. f.",
                                 "abl": "PFA. Abl. Sg. f."
                               },
                               "pl": {
                                 "nom": "PFA. Nom. Pl. f.",
                                 "gen": "PFA. Gen. Pl. f.",
                                 "dat": "PFA. Dat. Pl. f.",
-                                "acc": "PFA. Acc. Pl. f.",
+                                "acc": "PFA. Akk. Pl. f.",
                                 "abl": "PFA. Abl. Pl. f."
                               }
                             },
@@ -576,14 +572,14 @@ class VerbTest {
                                 "nom": "PFA. Nom. Sg. n.",
                                 "gen": "PFA. Gen. Sg. n.",
                                 "dat": "PFA. Dat. Sg. n.",
-                                "acc": "PFA. Acc. Sg. n.",
+                                "acc": "PFA. Akk. Sg. n.",
                                 "abl": "PFA. Abl. Sg. n."
                               },
                               "pl": {
                                 "nom": "PFA. Nom. Pl. n.",
                                 "gen": "PFA. Gen. Pl. n.",
                                 "dat": "PFA. Dat. Pl. n.",
-                                "acc": "PFA. Acc. Pl. n.",
+                                "acc": "PFA. Akk. Pl. n.",
                                 "abl": "PFA. Abl. Pl. n."
                               }
                             }
@@ -594,14 +590,14 @@ class VerbTest {
                                 "nom": "Gerund. Nom. Sg. m.",
                                 "gen": "Gerund. Gen. Sg. m.",
                                 "dat": "Gerund. Dat. Sg. m.",
-                                "acc": "Gerund. Acc. Sg. m.",
+                                "acc": "Gerund. Akk. Sg. m.",
                                 "abl": "Gerund. Abl. Sg. m."
                               },
                               "pl": {
                                 "nom": "Gerund. Nom. Pl. m.",
                                 "gen": "Gerund. Gen. Pl. m.",
                                 "dat": "Gerund. Dat. Pl. m.",
-                                "acc": "Gerund. Acc. Pl. m.",
+                                "acc": "Gerund. Akk. Pl. m.",
                                 "abl": "Gerund. Abl. Pl. m."
                               }
                             },
@@ -610,14 +606,14 @@ class VerbTest {
                                 "nom": "Gerund. Nom. Sg. f.",
                                 "gen": "Gerund. Gen. Sg. f.",
                                 "dat": "Gerund. Dat. Sg. f.",
-                                "acc": "Gerund. Acc. Sg. f.",
+                                "acc": "Gerund. Akk. Sg. f.",
                                 "abl": "Gerund. Abl. Sg. f."
                               },
                               "pl": {
                                 "nom": "Gerund. Nom. Pl. f.",
                                 "gen": "Gerund. Gen. Pl. f.",
                                 "dat": "Gerund. Dat. Pl. f.",
-                                "acc": "Gerund. Acc. Pl. f.",
+                                "acc": "Gerund. Akk. Pl. f.",
                                 "abl": "Gerund. Abl. Pl. f."
                               }
                             },
@@ -626,14 +622,14 @@ class VerbTest {
                                 "nom": "Gerund. Nom. Sg. n.",
                                 "gen": "Gerund. Gen. Sg. n.",
                                 "dat": "Gerund. Dat. Sg. n.",
-                                "acc": "Gerund. Acc. Sg. n.",
+                                "acc": "Gerund. Akk. Sg. n.",
                                 "abl": "Gerund. Abl. Sg. n."
                               },
                               "pl": {
                                 "nom": "Gerund. Nom. Pl. n.",
                                 "gen": "Gerund. Gen. Pl. n.",
                                 "dat": "Gerund. Dat. Pl. n.",
-                                "acc": "Gerund. Acc. Pl. n.",
+                                "acc": "Gerund. Akk. Pl. n.",
                                 "abl": "Gerund. Abl. Pl. n."
                               }
                             }
@@ -644,14 +640,14 @@ class VerbTest {
                                 "nom": "Gerundv. Nom. Sg. m.",
                                 "gen": "Gerundv. Gen. Sg. m.",
                                 "dat": "Gerundv. Dat. Sg. m.",
-                                "acc": "Gerundv. Acc. Sg. m.",
+                                "acc": "Gerundv. Akk. Sg. m.",
                                 "abl": "Gerundv. Abl. Sg. m."
                               },
                               "pl": {
                                 "nom": "Gerundv. Nom. Pl. m.",
                                 "gen": "Gerundv. Gen. Pl. m.",
                                 "dat": "Gerundv. Dat. Pl. m.",
-                                "acc": "Gerundv. Acc. Pl. m.",
+                                "acc": "Gerundv. Akk. Pl. m.",
                                 "abl": "Gerundv. Abl. Pl. m."
                               }
                             },
@@ -660,14 +656,14 @@ class VerbTest {
                                 "nom": "Gerundv. Nom. Sg. f.",
                                 "gen": "Gerundv. Gen. Sg. f.",
                                 "dat": "Gerundv. Dat. Sg. f.",
-                                "acc": "Gerundv. Acc. Sg. f.",
+                                "acc": "Gerundv. Akk. Sg. f.",
                                 "abl": "Gerundv. Abl. Sg. f."
                               },
                               "pl": {
                                 "nom": "Gerundv. Nom. Pl. f.",
                                 "gen": "Gerundv. Gen. Pl. f.",
                                 "dat": "Gerundv. Dat. Pl. f.",
-                                "acc": "Gerundv. Acc. Pl. f.",
+                                "acc": "Gerundv. Akk. Pl. f.",
                                 "abl": "Gerundv. Abl. Pl. f."
                               }
                             },
@@ -676,14 +672,14 @@ class VerbTest {
                                 "nom": "Gerundv. Nom. Sg. n.",
                                 "gen": "Gerundv. Gen. Sg. n.",
                                 "dat": "Gerundv. Dat. Sg. n.",
-                                "acc": "Gerundv. Acc. Sg. n.",
+                                "acc": "Gerundv. Akk. Sg. n.",
                                 "abl": "Gerundv. Abl. Sg. n."
                               },
                               "pl": {
                                 "nom": "Gerundv. Nom. Pl. n.",
                                 "gen": "Gerundv. Gen. Pl. n.",
                                 "dat": "Gerundv. Dat. Pl. n.",
-                                "acc": "Gerundv. Acc. Pl. n.",
+                                "acc": "Gerundv. Akk. Pl. n.",
                                 "abl": "Gerundv. Abl. Pl. n."
                               }
                             }
@@ -703,7 +699,7 @@ class VerbTest {
                 @Override
                 public String makeForm(VerbForm form) {
                     if (form.isInfinitive()) return "-";
-                    return form.formToString(i18n);
+                    return form.formToString();
                 }
 
                 @Override
@@ -754,14 +750,14 @@ class VerbTest {
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj.",
-                                  "second": "2. Pers. Sg. Conj.",
-                                  "third": "3. Pers. Sg. Conj."
+                                  "first": "1. Pers. Sg. Konj.",
+                                  "second": "2. Pers. Sg. Konj.",
+                                  "third": "3. Pers. Sg. Konj."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj.",
-                                  "second": "2. Pers. Pl. Conj.",
-                                  "third": "3. Pers. Pl. Conj."
+                                  "first": "1. Pers. Pl. Konj.",
+                                  "second": "2. Pers. Pl. Konj.",
+                                  "third": "3. Pers. Pl. Konj."
                                 }
                               }
                             },
@@ -780,14 +776,14 @@ class VerbTest {
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. Imperf.",
-                                  "second": "2. Pers. Sg. Conj. Imperf.",
-                                  "third": "3. Pers. Sg. Conj. Imperf."
+                                  "first": "1. Pers. Sg. Konj. Imperf.",
+                                  "second": "2. Pers. Sg. Konj. Imperf.",
+                                  "third": "3. Pers. Sg. Konj. Imperf."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. Imperf.",
-                                  "second": "2. Pers. Pl. Conj. Imperf.",
-                                  "third": "3. Pers. Pl. Conj. Imperf."
+                                  "first": "1. Pers. Pl. Konj. Imperf.",
+                                  "second": "2. Pers. Pl. Konj. Imperf.",
+                                  "third": "3. Pers. Pl. Konj. Imperf."
                                 }
                               }
                             },
@@ -806,40 +802,40 @@ class VerbTest {
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. Perf.",
-                                  "second": "2. Pers. Sg. Conj. Perf.",
-                                  "third": "3. Pers. Sg. Conj. Perf."
+                                  "first": "1. Pers. Sg. Konj. Perf.",
+                                  "second": "2. Pers. Sg. Konj. Perf.",
+                                  "third": "3. Pers. Sg. Konj. Perf."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. Perf.",
-                                  "second": "2. Pers. Pl. Conj. Perf.",
-                                  "third": "3. Pers. Pl. Conj. Perf."
+                                  "first": "1. Pers. Pl. Konj. Perf.",
+                                  "second": "2. Pers. Pl. Konj. Perf.",
+                                  "third": "3. Pers. Pl. Konj. Perf."
                                 }
                               }
                             },
                             "pluperfect": {
                               "indicative": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Pluperf.",
-                                  "second": "2. Pers. Sg. Pluperf.",
-                                  "third": "3. Pers. Sg. Pluperf."
+                                  "first": "1. Pers. Sg. Plusq.",
+                                  "second": "2. Pers. Sg. Plusq.",
+                                  "third": "3. Pers. Sg. Plusq."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Pluperf.",
-                                  "second": "2. Pers. Pl. Pluperf.",
-                                  "third": "3. Pers. Pl. Pluperf."
+                                  "first": "1. Pers. Pl. Plusq.",
+                                  "second": "2. Pers. Pl. Plusq.",
+                                  "third": "3. Pers. Pl. Plusq."
                                 }
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. Pluperf.",
-                                  "second": "2. Pers. Sg. Conj. Pluperf.",
-                                  "third": "3. Pers. Sg. Conj. Pluperf."
+                                  "first": "1. Pers. Sg. Konj. Plusq.",
+                                  "second": "2. Pers. Sg. Konj. Plusq.",
+                                  "third": "3. Pers. Sg. Konj. Plusq."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. Pluperf.",
-                                  "second": "2. Pers. Pl. Conj. Pluperf.",
-                                  "third": "3. Pers. Pl. Conj. Pluperf."
+                                  "first": "1. Pers. Pl. Konj. Plusq.",
+                                  "second": "2. Pers. Pl. Konj. Plusq.",
+                                  "third": "3. Pers. Pl. Konj. Plusq."
                                 }
                               }
                             },
@@ -858,14 +854,14 @@ class VerbTest {
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. FutI.",
-                                  "second": "2. Pers. Sg. Conj. FutI.",
-                                  "third": "3. Pers. Sg. Conj. FutI."
+                                  "first": "1. Pers. Sg. Konj. FutI.",
+                                  "second": "2. Pers. Sg. Konj. FutI.",
+                                  "third": "3. Pers. Sg. Konj. FutI."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. FutI.",
-                                  "second": "2. Pers. Pl. Conj. FutI.",
-                                  "third": "3. Pers. Pl. Conj. FutI."
+                                  "first": "1. Pers. Pl. Konj. FutI.",
+                                  "second": "2. Pers. Pl. Konj. FutI.",
+                                  "third": "3. Pers. Pl. Konj. FutI."
                                 }
                               }
                             },
@@ -884,14 +880,14 @@ class VerbTest {
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. FutII.",
-                                  "second": "2. Pers. Sg. Conj. FutII.",
-                                  "third": "3. Pers. Sg. Conj. FutII."
+                                  "first": "1. Pers. Sg. Konj. FutII.",
+                                  "second": "2. Pers. Sg. Konj. FutII.",
+                                  "third": "3. Pers. Sg. Konj. FutII."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. FutII.",
-                                  "second": "2. Pers. Pl. Conj. FutII.",
-                                  "third": "3. Pers. Pl. Conj. FutII."
+                                  "first": "1. Pers. Pl. Konj. FutII.",
+                                  "second": "2. Pers. Pl. Konj. FutII.",
+                                  "third": "3. Pers. Pl. Konj. FutII."
                                 }
                               }
                             }
@@ -912,14 +908,14 @@ class VerbTest {
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. Pass.",
-                                  "second": "2. Pers. Sg. Conj. Pass.",
-                                  "third": "3. Pers. Sg. Conj. Pass."
+                                  "first": "1. Pers. Sg. Konj. Pass.",
+                                  "second": "2. Pers. Sg. Konj. Pass.",
+                                  "third": "3. Pers. Sg. Konj. Pass."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. Pass.",
-                                  "second": "2. Pers. Pl. Conj. Pass.",
-                                  "third": "3. Pers. Pl. Conj. Pass."
+                                  "first": "1. Pers. Pl. Konj. Pass.",
+                                  "second": "2. Pers. Pl. Konj. Pass.",
+                                  "third": "3. Pers. Pl. Konj. Pass."
                                 }
                               }
                             },
@@ -938,14 +934,14 @@ class VerbTest {
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. Imperf. Pass.",
-                                  "second": "2. Pers. Sg. Conj. Imperf. Pass.",
-                                  "third": "3. Pers. Sg. Conj. Imperf. Pass."
+                                  "first": "1. Pers. Sg. Konj. Imperf. Pass.",
+                                  "second": "2. Pers. Sg. Konj. Imperf. Pass.",
+                                  "third": "3. Pers. Sg. Konj. Imperf. Pass."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. Imperf. Pass.",
-                                  "second": "2. Pers. Pl. Conj. Imperf. Pass.",
-                                  "third": "3. Pers. Pl. Conj. Imperf. Pass."
+                                  "first": "1. Pers. Pl. Konj. Imperf. Pass.",
+                                  "second": "2. Pers. Pl. Konj. Imperf. Pass.",
+                                  "third": "3. Pers. Pl. Konj. Imperf. Pass."
                                 }
                               }
                             },
@@ -964,40 +960,40 @@ class VerbTest {
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. Perf. Pass.",
-                                  "second": "2. Pers. Sg. Conj. Perf. Pass.",
-                                  "third": "3. Pers. Sg. Conj. Perf. Pass."
+                                  "first": "1. Pers. Sg. Konj. Perf. Pass.",
+                                  "second": "2. Pers. Sg. Konj. Perf. Pass.",
+                                  "third": "3. Pers. Sg. Konj. Perf. Pass."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. Perf. Pass.",
-                                  "second": "2. Pers. Pl. Conj. Perf. Pass.",
-                                  "third": "3. Pers. Pl. Conj. Perf. Pass."
+                                  "first": "1. Pers. Pl. Konj. Perf. Pass.",
+                                  "second": "2. Pers. Pl. Konj. Perf. Pass.",
+                                  "third": "3. Pers. Pl. Konj. Perf. Pass."
                                 }
                               }
                             },
                             "pluperfect": {
                               "indicative": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Pluperf. Pass.",
-                                  "second": "2. Pers. Sg. Pluperf. Pass.",
-                                  "third": "3. Pers. Sg. Pluperf. Pass."
+                                  "first": "1. Pers. Sg. Plusq. Pass.",
+                                  "second": "2. Pers. Sg. Plusq. Pass.",
+                                  "third": "3. Pers. Sg. Plusq. Pass."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Pluperf. Pass.",
-                                  "second": "2. Pers. Pl. Pluperf. Pass.",
-                                  "third": "3. Pers. Pl. Pluperf. Pass."
+                                  "first": "1. Pers. Pl. Plusq. Pass.",
+                                  "second": "2. Pers. Pl. Plusq. Pass.",
+                                  "third": "3. Pers. Pl. Plusq. Pass."
                                 }
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. Pluperf. Pass.",
-                                  "second": "2. Pers. Sg. Conj. Pluperf. Pass.",
-                                  "third": "3. Pers. Sg. Conj. Pluperf. Pass."
+                                  "first": "1. Pers. Sg. Konj. Plusq. Pass.",
+                                  "second": "2. Pers. Sg. Konj. Plusq. Pass.",
+                                  "third": "3. Pers. Sg. Konj. Plusq. Pass."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. Pluperf. Pass.",
-                                  "second": "2. Pers. Pl. Conj. Pluperf. Pass.",
-                                  "third": "3. Pers. Pl. Conj. Pluperf. Pass."
+                                  "first": "1. Pers. Pl. Konj. Plusq. Pass.",
+                                  "second": "2. Pers. Pl. Konj. Plusq. Pass.",
+                                  "third": "3. Pers. Pl. Konj. Plusq. Pass."
                                 }
                               }
                             },
@@ -1016,14 +1012,14 @@ class VerbTest {
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. FutI. Pass.",
-                                  "second": "2. Pers. Sg. Conj. FutI. Pass.",
-                                  "third": "3. Pers. Sg. Conj. FutI. Pass."
+                                  "first": "1. Pers. Sg. Konj. FutI. Pass.",
+                                  "second": "2. Pers. Sg. Konj. FutI. Pass.",
+                                  "third": "3. Pers. Sg. Konj. FutI. Pass."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. FutI. Pass.",
-                                  "second": "2. Pers. Pl. Conj. FutI. Pass.",
-                                  "third": "3. Pers. Pl. Conj. FutI. Pass."
+                                  "first": "1. Pers. Pl. Konj. FutI. Pass.",
+                                  "second": "2. Pers. Pl. Konj. FutI. Pass.",
+                                  "third": "3. Pers. Pl. Konj. FutI. Pass."
                                 }
                               }
                             },
@@ -1042,14 +1038,14 @@ class VerbTest {
                               },
                               "conjunctive": {
                                 "sg": {
-                                  "first": "1. Pers. Sg. Conj. FutII. Pass.",
-                                  "second": "2. Pers. Sg. Conj. FutII. Pass.",
-                                  "third": "3. Pers. Sg. Conj. FutII. Pass."
+                                  "first": "1. Pers. Sg. Konj. FutII. Pass.",
+                                  "second": "2. Pers. Sg. Konj. FutII. Pass.",
+                                  "third": "3. Pers. Sg. Konj. FutII. Pass."
                                 },
                                 "pl": {
-                                  "first": "1. Pers. Pl. Conj. FutII. Pass.",
-                                  "second": "2. Pers. Pl. Conj. FutII. Pass.",
-                                  "third": "3. Pers. Pl. Conj. FutII. Pass."
+                                  "first": "1. Pers. Pl. Konj. FutII. Pass.",
+                                  "second": "2. Pers. Pl. Konj. FutII. Pass.",
+                                  "third": "3. Pers. Pl. Konj. FutII. Pass."
                                 }
                               }
                             }
@@ -1062,14 +1058,14 @@ class VerbTest {
                                 "nom": "PPP. Nom. Sg. m.",
                                 "gen": "PPP. Gen. Sg. m.",
                                 "dat": "PPP. Dat. Sg. m.",
-                                "acc": "PPP. Acc. Sg. m.",
+                                "acc": "PPP. Akk. Sg. m.",
                                 "abl": "PPP. Abl. Sg. m."
                               },
                               "pl": {
                                 "nom": "PPP. Nom. Pl. m.",
                                 "gen": "PPP. Gen. Pl. m.",
                                 "dat": "PPP. Dat. Pl. m.",
-                                "acc": "PPP. Acc. Pl. m.",
+                                "acc": "PPP. Akk. Pl. m.",
                                 "abl": "PPP. Abl. Pl. m."
                               }
                             },
@@ -1078,14 +1074,14 @@ class VerbTest {
                                 "nom": "PPP. Nom. Sg. f.",
                                 "gen": "PPP. Gen. Sg. f.",
                                 "dat": "PPP. Dat. Sg. f.",
-                                "acc": "PPP. Acc. Sg. f.",
+                                "acc": "PPP. Akk. Sg. f.",
                                 "abl": "PPP. Abl. Sg. f."
                               },
                               "pl": {
                                 "nom": "PPP. Nom. Pl. f.",
                                 "gen": "PPP. Gen. Pl. f.",
                                 "dat": "PPP. Dat. Pl. f.",
-                                "acc": "PPP. Acc. Pl. f.",
+                                "acc": "PPP. Akk. Pl. f.",
                                 "abl": "PPP. Abl. Pl. f."
                               }
                             },
@@ -1094,14 +1090,14 @@ class VerbTest {
                                 "nom": "PPP. Nom. Sg. n.",
                                 "gen": "PPP. Gen. Sg. n.",
                                 "dat": "PPP. Dat. Sg. n.",
-                                "acc": "PPP. Acc. Sg. n.",
+                                "acc": "PPP. Akk. Sg. n.",
                                 "abl": "PPP. Abl. Sg. n."
                               },
                               "pl": {
                                 "nom": "PPP. Nom. Pl. n.",
                                 "gen": "PPP. Gen. Pl. n.",
                                 "dat": "PPP. Dat. Pl. n.",
-                                "acc": "PPP. Acc. Pl. n.",
+                                "acc": "PPP. Akk. Pl. n.",
                                 "abl": "PPP. Abl. Pl. n."
                               }
                             }
@@ -1112,14 +1108,14 @@ class VerbTest {
                                 "nom": "PPA. Nom. Sg. m.",
                                 "gen": "PPA. Gen. Sg. m.",
                                 "dat": "PPA. Dat. Sg. m.",
-                                "acc": "PPA. Acc. Sg. m.",
+                                "acc": "PPA. Akk. Sg. m.",
                                 "abl": "PPA. Abl. Sg. m."
                               },
                               "pl": {
                                 "nom": "PPA. Nom. Pl. m.",
                                 "gen": "PPA. Gen. Pl. m.",
                                 "dat": "PPA. Dat. Pl. m.",
-                                "acc": "PPA. Acc. Pl. m.",
+                                "acc": "PPA. Akk. Pl. m.",
                                 "abl": "PPA. Abl. Pl. m."
                               }
                             },
@@ -1128,14 +1124,14 @@ class VerbTest {
                                 "nom": "PPA. Nom. Sg. f.",
                                 "gen": "PPA. Gen. Sg. f.",
                                 "dat": "PPA. Dat. Sg. f.",
-                                "acc": "PPA. Acc. Sg. f.",
+                                "acc": "PPA. Akk. Sg. f.",
                                 "abl": "PPA. Abl. Sg. f."
                               },
                               "pl": {
                                 "nom": "PPA. Nom. Pl. f.",
                                 "gen": "PPA. Gen. Pl. f.",
                                 "dat": "PPA. Dat. Pl. f.",
-                                "acc": "PPA. Acc. Pl. f.",
+                                "acc": "PPA. Akk. Pl. f.",
                                 "abl": "PPA. Abl. Pl. f."
                               }
                             },
@@ -1144,14 +1140,14 @@ class VerbTest {
                                 "nom": "PPA. Nom. Sg. n.",
                                 "gen": "PPA. Gen. Sg. n.",
                                 "dat": "PPA. Dat. Sg. n.",
-                                "acc": "PPA. Acc. Sg. n.",
+                                "acc": "PPA. Akk. Sg. n.",
                                 "abl": "PPA. Abl. Sg. n."
                               },
                               "pl": {
                                 "nom": "PPA. Nom. Pl. n.",
                                 "gen": "PPA. Gen. Pl. n.",
                                 "dat": "PPA. Dat. Pl. n.",
-                                "acc": "PPA. Acc. Pl. n.",
+                                "acc": "PPA. Akk. Pl. n.",
                                 "abl": "PPA. Abl. Pl. n."
                               }
                             }
@@ -1162,14 +1158,14 @@ class VerbTest {
                                 "nom": "PFA. Nom. Sg. m.",
                                 "gen": "PFA. Gen. Sg. m.",
                                 "dat": "PFA. Dat. Sg. m.",
-                                "acc": "PFA. Acc. Sg. m.",
+                                "acc": "PFA. Akk. Sg. m.",
                                 "abl": "PFA. Abl. Sg. m."
                               },
                               "pl": {
                                 "nom": "PFA. Nom. Pl. m.",
                                 "gen": "PFA. Gen. Pl. m.",
                                 "dat": "PFA. Dat. Pl. m.",
-                                "acc": "PFA. Acc. Pl. m.",
+                                "acc": "PFA. Akk. Pl. m.",
                                 "abl": "PFA. Abl. Pl. m."
                               }
                             },
@@ -1178,14 +1174,14 @@ class VerbTest {
                                 "nom": "PFA. Nom. Sg. f.",
                                 "gen": "PFA. Gen. Sg. f.",
                                 "dat": "PFA. Dat. Sg. f.",
-                                "acc": "PFA. Acc. Sg. f.",
+                                "acc": "PFA. Akk. Sg. f.",
                                 "abl": "PFA. Abl. Sg. f."
                               },
                               "pl": {
                                 "nom": "PFA. Nom. Pl. f.",
                                 "gen": "PFA. Gen. Pl. f.",
                                 "dat": "PFA. Dat. Pl. f.",
-                                "acc": "PFA. Acc. Pl. f.",
+                                "acc": "PFA. Akk. Pl. f.",
                                 "abl": "PFA. Abl. Pl. f."
                               }
                             },
@@ -1194,14 +1190,14 @@ class VerbTest {
                                 "nom": "PFA. Nom. Sg. n.",
                                 "gen": "PFA. Gen. Sg. n.",
                                 "dat": "PFA. Dat. Sg. n.",
-                                "acc": "PFA. Acc. Sg. n.",
+                                "acc": "PFA. Akk. Sg. n.",
                                 "abl": "PFA. Abl. Sg. n."
                               },
                               "pl": {
                                 "nom": "PFA. Nom. Pl. n.",
                                 "gen": "PFA. Gen. Pl. n.",
                                 "dat": "PFA. Dat. Pl. n.",
-                                "acc": "PFA. Acc. Pl. n.",
+                                "acc": "PFA. Akk. Pl. n.",
                                 "abl": "PFA. Abl. Pl. n."
                               }
                             }
@@ -1212,14 +1208,14 @@ class VerbTest {
                                 "nom": "Gerund. Nom. Sg. m.",
                                 "gen": "Gerund. Gen. Sg. m.",
                                 "dat": "Gerund. Dat. Sg. m.",
-                                "acc": "Gerund. Acc. Sg. m.",
+                                "acc": "Gerund. Akk. Sg. m.",
                                 "abl": "Gerund. Abl. Sg. m."
                               },
                               "pl": {
                                 "nom": "Gerund. Nom. Pl. m.",
                                 "gen": "Gerund. Gen. Pl. m.",
                                 "dat": "Gerund. Dat. Pl. m.",
-                                "acc": "Gerund. Acc. Pl. m.",
+                                "acc": "Gerund. Akk. Pl. m.",
                                 "abl": "Gerund. Abl. Pl. m."
                               }
                             },
@@ -1228,14 +1224,14 @@ class VerbTest {
                                 "nom": "Gerund. Nom. Sg. f.",
                                 "gen": "Gerund. Gen. Sg. f.",
                                 "dat": "Gerund. Dat. Sg. f.",
-                                "acc": "Gerund. Acc. Sg. f.",
+                                "acc": "Gerund. Akk. Sg. f.",
                                 "abl": "Gerund. Abl. Sg. f."
                               },
                               "pl": {
                                 "nom": "Gerund. Nom. Pl. f.",
                                 "gen": "Gerund. Gen. Pl. f.",
                                 "dat": "Gerund. Dat. Pl. f.",
-                                "acc": "Gerund. Acc. Pl. f.",
+                                "acc": "Gerund. Akk. Pl. f.",
                                 "abl": "Gerund. Abl. Pl. f."
                               }
                             },
@@ -1244,14 +1240,14 @@ class VerbTest {
                                 "nom": "Gerund. Nom. Sg. n.",
                                 "gen": "Gerund. Gen. Sg. n.",
                                 "dat": "Gerund. Dat. Sg. n.",
-                                "acc": "Gerund. Acc. Sg. n.",
+                                "acc": "Gerund. Akk. Sg. n.",
                                 "abl": "Gerund. Abl. Sg. n."
                               },
                               "pl": {
                                 "nom": "Gerund. Nom. Pl. n.",
                                 "gen": "Gerund. Gen. Pl. n.",
                                 "dat": "Gerund. Dat. Pl. n.",
-                                "acc": "Gerund. Acc. Pl. n.",
+                                "acc": "Gerund. Akk. Pl. n.",
                                 "abl": "Gerund. Abl. Pl. n."
                               }
                             }
@@ -1262,14 +1258,14 @@ class VerbTest {
                                 "nom": "Gerundv. Nom. Sg. m.",
                                 "gen": "Gerundv. Gen. Sg. m.",
                                 "dat": "Gerundv. Dat. Sg. m.",
-                                "acc": "Gerundv. Acc. Sg. m.",
+                                "acc": "Gerundv. Akk. Sg. m.",
                                 "abl": "Gerundv. Abl. Sg. m."
                               },
                               "pl": {
                                 "nom": "Gerundv. Nom. Pl. m.",
                                 "gen": "Gerundv. Gen. Pl. m.",
                                 "dat": "Gerundv. Dat. Pl. m.",
-                                "acc": "Gerundv. Acc. Pl. m.",
+                                "acc": "Gerundv. Akk. Pl. m.",
                                 "abl": "Gerundv. Abl. Pl. m."
                               }
                             },
@@ -1278,14 +1274,14 @@ class VerbTest {
                                 "nom": "Gerundv. Nom. Sg. f.",
                                 "gen": "Gerundv. Gen. Sg. f.",
                                 "dat": "Gerundv. Dat. Sg. f.",
-                                "acc": "Gerundv. Acc. Sg. f.",
+                                "acc": "Gerundv. Akk. Sg. f.",
                                 "abl": "Gerundv. Abl. Sg. f."
                               },
                               "pl": {
                                 "nom": "Gerundv. Nom. Pl. f.",
                                 "gen": "Gerundv. Gen. Pl. f.",
                                 "dat": "Gerundv. Dat. Pl. f.",
-                                "acc": "Gerundv. Acc. Pl. f.",
+                                "acc": "Gerundv. Akk. Pl. f.",
                                 "abl": "Gerundv. Abl. Pl. f."
                               }
                             },
@@ -1294,14 +1290,14 @@ class VerbTest {
                                 "nom": "Gerundv. Nom. Sg. n.",
                                 "gen": "Gerundv. Gen. Sg. n.",
                                 "dat": "Gerundv. Dat. Sg. n.",
-                                "acc": "Gerundv. Acc. Sg. n.",
+                                "acc": "Gerundv. Akk. Sg. n.",
                                 "abl": "Gerundv. Abl. Sg. n."
                               },
                               "pl": {
                                 "nom": "Gerundv. Nom. Pl. n.",
                                 "gen": "Gerundv. Gen. Pl. n.",
                                 "dat": "Gerundv. Dat. Pl. n.",
-                                "acc": "Gerundv. Acc. Pl. n.",
+                                "acc": "Gerundv. Akk. Pl. n.",
                                 "abl": "Gerundv. Abl. Pl. n."
                               }
                             }

@@ -1,6 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.adjectives;
 
-import jupiterpi.vocabulum.core.i18n.I18n;
+import jupiterpi.vocabulum.core.i18n.Symbols;
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
@@ -44,8 +44,8 @@ public class AdjectiveForm implements VocabularyForm {
 
     /* parser */
 
-    public static AdjectiveForm fromString(String expr, I18n i18n) throws ParserException, LexerException {
-        return fromTokens(new Lexer(expr, i18n).getTokens());
+    public static AdjectiveForm fromString(String expr) throws ParserException, LexerException {
+        return fromTokens(new Lexer(expr).getTokens());
     }
 
     public static final ComparativeForm DEFAULT_COMPARATIVE_FORM = ComparativeForm.POSITIVE;
@@ -60,7 +60,7 @@ public class AdjectiveForm implements VocabularyForm {
         int comparativeFormIndex = tokens.indexOf(new Token(Token.Type.COMPARATIVE_FORM));
         ComparativeForm comparativeForm = DEFAULT_COMPARATIVE_FORM;
         if (comparativeFormIndex >= 0) {
-            comparativeForm = tokens.getI18n().comparativeFormFromSymbol(tokens.get(comparativeFormIndex).getContent());
+            comparativeForm = Symbols.get().comparativeFormFromSymbol(tokens.get(comparativeFormIndex).getContent());
             tokens.remove(comparativeFormIndex);
         }
 
@@ -95,14 +95,14 @@ public class AdjectiveForm implements VocabularyForm {
     // to string
 
     @Override
-    public String formToString(I18n i18n) {
+    public String formToString() {
         String str = "";
         if (adverb) {
-            str += i18n.getAdverbFlag() + ".";
+            str += Symbols.get().getAdverbFlag() + ".";
         } else {
-            str += declinedForm.formToString(i18n);
+            str += declinedForm.formToString();
         }
-        str += (comparativeForm == DEFAULT_COMPARATIVE_FORM ? "" : " " + i18n.getComparativeFormSymbol(comparativeForm) + ".");
+        str += (comparativeForm == DEFAULT_COMPARATIVE_FORM ? "" : " " + Symbols.get().getComparativeFormSymbol(comparativeForm) + ".");
         return str;
     }
 

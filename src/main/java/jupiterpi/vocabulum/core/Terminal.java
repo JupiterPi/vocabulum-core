@@ -1,6 +1,5 @@
 package jupiterpi.vocabulum.core;
 
-import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.ta.TranslationAssistance;
 import jupiterpi.vocabulum.core.ta.result.TAResult;
 import jupiterpi.vocabulum.core.util.ConsoleInterface;
@@ -12,90 +11,79 @@ import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.AdjectiveForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.Noun;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.NounForm;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
-import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Terminal extends ConsoleInterface {
-    public void run(I18n i18n) {
+    public void run() {
         out("----- Vocabulum Terminal -----");
 
-        Document texts = (Document) i18n.getTexts().get("terminal");
-        Document promptTexts = (Document) texts.get("prompt");
-        Document translationAssistanceTexts = (Document) texts.get("translation_assistance");
-        Document germanTranslationMatchingTexts = (Document) texts.get("german_translation_matching");
-
-        final String NOUN = texts.getString("noun");
-        final String ADJECTIVE = texts.getString("adjective");
-        final String VERB = texts.getString("verb");
-        final String ERROR = texts.getString("error");
-
         out("");
-        out(texts.getString("help-text"));
+        out("Enter \"p\" for Prompting, \"t\" for Translation Assistance, \"g\" for German translation matching. ");
 
         String modeInput = in("p/t/g: ");
         if (modeInput.equals("p")) {
 
             out("");
-            out("--- " + promptTexts.getString("title") + " ---");
-            out(promptTexts.getString("help-text"));
+            out("--- Prompting ---");
+            out("Usage: Type a vocabulary after \">\" (e. g. \"amicus, amici m. -- friend\", \"laetus, laeta, laetum -- happy\" or \"felix, Gen. felicis -- lucky\"). Then after the indented \">\", type the form you want to generate (e. g. \"Nom. Sg.\" or \"Gen. Pl. Fem.\"). To go back at any time, press Enter without typing something on a prompt. ");
             out("");
 
             while (true) {
                 try {
                     String wordInput = in("> ");
                     if (wordInput.equals("")) break;
-                    Vocabulary vocabulary = Vocabulary.fromString(wordInput, i18n, "terminal");
+                    Vocabulary vocabulary = Vocabulary.fromString(wordInput, "terminal");
                     if (vocabulary.getKind() == Vocabulary.Kind.NOUN) {
                         Noun noun = (Noun) vocabulary;
                         while (true) {
                             try {
-                                String formInput = in("[" + NOUN + "] " + noun.getBaseForm() + " > ");
+                                String formInput = in("[Noun] " + noun.getBaseForm() + " > ");
                                 if (formInput.equals("")) break;
-                                NounForm form = NounForm.fromString(formInput, i18n);
+                                NounForm form = NounForm.fromString(formInput);
                                 out(noun.makeForm(form));
                             } catch (Exception e) {
-                                out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
+                                out("ERROR: " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
                             }
                         }
                     } else if (vocabulary.getKind() == Vocabulary.Kind.ADJECTIVE) {
                         Adjective adjective = (Adjective) vocabulary;
                         while (true) {
                             try {
-                                String formInput = in("[" + ADJECTIVE + "] " + adjective.getBaseForm() + " > ");
+                                String formInput = in("[Adjective] " + adjective.getBaseForm() + " > ");
                                 if (formInput.equals("")) break;
-                                AdjectiveForm form = AdjectiveForm.fromString(formInput, i18n);
+                                AdjectiveForm form = AdjectiveForm.fromString(formInput);
                                 out(adjective.makeForm(form));
                             } catch (Exception e) {
-                                out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
+                                out("ERROR: " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
                             }
                         }
                     } else if (vocabulary.getKind() == Vocabulary.Kind.VERB) {
                         Verb verb = (Verb) vocabulary;
                         while (true) {
                             try {
-                                String formInput = in("[" + VERB + "] " + verb.getBaseForm() + " > ");
+                                String formInput = in("[Verb] " + verb.getBaseForm() + " > ");
                                 if (formInput.equals("")) break;
-                                VerbForm form = VerbForm.fromString(formInput, i18n);
+                                VerbForm form = VerbForm.fromString(formInput);
                                 out(verb.makeForm(form));
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
+                                out("ERROR: " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
                             }
                         }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
+                    out("ERROR: " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
                 }
             }
 
         } else if (modeInput.equals("t")) {
 
             out("");
-            out("--- " + translationAssistanceTexts.getString("title") + " ---");
-            out(translationAssistanceTexts.getString("help-text"));
+            out("--- Translation Assistance ---");
+            out("Usage: Type a sentence after \">\" (e. g. \"Asinus stat es exspectat.\") and press Enter. Translation Assistance will print you all available information required for translating it.");
             out("");
 
             while (true) {
@@ -106,7 +94,7 @@ public class Terminal extends ConsoleInterface {
 
                     int maxLines = 0;
                     for (TAResult.TAResultItem item : result.getItems()) {
-                        if (item.getLines(i18n).size() > maxLines) maxLines = item.getLines(i18n).size();
+                        if (item.getLines().size() > maxLines) maxLines = item.getLines().size();
                     }
 
                     List<String> outputLines = new ArrayList<>();
@@ -117,7 +105,7 @@ public class Terminal extends ConsoleInterface {
                     for (TAResult.TAResultItem item : result.getItems()) {
                         int maxLineLength = 0;
                         if (item.getItem().length() > maxLineLength) maxLineLength = item.getItem().length();
-                        for (String line : item.getLines(i18n)) {
+                        for (String line : item.getLines()) {
                             if (line.length() > maxLineLength) maxLineLength = line.length();
                         }
 
@@ -127,9 +115,9 @@ public class Terminal extends ConsoleInterface {
                         }
                         outputLines.set(0, outputLines.get(0) + "   " + itemLine);
 
-                        int linesCount = item.getLines(i18n).size();
+                        int linesCount = item.getLines().size();
                         for (int i = 0; i < linesCount; i++) {
-                            String lineLine = item.getLines(i18n).get(i);
+                            String lineLine = item.getLines().get(i);
                             while (lineLine.length() < maxLineLength) {
                                 lineLine += " ";
                             }
@@ -152,15 +140,15 @@ public class Terminal extends ConsoleInterface {
                     }
                     out("");
                 } catch (Exception e) {
-                    out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
+                    out("ERROR: " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
                 }
             }
 
         } else if (modeInput.equals("g")) {
 
             out("");
-            out("--- " + germanTranslationMatchingTexts.getString("title") + " ---");
-            out(germanTranslationMatchingTexts.getString("help-text"));
+            out("--- German translation matching ---");
+            out("Usage: Type a translation sequence after \">\" (e. g. \"der Freund\" or \"aus, von (... her)\"). Then after the indented \">\", type an input for the translation. The German translation matcher will match your input to the target translation. ");
             out("");
 
             while (true) {
@@ -182,18 +170,18 @@ public class Terminal extends ConsoleInterface {
                                 );
                             }
                         } catch (Exception e) {
-                            out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
+                            out("ERROR: " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
                         }
                     }
                 } catch (Exception e) {
-                    out(ERROR + ": " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
+                    out("ERROR: " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
                 }
             }
 
         } else {
-            out(String.format(texts.getString("unknown-mode-err"), modeInput));
+            out("Unknown mode: " + modeInput);
         }
 
-        out(texts.getString("done"));
+        out("Done.");
     }
 }

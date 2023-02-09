@@ -1,7 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated.form;
 
-import jupiterpi.vocabulum.core.db.Database;
-import jupiterpi.vocabulum.core.i18n.I18n;
+import jupiterpi.vocabulum.core.i18n.Symbols;
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
@@ -21,22 +20,14 @@ public class ConjugatedForm implements Comparable<ConjugatedForm> {
 
     private ConjugatedForm() {}
 
-    public static ConjugatedForm fromString(String str, I18n i18n) throws LexerException, ParserException {
-        return fromTokens(new Lexer(str, i18n).getTokens());
-    }
-    public static ConjugatedForm get(String str) {
-        try {
-            return fromString(str, Database.get().getI18ns().internal());
-        } catch (LexerException | ParserException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public static ConjugatedForm fromString(String str) throws LexerException, ParserException {
+        return fromTokens(new Lexer(str).getTokens());
     }
 
     public static ConjugatedForm fromTokens(TokenSequence tokens) throws ParserException {
         if (tokens.size() == 2 && tokens.fitsStartsWith(TokenSequence.fromTypes(Token.Type.PERSON, Token.Type.NUMBER))) {
-            Person person = tokens.getI18n().personFromSymbol(tokens.get(0).getContent());
-            CNumber number = tokens.getI18n().cNumberFromSymbol(tokens.get(1).getContent());
+            Person person = Symbols.get().personFromSymbol(tokens.get(0).getContent());
+            CNumber number = Symbols.get().cNumberFromSymbol(tokens.get(1).getContent());
             return new ConjugatedForm(person, number);
         } else {
             throw new ParserException("Invalid conjugated form: " + tokens);
@@ -68,16 +59,16 @@ public class ConjugatedForm implements Comparable<ConjugatedForm> {
 
     @Override
     public String toString() {
-        return "{" + formToString(Database.get().getI18ns().internal(), false) + "}";
+        return "{" + formToString(false) + "}";
     }
 
-    public String formToString(I18n i18n, boolean userFriendly) {
+    public String formToString(boolean userFriendly) {
         return switch (person) {
             case FIRST -> "1. ";
             case SECOND -> "2. ";
             case THIRD -> "3. ";
         }
-            + (userFriendly ? i18n.getPersonCosmetic() + ". " : "")
+            + (userFriendly ? Symbols.get().getPersonCosmetic() + ". " : "")
             + number.toString().substring(0, 1).toUpperCase() + number.toString().substring(1).toLowerCase()
             + ".";
     }

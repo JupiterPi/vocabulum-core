@@ -1,8 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.adjectives;
 
-import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
-import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
@@ -23,8 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockDatabaseSetup.class)
 class AdjectiveTest {
-    I18n i18n = Database.get().getI18ns().internal();
-
     @Nested
     @DisplayName("getDefinition()")
     class GetDefinition {
@@ -52,7 +48,7 @@ class AdjectiveTest {
                     return "acer";
                 }
             };
-            assertEquals("acer, acris, acre", adjective.getDefinition(i18n));
+            assertEquals("acer, acris, acre", adjective.getDefinition());
         }
 
         @Test
@@ -75,7 +71,7 @@ class AdjectiveTest {
                     return "felix";
                 }
             };
-            assertEquals("felix, Gen. felicis", adjective.getDefinition(i18n));
+            assertEquals("felix, Gen. felicis", adjective.getDefinition());
         }
 
     }
@@ -90,7 +86,7 @@ class AdjectiveTest {
         Adjective adjective = new Adjective(translations, "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS) {
             @Override
             public String makeForm(AdjectiveForm form) {
-                return form.formToString(i18n);
+                return form.formToString();
             }
 
             @Override
@@ -108,14 +104,14 @@ class AdjectiveTest {
                                         "nom": "Nom. Sg. m.",
                                         "gen": "Gen. Sg. m.",
                                         "dat": "Dat. Sg. m.",
-                                        "acc": "Acc. Sg. m.",
+                                        "acc": "Akk. Sg. m.",
                                         "abl": "Abl. Sg. m."
                                     },
                                     "pl": {
                                         "nom": "Nom. Pl. m.",
                                         "gen": "Gen. Pl. m.",
                                         "dat": "Dat. Pl. m.",
-                                        "acc": "Acc. Pl. m.",
+                                        "acc": "Akk. Pl. m.",
                                         "abl": "Abl. Pl. m."
                                     }
                                 },
@@ -124,14 +120,14 @@ class AdjectiveTest {
                                         "nom": "Nom. Sg. f.",
                                         "gen": "Gen. Sg. f.",
                                         "dat": "Dat. Sg. f.",
-                                        "acc": "Acc. Sg. f.",
+                                        "acc": "Akk. Sg. f.",
                                         "abl": "Abl. Sg. f."
                                     },
                                     "pl": {
                                         "nom": "Nom. Pl. f.",
                                         "gen": "Gen. Pl. f.",
                                         "dat": "Dat. Pl. f.",
-                                        "acc": "Acc. Pl. f.",
+                                        "acc": "Akk. Pl. f.",
                                         "abl": "Abl. Pl. f."
                                     }
                                 },
@@ -140,14 +136,14 @@ class AdjectiveTest {
                                         "nom": "Nom. Sg. n.",
                                         "gen": "Gen. Sg. n.",
                                         "dat": "Dat. Sg. n.",
-                                        "acc": "Acc. Sg. n.",
+                                        "acc": "Akk. Sg. n.",
                                         "abl": "Abl. Sg. n."
                                     },
                                     "pl": {
                                         "nom": "Nom. Pl. n.",
                                         "gen": "Gen. Pl. n.",
                                         "dat": "Dat. Pl. n.",
-                                        "acc": "Acc. Pl. n.",
+                                        "acc": "Akk. Pl. n.",
                                         "abl": "Abl. Pl. n."
                                     }
                                 }
@@ -155,50 +151,50 @@ class AdjectiveTest {
                             "comparative": {
                                 "masc": {
                                     "sg": {
-                                        "nom": "Nom. Sg. m. Comp.",
-                                        "gen": "Gen. Sg. m. Comp.",
-                                        "dat": "Dat. Sg. m. Comp.",
-                                        "acc": "Acc. Sg. m. Comp.",
-                                        "abl": "Abl. Sg. m. Comp."
+                                        "nom": "Nom. Sg. m. Komp.",
+                                        "gen": "Gen. Sg. m. Komp.",
+                                        "dat": "Dat. Sg. m. Komp.",
+                                        "acc": "Akk. Sg. m. Komp.",
+                                        "abl": "Abl. Sg. m. Komp."
                                     },
                                     "pl": {
-                                        "nom": "Nom. Pl. m. Comp.",
-                                        "gen": "Gen. Pl. m. Comp.",
-                                        "dat": "Dat. Pl. m. Comp.",
-                                        "acc": "Acc. Pl. m. Comp.",
-                                        "abl": "Abl. Pl. m. Comp."
+                                        "nom": "Nom. Pl. m. Komp.",
+                                        "gen": "Gen. Pl. m. Komp.",
+                                        "dat": "Dat. Pl. m. Komp.",
+                                        "acc": "Akk. Pl. m. Komp.",
+                                        "abl": "Abl. Pl. m. Komp."
                                     }
                                 },
                                 "fem": {
                                     "sg": {
-                                        "nom": "Nom. Sg. f. Comp.",
-                                        "gen": "Gen. Sg. f. Comp.",
-                                        "dat": "Dat. Sg. f. Comp.",
-                                        "acc": "Acc. Sg. f. Comp.",
-                                        "abl": "Abl. Sg. f. Comp."
+                                        "nom": "Nom. Sg. f. Komp.",
+                                        "gen": "Gen. Sg. f. Komp.",
+                                        "dat": "Dat. Sg. f. Komp.",
+                                        "acc": "Akk. Sg. f. Komp.",
+                                        "abl": "Abl. Sg. f. Komp."
                                     },
                                     "pl": {
-                                        "nom": "Nom. Pl. f. Comp.",
-                                        "gen": "Gen. Pl. f. Comp.",
-                                        "dat": "Dat. Pl. f. Comp.",
-                                        "acc": "Acc. Pl. f. Comp.",
-                                        "abl": "Abl. Pl. f. Comp."
+                                        "nom": "Nom. Pl. f. Komp.",
+                                        "gen": "Gen. Pl. f. Komp.",
+                                        "dat": "Dat. Pl. f. Komp.",
+                                        "acc": "Akk. Pl. f. Komp.",
+                                        "abl": "Abl. Pl. f. Komp."
                                     }
                                 },
                                 "neut": {
                                     "sg": {
-                                        "nom": "Nom. Sg. n. Comp.",
-                                        "gen": "Gen. Sg. n. Comp.",
-                                        "dat": "Dat. Sg. n. Comp.",
-                                        "acc": "Acc. Sg. n. Comp.",
-                                        "abl": "Abl. Sg. n. Comp."
+                                        "nom": "Nom. Sg. n. Komp.",
+                                        "gen": "Gen. Sg. n. Komp.",
+                                        "dat": "Dat. Sg. n. Komp.",
+                                        "acc": "Akk. Sg. n. Komp.",
+                                        "abl": "Abl. Sg. n. Komp."
                                     },
                                     "pl": {
-                                        "nom": "Nom. Pl. n. Comp.",
-                                        "gen": "Gen. Pl. n. Comp.",
-                                        "dat": "Dat. Pl. n. Comp.",
-                                        "acc": "Acc. Pl. n. Comp.",
-                                        "abl": "Abl. Pl. n. Comp."
+                                        "nom": "Nom. Pl. n. Komp.",
+                                        "gen": "Gen. Pl. n. Komp.",
+                                        "dat": "Dat. Pl. n. Komp.",
+                                        "acc": "Akk. Pl. n. Komp.",
+                                        "abl": "Abl. Pl. n. Komp."
                                     }
                                 }
                             },
@@ -208,14 +204,14 @@ class AdjectiveTest {
                                         "nom": "Nom. Sg. m. Sup.",
                                         "gen": "Gen. Sg. m. Sup.",
                                         "dat": "Dat. Sg. m. Sup.",
-                                        "acc": "Acc. Sg. m. Sup.",
+                                        "acc": "Akk. Sg. m. Sup.",
                                         "abl": "Abl. Sg. m. Sup."
                                     },
                                     "pl": {
                                         "nom": "Nom. Pl. m. Sup.",
                                         "gen": "Gen. Pl. m. Sup.",
                                         "dat": "Dat. Pl. m. Sup.",
-                                        "acc": "Acc. Pl. m. Sup.",
+                                        "acc": "Akk. Pl. m. Sup.",
                                         "abl": "Abl. Pl. m. Sup."
                                     }
                                 },
@@ -224,14 +220,14 @@ class AdjectiveTest {
                                         "nom": "Nom. Sg. f. Sup.",
                                         "gen": "Gen. Sg. f. Sup.",
                                         "dat": "Dat. Sg. f. Sup.",
-                                        "acc": "Acc. Sg. f. Sup.",
+                                        "acc": "Akk. Sg. f. Sup.",
                                         "abl": "Abl. Sg. f. Sup."
                                     },
                                     "pl": {
                                         "nom": "Nom. Pl. f. Sup.",
                                         "gen": "Gen. Pl. f. Sup.",
                                         "dat": "Dat. Pl. f. Sup.",
-                                        "acc": "Acc. Pl. f. Sup.",
+                                        "acc": "Akk. Pl. f. Sup.",
                                         "abl": "Abl. Pl. f. Sup."
                                     }
                                 },
@@ -240,14 +236,14 @@ class AdjectiveTest {
                                         "nom": "Nom. Sg. n. Sup.",
                                         "gen": "Gen. Sg. n. Sup.",
                                         "dat": "Dat. Sg. n. Sup.",
-                                        "acc": "Acc. Sg. n. Sup.",
+                                        "acc": "Akk. Sg. n. Sup.",
                                         "abl": "Abl. Sg. n. Sup."
                                     },
                                     "pl": {
                                         "nom": "Nom. Pl. n. Sup.",
                                         "gen": "Gen. Pl. n. Sup.",
                                         "dat": "Dat. Pl. n. Sup.",
-                                        "acc": "Acc. Pl. n. Sup.",
+                                        "acc": "Akk. Pl. n. Sup.",
                                         "abl": "Abl. Pl. n. Sup."
                                     }
                                 }
@@ -255,7 +251,7 @@ class AdjectiveTest {
                         },
                         "adverbs": {
                             "positive": "Adv.",
-                            "comparative": "Adv. Comp.",
+                            "comparative": "Adv. Komp.",
                             "superlative": "Adv. Sup."
                         }
                     },

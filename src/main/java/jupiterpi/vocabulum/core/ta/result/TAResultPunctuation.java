@@ -1,7 +1,5 @@
 package jupiterpi.vocabulum.core.ta.result;
 
-import jupiterpi.vocabulum.core.i18n.I18n;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +22,7 @@ public class TAResultPunctuation implements TAResult.TAResultItem {
     }
 
     @Override
-    public List<String> getLines(I18n i18n) {
+    public List<String> getLines() {
         return new ArrayList<>();
     }
 }

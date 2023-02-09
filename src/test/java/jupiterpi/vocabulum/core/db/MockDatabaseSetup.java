@@ -1,6 +1,5 @@
 package jupiterpi.vocabulum.core.db;
 
-import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
@@ -24,7 +23,7 @@ public class MockDatabaseSetup implements BeforeAllCallback {
     }
 
     private final boolean mockDatabase = true;
-    private void setup() throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException, ReflectiveOperationException {
+    private void setup() throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException, ReflectiveOperationException {
         if (mockDatabase) MockDatabase.inject();
         Database.get().connectAndLoad("mongodb://localhost");
         Database.get().prepareWordbase();

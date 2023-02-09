@@ -1,11 +1,11 @@
 package jupiterpi.vocabulum.core.interpreter.lexer;
 
-import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
-import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -13,12 +13,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockDatabaseSetup.class)
 class LexerTest {
-    I18n i18n = Database.get().getI18ns().internal();
-
     @Nested
     @DisplayName("valid")
     class Valid {
@@ -31,10 +30,10 @@ class LexerTest {
             @MethodSource("wordAndComma_args")
             @DisplayName("word, comma")
             void wordAndComma(String content, Token.Type expectedType) throws LexerException {
-                Lexer lexer = new Lexer(content, i18n);
+                Lexer lexer = new Lexer(content);
                 TokenSequence s = lexer.getTokens();
                 assertEquals(1, s.size());
-                assertEquals(new Token(expectedType, content, i18n), s.get(0));
+                assertEquals(new Token(expectedType, content), s.get(0));
             }
             static Stream<Arguments> wordAndComma_args() {
                 return Stream.of(
@@ -47,10 +46,10 @@ class LexerTest {
             @MethodSource("abbreviations_args")
             @DisplayName("abbreviations")
             void abbreviations(String content, Token.Type expectedType) throws LexerException {
-                Lexer lexer = new Lexer(content + ".", i18n);
+                Lexer lexer = new Lexer(content + ".");
                 TokenSequence s = lexer.getTokens();
                 assertEquals(1, s.size());
-                assertEquals(new Token(expectedType, content, i18n), s.get(0));
+                assertEquals(new Token(expectedType, content), s.get(0));
             }
             static Stream<Arguments> abbreviations_args() {
                 return Stream.of(
@@ -61,8 +60,8 @@ class LexerTest {
                         Arguments.of("Adv", Token.Type.ADV_FLAG),
                         Arguments.of("1", Token.Type.PERSON),
                         Arguments.of("Ind", Token.Type.MODE),
-                        Arguments.of("Pres", Token.Type.TENSE),
-                        Arguments.of("Act", Token.Type.VOICE),
+                        Arguments.of("Präs", Token.Type.TENSE),
+                        Arguments.of("Akt", Token.Type.VOICE),
                         Arguments.of("Imp", Token.Type.IMPERATIVE_FLAG),
                         Arguments.of("Inf", Token.Type.INFINITIVE_FLAG)
                 );
@@ -73,31 +72,31 @@ class LexerTest {
         @Test
         @DisplayName("Person Decorator should be ignored")
         void personDecoratorShouldBeIgnored() throws LexerException {
-            assertEquals(new TokenSequence(), new Lexer("Pers.", i18n).getTokens());
+            assertEquals(new TokenSequence(), new Lexer("Pers.").getTokens());
         }
 
         @Test
         @DisplayName("sequence of tokens")
         void sequenceOfTokens() throws LexerException {
-            String expr = "word , Nom. Sg. m. Pos. Adv. 1. Ind. word Pres. Act. Imp. Inf.";
+            String expr = "word , Nom. Sg. m. Pos. Adv. 1. Ind. word Präs. Akt. Imp. Inf.";
             //                  ^ standalone comma               ^ word between abbreviations
             TokenSequence e = new TokenSequence(
-                    new Token(Token.Type.WORD, "word", i18n),
-                    new Token(Token.Type.COMMA, ",", i18n),
-                    new Token(Token.Type.CASUS, "Nom", i18n),
-                    new Token(Token.Type.NUMBER, "Sg", i18n),
-                    new Token(Token.Type.GENDER, "m", i18n),
-                    new Token(Token.Type.COMPARATIVE_FORM, "Pos", i18n),
-                    new Token(Token.Type.ADV_FLAG, "Adv", i18n),
-                    new Token(Token.Type.PERSON, "1", i18n),
-                    new Token(Token.Type.MODE, "Ind", i18n),
-                    new Token(Token.Type.WORD, "word", i18n),
-                    new Token(Token.Type.TENSE, "Pres", i18n),
-                    new Token(Token.Type.VOICE, "Act", i18n),
-                    new Token(Token.Type.IMPERATIVE_FLAG, "Imp", i18n),
-                    new Token(Token.Type.INFINITIVE_FLAG, "Inf", i18n)
+                    new Token(Token.Type.WORD, "word"),
+                    new Token(Token.Type.COMMA, ","),
+                    new Token(Token.Type.CASUS, "Nom"),
+                    new Token(Token.Type.NUMBER, "Sg"),
+                    new Token(Token.Type.GENDER, "m"),
+                    new Token(Token.Type.COMPARATIVE_FORM, "Pos"),
+                    new Token(Token.Type.ADV_FLAG, "Adv"),
+                    new Token(Token.Type.PERSON, "1"),
+                    new Token(Token.Type.MODE, "Ind"),
+                    new Token(Token.Type.WORD, "word"),
+                    new Token(Token.Type.TENSE, "Präs"),
+                    new Token(Token.Type.VOICE, "Akt"),
+                    new Token(Token.Type.IMPERATIVE_FLAG, "Imp"),
+                    new Token(Token.Type.INFINITIVE_FLAG, "Inf")
             );
-            assertEquals(e, new Lexer(expr, i18n).getTokens());
+            assertEquals(e, new Lexer(expr).getTokens());
         }
 
         @Test
@@ -105,13 +104,13 @@ class LexerTest {
         void commasShouldBePossibleAfterWord() throws LexerException {
             String expr = "word, word , word";
             TokenSequence e = new TokenSequence(
-                    new Token(Token.Type.WORD, "word", i18n),
-                    new Token(Token.Type.COMMA, ",", i18n),
-                    new Token(Token.Type.WORD, "word", i18n),
-                    new Token(Token.Type.COMMA, ",", i18n),
-                    new Token(Token.Type.WORD, "word", i18n)
+                    new Token(Token.Type.WORD, "word"),
+                    new Token(Token.Type.COMMA, ","),
+                    new Token(Token.Type.WORD, "word"),
+                    new Token(Token.Type.COMMA, ","),
+                    new Token(Token.Type.WORD, "word")
             );
-            assertEquals(e, new Lexer(expr, i18n).getTokens());
+            assertEquals(e, new Lexer(expr).getTokens());
         }
 
         @Test
@@ -119,11 +118,11 @@ class LexerTest {
         void infinitiveTensesShouldWorkCorrectly() throws LexerException {
             String expr = "Perf. FutI. Fut.";
             TokenSequence e = new TokenSequence(
-                    new Token(Token.Type.TENSE, "Perf", i18n),
-                    new Token(Token.Type.TENSE, "FutI", i18n),
-                    new Token(Token.Type.TENSE, "Fut", i18n)
+                    new Token(Token.Type.TENSE, "Perf"),
+                    new Token(Token.Type.TENSE, "FutI"),
+                    new Token(Token.Type.TENSE, "Fut")
             );
-            assertEquals(e, new Lexer(expr, i18n).getTokens());
+            assertEquals(e, new Lexer(expr).getTokens());
         }
 
     }
@@ -137,7 +136,7 @@ class LexerTest {
         @DisplayName("invalid abbreviation")
         void invalidAbbreviation() {
             assertThrows(LexerException.class, () -> {
-                new Lexer("Invalid.", i18n);
+                new Lexer("Invalid.");
             });
         }
 
@@ -145,7 +144,7 @@ class LexerTest {
         @DisplayName("invalid character")
         void invalidCharacter() {
             assertThrows(LexerException.class, () -> {
-                new Lexer("ó", i18n);
+                new Lexer("ó");
             });
         }
 

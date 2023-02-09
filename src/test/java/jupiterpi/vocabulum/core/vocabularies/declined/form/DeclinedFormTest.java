@@ -1,8 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.form;
 
-import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
-import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
@@ -15,8 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockDatabaseSetup.class)
 class DeclinedFormTest {
-    I18n i18n = Database.get().getI18ns().internal();
-
     @Nested
     @DisplayName("valid fromTokens()")
     class ValidFromTokens {
@@ -25,9 +21,9 @@ class DeclinedFormTest {
         @DisplayName("with simple form")
         void simple() throws ParserException {
             DeclinedForm form = DeclinedForm.fromTokens(new TokenSequence(
-                    new Token(Token.Type.CASUS, "Nom", i18n),
-                    new Token(Token.Type.NUMBER, "Sg", i18n),
-                    new Token(Token.Type.GENDER, "m", i18n)
+                    new Token(Token.Type.CASUS, "Nom"),
+                    new Token(Token.Type.NUMBER, "Sg"),
+                    new Token(Token.Type.GENDER, "m")
             ));
             assertEquals(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC), form);
         }
@@ -36,9 +32,9 @@ class DeclinedFormTest {
         @DisplayName("with harder form")
         void harder() throws ParserException {
             DeclinedForm form = DeclinedForm.fromTokens(new TokenSequence(
-                    new Token(Token.Type.CASUS, "Gen", i18n),
-                    new Token(Token.Type.NUMBER, "Pl", i18n),
-                    new Token(Token.Type.GENDER, "f", i18n)
+                    new Token(Token.Type.CASUS, "Gen"),
+                    new Token(Token.Type.NUMBER, "Pl"),
+                    new Token(Token.Type.GENDER, "f")
             ));
             assertEquals(new DeclinedForm(Casus.GEN, NNumber.PL, Gender.FEM), form);
         }
@@ -55,8 +51,8 @@ class DeclinedFormTest {
         void wrongTypes() {
             assertThrows(ParserException.class, () -> {
                 DeclinedForm form = DeclinedForm.fromTokens(new TokenSequence(
-                        new Token(Token.Type.PERSON, "2", i18n),
-                        new Token(Token.Type.VOICE, "Pass", i18n)
+                        new Token(Token.Type.PERSON, "2"),
+                        new Token(Token.Type.VOICE, "Pass")
                 ));
             });
         }
@@ -66,10 +62,10 @@ class DeclinedFormTest {
         void additionalToken() {
             assertThrows(ParserException.class, () -> {
                 DeclinedForm form = DeclinedForm.fromTokens(new TokenSequence(
-                        new Token(Token.Type.CASUS, "Nom", i18n),
-                        new Token(Token.Type.NUMBER, "Sg", i18n),
-                        new Token(Token.Type.GENDER, "m", i18n),
-                        new Token(Token.Type.VOICE, "Pass", i18n)
+                        new Token(Token.Type.CASUS, "Nom"),
+                        new Token(Token.Type.NUMBER, "Sg"),
+                        new Token(Token.Type.GENDER, "m"),
+                        new Token(Token.Type.VOICE, "Pass")
                 ));
             });
         }
@@ -124,14 +120,14 @@ class DeclinedFormTest {
         @DisplayName("without gender")
         void formToString() {
             DeclinedForm form = new DeclinedForm(Casus.DAT, NNumber.PL);
-            assertEquals("Dat. Pl.", form.formToString(i18n));
+            assertEquals("Dat. Pl.", form.formToString());
         }
 
         @Test
         @DisplayName("with gender")
         void withGender() {
             DeclinedForm form = new DeclinedForm(Casus.DAT, NNumber.PL, Gender.FEM);
-            assertEquals("Dat. Pl. f.", form.formToString(i18n));
+            assertEquals("Dat. Pl. f.", form.formToString());
         }
 
     }

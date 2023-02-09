@@ -1,8 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.nouns;
 
-import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
-import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
@@ -20,8 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockDatabaseSetup.class)
 class NounTest {
-    I18n i18n = Database.get().getI18ns().internal();
-
     @Test
     void getDefinition() {
         Noun noun = new Noun(new TranslationSequence(), "test") {
@@ -46,7 +42,7 @@ class NounTest {
                 return "amicus";
             }
         };
-        assertEquals("amicus, amici m.", noun.getDefinition(i18n));
+        assertEquals("amicus, amici m.", noun.getDefinition());
     }
 
     @Nested
@@ -69,7 +65,7 @@ class NounTest {
 
                 @Override
                 public String makeForm(NounForm form) {
-                    return form.formToString(i18n);
+                    return form.formToString();
                 }
 
                 @Override
@@ -85,14 +81,14 @@ class NounTest {
                                     "nom": "Nom. Sg. m.",
                                     "gen": "Gen. Sg. m.",
                                     "dat": "Dat. Sg. m.",
-                                    "acc": "Acc. Sg. m.",
+                                    "acc": "Akk. Sg. m.",
                                     "abl": "Abl. Sg. m."
                                 },
                                 "pl": {
                                     "nom": "Nom. Pl. m.",
                                     "gen": "Gen. Pl. m.",
                                     "dat": "Dat. Pl. m.",
-                                    "acc": "Acc. Pl. m.",
+                                    "acc": "Akk. Pl. m.",
                                     "abl": "Abl. Pl. m."
                                 }
                             },
@@ -101,14 +97,14 @@ class NounTest {
                                     "nom": "Nom. Sg. f.",
                                     "gen": "Gen. Sg. f.",
                                     "dat": "Dat. Sg. f.",
-                                    "acc": "Acc. Sg. f.",
+                                    "acc": "Akk. Sg. f.",
                                     "abl": "Abl. Sg. f."
                                 },
                                 "pl": {
                                     "nom": "Nom. Pl. f.",
                                     "gen": "Gen. Pl. f.",
                                     "dat": "Dat. Pl. f.",
-                                    "acc": "Acc. Pl. f.",
+                                    "acc": "Akk. Pl. f.",
                                     "abl": "Abl. Pl. f."
                                 }
                             },
@@ -117,14 +113,14 @@ class NounTest {
                                     "nom": "Nom. Sg. n.",
                                     "gen": "Gen. Sg. n.",
                                     "dat": "Dat. Sg. n.",
-                                    "acc": "Acc. Sg. n.",
+                                    "acc": "Akk. Sg. n.",
                                     "abl": "Abl. Sg. n."
                                 },
                                 "pl": {
                                     "nom": "Nom. Pl. n.",
                                     "gen": "Gen. Pl. n.",
                                     "dat": "Dat. Pl. n.",
-                                    "acc": "Acc. Pl. n.",
+                                    "acc": "Akk. Pl. n.",
                                     "abl": "Abl. Pl. n."
                                 }
                             }
@@ -153,7 +149,7 @@ class NounTest {
                 @Override
                 public String makeForm(NounForm form) {
                     if (form.getDeclinedForm().getGender() != Gender.MASC) return "-";
-                    return form.formToString(i18n);
+                    return form.formToString();
                 }
 
                 @Override
@@ -169,14 +165,14 @@ class NounTest {
                                     "nom": "Nom. Sg. m.",
                                     "gen": "Gen. Sg. m.",
                                     "dat": "Dat. Sg. m.",
-                                    "acc": "Acc. Sg. m.",
+                                    "acc": "Akk. Sg. m.",
                                     "abl": "Abl. Sg. m."
                                 },
                                 "pl": {
                                     "nom": "Nom. Pl. m.",
                                     "gen": "Gen. Pl. m.",
                                     "dat": "Dat. Pl. m.",
-                                    "acc": "Acc. Pl. m.",
+                                    "acc": "Akk. Pl. m.",
                                     "abl": "Abl. Pl. m."
                                 }
                             },

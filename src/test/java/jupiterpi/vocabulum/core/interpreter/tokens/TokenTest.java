@@ -1,8 +1,6 @@
 package jupiterpi.vocabulum.core.interpreter.tokens;
 
-import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
-import jupiterpi.vocabulum.core.i18n.I18n;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -13,8 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockDatabaseSetup.class)
 class TokenTest {
-    I18n i18n = Database.get().getI18ns().internal();
-
     @Nested
     @DisplayName("valid fits()")
     class ValidFits {
@@ -22,15 +18,15 @@ class TokenTest {
         @Test
         @DisplayName("target with content")
         void targetWithContent() {
-            Token token = new Token(Token.Type.CASUS, "m", i18n);
-            Token target = new Token(Token.Type.CASUS, "m", i18n);
+            Token token = new Token(Token.Type.CASUS, "m");
+            Token target = new Token(Token.Type.CASUS, "m");
             assertTrue(token.fits(target));
         }
 
         @Test
         @DisplayName("target without content")
         void targetWithoutContent() {
-            Token token = new Token(Token.Type.CASUS, "m", i18n);
+            Token token = new Token(Token.Type.CASUS, "m");
             Token target = new Token(Token.Type.CASUS);
             assertTrue(token.fits(target));
         }
@@ -53,7 +49,7 @@ class TokenTest {
         @Test
         @DisplayName("wrong type")
         void wrongType() {
-            Token token = new Token(Token.Type.CASUS, "m", i18n);
+            Token token = new Token(Token.Type.CASUS, "m");
             Token target = new Token(Token.Type.PERSON);
             assertFalse(token.fits(target));
         }
@@ -61,8 +57,8 @@ class TokenTest {
         @Test
         @DisplayName("wrong content")
         void wrongContent() {
-            Token token = new Token(Token.Type.CASUS, "m", i18n);
-            Token target = new Token(Token.Type.CASUS, "f", i18n);
+            Token token = new Token(Token.Type.CASUS, "m");
+            Token target = new Token(Token.Type.CASUS, "f");
             assertFalse(token.fits(target));
         }
 

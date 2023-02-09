@@ -1,6 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.adjectives;
 
-import jupiterpi.vocabulum.core.i18n.I18n;
+import jupiterpi.vocabulum.core.i18n.Symbols;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
@@ -135,25 +135,25 @@ public abstract class Adjective extends Vocabulary {
     }
 
     @Override
-    public String getDefinition(I18n i18n) {
+    public String getDefinition() {
         if (this.definitionType == AdjectiveDefinitionType.FROM_BASE_FORMS) {
             String nom_sg_masc = "-";
             String nom_sg_fem = "-";
             String nom_sg_neut = "-";
             try {
-                nom_sg_masc = makeForm(new AdjectiveForm(DeclinedForm.get("Nom. Sg. m."), ComparativeForm.POSITIVE));
-                nom_sg_fem = makeForm(new AdjectiveForm(DeclinedForm.get("Nom. Sg. f."), ComparativeForm.POSITIVE));
-                nom_sg_neut = makeForm(new AdjectiveForm(DeclinedForm.get("Nom. Sg. n."), ComparativeForm.POSITIVE));
+                nom_sg_masc = makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC), ComparativeForm.POSITIVE));
+                nom_sg_fem = makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM), ComparativeForm.POSITIVE));
+                nom_sg_neut = makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT), ComparativeForm.POSITIVE));
             } catch (DeclinedFormDoesNotExistException ignored) {}
             return nom_sg_masc + ", " + nom_sg_fem + ", " + nom_sg_neut;
         } else {
             String nom_sg_masc = "-";
             String gen_sg_masc = "-";
             try {
-                nom_sg_masc = makeForm(new AdjectiveForm(DeclinedForm.get("Nom. Sg. m."), ComparativeForm.POSITIVE));
-                gen_sg_masc = makeForm(new AdjectiveForm(DeclinedForm.get("Gen. Sg. m."), ComparativeForm.POSITIVE));
+                nom_sg_masc = makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC), ComparativeForm.POSITIVE));
+                gen_sg_masc = makeForm(new AdjectiveForm(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC), ComparativeForm.POSITIVE));
             } catch (DeclinedFormDoesNotExistException ignored) {}
-            return nom_sg_masc + ", " + i18n.getCasusSymbol(Casus.GEN) + ". " + gen_sg_masc;
+            return nom_sg_masc + ", " + Symbols.get().getCasusSymbol(Casus.GEN) + ". " + gen_sg_masc;
         }
     }
 }

@@ -1,6 +1,5 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated;
 
-import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
 import org.bson.Document;
 import org.junit.jupiter.api.Test;
@@ -618,6 +617,6 @@ class WordbaseVerbTest {
     @Test
     void readFromDocument() {
         WordbaseVerb verb = WordbaseVerb.readFromDocument(sampleDocument);
-        assertEquals("vocare, voco, vocavi, vocatum", verb.getDefinition(Database.get().getI18ns().internal()));
+        assertEquals("vocare, voco, vocavi, vocatum", verb.getDefinition());
     }
 }

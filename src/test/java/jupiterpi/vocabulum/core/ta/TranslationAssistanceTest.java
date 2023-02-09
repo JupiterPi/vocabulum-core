@@ -5,7 +5,6 @@ import jupiterpi.vocabulum.core.db.MockDatabase;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
 import jupiterpi.vocabulum.core.db.MockWordbase;
 import jupiterpi.vocabulum.core.db.wordbase.IdentificationResult;
-import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.ta.result.TAResult;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
@@ -31,8 +30,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockDatabaseSetup.class)
 class TranslationAssistanceTest {
-    I18n i18n = Database.get().getI18ns().internal();
-
     @Nested
     @DisplayName("tokenize()")
     class Tokenize {
@@ -95,7 +92,7 @@ class TranslationAssistanceTest {
                 }
 
                 @Override
-                public String getDefinition(I18n i18n) {
+                public String getDefinition() {
                     return "word, wordis m.";
                 }
 
@@ -142,14 +139,14 @@ class TranslationAssistanceTest {
                                         "Nom. Sg. m.",
                                         "*transl1*",
                                         "transl2"
-                                ), item.getLines(i18n))
+                                ), item.getLines())
                         );
                     },
                     () -> {
                         TAResult.TAResultItem item = items.get(1);
                         assertAll(
                                 () -> assertEquals(",", item.getItem()),
-                                () -> assertEquals(List.of(), item.getLines(i18n))
+                                () -> assertEquals(List.of(), item.getLines())
                         );
                     },
                     () -> {
@@ -160,14 +157,14 @@ class TranslationAssistanceTest {
                                         "Nom. Sg. m.",
                                         "*transl1*",
                                         "transl2"
-                                ), item.getLines(i18n))
+                                ), item.getLines())
                         );
                     },
                     () -> {
                         TAResult.TAResultItem item = items.get(3);
                         assertAll(
                                 () -> assertEquals(".", item.getItem()),
-                                () -> assertEquals(List.of(), item.getLines(i18n))
+                                () -> assertEquals(List.of(), item.getLines())
                         );
                     }
             );
@@ -191,7 +188,7 @@ class TranslationAssistanceTest {
                                 "Nom. Sg. m.",
                                 "*transl1*",
                                 "transl2"
-                        ), item.getLines(i18n))
+                        ), item.getLines())
                     );
                 },
                 () -> {
@@ -211,7 +208,7 @@ class TranslationAssistanceTest {
                         TAResult.TAResultItem item = items.get(0);
                         assertAll(
                                 () -> assertEquals("0", item.getItem()),
-                                () -> assertEquals(List.of(), item.getLines(i18n))
+                                () -> assertEquals(List.of(), item.getLines())
                         );
                     },
                     () -> {

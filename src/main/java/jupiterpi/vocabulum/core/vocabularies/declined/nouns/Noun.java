@@ -1,6 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.nouns;
 
-import jupiterpi.vocabulum.core.i18n.I18n;
+import jupiterpi.vocabulum.core.i18n.Symbols;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
@@ -31,12 +31,12 @@ public abstract class Noun extends Vocabulary {
     public abstract String makeForm(NounForm form) throws DeclinedFormDoesNotExistException;
 
     @Override
-    public String getDefinition(I18n i18n) {
+    public String getDefinition() {
         String gen_sg = "-";
         try {
-            gen_sg = makeForm(new NounForm(DeclinedForm.get("Gen. Sg.")));
+            gen_sg = makeForm(new NounForm(new DeclinedForm(Casus.GEN, NNumber.SG)));
         } catch (DeclinedFormDoesNotExistException ignored) {}
-        return getBaseForm() + ", " + gen_sg + " " + i18n.getGenderSymbol(getGender()) + ".";
+        return getBaseForm() + ", " + gen_sg + " " + Symbols.get().getGenderSymbol(getGender()) + ".";
     }
 
     @Override

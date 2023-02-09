@@ -1,8 +1,6 @@
 package jupiterpi.vocabulum.core.interpreter.parser;
 
-import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
-import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
@@ -28,8 +26,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockDatabaseSetup.class)
 class VocabularyParserTest {
-    I18n i18n = Database.get().getI18ns().internal();
-
     @Nested
     @DisplayName("valid")
     class Valid {
@@ -51,10 +47,10 @@ class VocabularyParserTest {
                     translations, "test"
             );
             Vocabulary vocabulary = new VocabularyParser(new TokenSequence(
-                    new Token(Token.Type.WORD, "servus", i18n),
-                    new Token(Token.Type.COMMA, ",", i18n),
-                    new Token(Token.Type.WORD, "servi", i18n),
-                    new Token(Token.Type.GENDER, "m", i18n)
+                    new Token(Token.Type.WORD, "servus"),
+                    new Token(Token.Type.COMMA, ","),
+                    new Token(Token.Type.WORD, "servi"),
+                    new Token(Token.Type.GENDER, "m")
             ), translations, "test").getVocabulary();
             assertEquals(e.toString(), vocabulary.toString());
         }
@@ -68,11 +64,11 @@ class VocabularyParserTest {
                     translations, "test"
             );
             Vocabulary vocabulary = new VocabularyParser(new TokenSequence(
-                    new Token(Token.Type.WORD, "acer", i18n),
-                    new Token(Token.Type.COMMA, ",", i18n),
-                    new Token(Token.Type.WORD, "acris", i18n),
-                    new Token(Token.Type.COMMA, ",", i18n),
-                    new Token(Token.Type.WORD, "acre", i18n)
+                    new Token(Token.Type.WORD, "acer"),
+                    new Token(Token.Type.COMMA, ","),
+                    new Token(Token.Type.WORD, "acris"),
+                    new Token(Token.Type.COMMA, ","),
+                    new Token(Token.Type.WORD, "acre")
             ), translations, "test").getVocabulary();
             assertEquals(e.toString(), vocabulary.toString());
         }
@@ -86,10 +82,10 @@ class VocabularyParserTest {
                     translations, "test"
             );
             Vocabulary vocabulary = new VocabularyParser(new TokenSequence(
-                    new Token(Token.Type.WORD, "felix", i18n),
-                    new Token(Token.Type.COMMA, ",", i18n),
-                    new Token(Token.Type.CASUS, "Gen", i18n),
-                    new Token(Token.Type.WORD, "felicis", i18n)
+                    new Token(Token.Type.WORD, "felix"),
+                    new Token(Token.Type.COMMA, ","),
+                    new Token(Token.Type.CASUS, "Gen"),
+                    new Token(Token.Type.WORD, "felicis")
             ), translations, "test").getVocabulary();
             assertEquals(e.toString(), vocabulary.toString());
         }
@@ -103,13 +99,13 @@ class VocabularyParserTest {
                     translations, "test"
             );
             Vocabulary vocabulary = new VocabularyParser(new TokenSequence(
-                    new Token(Token.Type.WORD, "vocare", i18n),
-                    new Token(Token.Type.COMMA, ",", i18n),
-                    new Token(Token.Type.WORD, "voco", i18n),
-                    new Token(Token.Type.COMMA, ",", i18n),
-                    new Token(Token.Type.WORD, "vocavi", i18n),
-                    new Token(Token.Type.COMMA, ",", i18n),
-                    new Token(Token.Type.WORD, "vocatum", i18n)
+                    new Token(Token.Type.WORD, "vocare"),
+                    new Token(Token.Type.COMMA, ","),
+                    new Token(Token.Type.WORD, "voco"),
+                    new Token(Token.Type.COMMA, ","),
+                    new Token(Token.Type.WORD, "vocavi"),
+                    new Token(Token.Type.COMMA, ","),
+                    new Token(Token.Type.WORD, "vocatum")
             ), translations, "test").getVocabulary();
             assertEquals(e.toString(), vocabulary.toString());
         }
@@ -120,7 +116,7 @@ class VocabularyParserTest {
             TranslationSequence translations = generateTranslations("*und*");
             Inflexible e = new Inflexible("et", translations, "test");
             Vocabulary vocabulary = new VocabularyParser(new TokenSequence(
-                    new Token(Token.Type.WORD, "et", i18n)
+                    new Token(Token.Type.WORD, "et")
             ), translations, "test").getVocabulary();
             assertEquals(e, vocabulary);
         }
@@ -138,8 +134,8 @@ class VocabularyParserTest {
             assertThrows(ParserException.class, () -> {
                 new VocabularyParser(
                         new TokenSequence(
-                                new Token(Token.Type.CASUS, "Acc", i18n),
-                                new Token(Token.Type.GENDER, "m", i18n)
+                                new Token(Token.Type.CASUS, "Acc"),
+                                new Token(Token.Type.GENDER, "m")
                         ),
                         new TranslationSequence(), "test"
                 );

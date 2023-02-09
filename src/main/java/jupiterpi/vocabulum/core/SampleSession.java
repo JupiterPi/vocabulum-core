@@ -1,7 +1,6 @@
 package jupiterpi.vocabulum.core;
 
 import jupiterpi.vocabulum.core.db.Database;
-import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.sessions.Session;
 import jupiterpi.vocabulum.core.sessions.SessionRound;
 import jupiterpi.vocabulum.core.util.ConsoleInterface;
@@ -11,7 +10,7 @@ import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import java.util.List;
 
 public class SampleSession extends ConsoleInterface {
-    public void run(I18n i18n) throws Session.SessionLifecycleException {
+    public void run() throws Session.SessionLifecycleException {
         Session session = new Session(Database.get().getPortions().getPortion("A"));
         session.start();
         while (true) {
@@ -30,7 +29,7 @@ public class SampleSession extends ConsoleInterface {
                 float score = ((float) amountRight) / ((float) translations.size());
                 boolean passed = score >= 0.5f;
                 out(passed ? "✅" : "❌");
-                out(vocabulary.vocabularyToString(i18n));
+                out(vocabulary.vocabularyToString());
                 round.provideFeedback(vocabulary, passed);
             } while (!round.isDone());
             session.provideFeedback(round.getFeedback());

@@ -1,7 +1,6 @@
 package jupiterpi.vocabulum.core.testutil;
 
 import jupiterpi.vocabulum.core.db.portions.Portion;
-import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.sessions.selection.VocabularySelection;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
@@ -19,7 +18,7 @@ public class TestUtil {
             }
 
             @Override
-            public String getDefinition(I18n i18n) {
+            public String getDefinition() {
                 return base_form;
             }
 

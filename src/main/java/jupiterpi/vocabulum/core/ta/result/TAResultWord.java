@@ -1,6 +1,5 @@
 package jupiterpi.vocabulum.core.ta.result;
 
-import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.VocabularyForm;
 
@@ -46,10 +45,10 @@ public class TAResultWord implements TAResult.TAResultItem {
             return vocabulary;
         }
 
-        public List<String> getForms(I18n i18n) {
+        public List<String> getForms() {
             List<String> forms = new ArrayList<>();
             for (VocabularyForm form : this.forms) {
-                if (form != null) forms.add(form.formToString(i18n));
+                if (form != null) forms.add(form.formToString());
             }
             return forms;
         }
@@ -67,10 +66,10 @@ public class TAResultWord implements TAResult.TAResultItem {
     }
 
     @Override
-    public List<String> getLines(I18n i18n) {
+    public List<String> getLines() {
         List<String> lines = new ArrayList<>();
         for (PossibleWord word : possibleWords) {
-            lines.addAll(word.getForms(i18n));
+            lines.addAll(word.getForms());
             lines.addAll(word.getTranslations());
             lines.add("");
         }

@@ -10,8 +10,6 @@ import jupiterpi.vocabulum.core.db.users.DbUsers;
 import jupiterpi.vocabulum.core.db.users.Users;
 import jupiterpi.vocabulum.core.db.wordbase.DbWordbase;
 import jupiterpi.vocabulum.core.db.wordbase.Wordbase;
-import jupiterpi.vocabulum.core.i18n.I18nException;
-import jupiterpi.vocabulum.core.i18n.I18ns;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
@@ -45,7 +43,7 @@ public class Database {
     public MongoCollection<Document> collection_wordbase;
     public MongoCollection<Document> collection_users;
 
-    public void connectAndLoad(String mongoConnectUrl) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException, ReflectiveOperationException {
+    public void connectAndLoad(String mongoConnectUrl) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException, ReflectiveOperationException {
         connect(mongoConnectUrl);
         load();
     }
@@ -64,8 +62,7 @@ public class Database {
         collection_users = database.getCollection("users");
     }
 
-    protected void load() throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException, ReflectiveOperationException {
-        loadI18ns();
+    protected void load() throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
         loadDeclensionClasses();
         loadConjugationClasses();
         loadPortions();
@@ -100,20 +97,6 @@ public class Database {
     
     /* ----- objects that read the database ----- */
 
-    // I18ns
-
-    protected I18ns i18ns;
-
-    protected void loadI18ns() {
-        i18ns = new I18ns();
-        Iterable<Document> documents = collection_i18ns.find();
-        i18ns.loadI18ns(documents);
-    }
-
-    public I18ns getI18ns() {
-        return i18ns;
-    }
-
     // DeclensionClasses
 
     protected DeclensionClasses declensionClasses;
@@ -146,7 +129,7 @@ public class Database {
 
     protected Portions portions;
 
-    protected void loadPortions() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
+    protected void loadPortions() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
         portions = new Portions();
         Iterable<Document> documents = collection_portions.find();
         portions.loadPortions(documents);

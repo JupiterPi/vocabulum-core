@@ -1,6 +1,6 @@
 package jupiterpi.vocabulum.core.interpreter.lexer;
 
-import jupiterpi.vocabulum.core.i18n.I18n;
+import jupiterpi.vocabulum.core.i18n.Symbols;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.util.StringSet;
@@ -11,68 +11,65 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 
 public class Lexer {
-    private I18n i18n;
     private TokenSequence tokens = new TokenSequence();
 
-    public Lexer(String expr, I18n i18n) throws LexerException {
-        this.i18n = i18n;
-
+    public Lexer(String expr) throws LexerException {
         casusSymbols = new StringSet(
-                i18n.getCasusSymbol(Casus.NOM),
-                i18n.getCasusSymbol(Casus.GEN),
-                i18n.getCasusSymbol(Casus.DAT),
-                i18n.getCasusSymbol(Casus.ACC),
-                i18n.getCasusSymbol(Casus.ABL)
+                Symbols.get().getCasusSymbol(Casus.NOM),
+                Symbols.get().getCasusSymbol(Casus.GEN),
+                Symbols.get().getCasusSymbol(Casus.DAT),
+                Symbols.get().getCasusSymbol(Casus.ACC),
+                Symbols.get().getCasusSymbol(Casus.ABL)
         );
         numberSymbols = new StringSet(
-                i18n.getNumberSymbol(NNumber.SG),
-                i18n.getNumberSymbol(NNumber.PL)
+                Symbols.get().getNumberSymbol(NNumber.SG),
+                Symbols.get().getNumberSymbol(NNumber.PL)
         );
         genderSymbols = new StringSet(
-                i18n.getGenderSymbol(Gender.MASC),
-                i18n.getGenderSymbol(Gender.FEM),
-                i18n.getGenderSymbol(Gender.NEUT)
+                Symbols.get().getGenderSymbol(Gender.MASC),
+                Symbols.get().getGenderSymbol(Gender.FEM),
+                Symbols.get().getGenderSymbol(Gender.NEUT)
         );
         comparativeFormSymbols = new StringSet(
-                i18n.getComparativeFormSymbol(ComparativeForm.POSITIVE),
-                i18n.getComparativeFormSymbol(ComparativeForm.COMPARATIVE),
-                i18n.getComparativeFormSymbol(ComparativeForm.SUPERLATIVE)
+                Symbols.get().getComparativeFormSymbol(ComparativeForm.POSITIVE),
+                Symbols.get().getComparativeFormSymbol(ComparativeForm.COMPARATIVE),
+                Symbols.get().getComparativeFormSymbol(ComparativeForm.SUPERLATIVE)
         );
-        adverbFlag = i18n.getAdverbFlag();
+        adverbFlag = Symbols.get().getAdverbFlag();
         personSymbols = new StringSet(
-                i18n.getPersonSymbol(Person.FIRST),
-                i18n.getPersonSymbol(Person.SECOND),
-                i18n.getPersonSymbol(Person.THIRD)
+                Symbols.get().getPersonSymbol(Person.FIRST),
+                Symbols.get().getPersonSymbol(Person.SECOND),
+                Symbols.get().getPersonSymbol(Person.THIRD)
         );
-        personCosmetic = i18n.getPersonCosmetic();
+        personCosmetic = Symbols.get().getPersonCosmetic();
         modeSymbols = new StringSet(
-                i18n.getModeSymbol(Mode.INDICATIVE),
-                i18n.getModeSymbol(Mode.CONJUNCTIVE)
+                Symbols.get().getModeSymbol(Mode.INDICATIVE),
+                Symbols.get().getModeSymbol(Mode.CONJUNCTIVE)
         );
         tenseSymbols = new StringSet(
-                i18n.getTenseSymbol(Tense.PRESENT),
-                i18n.getTenseSymbol(Tense.IMPERFECT),
-                i18n.getTenseSymbol(Tense.PERFECT),
-                i18n.getTenseSymbol(Tense.PLUPERFECT),
-                i18n.getTenseSymbol(Tense.FUTURE_I),
-                i18n.getTenseSymbol(Tense.FUTURE_II)
+                Symbols.get().getTenseSymbol(Tense.PRESENT),
+                Symbols.get().getTenseSymbol(Tense.IMPERFECT),
+                Symbols.get().getTenseSymbol(Tense.PERFECT),
+                Symbols.get().getTenseSymbol(Tense.PLUPERFECT),
+                Symbols.get().getTenseSymbol(Tense.FUTURE_I),
+                Symbols.get().getTenseSymbol(Tense.FUTURE_II)
         );
         voiceSymbols = new StringSet(
-                i18n.getVoiceSymbol(Voice.ACTIVE),
-                i18n.getVoiceSymbol(Voice.PASSIVE)
+                Symbols.get().getVoiceSymbol(Voice.ACTIVE),
+                Symbols.get().getVoiceSymbol(Voice.PASSIVE)
         );
-        imperativeFlag = i18n.getImperativeFlag();
-        infinitiveFlag = i18n.getInfinitiveFlag();
+        imperativeFlag = Symbols.get().getImperativeFlag();
+        infinitiveFlag = Symbols.get().getInfinitiveFlag();
         infinitiveTenseSymbols = new StringSet(
-                i18n.getInfinitiveTenseSymbol(InfinitiveTense.PRESENT),
-                i18n.getInfinitiveTenseSymbol(InfinitiveTense.PERFECT),
-                i18n.getInfinitiveTenseSymbol(InfinitiveTense.FUTURE)
+                Symbols.get().getInfinitiveTenseSymbol(InfinitiveTense.PRESENT),
+                Symbols.get().getInfinitiveTenseSymbol(InfinitiveTense.PERFECT),
+                Symbols.get().getInfinitiveTenseSymbol(InfinitiveTense.FUTURE)
         );
         nounLikeForms = new StringSet(
-                i18n.getNounLikeFormSymbol(NounLikeForm.PPP),
-                i18n.getNounLikeFormSymbol(NounLikeForm.PPA),
-                i18n.getNounLikeFormSymbol(NounLikeForm.GERUNDIUM),
-                i18n.getNounLikeFormSymbol(NounLikeForm.GERUNDIVUM)
+                Symbols.get().getNounLikeFormSymbol(NounLikeForm.PPP),
+                Symbols.get().getNounLikeFormSymbol(NounLikeForm.PPA),
+                Symbols.get().getNounLikeFormSymbol(NounLikeForm.GERUNDIUM),
+                Symbols.get().getNounLikeFormSymbol(NounLikeForm.GERUNDIVUM)
         );
 
         generateTokens(expr);
@@ -151,41 +148,41 @@ public class Lexer {
 
     private void flushBuffer() throws LexerException {
         if (bufferType == BufferType.WORD) {
-            tokens.add(new Token(Token.Type.WORD, buffer, i18n));
+            tokens.add(new Token(Token.Type.WORD, buffer));
         } else if (bufferType == BufferType.ABBREVIATION) {
             if (casusSymbols.contains(buffer)) {
-                tokens.add(new Token(Token.Type.CASUS, buffer, i18n));
+                tokens.add(new Token(Token.Type.CASUS, buffer));
             } else if (numberSymbols.contains(buffer)) {
-                tokens.add(new Token(Token.Type.NUMBER, buffer, i18n));
+                tokens.add(new Token(Token.Type.NUMBER, buffer));
             } else if (genderSymbols.contains(buffer)) {
-                tokens.add(new Token(Token.Type.GENDER, buffer, i18n));
+                tokens.add(new Token(Token.Type.GENDER, buffer));
             } else if (comparativeFormSymbols.contains(buffer)) {
-                tokens.add(new Token(Token.Type.COMPARATIVE_FORM, buffer, i18n));
+                tokens.add(new Token(Token.Type.COMPARATIVE_FORM, buffer));
             } else if (adverbFlag.equals(buffer)) {
-                tokens.add(new Token(Token.Type.ADV_FLAG, buffer, i18n));
+                tokens.add(new Token(Token.Type.ADV_FLAG, buffer));
             } else if (personSymbols.contains(buffer)) {
-                tokens.add(new Token(Token.Type.PERSON, buffer, i18n));
+                tokens.add(new Token(Token.Type.PERSON, buffer));
             } else if (personCosmetic.equals(buffer)) {
                 // do nothing, the cosmetic should be ignored completely
             } else if (modeSymbols.contains(buffer)) {
-                tokens.add(new Token(Token.Type.MODE, buffer, i18n));
+                tokens.add(new Token(Token.Type.MODE, buffer));
             } else if (tenseSymbols.contains(buffer)) {
-                tokens.add(new Token(Token.Type.TENSE, buffer, i18n));
+                tokens.add(new Token(Token.Type.TENSE, buffer));
             } else if (voiceSymbols.contains(buffer)) {
-                tokens.add(new Token(Token.Type.VOICE, buffer, i18n));
+                tokens.add(new Token(Token.Type.VOICE, buffer));
             } else if (imperativeFlag.equals(buffer)) {
-                tokens.add(new Token(Token.Type.IMPERATIVE_FLAG, buffer, i18n));
+                tokens.add(new Token(Token.Type.IMPERATIVE_FLAG, buffer));
             } else if (infinitiveFlag.equals(buffer)) {
-                tokens.add(new Token(Token.Type.INFINITIVE_FLAG, buffer, i18n));
+                tokens.add(new Token(Token.Type.INFINITIVE_FLAG, buffer));
             } else if (infinitiveTenseSymbols.contains(buffer)) {
-                tokens.add(new Token(Token.Type.TENSE, buffer, i18n));
+                tokens.add(new Token(Token.Type.TENSE, buffer));
             } else if (nounLikeForms.contains(buffer)) {
-                tokens.add(new Token(Token.Type.NOUN_LIKE_FORM, buffer, i18n));
+                tokens.add(new Token(Token.Type.NOUN_LIKE_FORM, buffer));
             } else {
                 throw new LexerException("Invalid abbreviation: " + buffer);
             }
         } else if (bufferType == BufferType.COMMA) {
-            tokens.add(new Token(Token.Type.COMMA, buffer, i18n));
+            tokens.add(new Token(Token.Type.COMMA, buffer));
         }
         buffer = "";
         bufferType = null;

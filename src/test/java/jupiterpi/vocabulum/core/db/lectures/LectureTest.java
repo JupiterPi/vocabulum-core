@@ -5,7 +5,6 @@ import jupiterpi.vocabulum.core.db.MockDatabase;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
 import jupiterpi.vocabulum.core.db.MockWordbase;
 import jupiterpi.vocabulum.core.db.wordbase.IdentificationResult;
-import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.ta.result.TAResult;
 import jupiterpi.vocabulum.core.ta.result.TAResultPunctuation;
 import jupiterpi.vocabulum.core.ta.result.TAResultWord;
@@ -39,7 +38,7 @@ class LectureTest {
             }
 
             @Override
-            public String getDefinition(I18n i18n) {
+            public String getDefinition() {
                 return "word, wordis m.";
             }
 

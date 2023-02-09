@@ -1,8 +1,5 @@
 package jupiterpi.vocabulum.core.interpreter.tokens;
 
-import jupiterpi.vocabulum.core.i18n.I18n;
-import jupiterpi.vocabulum.core.i18n.I18nException;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -15,19 +12,6 @@ public class TokenSequence extends ArrayList<Token> {
     }
     public TokenSequence(Token... tokens) {
         super(List.of(tokens));
-    }
-
-    public I18n getI18n() {
-        if (this.size() == 0) return null;
-        I18n i18n = null;
-        for (Token token : this) {
-            if (token.getI18n() == null) continue;
-            if (i18n == null) i18n = token.getI18n();
-            else {
-                if (i18n != token.getI18n()) I18nException.mismatch(i18n, token.getI18n()).printStackTrace();
-            }
-        }
-        return i18n;
     }
 
     public static TokenSequence fromTypes(Token.Type... types) {
@@ -80,6 +64,6 @@ public class TokenSequence extends ArrayList<Token> {
     @Override
     public String toString() {
         String tokensStr = this.stream().map(Token::toString).collect(Collectors.joining(", "));
-        return "TokenSequence{i18n=" + (getI18n() == null ? "null" : getI18n().getName()) + ",tokens=[" + tokensStr + "]}";
+        return "TokenSequence{[" + tokensStr + "]}";
     }
 }

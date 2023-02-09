@@ -1,6 +1,5 @@
 package jupiterpi.vocabulum.core.db.portions;
 
-import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
@@ -15,7 +14,7 @@ public class Portions {
     private Map<String, Portion> portions;
     private Map<String, Vocabulary> vocabulariesInPortions;
 
-    public void loadPortions(Iterable<Document> documents) throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
+    public void loadPortions(Iterable<Document> documents) throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
         portions = new HashMap<>();
         vocabulariesInPortions = new HashMap<>();
         for (Document portionDocument : documents) {

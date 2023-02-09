@@ -1,6 +1,5 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.nouns;
 
-import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
@@ -18,8 +17,8 @@ public class NounForm implements VocabularyForm {
         this.declinedForm = declinedForm;
     }
 
-    public static NounForm fromString(String expr, I18n i18n) throws LexerException, ParserException {
-        return fromTokens(new Lexer(expr, i18n).getTokens());
+    public static NounForm fromString(String expr) throws LexerException, ParserException {
+        return fromTokens(new Lexer(expr).getTokens());
     }
 
     public static NounForm fromTokens(TokenSequence tokens) throws ParserException {
@@ -47,9 +46,9 @@ public class NounForm implements VocabularyForm {
     // to string
 
     @Override
-    public String formToString(I18n i18n) {
+    public String formToString() {
         String str = "";
-        str += declinedForm.formToString(i18n);
+        str += declinedForm.formToString();
         return str;
     }
 

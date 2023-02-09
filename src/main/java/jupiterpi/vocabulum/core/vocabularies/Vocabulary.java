@@ -1,7 +1,5 @@
 package jupiterpi.vocabulum.core.vocabularies;
 
-import jupiterpi.vocabulum.core.i18n.I18n;
-import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
@@ -26,13 +24,13 @@ public abstract class Vocabulary {
         this.portion = portion;
     }
 
-    public static Vocabulary fromString(String str, I18n i18n, String portion) throws LexerException, ParserException, DeclinedFormDoesNotExistException, I18nException, VerbFormDoesNotExistException {
+    public static Vocabulary fromString(String str, String portion) throws LexerException, ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
         String[] parts = str.split(" -- ");
         String latinStr = parts[0];
         String translationsStr = parts[1];
         TranslationSequence translations = TranslationSequence.fromString(translationsStr);
 
-        Lexer lexer = new Lexer(latinStr, i18n);
+        Lexer lexer = new Lexer(latinStr);
         TokenSequence tokens = lexer.getTokens();
         VocabularyParser parser = new VocabularyParser(tokens, translations, portion);
         Vocabulary vocabulary = parser.getVocabulary();
@@ -46,7 +44,7 @@ public abstract class Vocabulary {
 
     public abstract String getBaseForm();
 
-    public abstract String getDefinition(I18n i18n);
+    public abstract String getDefinition();
 
     public abstract Kind getKind();
     public enum Kind {
@@ -92,12 +90,12 @@ public abstract class Vocabulary {
 
     protected abstract List<String> getAllFormsToString();
 
-    public String vocabularyToString(I18n i18n) {
+    public String vocabularyToString() {
         List<String> translationsStr = new ArrayList<>();
         for (VocabularyTranslation translation : translations) {
             translationsStr.add(translation.getFormattedTranslation());
         }
-        return getDefinition(i18n) + " - " + String.join(", ", translationsStr);
+        return getDefinition() + " - " + String.join(", ", translationsStr);
     }
 
     @Override

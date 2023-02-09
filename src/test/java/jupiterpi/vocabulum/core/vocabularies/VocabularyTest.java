@@ -1,9 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies;
 
-import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
-import jupiterpi.vocabulum.core.i18n.I18n;
-import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
@@ -25,15 +22,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(MockDatabaseSetup.class)
 class VocabularyTest {
     @Test
-    void fromString() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
-        Vocabulary vocabulary = Vocabulary.fromString("amicus, amici m. -- *der Freund*, der Kamerad", Database.get().getI18ns().internal(), "test");
+    void fromString() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
+        Vocabulary vocabulary = Vocabulary.fromString("amicus, amici m. -- *der Freund*, der Kamerad", "test");
         TranslationSequence translations = new TranslationSequence(
                 new VocabularyTranslation(true, new TranslationPartContainer(new ArticlePart("der"), new PlainTextPart("Freund"))),
                 new VocabularyTranslation(false, new TranslationPartContainer(new ArticlePart("der"), new PlainTextPart("Kamerad")))
         );
         assertAll(
                 () -> assertEquals(translations, vocabulary.getTranslations()),
-                () -> assertEquals("amicus, amici m.", vocabulary.getDefinition(Database.get().getI18ns().internal()))
+                () -> assertEquals("amicus, amici m.", vocabulary.getDefinition())
         );
     }
 
@@ -50,7 +47,7 @@ class VocabularyTest {
             }
 
             @Override
-            public String getDefinition(I18n i18n) { return null; }
+            public String getDefinition() { return null; }
 
             @Override
             public Kind getKind() {
@@ -77,8 +74,8 @@ class VocabularyTest {
     }
 
     @Test
-    void vocabularyToString() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
-        Vocabulary vocabulary = Vocabulary.fromString("amicus, amici m. -- *der Freund*, der Kamerad", Database.get().getI18ns().internal(), "test");
-        assertEquals("amicus, amici m. - *der Freund*, der Kamerad", vocabulary.vocabularyToString(Database.get().getI18ns().internal()));
+    void vocabularyToString() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
+        Vocabulary vocabulary = Vocabulary.fromString("amicus, amici m. -- *der Freund*, der Kamerad", "test");
+        assertEquals("amicus, amici m. - *der Freund*, der Kamerad", vocabulary.vocabularyToString());
     }
 }

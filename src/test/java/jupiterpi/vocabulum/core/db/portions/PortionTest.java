@@ -1,8 +1,6 @@
 package jupiterpi.vocabulum.core.db.portions;
 
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
-import jupiterpi.vocabulum.core.i18n.I18n;
-import jupiterpi.vocabulum.core.i18n.I18nException;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
@@ -41,7 +39,7 @@ class PortionTest {
             """);
 
     @Test
-    void readFromDocument() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
+    void readFromDocument() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
         Portion portion = Portion.readFromDocument(sampleDocument);
         assertAll(
             () -> assertEquals("A", portion.getName()),
@@ -79,7 +77,7 @@ class PortionTest {
             }
 
             @Override
-            public String getDefinition(I18n i18n) {
+            public String getDefinition() {
                 return base_form + ", " + base_form;
             }
 

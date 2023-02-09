@@ -49,12 +49,12 @@ public class RuntimeAdjective extends Adjective {
         adjective.nom_sg_neut = nom_sg_neut;
 
         if (
-                /*nom_sg_masc.endsWith(masculineDeclensionSchema.getSuffix(DeclinedForm.get("Nom. Sg. m.")))      // incorrect, only depends on f. and n. ending
-                &&*/ nom_sg_fem.endsWith(feminineDeclensionSchema.getSuffix(DeclinedForm.get("Nom. Sg. f.")))
-                && nom_sg_neut.endsWith(neuterDeclensionSchema.getSuffix(DeclinedForm.get("Nom. Sg. n.")))
+                /*nom_sg_masc.endsWith(masculineDeclensionSchema.getSuffix(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC)))      // incorrect, only depends on f. and n. ending
+                &&*/ nom_sg_fem.endsWith(feminineDeclensionSchema.getSuffix(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM)))
+                && nom_sg_neut.endsWith(neuterDeclensionSchema.getSuffix(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT)))
         ) {
             adjective.kind = Kind.AO;
-            adjective.root = nom_sg_fem.substring(0, nom_sg_fem.length() - feminineDeclensionSchema.getSuffix(DeclinedForm.get("Nom. Sg. f.")).length());
+            adjective.root = nom_sg_fem.substring(0, nom_sg_fem.length() - feminineDeclensionSchema.getSuffix(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM)).length());
         } else {
             adjective.kind = Kind.CONS;
             adjective.root = "";
@@ -74,7 +74,7 @@ public class RuntimeAdjective extends Adjective {
         adjective.nom_sg_fem = nom_sg;
         adjective.nom_sg_neut = nom_sg;
 
-        String gen_sg_suffix = consonantalDeclensionSchema.getSuffix(DeclinedForm.get("Gen. Sg. m."));
+        String gen_sg_suffix = consonantalDeclensionSchema.getSuffix(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC));
         if (gen_sg.endsWith(gen_sg_suffix)) {
             adjective.root = gen_sg.substring(0, gen_sg.length() - gen_sg_suffix.length());
         } else {

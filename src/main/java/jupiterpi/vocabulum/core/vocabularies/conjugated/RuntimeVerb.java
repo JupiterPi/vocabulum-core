@@ -43,11 +43,11 @@ public class RuntimeVerb extends Verb {
         String presentRoot = null;
         String perfectRoot = "-";
         for (ConjugationSchema schema : Database.get().getConjugationClasses().getAll()) {
-            Pattern pattern = schema.getPattern(VerbForm.get("1. Sg. Pres."));
+            Pattern pattern = schema.getPattern(new VerbForm(new ConjugatedForm(Person.FIRST, CNumber.SG), Mode.INDICATIVE, Tense.PRESENT, Voice.ACTIVE));
             if (first_sg_present.endsWith(pattern.getSuffix())) {
                 presentRoot = first_sg_present.substring(0, first_sg_present.length() - pattern.getSuffix().length());
                 if (!first_sg_perfect.equals("-")) {
-                    perfectRoot = first_sg_perfect.substring(0, first_sg_perfect.length() - schema.getPattern(VerbForm.get("1. Sg. Perf.")).getSuffix().length());
+                    perfectRoot = first_sg_perfect.substring(0, first_sg_perfect.length() - schema.getPattern(new VerbForm(new ConjugatedForm(Person.FIRST, CNumber.SG), Mode.INDICATIVE, Tense.PERFECT, Voice.ACTIVE)).getSuffix().length());
                 }
             }
         }

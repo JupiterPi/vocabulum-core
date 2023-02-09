@@ -1,6 +1,5 @@
 package jupiterpi.vocabulum.core.vocabularies.inflexible;
 
-import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import org.bson.Document;
@@ -27,7 +26,7 @@ public class Inflexible extends Vocabulary {
     }
 
     @Override
-    public String getDefinition(I18n i18n) {
+    public String getDefinition() {
         return word;
     }
 

@@ -1,8 +1,6 @@
 package jupiterpi.vocabulum.core.interpreter.tokens;
 
-import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
-import jupiterpi.vocabulum.core.i18n.I18n;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -13,8 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockDatabaseSetup.class)
 class TokenSequenceTest {
-    I18n i18n = Database.get().getI18ns().internal();
-
     @Nested
     @DisplayName("creation")
     class Creation {
@@ -34,42 +30,6 @@ class TokenSequenceTest {
 
 
     @Nested
-    @DisplayName("getI18n()")
-    class GetI18n {
-
-        @Test
-        @DisplayName("empty")
-        void empty() {
-            TokenSequence s = new TokenSequence();
-            assertNull(s.getI18n());
-        }
-
-        @Test
-        @DisplayName("simple")
-        void simple() {
-            TokenSequence s = new TokenSequence(
-                    new Token(Token.Type.WORD, "amicus", i18n),
-                    new Token(Token.Type.COMMA, ",", i18n),
-                    new Token(Token.Type.GENDER, "m", i18n)
-            );
-            assertSame(i18n, s.getI18n());
-        }
-
-        @Test
-        @DisplayName("first item without i18n")
-        void firstItemWithoutI18n() {
-            TokenSequence s = new TokenSequence(
-                    new Token(Token.Type.WORD),
-                    new Token(Token.Type.COMMA, ",", i18n),
-                    new Token(Token.Type.GENDER, "m", i18n)
-            );
-            assertSame(i18n, s.getI18n());
-        }
-
-    }
-
-
-    @Nested
     @DisplayName("operations")
     class Operations {
 
@@ -78,16 +38,16 @@ class TokenSequenceTest {
         @BeforeEach
         void init() {
             s = new TokenSequence(
-                    new Token(Token.Type.WORD, "amicus", i18n),
-                    new Token(Token.Type.COMMA, ",", i18n),
-                    new Token(Token.Type.GENDER, "m", i18n)
+                    new Token(Token.Type.WORD, "amicus"),
+                    new Token(Token.Type.COMMA, ","),
+                    new Token(Token.Type.GENDER, "m")
             );
         }
 
         @Test
         @DisplayName("subsequence(fromIndex, toIndex)")
         void subsequence1() {
-            TokenSequence e = new TokenSequence(new Token(Token.Type.COMMA, ",", i18n));
+            TokenSequence e = new TokenSequence(new Token(Token.Type.COMMA, ","));
             assertEquals(e, s.subsequence(1, 2));
         }
 
@@ -95,8 +55,8 @@ class TokenSequenceTest {
         @DisplayName("subsequence(formIndex)")
         void subsequence2() {
             TokenSequence e = new TokenSequence(
-                    new Token(Token.Type.COMMA, ",", i18n),
-                    new Token(Token.Type.GENDER, "m", i18n)
+                    new Token(Token.Type.COMMA, ","),
+                    new Token(Token.Type.GENDER, "m")
             );
             assertEquals(e, s.subsequence(1));
         }
@@ -108,7 +68,7 @@ class TokenSequenceTest {
             @Test
             @DisplayName("with content")
             void withContent() {
-                assertEquals(2, s.indexOf(new Token(Token.Type.GENDER, "m", i18n)));
+                assertEquals(2, s.indexOf(new Token(Token.Type.GENDER, "m")));
             }
 
             @Test
@@ -133,8 +93,8 @@ class TokenSequenceTest {
             @DisplayName("=> true, with content")
             void withContent() {
                 TokenSequence f = new TokenSequence(
-                        new Token(Token.Type.WORD, "amicus", i18n),
-                        new Token(Token.Type.COMMA, ",", i18n)
+                        new Token(Token.Type.WORD, "amicus"),
+                        new Token(Token.Type.COMMA, ",")
                 );
                 assertTrue(s.fitsStartsWith(f));
             }

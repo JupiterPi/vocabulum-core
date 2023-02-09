@@ -1,7 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated.form;
 
-import jupiterpi.vocabulum.core.db.Database;
-import jupiterpi.vocabulum.core.i18n.I18n;
+import jupiterpi.vocabulum.core.i18n.Symbols;
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
@@ -68,17 +67,8 @@ public class VerbForm implements VocabularyForm {
 
     /* parser */
 
-    public static VerbForm fromString(String expr, I18n i18n) throws ParserException, LexerException {
-        return fromTokens(new Lexer(expr, i18n).getTokens());
-    }
-
-    public static VerbForm get(String expr) {
-        try {
-            return fromString(expr, Database.get().getI18ns().internal());
-        } catch (ParserException | LexerException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public static VerbForm fromString(String expr) throws ParserException, LexerException {
+        return fromTokens(new Lexer(expr).getTokens());
     }
 
     public static final Mode DEFAULT_MODE = Mode.INDICATIVE;
@@ -175,20 +165,20 @@ public class VerbForm implements VocabularyForm {
     // to string
 
     @Override
-    public String formToString(I18n i18n) {
+    public String formToString() {
         if (getKind() == Kind.BASIC) {
             String str = "";
-            str += conjugatedForm.formToString(i18n, true) + " ";
-            str += mode != DEFAULT_MODE ? i18n.getModeSymbol(mode) + ". " : "";
-            str += tense != DEFAULT_TENSE ? i18n.getTenseSymbol(tense) + ". " : "";
-            str += voice != DEFAULT_VOICE ? i18n.getVoiceSymbol(voice) + ". " : "";
+            str += conjugatedForm.formToString(true) + " ";
+            str += mode != DEFAULT_MODE ? Symbols.get().getModeSymbol(mode) + ". " : "";
+            str += tense != DEFAULT_TENSE ? Symbols.get().getTenseSymbol(tense) + ". " : "";
+            str += voice != DEFAULT_VOICE ? Symbols.get().getVoiceSymbol(voice) + ". " : "";
             return str.substring(0, str.length() - 1);
         } else {
             return switch (getKind()) {
                 case BASIC -> null;
-                case IMPERATIVE -> i18n.getImperativeFlag() + ". " + i18n.getNumberSymbol(imperativeNumber) + ".";
-                case INFINITIVE -> i18n.getInfinitiveFlag() + ". " + i18n.getInfinitiveTenseSymbol(infinitiveTense) + ". " + i18n.getVoiceSymbol(infinitiveVoice) + ".";
-                case NOUN_LIKE -> i18n.getNounLikeFormSymbol(nounLikeForm) + ". " + nounLikeDeclinedForm.formToString(i18n);
+                case IMPERATIVE -> Symbols.get().getImperativeFlag() + ". " + Symbols.get().getNumberSymbol(imperativeNumber) + ".";
+                case INFINITIVE -> Symbols.get().getInfinitiveFlag() + ". " + Symbols.get().getInfinitiveTenseSymbol(infinitiveTense) + ". " + Symbols.get().getVoiceSymbol(infinitiveVoice) + ".";
+                case NOUN_LIKE -> Symbols.get().getNounLikeFormSymbol(nounLikeForm) + ". " + nounLikeDeclinedForm.formToString();
             };
         }
     }

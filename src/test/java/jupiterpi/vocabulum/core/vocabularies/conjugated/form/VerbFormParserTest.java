@@ -1,8 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated.form;
 
-import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
-import jupiterpi.vocabulum.core.i18n.I18n;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
@@ -15,18 +13,17 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockDatabaseSetup.class)
 class VerbFormParserTest {
-    I18n i18n = Database.get().getI18ns().internal();
-
     @Test
     @DisplayName("imperative")
     void imperative() throws ParserException {
         TokenSequence tokens = new TokenSequence(
-                new Token(Token.Type.IMPERATIVE_FLAG, "Imp", i18n),
-                new Token(Token.Type.NUMBER, "Pl", i18n)
+                new Token(Token.Type.IMPERATIVE_FLAG, "Imp"),
+                new Token(Token.Type.NUMBER, "Pl")
         );
         VerbForm verbForm = new VerbFormParser(tokens).getVerbForm();
         VerbForm e = new VerbForm(CNumber.PL);
@@ -37,9 +34,9 @@ class VerbFormParserTest {
     @DisplayName("infinitive")
     void infinitive() throws ParserException {
         TokenSequence tokens = new TokenSequence(
-                new Token(Token.Type.INFINITIVE_FLAG, "Inf", i18n),
-                new Token(Token.Type.TENSE, "Perf", i18n),
-                new Token(Token.Type.VOICE, "Pass", i18n)
+                new Token(Token.Type.INFINITIVE_FLAG, "Inf"),
+                new Token(Token.Type.TENSE, "Perf"),
+                new Token(Token.Type.VOICE, "Pass")
         );
         VerbForm verbForm = new VerbFormParser(tokens).getVerbForm();
         VerbForm e = new VerbForm(InfinitiveTense.PERFECT, Voice.PASSIVE);
@@ -50,9 +47,9 @@ class VerbFormParserTest {
     @DisplayName("noun-like form")
     void nounLikeForm() throws ParserException {
         TokenSequence tokens = new TokenSequence(
-                new Token(Token.Type.NOUN_LIKE_FORM, "PPA", i18n),
-                new Token(Token.Type.CASUS, "Acc", i18n),
-                new Token(Token.Type.NUMBER, "Sg", i18n)
+                new Token(Token.Type.NOUN_LIKE_FORM, "PPA"),
+                new Token(Token.Type.CASUS, "Akk"),
+                new Token(Token.Type.NUMBER, "Sg")
         );
         VerbForm verbForm = new VerbFormParser(tokens).getVerbForm();
         VerbForm e = new VerbForm(NounLikeForm.PPA, new DeclinedForm(Casus.ACC, NNumber.SG, Gender.MASC));
@@ -67,11 +64,11 @@ class VerbFormParserTest {
         @DisplayName("fully specified")
         void fullySpecified() throws ParserException {
             TokenSequence tokens = new TokenSequence(
-                    new Token(Token.Type.PERSON, "2", i18n),
-                    new Token(Token.Type.NUMBER, "Pl", i18n),
-                    new Token(Token.Type.MODE, "Conj", i18n),
-                    new Token(Token.Type.TENSE, "Perf", i18n),
-                    new Token(Token.Type.VOICE, "Pass", i18n)
+                    new Token(Token.Type.PERSON, "2"),
+                    new Token(Token.Type.NUMBER, "Pl"),
+                    new Token(Token.Type.MODE, "Konj"),
+                    new Token(Token.Type.TENSE, "Perf"),
+                    new Token(Token.Type.VOICE, "Pass")
             );
             VerbForm verbForm = new VerbFormParser(tokens).getVerbForm();
             VerbForm e = new VerbForm(new ConjugatedForm(Person.SECOND, CNumber.PL), Mode.CONJUNCTIVE, Tense.PERFECT, Voice.PASSIVE);
@@ -82,8 +79,8 @@ class VerbFormParserTest {
         @DisplayName("minimal")
         void minimal() throws ParserException {
             TokenSequence tokens = new TokenSequence(
-                    new Token(Token.Type.PERSON, "2", i18n),
-                    new Token(Token.Type.NUMBER, "Pl", i18n)
+                    new Token(Token.Type.PERSON, "2"),
+                    new Token(Token.Type.NUMBER, "Pl")
             );
             VerbForm verbForm = new VerbFormParser(tokens).getVerbForm();
             VerbForm e = new VerbForm(new ConjugatedForm(Person.SECOND, CNumber.PL), Mode.INDICATIVE, Tense.PRESENT, Voice.ACTIVE);

@@ -1,5 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated.form;
 
+import jupiterpi.vocabulum.core.i18n.Symbols;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
@@ -25,7 +26,7 @@ public class VerbFormParser {
                 Token.Type.IMPERATIVE_FLAG,
                 Token.Type.NUMBER
         ))) {
-            CNumber number = tokens.getI18n().cNumberFromSymbol(tokens.get(1).getContent());
+            CNumber number = Symbols.get().cNumberFromSymbol(tokens.get(1).getContent());
             return new VerbForm(number);
         }
 
@@ -35,8 +36,8 @@ public class VerbFormParser {
                 Token.Type.TENSE,
                 Token.Type.VOICE
         ))) {
-            InfinitiveTense tense = tokens.getI18n().infinitiveTenseFromSymbol(tokens.get(1).getContent());
-            Voice voice = tokens.getI18n().voiceFromSymbol(tokens.get(2).getContent());
+            InfinitiveTense tense = Symbols.get().infinitiveTenseFromSymbol(tokens.get(1).getContent());
+            Voice voice = Symbols.get().voiceFromSymbol(tokens.get(2).getContent());
             return new VerbForm(tense, voice);
         }
 
@@ -46,7 +47,7 @@ public class VerbFormParser {
                 Token.Type.CASUS,
                 Token.Type.NUMBER
         )) && tokens.size() <= 4) {
-            NounLikeForm nounLikeForm = tokens.getI18n().nounLikeFormFromSymbol(tokens.get(0).getContent());
+            NounLikeForm nounLikeForm = Symbols.get().nounLikeFormFromSymbol(tokens.get(0).getContent());
             DeclinedForm declinedForm = DeclinedForm.fromTokens(tokens.subsequence(1));
             declinedForm.normalizeGender();
             return new VerbForm(nounLikeForm, declinedForm);
@@ -57,21 +58,21 @@ public class VerbFormParser {
             int voiceIndex = tokens.indexOf(new Token(Token.Type.VOICE));
             Voice voice = VerbForm.DEFAULT_VOICE;
             if (voiceIndex >= 0) {
-                voice = tokens.getI18n().voiceFromSymbol(tokens.get(voiceIndex).getContent());
+                voice = Symbols.get().voiceFromSymbol(tokens.get(voiceIndex).getContent());
                 tokens.remove(voiceIndex);
             }
 
             int tenseIndex = tokens.indexOf(new Token(Token.Type.TENSE));
             Tense tense = VerbForm.DEFAULT_TENSE;
             if (tenseIndex >= 0) {
-                tense = tokens.getI18n().tenseFromSymbol(tokens.get(tenseIndex).getContent());
+                tense = Symbols.get().tenseFromSymbol(tokens.get(tenseIndex).getContent());
                 tokens.remove(tenseIndex);
             }
 
             int modeIndex = tokens.indexOf(new Token(Token.Type.MODE));
             Mode mode = VerbForm.DEFAULT_MODE;
             if (modeIndex >= 0) {
-                mode = tokens.getI18n().modeFromSymbol(tokens.get(modeIndex).getContent());
+                mode = Symbols.get().modeFromSymbol(tokens.get(modeIndex).getContent());
                 tokens.remove(modeIndex);
             }
 

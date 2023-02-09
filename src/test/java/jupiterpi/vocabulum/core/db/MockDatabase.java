@@ -6,8 +6,6 @@ import jupiterpi.vocabulum.core.db.lectures.Lectures;
 import jupiterpi.vocabulum.core.db.portions.Portions;
 import jupiterpi.vocabulum.core.db.users.Users;
 import jupiterpi.vocabulum.core.db.wordbase.Wordbase;
-import jupiterpi.vocabulum.core.i18n.I18nException;
-import jupiterpi.vocabulum.core.i18n.I18ns;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
@@ -231,254 +229,6 @@ public class MockDatabase extends Database {
     }
 
     // load classes
-
-    @Override
-    protected void loadI18ns() {
-        this.i18ns = new I18ns();
-        this.i18ns.loadI18ns(List.of(
-                Document.parse("""
-                        {
-                          "language": "int",
-                          "texts": null,
-                          "str-texts": {
-                            "casus": {
-                              "nom": "Nom",
-                              "acc": "Acc",
-                              "gen": "Gen",
-                              "dat": "Dat",
-                              "abl": "Abl"
-                            },
-                            "number": {
-                              "sg": "Sg",
-                              "pl": "Pl"
-                            },
-                            "gender": {
-                              "masc": "m",
-                              "fem": "f",
-                              "neut": "n"
-                            },
-                            "comparative_form": {
-                              "positive": "Pos",
-                              "comparative": "Comp",
-                              "superlative": "Sup"
-                            },
-                            "adverb": "Adv",
-                            "person": {
-                              "first": "1",
-                              "second": "2",
-                              "third": "3"
-                            },
-                            "person_cosmetic": "Pers",
-                            "mode": {
-                              "indicative": "Ind",
-                              "conjunctive": "Conj"
-                            },
-                            "tense": {
-                              "present": "Pres",
-                              "imperfect": "Imperf",
-                              "perfect": "Perf",
-                              "pluperfect": "Pluperf",
-                              "future_i": "FutI",
-                              "future_ii": "FutII"
-                            },
-                            "voice": {
-                              "active": "Act",
-                              "passive": "Pass"
-                            },
-                                  "imperative": "Imp",
-                            "infinitive": "Inf",
-                            "infinitive_tense": {
-                              "present": "Pres",
-                              "perfect": "Perf",
-                              "future": "Fut"
-                            },
-                            "noun_like_form": {
-                              "ppp": "PPP",
-                              "ppa": "PPA",
-                                                 "pfa": "PFA",
-                              "gerundium": "Gerund",
-                              "gerundivum": "Gerundv"
-                            }
-                          }
-                        }
-                        """),
-                Document.parse("""
-                        {
-                           "language": "de",
-                           "texts": {
-                             "terminal": {
-                               "help-text": "Geben Sie \\"p\\" ein für Prompting, \\"t\\" für Translation Assistance. ",
-                               "unknown-mode-err": "Unbekannter Modus: %s",
-                               "prompt": {
-                                 "title": "Prompting",
-                                 "help-text": "Funktionsweise: Tippen Sie nach \\">\\" eine Vokabel (bspw. \\"amicus, amici m. - der Freund\\", \\"laetus, laeta, laetum - fröhlich\\" oder \\"felix, Gen. felicis - glücklich\\"). Tippen Sie anschließend nach dem eingerückten \\">\\" die Form, die Sie generieren wollen (bspw. \\"Nom. Sg.\\" oder \\"Gen. Pl. f.\\"). Um zu einem beliebigen Zeitpunkt zurückzugehen, drücken Sie Enter, ohne etwas einzugeben. "
-                               },
-                               "translation_assistance": {
-                                 "title": "Translaton Assistance",
-                                 "help-text": "Funktionsweise: Geben Sie nach \\">\\" einen Satz ein (bspw. \\"Asinus stat et exspectat.\\") und drücken Sie Enter. Die Translation Assistance wird Ihnen alle verfügbaren Informationen ausgeben, die zum Übersetzen notwendig sind. "
-                               },
-                               "noun": "Sustantiv",
-                               "adjective": "Adjektiv",
-                               "verb": "Verb",
-                               "error": "FEHLER",
-                               "done": "Fertig. "
-                             }
-                           },
-                           "str-texts": {
-                             "casus": {
-                               "nom": "Nom",
-                               "acc": "Akk",
-                               "gen": "Gen",
-                               "dat": "Dat",
-                               "abl": "Abl"
-                             },
-                             "number": {
-                               "sg": "Sg",
-                               "pl": "Pl"
-                             },
-                             "gender": {
-                               "masc": "m",
-                               "fem": "f",
-                               "neut": "n"
-                             },
-                             "comparative_form": {
-                               "positive": "Pos",
-                               "comparative": "Komp",
-                               "superlative": "Sup"
-                             },
-                             "adverb": "Adv",
-                             "person": {
-                               "first": "1",
-                               "second": "2",
-                               "third": "3"
-                             },
-                             "person_cosmetic": "Pers",
-                             "mode": {
-                               "indicative": "Ind",
-                               "conjunctive": "Konj"
-                             },
-                             "tense": {
-                               "present": "Präs",
-                               "imperfect": "Imperf",
-                               "perfect": "Perf",
-                               "pluperfect": "Plusq",
-                               "future_i": "FutI",
-                               "future_ii": "FutII"
-                             },
-                             "voice": {
-                               "active": "Akt",
-                               "passive": "Pass"
-                             },
-                                   "imperative": "Imp",
-                             "infinitive": "Inf",
-                             "infinitive_tense": {
-                               "present": "Präs",
-                               "perfect": "Perf",
-                               "future": "Fut"
-                             },
-                             "noun_like_form": {
-                               "ppp": "PPP",
-                               "ppa": "PPA",
-                                                  "pfa": "PFA",
-                               "gerundium": "Gerund",
-                               "gerundivum": "Gerundv"
-                             }
-                           }
-                         }
-                        """),
-                Document.parse("""
-                        {
-                           "language": "en",
-                           "texts": {
-                             "terminal": {
-                               "help-text": "Enter \\"p\\" for Prompting, \\"t\\" for Translation Assistance. ",
-                               "unknown-mode-err": "Unknown mode: %s",
-                               "prompt": {
-                                 "title": "Prompting",
-                                 "help-text": "Usage: Type a vocabulary after \\">\\" (e. g. \\"amicus, amici m. - friend\\", \\"laetus, laeta, laetum - happy\\" or \\"felix, Gen. felicis - lucky\\"). Then after the indented \\">\\", type the form you want to generate (e. g. \\"Nom. Sg.\\" or \\"Gen. Pl. Fem.\\"). To go back at any time, press Enter without typing something on a prompt. "
-                               },
-                               "translation_assistance": {
-                                 "title": "Translaton Assistance",
-                                 "help-text": "Usage: Type a sentence after \\">\\" (e. g. \\"Asinus stat es exspectat.\\") and press Enter. Translation Assistance will print you all available information required for translating it."
-                               },
-                               "noun": "Noun",
-                               "adjective": "Adjective",
-                               "verb": "Verb",
-                               "error": "ERROR",
-                               "done": "Done. "
-                             }
-                           },
-                           "str-texts": {
-                             "casus": {
-                               "nom": "Nom",
-                               "acc": "Acc",
-                               "gen": "Gen",
-                               "dat": "Dat",
-                               "abl": "Abl"
-                             },
-                             "number": {
-                               "sg": "Sg",
-                               "pl": "Pl"
-                             },
-                             "gender": {
-                               "masc": "Masc",
-                               "fem": "Fem",
-                               "neut": "Neut"
-                             },
-                             "comparative_form": {
-                               "positive": "Pos",
-                               "comparative": "Comp",
-                               "superlative": "Sup"
-                             },
-                             "adverb": "Adv",
-                             "person": {
-                               "first": "1",
-                               "second": "2",
-                               "third": "3"
-                             },
-                             "person_cosmetic": "Pers",
-                             "mode": {
-                               "indicative": "Ind",
-                               "conjunctive": "Conj"
-                             },
-                             "tense": {
-                               "present": "Pres",
-                               "imperfect": "Imperf",
-                               "perfect": "Perf",
-                               "pluperfect": "Pluperf",
-                               "future_i": "FutI",
-                               "future_ii": "FutII"
-                             },
-                             "voice": {
-                               "active": "Act",
-                               "passive": "Pass"
-                             },
-                                   "imperative": "Imp",
-                             "infinitive": "Inf",
-                             "infinitive_tense": {
-                               "present": "Pres",
-                               "perfect": "Perf",
-                               "future": "Fut"
-                             },
-                             "noun_like_form": {
-                               "ppp": "PPP",
-                               "ppa": "PPA",
-                                                  "pfa": "PFA",
-                               "gerundium": "Gerund",
-                               "gerundivum": "Gerundv"
-                             }
-                           }
-                         }
-                        """)
-        ));
-    }
-    public void reloadI18ns() {
-        loadI18ns();
-    }
-
-    public void injectI18ns(I18ns i18ns) {
-        this.i18ns = i18ns;
-    }
 
     @Override
     protected void loadDeclensionClasses() throws LoadingDataException {
@@ -1040,7 +790,7 @@ public class MockDatabase extends Database {
     }
 
     @Override
-    protected void loadPortions() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
+    protected void loadPortions() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
         this.portions = new Portions();
         this.portions.loadPortions(List.of(
                 Document.parse("""
@@ -1118,7 +868,7 @@ public class MockDatabase extends Database {
                         """)*/
         ));
     }
-    public void reloadPortions() throws ParserException, DeclinedFormDoesNotExistException, I18nException, LexerException, VerbFormDoesNotExistException {
+    public void reloadPortions() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
         loadPortions();
     }
 
