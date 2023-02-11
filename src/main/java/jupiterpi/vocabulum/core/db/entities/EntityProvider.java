@@ -7,17 +7,47 @@ import org.bson.types.ObjectId;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Abstraction for a MongoDB collection that provides basic methods to read and write documents.
+ * @see Entity
+ */
 public abstract class EntityProvider {
+    /**
+     * @return The ids of all documents available in the collection
+     */
     public abstract List<String> getAvailableDocumentIds();
 
+    /**
+     * @param documentId the document id
+     * @return the raw document read in from the collection
+     */
     public abstract Document readDocument(String documentId);
 
+    /**
+     * Inserts a document into the collection.
+     * @param document the document to insert
+     * @return the assigned document id
+     */
     public abstract String insertDocument(Document document);
 
+    /**
+     * Modifies a document inside the collection.
+     * @param documentId the id of the document to modify
+     * @param document   the modified document
+     */
     public abstract void modifyDocument(String documentId, Document document);
 
+    /**
+     * Deletes a document in the collection.
+     * @param documentId the id of the document to delete
+     */
     public abstract void deleteDocument(String documentId);
 
+    /**
+     * Constructs an entity provider from a MongoDB collection.
+     * @param collection the MongoDB collection
+     * @return the corresponding entity provider
+     */
     public static EntityProvider fromMongoCollection(MongoCollection<Document> collection) {
         return new EntityProvider() {
             @Override

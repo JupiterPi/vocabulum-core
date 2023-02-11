@@ -9,6 +9,10 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Collection of all available <code>Lecture</code>s.
+ * @see Lecture
+ */
 public class Lectures {
     private Map<String, Lecture> lectures;
 
@@ -20,16 +24,29 @@ public class Lectures {
         }
     }
 
+    /**
+     * @return all available lectures
+     */
     public Collection<Lecture> getLectures() {
         return lectures.values();
     }
 
+    /**
+     * @param name the name of the lecture (e. g. "L1")
+     * @return the lecture with the specified name
+     */
     public Lecture getLecture(String name) {
         return lectures.get(name);
     }
 
     /* feature: example lines */
 
+    /**
+     * Goes through all lines of all lectures to find all sentences where a vocabulary is mentioned.
+     * @param vocabulary the vocabulary to search for
+     * @return the found example lines
+     * @see ExampleLine
+     */
     public List<ExampleLine> getExampleLines(Vocabulary vocabulary) {
         List<ExampleLine> exampleLines = new ArrayList<>();
         for (Lecture lecture : lectures.values()) {
@@ -82,22 +99,37 @@ public class Lectures {
             this.lineIndex = lineIndex;
         }
 
+        /**
+         * @return the full line from the lecture
+         */
         public String getLine() {
             return line;
         }
 
+        /**
+         * @return the index at the beginning of the substring of the line that matches the vocabulary
+         */
         public int getStartIndex() {
             return startIndex;
         }
 
+        /**
+         * @return the index at the end of the substring of the line that matches the vocabulary
+         */
         public int getEndIndex() {
             return endIndex;
         }
 
+        /**
+         * @return the lecture in which the line was found
+         */
         public Lecture getLecture() {
             return lecture;
         }
 
+        /**
+         * @return the index of the line within the lecture (0-based)
+         */
         public int getLineIndex() {
             return lineIndex;
         }

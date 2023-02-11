@@ -17,6 +17,12 @@ import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExis
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import org.bson.Document;
 
+/**
+ * Loads and hosts all relevant data from the database.
+ * Call <code>connectAndLoad()</code> and <code>prepareWordbase()</code> to load all data, then access it using <code>getPortions()</code> etc. or <code>getTranslationsDocument()</code>.
+ * @see #connectAndLoad(String) connectAndLoad()
+ * @see #prepareWordbase() prepareWordbase()
+ */
 public class Database {
     private static Database instance = null;
     public static Database get() {
@@ -48,6 +54,10 @@ public class Database {
         load();
     }
 
+    /**
+     * Establishes a connection to the MongoDB database and loads all data.
+     * @param mongoConnectUrl the MongoDB connect url (e. g. "mongodb://localhost")
+     */
     protected void connect(String mongoConnectUrl) {
         mongoClient = MongoClients.create(mongoConnectUrl);
         database = mongoClient.getDatabase("vocabulum_data");
@@ -72,6 +82,9 @@ public class Database {
         loadUsers();
     }
 
+    /**
+     * Loads all vocabularies from <code>Portions</code> into the <code>Wordbase</code>.
+     */
     public void prepareWordbase() {
         wordbase.clearAll();
         for (Portion portion : portions.getPortions().values()) {
@@ -83,14 +96,23 @@ public class Database {
 
     /* ----- provide access for non-DB classes ----- */
 
+    /**
+     * @return The "adjectives" raw document on the database.
+     */
     public Document getAdjectivesDocument() {
         return collection_other.find(new Document("id", "adjectives")).first();
     }
 
+    /**
+     * @return The "verbs" raw document on the database.
+     */
     public Document getVerbsDocument() {
         return collection_other.find(new Document("id", "verbs")).first();
     }
 
+    /**
+     * @return The "translations" raw document on the database.
+     */
     public Document getTranslationsDocument() {
         return collection_other.find(new Document("id", "translations")).first();
     }

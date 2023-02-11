@@ -7,6 +7,9 @@ import org.bson.Document;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a lecture in the textbook.
+ */
 public class Lecture {
     private String name;
     private List<String> lines;
@@ -32,16 +35,25 @@ public class Lecture {
         );
     }
 
-    /* getters, accessors, toString */
+    /* getters, accessors */
 
+    /**
+     * @return the name of the lecture (e. g. "L1")
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return the text of the lecture by line
+     */
     public List<String> getLines() {
         return lines;
     }
 
+    /**
+     * @return the text of the lecture as a string with line breaks
+     */
     public String getText() {
         return String.join("\n", lines);
     }
@@ -50,6 +62,11 @@ public class Lecture {
 
     private List<TAResult> processedLines = null;
 
+    /**
+     * Processes the lines in the lecture using the translation assistance.
+     * @return the processed lines
+     * @see TranslationAssistance
+     */
     public List<TAResult> getProcessedLines() {
         if (processedLines == null) {
             processedLines = new ArrayList<>();

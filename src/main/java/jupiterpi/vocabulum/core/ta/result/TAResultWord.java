@@ -6,6 +6,10 @@ import jupiterpi.vocabulum.core.vocabularies.VocabularyForm;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a word/vocabulary that's part of a translation assistance result.
+ * @see TAResult
+ */
 public class TAResultWord implements TAResult.TAResultItem {
     private String word;
     private List<PossibleWord> possibleWords;
@@ -15,6 +19,10 @@ public class TAResultWord implements TAResult.TAResultItem {
         this.possibleWords = possibleWords;
     }
 
+    /**
+     * Equivalent to <code>getItem()</code>.
+     * @return the word as it is in the sentence
+     */
     public String getWord() {
         return word;
     }
@@ -24,6 +32,9 @@ public class TAResultWord implements TAResult.TAResultItem {
         return word + ": " + String.join(", ", possibleWords.stream().map(possibleWord -> possibleWord.getVocabulary().toString()).toList());
     }
 
+    /**
+     * @return a list of possible vocabularies that this word might be
+     */
     public List<PossibleWord> getPossibleWords() {
         return possibleWords;
     }
@@ -37,14 +48,23 @@ public class TAResultWord implements TAResult.TAResultItem {
             this.forms = forms;
         }
 
+        /**
+         * @return the forms of this vocabulary that the word might be
+         */
         public List<VocabularyForm> getFormsRaw() {
             return forms;
         }
 
+        /**
+         * @return this vocabulary, which the word might be
+         */
         public Vocabulary getVocabulary() {
             return vocabulary;
         }
 
+        /**
+         * @return the forms of this vocabulary that the word might be
+         */
         public List<String> getForms() {
             List<String> forms = new ArrayList<>();
             for (VocabularyForm form : this.forms) {
@@ -53,6 +73,10 @@ public class TAResultWord implements TAResult.TAResultItem {
             return forms;
         }
 
+        /**
+         * Equivalent to <code>getVocabulary().getTranslationsToString()</code>.
+         * @return the possible translations of this vocabulary
+         */
         public List<String> getTranslations() {
             return vocabulary.getTranslationsToString();
         }

@@ -10,9 +10,18 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 
+/**
+ * Part of the interpreter that transforms an input expression into a sequence of tokens.
+ * Instantiate with the input expression and get the token sequence using <code>getTokens()</code>.
+ */
 public class Lexer {
     private TokenSequence tokens = new TokenSequence();
 
+    /**
+     * Constructs this lexer with the given input expression and transforms it into a token sequence.
+     * @param expr the input expression
+     * @throws LexerException when the input expression is invalid
+     */
     public Lexer(String expr) throws LexerException {
         casusSymbols = new StringSet(
                 Symbols.get().getCasusSymbol(Casus.NOM),
@@ -75,6 +84,9 @@ public class Lexer {
         generateTokens(expr);
     }
 
+    /**
+     * @return the resulting token sequence
+     */
     public TokenSequence getTokens() {
         return tokens;
     }

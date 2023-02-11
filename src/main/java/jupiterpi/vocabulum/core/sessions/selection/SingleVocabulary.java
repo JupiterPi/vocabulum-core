@@ -4,6 +4,9 @@ import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 
 import java.util.List;
 
+/**
+ * A vocabulary selection that contains a single vocabulary.
+ */
 public class SingleVocabulary implements StringifiableVocabularySelection {
     private Vocabulary vocabulary;
 

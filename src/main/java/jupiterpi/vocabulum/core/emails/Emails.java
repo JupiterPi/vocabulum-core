@@ -10,6 +10,10 @@ import javax.mail.internet.MimeMultipart;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * Utility class for sending verification emails.
+ * Not ready for use.
+ */
 public class Emails {
     private static Emails instance = null;
     public static Emails get() {

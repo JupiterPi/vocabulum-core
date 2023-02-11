@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Represents a vocabulary selection that can be expressed as a portion based vocabulary selection string.
+ * That format is as follows:
+ * <br>
  * 37 -> Portion 37
  * <p>
  * "A" -> Portion A (for non-number names)
@@ -49,6 +52,12 @@ public class PortionBasedVocabularySelection implements StringifiableVocabularyS
     /* from string */
 
     private PortionBasedVocabularySelection() {}
+
+    /**
+     * Constructs a portion based vocabulary selection from a selection string.
+     * @param str the portion based vocabulary selection string
+     * @return the vocabulary selection
+     */
     public static PortionBasedVocabularySelection fromString(String str) {
         return new PortionBasedVocabularySelectionParser(str) {
             @Override

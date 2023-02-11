@@ -11,6 +11,10 @@ import org.bson.Document;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a collection ("portion") of vocabularies.
+ * The vocabularies are divided into blocks (similar to the textbook).
+ */
 public class Portion implements VocabularySelection {
     private String name;
     private List<List<Vocabulary>> vocabularyBlocks = new ArrayList<>();
@@ -39,14 +43,23 @@ public class Portion implements VocabularySelection {
         return portion;
     }
 
+    /**
+     * @return the name of the portion (e. g. "1")
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return the vocabulary blocks
+     */
     public List<List<Vocabulary>> getVocabularyBlocks() {
         return vocabularyBlocks;
     }
 
+    /**
+     * @return the vocabularies from all blocks
+     */
     public List<Vocabulary> getVocabularies() {
         List<Vocabulary> vocabularies = new ArrayList<>();
         for (List<Vocabulary> block : vocabularyBlocks) {

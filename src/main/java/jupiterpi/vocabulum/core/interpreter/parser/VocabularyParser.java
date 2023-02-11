@@ -13,13 +13,28 @@ import jupiterpi.vocabulum.core.vocabularies.declined.nouns.RuntimeNoun;
 import jupiterpi.vocabulum.core.vocabularies.inflexible.Inflexible;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 
+/**
+ * Part of the interpreter that transforms a token sequence, translations and portion to a vocabulary.
+ * Instantiate and get the vocabulary using <code>getVocabulary()</code>.
+ * @see jupiterpi.vocabulum.core.interpreter.lexer.Lexer
+ */
 public class VocabularyParser {
     private Vocabulary vocabulary;
 
+    /**
+     * Constructs this parser with the given token sequence that makes up the definition, translations and portion.
+     * @param tokens       the token sequence that makes up the definition
+     * @param translations the translations
+     * @param portion      the portion that the vocabulary belongs to
+     * @throws ParserException when the given token sequence is not a valid vocabulary
+     */
     public VocabularyParser(TokenSequence tokens, TranslationSequence translations, String portion) throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
         this.vocabulary = parseVocabulary(tokens, translations, portion);
     }
 
+    /**
+     * @return the resulting vocabulary
+     */
     public Vocabulary getVocabulary() {
         return vocabulary;
     }

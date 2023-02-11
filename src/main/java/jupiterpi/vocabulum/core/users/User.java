@@ -7,6 +7,11 @@ import org.bson.Document;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Represents a Vocabulum user.
+ * The unique, immutable identifier for users is their email.
+ * The name is unique too, but mutable.
+ */
 public class User extends Entity {
     // unique but mutable
     private String name;
@@ -66,26 +71,50 @@ public class User extends Entity {
 
     /* getters */
 
+    /**
+     * @return this user's name, which is unique but mutable
+     * @see #fits(String, String)
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return this user's email, which is their unique, immutable identifier
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * @return this user's password
+     * @see #passwordFits(String)
+     * @see #fits(String, String)
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Returns when this user's pro subscription expires.
+     * Can be before the current date, in which case it means when it has expired last.
+     * @return the expiration of this user's pro subscription
+     * @see #isProUser()
+     */
     public Date getProExpiration() {
         return proExpiration;
     }
 
+    /**
+     * @return this user's connected Discord username
+     */
     public String getDiscordUsername() {
         return discordUsername;
     }
 
+    /**
+     * @return whether this user is an admin
+     */
     public boolean isAdmin() {
         return isAdmin;
     }
@@ -114,14 +143,29 @@ public class User extends Entity {
 
     /* other getters */
 
+    /**
+     * Checks whether the password provided for login is correct.
+     * @param password the password provided for login
+     * @return whether the password is correct
+     */
     public boolean passwordFits(String password) {
         return password.equals(this.password);
     }
 
+    /**
+     * Checks whether the username and password provided for login is correct / fit this user.
+     * @param name the name provided for login
+     * @param password the password provided for login
+     * @return whether the username and password fit this user
+     */
     public boolean fits(String name, String password) {
         return this.name.equals(name) && this.password.equals(password);
     }
 
+    /**
+     * @return whether this user's pro subscription has not expired
+     * @see #getProExpiration()
+     */
     public boolean isProUser() {
         if (proExpiration == null) return false;
         return new Date().getTime() <= proExpiration.getTime();

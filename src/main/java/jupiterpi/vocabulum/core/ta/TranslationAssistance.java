@@ -11,13 +11,26 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class that identifies and specifies words in a whole sentence.
+ * Initializing it and calling <code>getResult()</code> provides
+ * you with a detailed representation of the vocabularies in that sentence,
+ * which you can then, for example, present to the user.
+ */
 public class TranslationAssistance {
     private TAResult result;
 
+    /**
+     * Constructs a new translation assistance instance and runs the analysis.
+     * @param sentence the sentence to analyze
+     */
     public TranslationAssistance(String sentence) {
         runTranslationAssistance(sentence);
     }
 
+    /**
+     * @return the result
+     */
     public TAResult getResult() {
         return result;
     }
