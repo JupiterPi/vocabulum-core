@@ -1,10 +1,10 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated.form;
 
-import jupiterpi.vocabulum.core.i18n.Symbols;
 import jupiterpi.vocabulum.core.interpreter.lexer.Lexer;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
+import jupiterpi.vocabulum.core.symbols.Symbols;
 import jupiterpi.vocabulum.core.vocabularies.VocabularyForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 

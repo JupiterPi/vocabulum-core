@@ -1,8 +1,8 @@
 package jupiterpi.vocabulum.core.interpreter.lexer;
 
-import jupiterpi.vocabulum.core.i18n.Symbols;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
+import jupiterpi.vocabulum.core.symbols.Symbols;
 import jupiterpi.vocabulum.core.util.StringSet;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.*;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.ComparativeForm;

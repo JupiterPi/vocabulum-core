@@ -1,8 +1,8 @@
 package jupiterpi.vocabulum.core.interpreter.parser;
 
-import jupiterpi.vocabulum.core.i18n.Symbols;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
+import jupiterpi.vocabulum.core.symbols.Symbols;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.RuntimeVerb;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;

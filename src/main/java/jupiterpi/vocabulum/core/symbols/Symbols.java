@@ -1,4 +1,4 @@
-package jupiterpi.vocabulum.core.i18n;
+package jupiterpi.vocabulum.core.symbols;
 
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.*;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.ComparativeForm;

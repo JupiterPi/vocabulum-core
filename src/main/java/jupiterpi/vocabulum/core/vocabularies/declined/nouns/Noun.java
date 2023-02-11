@@ -1,6 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.nouns;
 
-import jupiterpi.vocabulum.core.i18n.Symbols;
+import jupiterpi.vocabulum.core.symbols.Symbols;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
