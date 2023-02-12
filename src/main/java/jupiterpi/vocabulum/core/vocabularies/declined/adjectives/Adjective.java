@@ -8,7 +8,6 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
-import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,44 +34,7 @@ public abstract class Adjective extends Vocabulary {
     }
 
     @Override
-    public Document generateWordbaseEntrySpecificPart() {
-        Document formsDocument = new Document();
-
-        Document adjectiveFormsDocument = new Document();
-        for (ComparativeForm comparativeForm : ComparativeForm.values()) {
-            Document comparativeFormDocument = new Document();
-            for (Gender gender : Gender.values()) {
-                Document genderDocument = new Document();
-                for (NNumber number : NNumber.values()) {
-                    Document numberDocument = new Document();
-                    for (Casus casus : Casus.values()) {
-                        AdjectiveForm form = new AdjectiveForm(new DeclinedForm(casus, number, gender), comparativeForm);
-                        numberDocument.put(casus.toString().toLowerCase(), makeFormOrDash(form));
-                    }
-                    genderDocument.put(number.toString().toLowerCase(), numberDocument);
-                }
-                comparativeFormDocument.put(gender.toString().toLowerCase(), genderDocument);
-            }
-            adjectiveFormsDocument.put(comparativeForm.toString().toLowerCase(), comparativeFormDocument);
-        }
-
-        Document adverbFormsDocument = new Document();
-        for (ComparativeForm comparativeForm : ComparativeForm.values()) {
-            AdjectiveForm adverbForm = new AdjectiveForm(true, comparativeForm);
-            adverbFormsDocument.put(comparativeForm.toString().toLowerCase(), makeFormOrDash(adverbForm));
-        }
-
-        formsDocument.put("adjectives", adjectiveFormsDocument);
-        formsDocument.put("adverbs", adverbFormsDocument);
-
-        Document document = new Document();
-        document.put("forms", formsDocument);
-        document.put("definition_type", definitionType.toString().toLowerCase());
-        return document;
-    }
-
-    @Override
-    protected List<String> getAllFormsToString() {
+    public List<String> getAllFormsToString() {
         List<String> forms = new ArrayList<>();
         for (Casus casus : Casus.values()) {
             for (NNumber number : NNumber.values()) {

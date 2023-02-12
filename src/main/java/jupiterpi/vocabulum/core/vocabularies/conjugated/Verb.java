@@ -8,7 +8,6 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
-import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,81 +43,7 @@ public abstract class Verb extends Vocabulary {
     public abstract String getBaseForm();
 
     @Override
-    public Document generateWordbaseEntrySpecificPart() {
-        Document formsDocument = new Document();
-
-        // Kind.IMPERATIVE
-        Document imperativeFormsDocument = new Document();
-        for (CNumber number : CNumber.values()) {
-            String form = makeFormOrDash(new VerbForm(number));
-            imperativeFormsDocument.put(number.toString().toLowerCase(), form);
-        }
-        formsDocument.put("imperative", imperativeFormsDocument);
-
-        // Kind.INFINITIVE
-        Document infinitiveFormsDocument = new Document();
-        for (InfinitiveTense infinitiveTense : InfinitiveTense.values()) {
-            Document infinitiveTenseDocument = new Document();
-            for (Voice voice : Voice.values()) {
-                String form = makeFormOrDash(new VerbForm(infinitiveTense, voice));
-                infinitiveTenseDocument.put(voice.toString().toLowerCase(), form);
-            }
-            infinitiveFormsDocument.put(infinitiveTense.toString().toLowerCase(), infinitiveTenseDocument);
-        }
-        formsDocument.put("infinitive", infinitiveFormsDocument);
-
-        // Kind.BASIC
-        Document basicFormsDocument = new Document();
-        for (Voice voice : Voice.values()) {
-            Document voiceDocument = new Document();
-            for (Tense tense : Tense.values()) {
-                Document tenseDocument = new Document();
-                for (Mode mode : Mode.values()) {
-                    Document modeDocument = new Document();
-                    for (CNumber number : CNumber.values()) {
-                        Document numberDocument = new Document();
-                        for (Person person : Person.values()) {
-                            String form = makeFormOrDash(new VerbForm(new ConjugatedForm(person, number), mode, tense, voice));
-                            numberDocument.put(person.toString().toLowerCase(), form);
-                        }
-                        modeDocument.put(number.toString().toLowerCase(), numberDocument);
-                    }
-                    tenseDocument.put(mode.toString().toLowerCase(), modeDocument);
-                }
-                voiceDocument.put(tense.toString().toLowerCase(), tenseDocument);
-            }
-            basicFormsDocument.put(voice.toString().toLowerCase(), voiceDocument);
-        }
-        formsDocument.put("basic", basicFormsDocument);
-
-        // Kind.NOUN_LIKE
-        Document nounLikeFormsDocument = new Document();
-        for (NounLikeForm nounLikeForm : NounLikeForm.values()) {
-            Document nounLikeFormDocument = new Document();
-            for (Gender gender : Gender.values()) {
-                Document genderDocument = new Document();
-                for (NNumber number : NNumber.values()) {
-                    Document numberDocument = new Document();
-                    for (Casus casus : Casus.values()) {
-                        String form = makeFormOrDash(new VerbForm(nounLikeForm, new DeclinedForm(casus, number, gender)));
-                        numberDocument.put(casus.toString().toLowerCase(), form);
-                    }
-                    genderDocument.put(number.toString().toLowerCase(), numberDocument);
-                }
-                nounLikeFormDocument.put(gender.toString().toLowerCase(), genderDocument);
-            }
-            nounLikeFormsDocument.put(nounLikeForm.toString().toLowerCase(), nounLikeFormDocument);
-        }
-        formsDocument.put("noun_like", nounLikeFormsDocument);
-
-        Document document = new Document();
-        document.put("forms", formsDocument);
-        document.put("conjugation_schema", getConjugationSchema());
-        return document;
-    }
-
-    @Override
-    protected List<String> getAllFormsToString() {
+    public List<String> getAllFormsToString() {
         List<String> forms = new ArrayList<>();
 
         // Kind.IMPERATIVE

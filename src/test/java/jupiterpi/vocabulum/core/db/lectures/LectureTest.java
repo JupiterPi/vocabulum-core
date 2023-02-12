@@ -1,21 +1,11 @@
 package jupiterpi.vocabulum.core.db.lectures;
 
-import jupiterpi.vocabulum.core.db.Database;
-import jupiterpi.vocabulum.core.db.MockDatabase;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
-import jupiterpi.vocabulum.core.db.MockWordbase;
-import jupiterpi.vocabulum.core.db.wordbase.IdentificationResult;
 import jupiterpi.vocabulum.core.ta.result.TAResult;
 import jupiterpi.vocabulum.core.ta.result.TAResultPunctuation;
 import jupiterpi.vocabulum.core.ta.result.TAResultWord;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
-import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
-import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
-import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
-import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
-import jupiterpi.vocabulum.core.vocabularies.declined.nouns.NounForm;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
-import org.bson.Document;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -48,24 +38,10 @@ class LectureTest {
             }
 
             @Override
-            protected Document generateWordbaseEntrySpecificPart() {
-                return new Document();
-            }
-
-            @Override
-            protected List<String> getAllFormsToString() {
+            public List<String> getAllFormsToString() {
                 return List.of();
             }
         };
-
-        ((MockDatabase) Database.get()).injectWordbase(new MockWordbase() {
-            @Override
-            public List<IdentificationResult> identifyWord(String word, boolean partialSearch) {
-                IdentificationResult sampleIdentificationResult = new IdentificationResult(sampleVocabulary, List.of(new NounForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))));
-                if (List.of("asinus", "stat", "vocat").contains(word)) return List.of(sampleIdentificationResult);
-                else return List.of();
-            }
-        });
 
         Lecture lecture = Lecture.fromTextString("name", "Asinus stat.\nQuintus vocat.");
         assertAll(

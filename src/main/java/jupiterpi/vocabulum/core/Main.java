@@ -14,7 +14,6 @@ public class Main {
         System.out.println("----- Vocabulum Core -----");
 
         Database.get().connectAndLoad("mongodb://localhost");
-        Database.get().prepareWordbase();
 
         for (Lecture lecture : Database.get().getLectures().getLectures()) {
             System.out.println(lecture.toString());

@@ -2,7 +2,7 @@ package jupiterpi.vocabulum.core.vocabularies;
 
 import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.LoadingDataException;
-import jupiterpi.vocabulum.core.db.wordbase.IdentificationResult;
+import jupiterpi.vocabulum.core.db.portions.Dictionary;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.*;
@@ -18,10 +18,9 @@ import java.util.List;
 public class VocabularyFormComparisonTests {
     public static void main(String[] args) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException, ReflectiveOperationException {
         Database.get().connectAndLoad("mongodb://localhost");
-        Database.get().prepareWordbase();
 
         String query = "exsp";
-        List<IdentificationResult> identificationResults = Database.get().getWordbase().identifyWord(query, true);
+        List<Dictionary.IdentificationResult> identificationResults = Database.get().getDictionary().identifyWord(query, true);
         for (VocabularyForm form : identificationResults.get(0).getForms()) {
             System.out.println(form);
         }
@@ -29,7 +28,6 @@ public class VocabularyFormComparisonTests {
 
     public static void main1(String[] args) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException, ReflectiveOperationException {
         Database.get().connectAndLoad("mongodb://localhost");
-        Database.get().prepareWordbase();
 
         // --- Verbs ---
         List<VerbForm> forms = new ArrayList<>();

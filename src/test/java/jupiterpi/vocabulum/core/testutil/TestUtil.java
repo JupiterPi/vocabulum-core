@@ -5,7 +5,6 @@ import jupiterpi.vocabulum.core.sessions.selection.VocabularySelection;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
-import org.bson.Document;
 
 import java.util.List;
 
@@ -28,12 +27,7 @@ public class TestUtil {
             }
 
             @Override
-            protected Document generateWordbaseEntrySpecificPart() {
-                return new Document();
-            }
-
-            @Override
-            protected List<String> getAllFormsToString() {
+            public List<String> getAllFormsToString() {
                 return List.of(base_form);
             }
         };

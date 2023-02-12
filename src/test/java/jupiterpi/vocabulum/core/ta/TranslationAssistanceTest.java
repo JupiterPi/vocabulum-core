@@ -3,10 +3,14 @@ package jupiterpi.vocabulum.core.ta;
 import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.MockDatabase;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
-import jupiterpi.vocabulum.core.db.MockWordbase;
-import jupiterpi.vocabulum.core.db.wordbase.IdentificationResult;
+import jupiterpi.vocabulum.core.db.portions.Dictionary;
+import jupiterpi.vocabulum.core.db.portions.Portions;
+import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
+import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.ta.result.TAResult;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
+import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
@@ -16,7 +20,6 @@ import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 import jupiterpi.vocabulum.core.vocabularies.translations.parts.PlainTextPart;
 import jupiterpi.vocabulum.core.vocabularies.translations.parts.container.TranslationPartContainer;
-import org.bson.Document;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -80,7 +83,7 @@ class TranslationAssistanceTest {
     class RunTranslationAssistance {
 
         @BeforeAll
-        static void init() {
+        static void init() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
             TranslationSequence translations = new TranslationSequence(
                     new VocabularyTranslation(true, new TranslationPartContainer(new PlainTextPart("transl1"))),
                     new VocabularyTranslation(false, new TranslationPartContainer(new PlainTextPart("transl2")))
@@ -102,17 +105,14 @@ class TranslationAssistanceTest {
                 }
 
                 @Override
-                protected Document generateWordbaseEntrySpecificPart() {
-                    return new Document();
-                }
-
-                @Override
-                protected List<String> getAllFormsToString() {
+                public List<String> getAllFormsToString() {
                     return List.of();
                 }
             };
 
-            ((MockDatabase) Database.get()).injectWordbase(new MockWordbase() {
+            Portions mockPortions = new Portions();
+            mockPortions.loadPortions(List.of());
+            ((MockDatabase) Database.get()).injectDictionary(new Dictionary(mockPortions) {
                 @Override
                 public List<IdentificationResult> identifyWord(String word, boolean partialSearch) {
                     IdentificationResult sampleIdentificationResult = new IdentificationResult(sampleVocabulary, List.of(new NounForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))));
@@ -219,8 +219,8 @@ class TranslationAssistanceTest {
         }
 
         @AfterAll
-        static void cleanup() {
-            ((MockDatabase) Database.get()).reloadWordbase();
+        static void cleanup() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
+            ((MockDatabase) Database.get()).reloadPortionsAndDictionary();
         }
 
     }

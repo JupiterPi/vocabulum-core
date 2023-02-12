@@ -1,7 +1,7 @@
 package jupiterpi.vocabulum.core.ta;
 
 import jupiterpi.vocabulum.core.db.Database;
-import jupiterpi.vocabulum.core.db.wordbase.IdentificationResult;
+import jupiterpi.vocabulum.core.db.portions.Dictionary;
 import jupiterpi.vocabulum.core.ta.result.TAResult;
 import jupiterpi.vocabulum.core.ta.result.TAResultPunctuation;
 import jupiterpi.vocabulum.core.ta.result.TAResultWord;
@@ -45,7 +45,7 @@ public class TranslationAssistance {
                 items.add(new TAResultPunctuation(token.getContent()));
             } else {
                 String word = token.getContent();
-                List<IdentificationResult> results = Database.get().getWordbase().identifyWord(word.toLowerCase(), false);
+                List<Dictionary.IdentificationResult> results = Database.get().getDictionary().identifyWord(word.toLowerCase(), false);
                 List<TAResultWord.PossibleWord> possibleWords = results.stream()
                         .map(r -> new TAResultWord.PossibleWord(r.getVocabulary(), r.getForms()))
                         .toList();

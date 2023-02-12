@@ -36,12 +36,7 @@ public class Inflexible extends Vocabulary {
     }
 
     @Override
-    public Document generateWordbaseEntrySpecificPart() {
-        return new Document();
-    }
-
-    @Override
-    protected List<String> getAllFormsToString() {
+    public List<String> getAllFormsToString() {
         return List.of(word);
     }
 

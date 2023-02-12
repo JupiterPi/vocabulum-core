@@ -62,7 +62,7 @@ public class PortionBasedVocabularySelection implements StringifiableVocabularyS
         return new PortionBasedVocabularySelectionParser(str) {
             @Override
             protected Vocabulary retrieveVocabulary(String base_form) {
-                return Database.get().getPortions().getVocabularyInPortion(base_form);
+                return Database.get().getDictionary().getVocabulary(base_form);
             }
 
             @Override

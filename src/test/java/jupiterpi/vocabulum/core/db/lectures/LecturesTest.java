@@ -24,7 +24,7 @@ class LecturesTest {
         @Test
         @DisplayName("normal")
         void normal() {
-            Vocabulary v = Database.get().getPortions().getVocabularyInPortion("clamare");
+            Vocabulary v = Database.get().getDictionary().getVocabulary("clamare");
             List<Lectures.ExampleLine> lines = Database.get().getLectures().getExampleLines(v);
             assertAll(
                     () -> assertEquals(2, lines.size()),
@@ -39,7 +39,7 @@ class LecturesTest {
         @Test
         @DisplayName("multiple occurrences of item string in line")
         void multipleOccurrencesOfItemStringInLine() {
-            Vocabulary v = Database.get().getPortions().getVocabularyInPortion("et");
+            Vocabulary v = Database.get().getDictionary().getVocabulary("et");
             List<Lectures.ExampleLine> lines = Database.get().getLectures().getExampleLines(v);
             assertEquals(17, lines.get(1).getStartIndex());
         }

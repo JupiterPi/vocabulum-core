@@ -29,8 +29,7 @@ class InflexibleTest {
         assertAll(
                 () -> assertEquals("et", i.getBaseForm()),
                 () -> assertEquals("et", i.getDefinition()),
-                () -> assertEquals(Vocabulary.Kind.INFLEXIBLE, i.getKind()),
-                () -> assertEquals(new Document(), i.generateWordbaseEntrySpecificPart())
+                () -> assertEquals(Vocabulary.Kind.INFLEXIBLE, i.getKind())
         );
     }
 }

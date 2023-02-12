@@ -10,11 +10,8 @@ import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 import jupiterpi.vocabulum.core.vocabularies.translations.parts.ArticlePart;
 import jupiterpi.vocabulum.core.vocabularies.translations.parts.PlainTextPart;
 import jupiterpi.vocabulum.core.vocabularies.translations.parts.container.TranslationPartContainer;
-import org.bson.Document;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,45 +29,6 @@ class VocabularyTest {
                 () -> assertEquals(translations, vocabulary.getTranslations()),
                 () -> assertEquals("amicus, amici m.", vocabulary.getDefinition())
         );
-    }
-
-    @Test
-    void generateWordbaseEntry() {
-        TranslationSequence translations = new TranslationSequence(
-                new VocabularyTranslation(true, new TranslationPartContainer(new PlainTextPart("der Freund"))),
-                new VocabularyTranslation(false, new TranslationPartContainer(new PlainTextPart("der Kamerad")))
-        );
-        Vocabulary vocabulary = new Vocabulary(translations, "test") {
-            @Override
-            public String getBaseForm() {
-                return "amicus";
-            }
-
-            @Override
-            public String getDefinition() { return null; }
-
-            @Override
-            public Kind getKind() {
-                return Kind.NOUN;
-            }
-
-            @Override
-            protected Document generateWordbaseEntrySpecificPart() {
-                return new Document();
-            }
-
-            @Override
-            protected List<String> getAllFormsToString() {
-                return List.of("form1", "form2");
-            }
-        };
-        Document e = new Document();
-        e.put("kind", "noun");
-        e.put("base_form", "amicus");
-        e.put("portion", "test");
-        e.put("translations", List.of("*der Freund*", "der Kamerad"));
-        e.put("allFormsIndex", "form1 form2");
-        assertEquals(e, vocabulary.generateWordbaseEntry());
     }
 
     @Test

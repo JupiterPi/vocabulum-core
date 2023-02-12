@@ -3,9 +3,9 @@ package jupiterpi.vocabulum.core.db;
 import jupiterpi.vocabulum.core.db.classes.ConjugationClasses;
 import jupiterpi.vocabulum.core.db.classes.DeclensionClasses;
 import jupiterpi.vocabulum.core.db.lectures.Lectures;
+import jupiterpi.vocabulum.core.db.portions.Dictionary;
 import jupiterpi.vocabulum.core.db.portions.Portions;
 import jupiterpi.vocabulum.core.db.users.Users;
-import jupiterpi.vocabulum.core.db.wordbase.Wordbase;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
@@ -24,11 +24,6 @@ public class MockDatabase extends Database {
 
     @Override
     protected void connect(String mongoConnectUrl) {
-        // do nothing
-    }
-
-    @Override
-    public void prepareWordbase() {
         // do nothing
     }
 
@@ -51,7 +46,7 @@ public class MockDatabase extends Database {
     }
 
     @Override
-    protected void loadPortions() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
+    protected void loadPortionsAndDictionary() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
         this.portions = new Portions();
         this.portions.loadPortions(List.of(
                 Document.parse("""
@@ -128,13 +123,19 @@ public class MockDatabase extends Database {
                         }
                         """)*/
         ));
+
+        dictionary = new Dictionary(portions);
     }
-    public void reloadPortions() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
-        loadPortions();
+    public void reloadPortionsAndDictionary() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
+        loadPortionsAndDictionary();
     }
 
     public void injectPortions(Portions portions) {
         this.portions = portions;
+    }
+
+    public void injectDictionary(Dictionary dictionary) {
+        this.dictionary = dictionary;
     }
 
     @Override
@@ -156,18 +157,6 @@ public class MockDatabase extends Database {
 
     public void injectLectures(Lectures lectures) {
         this.lectures = lectures;
-    }
-
-    @Override
-    protected void loadWordbase() {
-        this.wordbase = new MockWordbase();
-    }
-    public void reloadWordbase() {
-        loadWordbase();
-    }
-
-    public void injectWordbase(Wordbase wordbase) {
-        this.wordbase = wordbase;
     }
 
     @Override

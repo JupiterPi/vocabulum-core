@@ -9,7 +9,6 @@ import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExis
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
-import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,24 +70,7 @@ public abstract class Vocabulary {
         return null;
     }
 
-    public Document generateWordbaseEntry() {
-        Document document = new Document();
-        document.put("kind", getKind().toString().toLowerCase());
-        document.put("base_form", getBaseForm());
-        document.put("portion", portion);
-        document.put("translations", getTranslationsToString());
-
-        Document specificPart = generateWordbaseEntrySpecificPart();
-        document.putAll(specificPart);
-
-        document.put("allFormsIndex", String.join(" ", getAllFormsToString()));
-
-        return document;
-    }
-
-    protected abstract Document generateWordbaseEntrySpecificPart();
-
-    protected abstract List<String> getAllFormsToString();
+    public abstract List<String> getAllFormsToString();
 
     public String vocabularyToString() {
         List<String> translationsStr = new ArrayList<>();

@@ -4,16 +4,13 @@ import com.mongodb.client.*;
 import jupiterpi.vocabulum.core.db.classes.ConjugationClasses;
 import jupiterpi.vocabulum.core.db.classes.DeclensionClasses;
 import jupiterpi.vocabulum.core.db.lectures.Lectures;
-import jupiterpi.vocabulum.core.db.portions.Portion;
+import jupiterpi.vocabulum.core.db.portions.Dictionary;
 import jupiterpi.vocabulum.core.db.portions.Portions;
 import jupiterpi.vocabulum.core.db.users.DbUsers;
 import jupiterpi.vocabulum.core.db.users.Users;
-import jupiterpi.vocabulum.core.db.wordbase.DbWordbase;
-import jupiterpi.vocabulum.core.db.wordbase.Wordbase;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.util.TextFile;
-import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import org.bson.Document;
@@ -24,9 +21,8 @@ import java.util.stream.Stream;
 
 /**
  * Loads and hosts all relevant data from the database or resource files.
- * Call <code>connectAndLoad()</code> and <code>prepareWordbase()</code> to load all data, then access it using <code>getPortions()</code> etc.
- * @see #connectAndLoad(String) connectAndLoad()
- * @see #prepareWordbase() prepareWordbase()
+ * Call <code>connectAndLoad()</code> to load all data, then access it using <code>getPortions()</code> etc.
+ * @see #connectAndLoad(String)
  */
 public class Database {
     private static Database instance = null;
@@ -74,23 +70,10 @@ public class Database {
 
         loadDeclensionClasses();
         loadConjugationClasses();
-        loadPortions();
+        loadPortionsAndDictionary();
         loadLectures();
 
-        loadWordbase();
         loadUsers();
-    }
-
-    /**
-     * Loads all vocabularies from <code>Portions</code> into the <code>Wordbase</code>.
-     */
-    public void prepareWordbase() {
-        wordbase.clearAll();
-        for (Portion portion : portions.getPortions().values()) {
-            for (Vocabulary vocabulary : portion.getVocabularies()) {
-                wordbase.saveVocabulary(vocabulary);
-            }
-        }
     }
 
     /* ----- provide access for non-DB classes ----- */
@@ -169,18 +152,25 @@ public class Database {
         return conjugationClasses;
     }
 
-    // Portions
+    // Portions & Dictionary
 
     protected Portions portions;
+    protected Dictionary dictionary;
 
-    protected void loadPortions() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
+    protected void loadPortionsAndDictionary() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
         portions = new Portions();
         Iterable<Document> documents = collection_portions.find();
         portions.loadPortions(documents);
+
+        dictionary = new Dictionary(portions);
     }
 
     public Portions getPortions() {
         return portions;
+    }
+
+    public Dictionary getDictionary() {
+        return dictionary;
     }
 
     // Lectures
@@ -198,18 +188,6 @@ public class Database {
     }
 
     /* ----- objects that also modify the database ----- */
-
-    // Wordbase
-
-    protected Wordbase wordbase;
-
-    protected void loadWordbase() {
-        wordbase = new DbWordbase(this);
-    }
-
-    public Wordbase getWordbase() {
-        return wordbase;
-    }
 
     // Users
 
