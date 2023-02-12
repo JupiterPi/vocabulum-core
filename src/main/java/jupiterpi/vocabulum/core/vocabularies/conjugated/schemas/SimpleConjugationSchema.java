@@ -1,13 +1,8 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated.schemas;
 
 import jupiterpi.vocabulum.core.db.LoadingDataException;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.Verb;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.*;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.forminfo.Pattern;
-import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
-import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
-import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
-import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import org.bson.Document;
 
 import java.util.HashMap;
@@ -16,7 +11,8 @@ import java.util.Map;
 public class SimpleConjugationSchema extends ConjugationSchema {
     public static SimpleConjugationSchema readFromDocument(Document document) throws LoadingDataException {
         String name = document.getString("name");
-        SimpleConjugationSchema schema = new SimpleConjugationSchema(name);
+        String displayName = document.getString("displayName");
+        SimpleConjugationSchema schema = new SimpleConjugationSchema(name, displayName);
 
         // Kind.IMPERATIVE
         Document imperativeFormsDocument = (Document) document.get("imperative");
@@ -67,8 +63,8 @@ public class SimpleConjugationSchema extends ConjugationSchema {
         return schema;
     }
 
-    private SimpleConjugationSchema(String name) {
-        super(name);
+    private SimpleConjugationSchema(String name, String displayName) {
+        super(name, displayName);
         patterns = new HashMap<>();
         nounLikeFormRootPatterns = new HashMap<>();
     }

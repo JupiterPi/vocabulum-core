@@ -5,13 +5,19 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 
 public abstract class DeclensionSchema {
     protected String name;
+    protected String displayName;
 
-    protected DeclensionSchema(String name) {
+    protected DeclensionSchema(String name, String displayName) {
         this.name = name;
+        this.displayName = displayName;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getDisplayName() {
+        return displayName;
     }
 
     public String getSuffix(DeclinedForm form) throws DeclinedFormDoesNotExistException {

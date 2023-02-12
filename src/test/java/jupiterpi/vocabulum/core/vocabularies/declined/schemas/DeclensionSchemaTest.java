@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockDatabaseSetup.class)
 class DeclensionSchemaTest {
@@ -21,7 +22,7 @@ class DeclensionSchemaTest {
         @Test
         @DisplayName("on gender dependant with form with unset gender")
         void genderDependantUnsetGender() {
-            DeclensionSchema s = new DeclensionSchema("test") {
+            DeclensionSchema s = new DeclensionSchema("test", "test") {
                 @Override
                 protected String getSuffixRaw(DeclinedForm form) { return "-"; }
 
@@ -32,7 +33,7 @@ class DeclensionSchemaTest {
         @Test
         @DisplayName("throws DeclinedFormDoesNotExistException on '-' raw suffix")
         void throwsDoesNotExistException() {
-            DeclensionSchema s = new DeclensionSchema("test") {
+            DeclensionSchema s = new DeclensionSchema("test", "test") {
                 @Override
                 protected String getSuffixRaw(DeclinedForm form) {
                     return "-";
@@ -45,7 +46,7 @@ class DeclensionSchemaTest {
         @Test
         @DisplayName("basic")
         void basic() throws DeclinedFormDoesNotExistException {
-            DeclensionSchema s = new DeclensionSchema("test") {
+            DeclensionSchema s = new DeclensionSchema("test", "test") {
                 @Override
                 protected String getSuffixRaw(DeclinedForm form) {
                     return "is";

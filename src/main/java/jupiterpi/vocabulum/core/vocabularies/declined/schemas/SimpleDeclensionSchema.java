@@ -16,21 +16,22 @@ public class SimpleDeclensionSchema extends DeclensionSchema {
     private Map<DeclinedForm, String> suffixes;
     private boolean isGenderDependant;
 
-    public SimpleDeclensionSchema(String name, Map<DeclinedForm, String> suffixes, boolean isGenderDependant) {
-        super(name);
+    public SimpleDeclensionSchema(String name, String displayName, Map<DeclinedForm, String> suffixes, boolean isGenderDependant) {
+        super(name, displayName);
         this.suffixes = suffixes;
         this.isGenderDependant = isGenderDependant;
     }
 
-    protected SimpleDeclensionSchema(String name, boolean isGenderDependant) {
-        super(name);
+    protected SimpleDeclensionSchema(String name, String displayName, boolean isGenderDependant) {
+        super(name, displayName);
         this.suffixes = new HashMap<>();
         this.isGenderDependant = isGenderDependant;
     }
     public static SimpleDeclensionSchema readFromDocument(Document document) throws LoadingDataException, DeclinedFormDoesNotExistException {
         String name = document.getString("name");
+        String displayName = document.getString("displayName");
         boolean isGenderDependant = document.getString("schema").equals("gender_dependant");
-        SimpleDeclensionSchema schema = new SimpleDeclensionSchema(name, isGenderDependant);
+        SimpleDeclensionSchema schema = new SimpleDeclensionSchema(name, displayName, isGenderDependant);
 
         DeclensionSchema parent = null;
         if (document.containsKey("parent")) {
