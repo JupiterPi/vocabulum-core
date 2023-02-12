@@ -6,8 +6,6 @@ import jupiterpi.vocabulum.core.db.classes.DeclensionClasses;
 import jupiterpi.vocabulum.core.db.lectures.Lectures;
 import jupiterpi.vocabulum.core.db.portions.Dictionary;
 import jupiterpi.vocabulum.core.db.portions.Portions;
-import jupiterpi.vocabulum.core.db.users.DbUsers;
-import jupiterpi.vocabulum.core.db.users.Users;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.util.TextFile;
@@ -43,8 +41,6 @@ public class Database {
 
     public MongoCollection<Document> collection_portions;
     public MongoCollection<Document> collection_lectures;
-    public MongoCollection<Document> collection_wordbase;
-    public MongoCollection<Document> collection_users;
 
     public void connectAndLoad(String mongoConnectUrl) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
         connect(mongoConnectUrl);
@@ -61,8 +57,6 @@ public class Database {
 
         collection_portions = database.getCollection("portions");
         collection_lectures = database.getCollection("lectures");
-        collection_wordbase = database.getCollection("wordbase");
-        collection_users = database.getCollection("users");
     }
 
     protected void load() throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
@@ -72,8 +66,6 @@ public class Database {
         loadConjugationClasses();
         loadPortionsAndDictionary();
         loadLectures();
-
-        loadUsers();
     }
 
     /* ----- provide access for non-DB classes ----- */
@@ -185,19 +177,5 @@ public class Database {
 
     public Lectures getLectures() {
         return lectures;
-    }
-
-    /* ----- objects that also modify the database ----- */
-
-    // Users
-
-    protected Users users;
-
-    protected void loadUsers() {
-        users = new DbUsers(this);
-    }
-
-    public Users getUsers() {
-        return users;
     }
 }

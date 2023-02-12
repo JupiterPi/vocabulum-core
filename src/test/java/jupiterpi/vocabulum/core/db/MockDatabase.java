@@ -5,7 +5,6 @@ import jupiterpi.vocabulum.core.db.classes.DeclensionClasses;
 import jupiterpi.vocabulum.core.db.lectures.Lectures;
 import jupiterpi.vocabulum.core.db.portions.Dictionary;
 import jupiterpi.vocabulum.core.db.portions.Portions;
-import jupiterpi.vocabulum.core.db.users.Users;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
@@ -157,18 +156,5 @@ public class MockDatabase extends Database {
 
     public void injectLectures(Lectures lectures) {
         this.lectures = lectures;
-    }
-
-    @Override
-    protected void loadUsers() {
-        users = new MockUsers();
-    }
-
-    public void reloadUsers() {
-        loadUsers();
-    }
-
-    public void injectUsers(Users users) {
-        this.users = users;
     }
 }
