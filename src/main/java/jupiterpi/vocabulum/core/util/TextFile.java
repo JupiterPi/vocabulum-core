@@ -1,5 +1,7 @@
 package jupiterpi.vocabulum.core.util;
 
+import org.bson.Document;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -37,6 +39,10 @@ public class TextFile {
 
     public static TextFile readResourceFile(String path) {
         return readFile(new File(ClassLoader.getSystemClassLoader().getResource(path).getFile()));
+    }
+
+    public static Document readJsonResourceFile(String path) {
+        return Document.parse(readResourceFile(path).getFile());
     }
 
     public static TextFile readFile(File file) {

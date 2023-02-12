@@ -1,5 +1,6 @@
 {
   "name": "o",
+  "displayName": "o-Deklination",
   "schema": "gender_dependant",
   "masc": {
     "sg": {

@@ -1,5 +1,6 @@
 {
   "name": "cons",
+  "displayName": "konsonantische Deklination",
   "schema": "general",
   "sg": {
     "nom": "",

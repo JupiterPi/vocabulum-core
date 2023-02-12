@@ -1,5 +1,6 @@
 {
   "name": "cons_adjectives",
+  "displayName": "konsonantische Deklination (Adjektive)",
   "parent": "cons",
   "schema": "gender_dependant",
   "masc": {
