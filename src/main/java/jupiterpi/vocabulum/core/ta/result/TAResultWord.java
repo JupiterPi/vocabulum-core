@@ -63,7 +63,7 @@ public class TAResultWord implements TAResult.TAResultItem {
         }
 
         /**
-         * @return the forms of this vocabulary that the word might be
+         * @return string representations of the forms of this vocabulary that the word might be
          */
         public List<String> getForms() {
             List<String> forms = new ArrayList<>();

@@ -46,7 +46,9 @@ public class Lectures {
      * @param vocabulary the vocabulary to search for
      * @return the found example lines
      * @see ExampleLine
+     * @deprecated use <code>getAllExampleLines()</code> instead (otherwise severe performance issues)
      */
+    @Deprecated
     public List<ExampleLine> getExampleLines(Vocabulary vocabulary) {
         List<ExampleLine> exampleLines = new ArrayList<>();
         for (Lecture lecture : lectures.values()) {
@@ -82,6 +84,48 @@ public class Lectures {
             }
         }
         return exampleLines;
+    }
+
+    /**
+     * Goes through all lines of all lectures and constructs a map of all sentences where a vocabulary is mentioned for all vocabularies.
+     * @return a map of all occurring vocabularies and all sentences where they're used
+     * @see ExampleLine
+     */
+    public Map<Vocabulary, List<ExampleLine>> getAllExampleLines() {
+        Map<Vocabulary, List<ExampleLine>> allExampleLines = new HashMap<>();
+        for (Lecture lecture : lectures.values()) {
+            for (int lineIndex = 0; lineIndex < lecture.getProcessedLines().size(); lineIndex++) {
+                TAResult processedLine = lecture.getProcessedLines().get(lineIndex);
+                String line = lecture.getLines().get(lineIndex);
+
+                Set<Vocabulary> vocabulariesDone = new HashSet<>();
+                for (TAResult.TAResultItem item : processedLine.getItems()) {
+                    if (item instanceof TAResultWord word) {
+                        for (TAResultWord.PossibleWord possibleWord : word.getPossibleWords()) {
+                            Vocabulary vocabulary = possibleWord.getVocabulary();
+                            if (!vocabulariesDone.contains(vocabulary)) {
+                                vocabulariesDone.add(vocabulary);
+
+                                Matcher matcher = Pattern.compile("\\b" + Pattern.quote(word.getWord()) + "\\b").matcher(line);
+                                matcher.find();
+                                int startIndex = matcher.start();
+
+                                ExampleLine exampleLine = new ExampleLine(
+                                        line, startIndex, startIndex + word.getWord().length(),
+                                        lecture, lineIndex
+                                );
+                                if (allExampleLines.containsKey(vocabulary)) {
+                                    allExampleLines.get(vocabulary).add(exampleLine);
+                                } else {
+                                    allExampleLines.put(vocabulary, new ArrayList<>(List.of(exampleLine)));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return allExampleLines;
     }
 
     public static class ExampleLine {
