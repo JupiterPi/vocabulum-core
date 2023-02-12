@@ -48,10 +48,8 @@ class LecturesTest {
 
     @Test
     void getAllExampleLines() {
-        Vocabulary v = Database.get().getPortions().getVocabularyInPortion("clamare");
-        Vocabulary v2 = Database.get().getPortions().getVocabularyInPortion("silentium");
-        Map<Vocabulary, List<Lectures.ExampleLine>> allExampleLines = Database.get().getLectures().getAllExampleLines();
-        List<Lectures.ExampleLine> lines = allExampleLines.get(v);
+        Map<String, List<Lectures.ExampleLine>> allExampleLines = Database.get().getLectures().getAllExampleLines();
+        List<Lectures.ExampleLine> lines = allExampleLines.get("clamare");
         assertAll(
                 () -> assertEquals(2, lines.size()),
                 () -> assertEquals("Etiam canis tacet, asinus non iam clamat.", lines.get(0).getLine()),
@@ -59,7 +57,7 @@ class LecturesTest {
                 () -> assertEquals(40, lines.get(0).getEndIndex()),
                 () -> assertEquals(Database.get().getLectures().getLecture("L1"), lines.get(0).getLecture()),
                 () -> assertEquals(1, lines.get(0).getLineIndex()),
-                () -> assertTrue(allExampleLines.containsKey(v2))
+                () -> assertTrue(allExampleLines.containsKey("silentium"))
         );
     }
 

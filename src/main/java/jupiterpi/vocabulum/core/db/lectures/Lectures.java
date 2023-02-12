@@ -86,25 +86,26 @@ public class Lectures {
         return exampleLines;
     }
 
+    //TODO map by vocabulary object -> unified source of truth
     /**
      * Goes through all lines of all lectures and constructs a map of all sentences where a vocabulary is mentioned for all vocabularies.
      * @return a map of all occurring vocabularies and all sentences where they're used
      * @see ExampleLine
      */
-    public Map<Vocabulary, List<ExampleLine>> getAllExampleLines() {
-        Map<Vocabulary, List<ExampleLine>> allExampleLines = new HashMap<>();
+    public Map<String, List<ExampleLine>> getAllExampleLines() {
+        Map<String, List<ExampleLine>> allExampleLines = new HashMap<>(); // vocabulary's base form
         for (Lecture lecture : lectures.values()) {
             for (int lineIndex = 0; lineIndex < lecture.getProcessedLines().size(); lineIndex++) {
                 TAResult processedLine = lecture.getProcessedLines().get(lineIndex);
                 String line = lecture.getLines().get(lineIndex);
 
-                Set<Vocabulary> vocabulariesDone = new HashSet<>();
+                Set<String> vocabulariesDone = new HashSet<>(); // vocabulary's base form
                 for (TAResult.TAResultItem item : processedLine.getItems()) {
                     if (item instanceof TAResultWord word) {
                         for (TAResultWord.PossibleWord possibleWord : word.getPossibleWords()) {
                             Vocabulary vocabulary = possibleWord.getVocabulary();
-                            if (!vocabulariesDone.contains(vocabulary)) {
-                                vocabulariesDone.add(vocabulary);
+                            if (!vocabulariesDone.contains(vocabulary.getBaseForm())) {
+                                vocabulariesDone.add(vocabulary.getBaseForm());
 
                                 Matcher matcher = Pattern.compile("\\b" + Pattern.quote(word.getWord()) + "\\b").matcher(line);
                                 matcher.find();
@@ -114,10 +115,10 @@ public class Lectures {
                                         line, startIndex, startIndex + word.getWord().length(),
                                         lecture, lineIndex
                                 );
-                                if (allExampleLines.containsKey(vocabulary)) {
-                                    allExampleLines.get(vocabulary).add(exampleLine);
+                                if (allExampleLines.containsKey(vocabulary.getBaseForm())) {
+                                    allExampleLines.get(vocabulary.getBaseForm()).add(exampleLine);
                                 } else {
-                                    allExampleLines.put(vocabulary, new ArrayList<>(List.of(exampleLine)));
+                                    allExampleLines.put(vocabulary.getBaseForm(), new ArrayList<>(List.of(exampleLine)));
                                 }
                             }
                         }
