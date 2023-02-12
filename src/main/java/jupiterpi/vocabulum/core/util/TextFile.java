@@ -8,18 +8,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TextFile {
-    public static String readFile(String path) {
-        return String.join("\n", readLines(path));
+    private List<String> lines;
+
+    public TextFile(List<String> lines) {
+        this.lines = lines;
     }
 
-    public static List<String> readLines(String path) {
-        try {
-            File file = new File(path);
-            if (!file.exists()) {
-                file.createNewFile();
-                return List.of();
-            }
+    /* getters */
 
+    public String getFile() {
+        return String.join("\n", lines);
+    }
+
+    public List<String> getLines() {
+        return lines;
+    }
+
+    /* read */
+
+    public static TextFile readFile(String path) {
+        File file = new File(path);
+        if (!file.exists()) {
+            return new TextFile(List.of());
+        } else {
+            return readFile(file);
+        }
+    }
+
+    public static TextFile readResourceFile(String path) {
+        return readFile(new File(ClassLoader.getSystemClassLoader().getResource(path).getFile()));
+    }
+
+    public static TextFile readFile(File file) {
+        try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             List<String> lines = new ArrayList<>();
             while (true) {
@@ -32,9 +53,10 @@ public class TextFile {
             }
             reader.close();
 
-            return lines;
+            return new TextFile(lines);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return null;
         }
     }
 }

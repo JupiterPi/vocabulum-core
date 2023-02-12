@@ -28,12 +28,12 @@ public class Emails {
     private final String emailDir = "./emails";
 
     private List<String> getConfig() {
-        return TextFile.readLines(emailDir + "/config.txt");
+        return TextFile.readFile(emailDir + "/config.txt").getLines();
     }
     // properties in order: 0) sender email, 1) sender password, 2) verification email subject
 
     private String getVerificationHTML() {
-        return TextFile.readFile(emailDir + "/verification_email.html");
+        return TextFile.readFile(emailDir + "/verification_email.html").getFile();
     }
 
     public void sendVerificationEmail(String recipient) throws MessagingException {
