@@ -1,0 +1,12 @@
+{
+  "lectures": [
+    {
+      "name": "L1",
+      "file": "L1.txt"
+    },
+    {
+      "name": "L2",
+      "file": "L2.txt"
+    }
+  ]
+}

@@ -2,7 +2,6 @@ package jupiterpi.vocabulum.core.db.lectures;
 
 import jupiterpi.vocabulum.core.ta.TranslationAssistance;
 import jupiterpi.vocabulum.core.ta.result.TAResult;
-import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +24,6 @@ public class Lecture {
         return new Lecture(
                 name,
                 List.of(text.split("\n"))
-        );
-    }
-
-    public static Lecture readFromDocument(Document document) {
-        return new Lecture(
-                document.getString("name"),
-                List.of(document.getString("text").split("\n"))
         );
     }
 

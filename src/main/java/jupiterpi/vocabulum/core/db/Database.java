@@ -1,6 +1,5 @@
 package jupiterpi.vocabulum.core.db;
 
-import com.mongodb.client.*;
 import jupiterpi.vocabulum.core.db.classes.ConjugationClasses;
 import jupiterpi.vocabulum.core.db.classes.DeclensionClasses;
 import jupiterpi.vocabulum.core.db.lectures.Lectures;
@@ -21,8 +20,7 @@ import java.util.stream.Stream;
 
 /**
  * Loads and hosts all relevant data from the database or resource files.
- * Call <code>connectAndLoad()</code> to load all data, then access it using <code>getPortions()</code> etc.
- * @see #connectAndLoad(String)
+ * Call <code>load()</code> to load all data, then access it using <code>getPortions()</code> etc.
  */
 public class Database {
     private static Database instance = null;
@@ -38,28 +36,10 @@ public class Database {
 
     /////
 
-    public MongoClient mongoClient;
-    public MongoDatabase database;
-
-    public MongoCollection<Document> collection_lectures;
-
-    public void connectAndLoad(String mongoConnectUrl) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
-        connect(mongoConnectUrl);
-        load();
-    }
-
     /**
-     * Establishes a connection to the MongoDB database and loads all data.
-     * @param mongoConnectUrl the MongoDB connect url (e. g. "mongodb://localhost")
+     * Loads all data.
      */
-    protected void connect(String mongoConnectUrl) {
-        mongoClient = MongoClients.create(mongoConnectUrl);
-        database = mongoClient.getDatabase("vocabulum_data");
-
-        collection_lectures = database.getCollection("lectures");
-    }
-
-    protected void load() throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
+    public void load() throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
         loadDocuments();
 
         loadDeclensionClasses();
@@ -80,23 +60,14 @@ public class Database {
         translationsDocument = TextFile.readJsonResourceFile("translations.json");
     }
 
-    /**
-     * @return The "adjectives" raw document on the database.
-     */
     public Document getAdjectivesDocument() {
         return adjectivesDocument;
     }
 
-    /**
-     * @return The "verbs" raw document on the database.
-     */
     public Document getVerbsDocument() {
         return verbsDocument;
     }
 
-    /**
-     * @return The "translations" raw document on the database.
-     */
     public Document getTranslationsDocument() {
         return translationsDocument;
     }
@@ -154,14 +125,13 @@ public class Database {
 
         Map<String, List<List<String>>> portions = new HashMap<>();
         for (Document document : TextFile.readJsonResourceFile("portions.json").getList("portions", Document.class)) {
-            String portionName = document.getString("name");
-            System.out.println("portions/" + document.getString("file"));
+            String name = document.getString("name");
             String file = TextFile.readResourceFile("portions/" + document.getString("file")).getFile();
             List<String> blocksStr = List.of(file.split("\n\n"));
             List<List<String>> vocabularyStrBlocks = blocksStr.stream()
                     .map(blockStr -> List.of(blockStr.split("\n")))
                     .toList();
-            portions.put(portionName, vocabularyStrBlocks);
+            portions.put(name, vocabularyStrBlocks);
         }
         this.portions.loadPortions(portions);
 
@@ -181,9 +151,15 @@ public class Database {
     protected Lectures lectures;
 
     protected void loadLectures() {
-        lectures = new Lectures();
-        FindIterable<Document> documents = collection_lectures.find();
-        lectures.loadLectures(documents);
+        this.lectures = new Lectures();
+
+        Map<String, List<String>> lectures = new HashMap<>();
+        for (Document document : TextFile.readJsonResourceFile("lectures.json").getList("lectures", Document.class)) {
+            String name = document.getString("name");
+            List<String> lines = TextFile.readResourceFile("lectures/" + document.getString("file")).getLines();
+            lectures.put(name, lines);
+        }
+        this.lectures.loadLectures(lectures);
     }
 
     public Lectures getLectures() {

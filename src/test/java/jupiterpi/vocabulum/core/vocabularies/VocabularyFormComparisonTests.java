@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VocabularyFormComparisonTests {
-    public static void main(String[] args) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException, ReflectiveOperationException {
-        Database.get().connectAndLoad("mongodb://localhost");
+    public static void main(String[] args) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
+        Database.get().load();
 
         String query = "exsp";
         List<Dictionary.IdentificationResult> identificationResults = Database.get().getDictionary().identifyWord(query, true);
@@ -26,8 +26,8 @@ public class VocabularyFormComparisonTests {
         }
     }
 
-    public static void main1(String[] args) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException, ReflectiveOperationException {
-        Database.get().connectAndLoad("mongodb://localhost");
+    public static void main1(String[] args) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
+        Database.get().load();
 
         // --- Verbs ---
         List<VerbForm> forms = new ArrayList<>();

@@ -10,10 +10,10 @@ import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExis
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 
 public class Main {
-    public static void main(String[] args) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException, Session.SessionLifecycleException, ReflectiveOperationException {
+    public static void main(String[] args) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException, Session.SessionLifecycleException {
         System.out.println("----- Vocabulum Core -----");
 
-        Database.get().connectAndLoad("mongodb://localhost");
+        Database.get().load();
 
         for (Lecture lecture : Database.get().getLectures().getLectures()) {
             System.out.println(lecture.toString());

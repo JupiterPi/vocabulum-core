@@ -3,7 +3,6 @@ package jupiterpi.vocabulum.core.db.lectures;
 import jupiterpi.vocabulum.core.ta.result.TAResult;
 import jupiterpi.vocabulum.core.ta.result.TAResultWord;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
-import org.bson.Document;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -16,11 +15,12 @@ import java.util.regex.Pattern;
 public class Lectures {
     private Map<String, Lecture> lectures;
 
-    public void loadLectures(Iterable<Document> documents) {
-        lectures = new HashMap<>();
-        for (Document document : documents) {
-            Lecture lecture = Lecture.readFromDocument(document);
-            lectures.put(lecture.getName(), lecture);
+    public void loadLectures(Map<String, List<String>> lectures) {
+        this.lectures = new HashMap<>();
+        for (Map.Entry<String, List<String>> entry : lectures.entrySet()) {
+            String name = entry.getKey();
+            List<String> lines = entry.getValue();
+            this.lectures.put(name, new Lecture(name, lines));
         }
     }
 

@@ -9,21 +9,10 @@ import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
-import org.bson.Document;
-
-import java.util.List;
 
 public class MockDatabase extends Database {
     public static void inject() {
         Database.inject(new MockDatabase());
-    }
-
-    /////
-
-
-    @Override
-    protected void connect(String mongoConnectUrl) {
-        // do nothing
     }
 
     // load classes
@@ -54,19 +43,6 @@ public class MockDatabase extends Database {
 
     public void injectDictionary(Dictionary dictionary) {
         this.dictionary = dictionary;
-    }
-
-    @Override
-    protected void loadLectures() {
-        this.lectures = new Lectures();
-        this.lectures.loadLectures(List.of(
-                Document.parse("""
-                        {
-                          "name": "L1",
-                          "text": "Sol ardet, silentium est; villa sub sole iacet.\\nEtiam canis tacet, asinus non iam clamat.\\nQuintus stat et exspectat.\\nUbi est Flavia?\\nCur amica non venit?\\nNon placet stare et exspectare,\\nnon placet esse sine amica,\\nnon placet villa sine amica,\\nnon placet sol,\\nnon placet silentium.\\nSubito canis latrat, etiam asinus clamat.\\nQuid est? Ecce! Quis venit?"
-                        }
-                        """)
-        ));
     }
 
     public void reloadLectures() {

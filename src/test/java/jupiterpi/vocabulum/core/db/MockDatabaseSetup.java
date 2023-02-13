@@ -23,10 +23,10 @@ public class MockDatabaseSetup implements BeforeAllCallback {
     }
 
     private final boolean mockDatabase = true;
-    private void setup() throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException, ReflectiveOperationException {
+    private void setup() throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
         if (mockDatabase) MockDatabase.inject();
-        Database.get().connectAndLoad("mongodb://localhost");
-        System.out.println("Connected and loaded " + (mockDatabase ? "mocked " : "") + "database");
+        Database.get().load();
+        System.out.println("Loaded " + (mockDatabase ? "mocked " : "") + "database");
     }
 
     // https://stackoverflow.com/a/64070019/13164753
