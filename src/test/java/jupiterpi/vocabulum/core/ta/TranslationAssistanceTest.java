@@ -26,6 +26,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -111,7 +112,7 @@ class TranslationAssistanceTest {
             };
 
             Portions mockPortions = new Portions();
-            mockPortions.loadPortions(List.of());
+            mockPortions.loadPortions(new HashMap<>());
             ((MockDatabase) Database.get()).injectDictionary(new Dictionary(mockPortions) {
                 @Override
                 public List<IdentificationResult> identifyWord(String word, boolean partialSearch) {

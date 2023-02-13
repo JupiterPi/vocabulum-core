@@ -4,9 +4,9 @@ import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
-import org.bson.Document;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,11 +16,13 @@ import java.util.Map;
 public class Portions {
     private Map<String, Portion> portions;
 
-    public void loadPortions(Iterable<Document> documents) throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
-        portions = new HashMap<>();
-        for (Document portionDocument : documents) {
-            Portion portion = Portion.readFromDocument(portionDocument);
-            portions.put(portion.getName(), portion);
+    public void loadPortions(Map<String, List<List<String>>> portions) throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
+        this.portions = new HashMap<>();
+        for (Map.Entry<String, List<List<String>>> entry : portions.entrySet()) {
+            String portionName = entry.getKey();
+            List<List<String>> vocabulariesStr = entry.getValue();
+            Portion portion = Portion.readFromVocabularyStrBlocks(portionName, vocabulariesStr);
+            this.portions.put(portion.getName(), portion);
         }
     }
 

@@ -8,7 +8,6 @@ import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExis
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
-import org.bson.Document;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,27 +19,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockDatabaseSetup.class)
 class PortionTest {
-    Document sampleDocument = Document.parse("""
-            {
-              "_id": {
-                "$oid": "62dd57d5a4fb87ed55463483"
-              },
-              "name": "A",
-              "i18n": "de",
-              "vocabularies": [
-                [
-                  "asinus, asini m. -- *der Esel*",
-                  "stare, sto, stavi, statum -- *dastehen*, aufrecht stehen",
-                  "et -- *und*",
-                  "exspectare, exspecto, exspectavi, exspectatum -- *erwarten*, warten auf"
-                ]
-              ]
-            }
-            """);
-
     @Test
-    void readFromDocument() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
-        Portion portion = Portion.readFromDocument(sampleDocument);
+    void readFromVocabularyStrBlocks() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
+        Portion portion = Portion.readFromVocabularyStrBlocks("A", List.of(
+                List.of(
+                        "asinus, asini m. -- *der Esel*",
+                        "stare, sto, stavi, statum -- *dastehen*, aufrecht stehen",
+                        "et -- *und*",
+                        "exspectare, exspecto, exspectavi, exspectatum -- *erwarten*, warten auf"
+                )
+        ));
         assertAll(
             () -> assertEquals("A", portion.getName()),
             () -> assertAll(

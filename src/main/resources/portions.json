@@ -1,0 +1,16 @@
+{
+  "portions": [
+    {
+      "name": "L1",
+      "file": "for1.txt"
+    },
+    {
+      "name": "1",
+      "file": "sample1.txt"
+    },
+    {
+      "name": "2",
+      "file": "sentence1.txt"
+    }
+  ]
+}

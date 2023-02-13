@@ -6,7 +6,6 @@ import jupiterpi.vocabulum.core.sessions.selection.VocabularySelection;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
-import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,20 +24,19 @@ public class Portion implements VocabularySelection {
     }
 
     private Portion() {}
-    public static Portion readFromDocument(Document document) throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
+    public static Portion readFromVocabularyStrBlocks(String name, List<List<String>> vocabularyStrBlocks) throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
         Portion portion = new Portion();
-
-        String name = document.getString("name");
         portion.name = name;
 
-        List<List<String>> vocabularyBlocks = (List<List<String>>) document.get("vocabularies");
-        for (List<String> vocabularies : vocabularyBlocks) {
-            List<Vocabulary> vocabularyBlock = new ArrayList<>();
-            for (String vocabulary : vocabularies) {
-                vocabularyBlock.add(Vocabulary.fromString(vocabulary, name));
+        List<List<Vocabulary>> vocabularyBlocks = new ArrayList<>();
+        for (List<String> block : vocabularyStrBlocks) {
+            List<Vocabulary> vocabularies = new ArrayList<>();
+            for (String vocabularyStr : block) {
+                vocabularies.add(Vocabulary.fromString(vocabularyStr, name));
             }
-            portion.vocabularyBlocks.add(vocabularyBlock);
+            vocabularyBlocks.add(vocabularies);
         }
+        portion.vocabularyBlocks = vocabularyBlocks;
 
         return portion;
     }

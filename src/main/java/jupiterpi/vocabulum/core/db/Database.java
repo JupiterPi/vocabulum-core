@@ -13,7 +13,9 @@ import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExis
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import org.bson.Document;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -39,7 +41,6 @@ public class Database {
     public MongoClient mongoClient;
     public MongoDatabase database;
 
-    public MongoCollection<Document> collection_portions;
     public MongoCollection<Document> collection_lectures;
 
     public void connectAndLoad(String mongoConnectUrl) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
@@ -55,7 +56,6 @@ public class Database {
         mongoClient = MongoClients.create(mongoConnectUrl);
         database = mongoClient.getDatabase("vocabulum_data");
 
-        collection_portions = database.getCollection("portions");
         collection_lectures = database.getCollection("lectures");
     }
 
@@ -150,11 +150,22 @@ public class Database {
     protected Dictionary dictionary;
 
     protected void loadPortionsAndDictionary() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
-        portions = new Portions();
-        Iterable<Document> documents = collection_portions.find();
-        portions.loadPortions(documents);
+        this.portions = new Portions();
 
-        dictionary = new Dictionary(portions);
+        Map<String, List<List<String>>> portions = new HashMap<>();
+        for (Document document : TextFile.readJsonResourceFile("portions.json").getList("portions", Document.class)) {
+            String portionName = document.getString("name");
+            System.out.println("portions/" + document.getString("file"));
+            String file = TextFile.readResourceFile("portions/" + document.getString("file")).getFile();
+            List<String> blocksStr = List.of(file.split("\n\n"));
+            List<List<String>> vocabularyStrBlocks = blocksStr.stream()
+                    .map(blockStr -> List.of(blockStr.split("\n")))
+                    .toList();
+            portions.put(portionName, vocabularyStrBlocks);
+        }
+        this.portions.loadPortions(portions);
+
+        dictionary = new Dictionary(this.portions);
     }
 
     public Portions getPortions() {
