@@ -1,11 +1,15 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.nouns;
 
+import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
+import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
+import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -13,35 +17,92 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockDatabaseSetup.class)
 class NounTest {
     @Test
     void getDefinition() {
-        Noun noun = new Noun(new TranslationSequence(), "test") {
-            @Override
-            protected Gender getGender() {
-                return Gender.MASC;
-            }
-
-            @Override
-            public String getDeclensionSchema() {
-                return "o";
-            }
-
-            @Override
-            public String makeForm(NounForm form) {
-                if (form.equals(new NounForm(new DeclinedForm(Casus.GEN, NNumber.SG)))) return "amici";
-                return null;
-            }
-
-            @Override
-            public String getBaseForm() {
-                return "amicus";
-            }
-        };
+        Noun noun = new Noun(
+                Database.get().getDeclensionClasses().o_Declension(),
+                "amicus", "amic", Gender.MASC,
+                new TranslationSequence(), "test"
+        );
         assertEquals("amicus, amici m.", noun.getDefinition());
+    }
+
+    @Nested
+    @DisplayName("fromGenitive()")
+    class FromGenitive {
+
+        @Test
+        @DisplayName("simple")
+        void simple() throws ParserException, DeclinedFormDoesNotExistException {
+            Noun n = Noun.fromGenitive("amicus", "amici", Gender.MASC, new TranslationSequence(), "test");
+            assertAll(
+                    () -> assertEquals("amicus", n.getBaseForm()),
+                    () -> assertEquals("amico", n.makeForm(new NounForm(new DeclinedForm(Casus.ABL, NNumber.SG)))),
+                    () -> assertEquals(Gender.MASC, n.getGender()),
+                    () -> assertEquals("o", n.getDeclensionSchema())
+            );
+        }
+
+        @Test
+        @DisplayName("not mixed up with cons_adjectives")
+        void notMixedUpWithConsAdjectives() throws ParserException, DeclinedFormDoesNotExistException {
+            Noun n = Noun.fromGenitive("sol", "solis", Gender.MASC, new TranslationSequence(), "test");
+            assertAll(
+                    () -> assertEquals("sol", n.getBaseForm()),
+                    () -> assertEquals(Gender.MASC, n.getGender()),
+                    () -> assertEquals("cons", n.getDeclensionSchema())
+            );
+        }
+
+    }
+
+    @Nested
+    @DisplayName("makeForm()")
+    class MakeForm {
+
+        Noun n;
+
+        @BeforeEach
+        void init() {
+            n = new Noun(
+                    Database.get().getDeclensionClasses().o_Declension(),
+                    "amicus", "amic", Gender.MASC,
+                    new TranslationSequence(), "test"
+            );
+        }
+
+        @Test
+        @DisplayName("wrong gender")
+        void wrongGender() {
+            NounForm form = new NounForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM));
+            assertThrows(DeclinedFormDoesNotExistException.class, () -> n.makeForm(form));
+        }
+
+        @Test
+        @DisplayName("unset gender")
+        void unsetGender() throws DeclinedFormDoesNotExistException {
+            NounForm form = new NounForm(new DeclinedForm(Casus.GEN, NNumber.PL));
+            assertEquals("amicorum", n.makeForm(form));
+        }
+
+        @Test
+        @DisplayName("Nom. Sg.")
+        void nomSg() throws DeclinedFormDoesNotExistException {
+            NounForm form = new NounForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC));
+            assertEquals("amicus", n.makeForm(form));
+        }
+
+        @Test
+        @DisplayName("other form")
+        void otherForm() throws DeclinedFormDoesNotExistException {
+            NounForm form = new NounForm(new DeclinedForm(Casus.GEN, NNumber.PL, Gender.MASC));
+            assertEquals("amicorum", n.makeForm(form));
+        }
+
     }
 
     @Nested
@@ -51,60 +112,25 @@ class NounTest {
         @Test
         @DisplayName("one possibility")
         void onePossibility() {
-            final NounForm abl_pl = new NounForm(new DeclinedForm(Casus.ABL, NNumber.PL, Gender.MASC));
-            Noun noun = new Noun(new TranslationSequence(), "test") {
-                @Override
-                protected Gender getGender() {
-                    return Gender.MASC;
-                }
-
-                @Override
-                public String getDeclensionSchema() {
-                    return "o";
-                }
-
-                @Override
-                public String makeForm(NounForm form) {
-                    if (form.equals(abl_pl)) return "amicis";
-                    else return "";
-                }
-
-                @Override
-                public String getBaseForm() {
-                    return "amicus";
-                }
-            };
-            assertEquals(List.of(abl_pl), noun.identifyForm("amicis", false));
+            Noun noun = new Noun(
+                    Database.get().getDeclensionClasses().o_Declension(),
+                    "amicus", "amic", Gender.MASC,
+                    new TranslationSequence(), "test"
+            );
+            NounForm gen_pl = new NounForm(new DeclinedForm(Casus.GEN, NNumber.PL, Gender.MASC));
+            assertEquals(List.of(gen_pl), noun.identifyForm("amicorum", false));
         }
 
         @Test
         @DisplayName("multiple possibilities")
         void multiplePossibilities() {
-            final NounForm gen_sg = new NounForm(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC));
-            final NounForm nom_pl = new NounForm(new DeclinedForm(Casus.NOM, NNumber.PL, Gender.MASC));
-            Noun noun = new Noun(new TranslationSequence(), "test") {
-                @Override
-                protected Gender getGender() {
-                    return Gender.MASC;
-                }
-
-                @Override
-                public String getDeclensionSchema() {
-                    return "o";
-                }
-
-                @Override
-                public String makeForm(NounForm form) {
-                    if (form.equals(gen_sg)) return "amici";
-                    if (form.equals(nom_pl)) return "amici";
-                    else return "";
-                }
-
-                @Override
-                public String getBaseForm() {
-                    return "amicus";
-                }
-            };
+            Noun noun = new Noun(
+                    Database.get().getDeclensionClasses().o_Declension(),
+                    "amicus", "amic", Gender.MASC,
+                    new TranslationSequence(), "test"
+            );
+            NounForm gen_sg = new NounForm(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC));
+            NounForm nom_pl = new NounForm(new DeclinedForm(Casus.NOM, NNumber.PL, Gender.MASC));
             assertEquals(List.of(nom_pl, gen_sg), noun.identifyForm("amici", false));
         }
 

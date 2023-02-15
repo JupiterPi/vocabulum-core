@@ -12,7 +12,6 @@ import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.Adjective;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.RuntimeAdjective;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.Noun;
-import jupiterpi.vocabulum.core.vocabularies.declined.nouns.RuntimeNoun;
 import jupiterpi.vocabulum.core.vocabularies.inflexible.Inflexible;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
@@ -42,7 +41,7 @@ class VocabularyParserTest {
         @DisplayName("noun")
         void noun() throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
             TranslationSequence translations = generateTranslations("*der Sklave*", "der Diener");
-            Noun e = RuntimeNoun.fromGenitive(
+            Noun e = Noun.fromGenitive(
                     "servus", "servi", Gender.MASC,
                     translations, "test"
             );

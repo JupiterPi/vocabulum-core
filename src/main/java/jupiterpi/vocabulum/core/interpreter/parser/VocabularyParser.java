@@ -9,7 +9,7 @@ import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExis
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.RuntimeAdjective;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
-import jupiterpi.vocabulum.core.vocabularies.declined.nouns.RuntimeNoun;
+import jupiterpi.vocabulum.core.vocabularies.declined.nouns.Noun;
 import jupiterpi.vocabulum.core.vocabularies.inflexible.Inflexible;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 
@@ -49,7 +49,7 @@ public class VocabularyParser {
                 Token.Type.COMMA,
                 Token.Type.WORD,
                 Token.Type.GENDER))) {
-            return RuntimeNoun.fromGenitive(
+            return Noun.fromGenitive(
                     tokens.get(0).getContent(),
                     tokens.get(2).getContent(),
                     Symbols.get().genderFromSymbol(tokens.get(3).getContent()),
