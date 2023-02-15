@@ -10,7 +10,6 @@ import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistEx
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.Adjective;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.AdjectiveForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.ComparativeForm;
-import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.RuntimeAdjective;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
@@ -59,7 +58,7 @@ public class RuntimeVerb extends Verb {
 
         String pppRoot = "-";
         if (!ppp_nom_sg_neut.equals("-")) {
-            String nom_sg_neut_suffix = RuntimeAdjective.neuterDeclensionSchema.getSuffix(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT));
+            String nom_sg_neut_suffix = Adjective.neuterDeclensionSchema.getSuffix(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT));
             pppRoot = ppp_nom_sg_neut.substring(0, ppp_nom_sg_neut.length() - nom_sg_neut_suffix.length());
         }
 
@@ -104,17 +103,17 @@ public class RuntimeVerb extends Verb {
                 !perfectRoot.equals("-"), !pppRoot.equals("-")
         );
 
-        String adjective_nom_sg_masc_suffix = RuntimeAdjective.masculineDeclensionSchema.getSuffix(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC));
-        String adjective_nom_sg_fem_suffix = RuntimeAdjective.feminineDeclensionSchema.getSuffix(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM));
-        String adjective_nom_sg_neut_suffix = RuntimeAdjective.neuterDeclensionSchema.getSuffix(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT));
+        String adjective_nom_sg_masc_suffix = Adjective.masculineDeclensionSchema.getSuffix(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC));
+        String adjective_nom_sg_fem_suffix = Adjective.feminineDeclensionSchema.getSuffix(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM));
+        String adjective_nom_sg_neut_suffix = Adjective.neuterDeclensionSchema.getSuffix(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT));
 
         NounLikeForm nounLikeForm = form.getNounLikeForm();
         if (nounLikeForm == NounLikeForm.PPP) {
-            RuntimeAdjective ppp = new RuntimeAdjective(
+            Adjective ppp = new Adjective(
                     pppRoot + adjective_nom_sg_masc_suffix,
                     pppRoot + adjective_nom_sg_fem_suffix,
                     pppRoot + adjective_nom_sg_neut_suffix,
-                    RuntimeAdjective.Kind.AO, pppRoot, new TranslationSequence(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
+                    Adjective.Kind.AO, pppRoot, new TranslationSequence(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
             AdjectiveForm adjectiveForm = new AdjectiveForm(form.getNounLikeDeclinedForm(), ComparativeForm.POSITIVE);
             return ppp.makeForm(adjectiveForm);
         } else {
@@ -149,11 +148,11 @@ public class RuntimeVerb extends Verb {
                     sign = alt_sign;
                 }
 
-                RuntimeAdjective pfa = new RuntimeAdjective(
+                Adjective pfa = new Adjective(
                         root + sign + adjective_nom_sg_masc_suffix,
                         root + sign + adjective_nom_sg_fem_suffix,
                         root + sign + adjective_nom_sg_neut_suffix,
-                        RuntimeAdjective.Kind.AO, root + sign, new TranslationSequence(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
+                        Adjective.Kind.AO, root + sign, new TranslationSequence(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
                 return pfa.makeForm(new AdjectiveForm(form.getNounLikeDeclinedForm(), ComparativeForm.POSITIVE));
             } else if (nounLikeForm == NounLikeForm.GERUNDIUM) {
                 Document gerundiumDocument = (Document) verbsDocument.get("gerundium");
@@ -181,11 +180,11 @@ public class RuntimeVerb extends Verb {
                 Pattern pattern = conjugationSchema.getNounLikeFormRootPattern(NounLikeForm.GERUNDIVUM);
                 String root = pattern.make(info);
 
-                RuntimeAdjective pfa = new RuntimeAdjective(
+                Adjective pfa = new Adjective(
                         root + sign + adjective_nom_sg_masc_suffix,
                         root + sign + adjective_nom_sg_fem_suffix,
                         root + sign + adjective_nom_sg_neut_suffix,
-                        RuntimeAdjective.Kind.AO, root + sign, new TranslationSequence(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
+                        Adjective.Kind.AO, root + sign, new TranslationSequence(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
                 return pfa.makeForm(new AdjectiveForm(form.getNounLikeDeclinedForm(), ComparativeForm.POSITIVE));
             }
         }

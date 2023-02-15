@@ -9,7 +9,6 @@ import jupiterpi.vocabulum.core.vocabularies.conjugated.Verb;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.Adjective;
-import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.RuntimeAdjective;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.Noun;
 import jupiterpi.vocabulum.core.vocabularies.inflexible.Inflexible;
@@ -58,7 +57,7 @@ class VocabularyParserTest {
         @DisplayName("adjective (2/3-ended: form base forms)")
         void adjectiveFromBaseForms() throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
             TranslationSequence translations = generateTranslations("*hart*", "*scharf*");
-            Adjective e = RuntimeAdjective.fromBaseForms(
+            Adjective e = Adjective.fromBaseForms(
                     "acer", "acris", "acre",
                     translations, "test"
             );
@@ -76,7 +75,7 @@ class VocabularyParserTest {
         @DisplayName("adjective (1-ended: form genitive)")
         void adjectiveFromGenitive() throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
             TranslationSequence translations = generateTranslations("*glücklich*");
-            Adjective e = RuntimeAdjective.fromGenitive(
+            Adjective e = Adjective.fromGenitive(
                     "felix", "felicis",
                     translations, "test"
             );

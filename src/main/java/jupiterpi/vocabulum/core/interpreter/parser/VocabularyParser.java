@@ -7,7 +7,7 @@ import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.RuntimeVerb;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
-import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.RuntimeAdjective;
+import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.Adjective;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.nouns.Noun;
 import jupiterpi.vocabulum.core.vocabularies.inflexible.Inflexible;
@@ -64,7 +64,7 @@ public class VocabularyParser {
                 Token.Type.WORD,
                 Token.Type.COMMA,
                 Token.Type.WORD))) {
-            return RuntimeAdjective.fromBaseForms(
+            return Adjective.fromBaseForms(
                     tokens.get(0).getContent(),
                     tokens.get(2).getContent(),
                     tokens.get(4).getContent(),
@@ -79,7 +79,7 @@ public class VocabularyParser {
                 new Token(Token.Type.CASUS, Symbols.get().getCasusSymbol(Casus.GEN)),
                 new Token(Token.Type.WORD)
         ))) {
-            return RuntimeAdjective.fromGenitive(
+            return Adjective.fromGenitive(
                     tokens.get(0).getContent(),
                     tokens.get(3).getContent(),
                     translations, portion
