@@ -4,7 +4,7 @@ import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.symbols.Symbols;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.RuntimeVerb;
+import jupiterpi.vocabulum.core.vocabularies.conjugated.Verb;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.adjectives.Adjective;
@@ -96,7 +96,7 @@ public class VocabularyParser {
                 Token.Type.COMMA,
                 Token.Type.WORD
         ))) {
-            return RuntimeVerb.fromBaseForms(
+            return Verb.fromBaseForms(
                     tokens.get(0).getContent(),
                     tokens.get(2).getContent(),
                     tokens.get(4).getContent(),

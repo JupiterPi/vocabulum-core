@@ -4,7 +4,6 @@ import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
 import jupiterpi.vocabulum.core.interpreter.tokens.Token;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
-import jupiterpi.vocabulum.core.vocabularies.conjugated.RuntimeVerb;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.Verb;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
@@ -92,7 +91,7 @@ class VocabularyParserTest {
         @DisplayName("verb")
         void verb() throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
             TranslationSequence translations = generateTranslations("*rufen*", "nennen");
-            Verb e = RuntimeVerb.fromBaseForms(
+            Verb e = Verb.fromBaseForms(
                     "vocare", "voco", "vocavi", "vocatum",
                     translations, "test"
             );
