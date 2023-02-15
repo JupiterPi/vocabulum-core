@@ -41,51 +41,6 @@ public class Lectures {
 
     /* feature: example lines */
 
-    /**
-     * Goes through all lines of all lectures to find all sentences where a vocabulary is mentioned.
-     * @param vocabulary the vocabulary to search for
-     * @return the found example lines
-     * @see ExampleLine
-     * @deprecated use <code>getAllExampleLines()</code> instead (otherwise severe performance issues)
-     */
-    @Deprecated
-    public List<ExampleLine> getExampleLines(Vocabulary vocabulary) {
-        List<ExampleLine> exampleLines = new ArrayList<>();
-        for (Lecture lecture : lectures.values()) {
-            for (int i = 0; i < lecture.getProcessedLines().size(); i++) {
-                TAResult processedLine = lecture.getProcessedLines().get(i);
-                String line = lecture.getLines().get(i);
-
-                TAResult.TAResultItem foundItem = null;
-                for (TAResult.TAResultItem item : processedLine.getItems()) {
-                    if (item instanceof TAResultWord) {
-                        TAResultWord word = (TAResultWord) item;
-                        for (TAResultWord.PossibleWord possibleWord : word.getPossibleWords()) {
-                            if (possibleWord.getVocabulary() != null && possibleWord.getVocabulary().getBaseForm().equals(vocabulary.getBaseForm())) {
-                                foundItem = item;
-                                break;
-                            }
-                        }
-                    }
-                    if (foundItem != null) break;
-                }
-                if (foundItem != null) {
-                    String itemStr = foundItem.getItem();
-
-                    Matcher matcher = Pattern.compile("\\b" + Pattern.quote(itemStr) + "\\b").matcher(line);
-                    matcher.find();
-                    int index = matcher.start();
-
-                    exampleLines.add(new ExampleLine(
-                            line, index, index + itemStr.length(),
-                            lecture, i
-                    ));
-                }
-            }
-        }
-        return exampleLines;
-    }
-
     //TODO map by vocabulary object -> unified source of truth
     /**
      * Goes through all lines of all lectures and constructs a map of all sentences where a vocabulary is mentioned for all vocabularies.
