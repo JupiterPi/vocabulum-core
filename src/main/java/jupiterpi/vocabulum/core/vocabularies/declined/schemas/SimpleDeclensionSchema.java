@@ -46,7 +46,7 @@ public class SimpleDeclensionSchema extends DeclensionSchema {
                     : document;
             for (NNumber number : NNumber.values()) {
                 Document numberDocument = (Document) genderDocument.get(number.toString().toLowerCase());
-                for (Casus casus : Casus.values()) {
+                for (Casus casus : Casus.standardCasus()) { // Casus.VOC handles specially in #getSuffixRaw()
                     String suffix = numberDocument.getString(casus.toString().toLowerCase());
                     DeclinedForm form = new DeclinedForm(casus, number, gender);
                     if (suffix.equals(".")) {
@@ -69,6 +69,10 @@ public class SimpleDeclensionSchema extends DeclensionSchema {
         if (!form.hasGender()) {
             if (isGenderDependant) throw DeclinedFormDoesNotExistException.forDeclensionSchema(form, this);
             else form.normalizeGender();
+        }
+        if (form.isCasus(Casus.VOC)) {
+            if (form.isNumber(NNumber.SG) && this == Database.get().getDeclensionClasses().o_Declension()) return "e";
+            else return getSuffixRaw(new DeclinedForm(Casus.NOM, form.getNumber(), form.getGender())); // return Casus.VOC like Casus.NOM
         }
         return suffixes.get(form);
     }

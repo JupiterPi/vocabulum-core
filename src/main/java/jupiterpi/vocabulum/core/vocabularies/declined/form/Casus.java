@@ -5,5 +5,10 @@ public enum Casus {
     GEN, // Genitive
     DAT, // Dative
     ACC, // Accusative
-    ABL  // Ablative
+    ABL, // Ablative
+    VOC; // Vocative
+
+    public static Casus[] standardCasus() {
+        return new Casus[]{NOM, GEN, DAT, ACC, ABL};
+    }
 }

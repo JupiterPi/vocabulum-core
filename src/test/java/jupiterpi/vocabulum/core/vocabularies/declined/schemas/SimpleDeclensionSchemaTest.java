@@ -1,5 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.schemas;
 
+import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.LoadingDataException;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
@@ -12,6 +13,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -184,6 +188,29 @@ class SimpleDeclensionSchemaTest {
                     () -> assertEquals("ium", s.getSuffixRaw(new DeclinedForm(Casus.GEN, NNumber.PL, Gender.MASC))),
                     () -> assertEquals("is", s.getSuffixRaw(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC)))
             );
+        }
+
+        @Nested
+        @DisplayName("Vocative forms")
+        class VocativeForms {
+
+            @Test
+            @DisplayName("reads NOM for VOC")
+            void readsNomForVoc() throws DeclinedFormDoesNotExistException {
+                Map<DeclinedForm, String> forms = new HashMap<>();
+                forms.put(new DeclinedForm(Casus.VOC, NNumber.SG, Gender.MASC), "wrong");
+                forms.put(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC), "right");
+                SimpleDeclensionSchema s = new SimpleDeclensionSchema("test", "test", forms, false);
+                assertEquals("right", s.getSuffixRaw(new DeclinedForm(Casus.VOC, NNumber.SG, Gender.MASC)));
+            }
+
+            @Test
+            @DisplayName("suffix for o-Decl Nom. Sg. m.")
+            void suffixForODeclNomSgM() throws DeclinedFormDoesNotExistException {
+                DeclensionSchema o_declension = Database.get().getDeclensionClasses().o_Declension();
+                assertEquals("e", o_declension.getSuffixRaw(new DeclinedForm(Casus.VOC, NNumber.SG, Gender.MASC)));
+            }
+
         }
 
     }

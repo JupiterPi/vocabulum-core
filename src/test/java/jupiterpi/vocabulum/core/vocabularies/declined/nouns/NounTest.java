@@ -131,7 +131,8 @@ class NounTest {
             );
             NounForm gen_sg = new NounForm(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC));
             NounForm nom_pl = new NounForm(new DeclinedForm(Casus.NOM, NNumber.PL, Gender.MASC));
-            assertEquals(List.of(nom_pl, gen_sg), noun.identifyForm("amici", false));
+            NounForm voc_pl = new NounForm(new DeclinedForm(Casus.VOC, NNumber.PL, Gender.MASC));
+            assertEquals(List.of(nom_pl, gen_sg, voc_pl), noun.identifyForm("amici", false));
         }
 
     }

@@ -32,6 +32,7 @@ public class Symbols {
             case DAT -> "Dat";
             case ACC -> "Akk";
             case ABL -> "Abl";
+            case VOC -> "Vok";
         };
     }
 
@@ -42,6 +43,7 @@ public class Symbols {
             case "Dat" -> Casus.DAT;
             case "Akk" -> Casus.ACC;
             case "Abl" -> Casus.ABL;
+            case "Vok" -> Casus.VOC;
             default -> null;
         };
     }
