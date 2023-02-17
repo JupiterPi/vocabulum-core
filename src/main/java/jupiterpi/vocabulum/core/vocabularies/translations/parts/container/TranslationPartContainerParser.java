@@ -1,6 +1,6 @@
 package jupiterpi.vocabulum.core.vocabularies.translations.parts.container;
 
-import jupiterpi.vocabulum.core.db.Database;
+import jupiterpi.vocabulum.core.db.Resources;
 import jupiterpi.vocabulum.core.vocabularies.translations.parts.ArticlePart;
 import jupiterpi.vocabulum.core.vocabularies.translations.parts.DotsPart;
 import jupiterpi.vocabulum.core.vocabularies.translations.parts.PlainTextPart;
@@ -35,7 +35,7 @@ public class TranslationPartContainerParser {
 
     /* parse string */
 
-    private final List<Keyword> keywords = Keyword.fromDocuments((List<Document>) Database.get().getTranslationsDocument().get("keywords"));
+    private final List<Keyword> keywords = Keyword.fromDocuments(Resources.get().getTranslationsDocument().getList("keywords", Document.class));
 
     private String buffer = "";
     private boolean inParens = false;
@@ -76,7 +76,7 @@ public class TranslationPartContainerParser {
         TranslationPart part = null;
         if (buffer.equals("...")) {
             part = new DotsPart();
-        } else if (Database.get().getTranslationsDocument().getList("articles", String.class).contains(buffer)) {
+        } else if (Resources.get().getTranslationsDocument().getList("articles", String.class).contains(buffer)) {
             part = new ArticlePart(buffer);
         } else {
             for (Keyword keyword : keywords) {

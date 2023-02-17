@@ -2,7 +2,6 @@ package jupiterpi.vocabulum.core;
 
 import jupiterpi.vocabulum.core.db.Database;
 import jupiterpi.vocabulum.core.db.LoadingDataException;
-import jupiterpi.vocabulum.core.db.lectures.Lecture;
 import jupiterpi.vocabulum.core.interpreter.lexer.LexerException;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.sessions.Session;
@@ -15,11 +14,7 @@ public class Main {
 
         Database.get().load();
 
-        for (Lecture lecture : Database.get().getLectures().getLectures()) {
-            System.out.println(lecture.toString());
-        }
-
-        SampleSession sampleSession = new SampleSession();
-        sampleSession.run();
+        /*SampleSession sampleSession = new SampleSession();
+        sampleSession.run();*/
     }
 }

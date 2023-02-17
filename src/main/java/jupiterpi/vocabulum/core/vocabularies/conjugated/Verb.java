@@ -1,6 +1,7 @@
 package jupiterpi.vocabulum.core.vocabularies.conjugated;
 
 import jupiterpi.vocabulum.core.db.Database;
+import jupiterpi.vocabulum.core.db.Resources;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.*;
@@ -191,7 +192,7 @@ public class Verb extends Vocabulary {
             AdjectiveForm adjectiveForm = new AdjectiveForm(form.getNounLikeDeclinedForm(), ComparativeForm.POSITIVE);
             return ppp.makeForm(adjectiveForm).toString();
         } else {
-            Document verbsDocument = (Document) Database.get().getVerbsDocument().get("noun_like_form_suffixes");
+            Document verbsDocument = (Document) Resources.get().getVerbsDocument().get("noun_like_form_suffixes");
             if (nounLikeForm == NounLikeForm.PPA) {
                 Document ppaDocument = (Document) verbsDocument.get("ppa");
                 String nom_sg_sign = ppaDocument.getString("nom_sg_sign");

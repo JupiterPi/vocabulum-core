@@ -1,6 +1,7 @@
 package jupiterpi.vocabulum.core.vocabularies.declined.adjectives;
 
 import jupiterpi.vocabulum.core.db.Database;
+import jupiterpi.vocabulum.core.db.Resources;
 import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.symbols.Symbols;
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
@@ -23,7 +24,7 @@ public class Adjective extends Vocabulary {
     public static final DeclensionSchema neuterDeclensionSchema = Database.get().getDeclensionClasses().o_Declension();
     public static final DeclensionSchema consonantalDeclensionSchema = Database.get().getDeclensionClasses().cons_adjectives_Declension();
 
-    private static final Document adjectivesData = Database.get().getAdjectivesDocument();
+    private static final Document adjectivesData = Resources.get().getAdjectivesDocument();
 
     private String nom_sg_masc;
     private String nom_sg_fem;
