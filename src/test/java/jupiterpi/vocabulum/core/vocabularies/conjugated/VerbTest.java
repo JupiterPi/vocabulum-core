@@ -23,21 +23,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockDatabaseSetup.class)
 class VerbTest {
     @Test
-    void makeFormOrDash() {
-        Verb verb = new Verb(
-                Database.get().getConjugationClasses().a_Conjugation(),
-                "vocare", "voc", "vocav", "vocat",
-                new TranslationSequence(), "test"
-        ) {
-            @Override
-            public String makeForm(VerbForm form) throws VerbFormDoesNotExistException {
-                throw new VerbFormDoesNotExistException(form);
-            }
-        };
-        assertEquals("-", verb.makeFormOrDash(new VerbForm(InfinitiveTense.PRESENT, Voice.ACTIVE)));
-    }
-
-    @Test
     void getDefinition() {
         Verb verb = new Verb(
                 Database.get().getConjugationClasses().a_Conjugation(),
@@ -52,7 +37,7 @@ class VerbTest {
         Verb verb = Verb.fromBaseForms("vocare", "voco", "vocavi", "vocatum", new TranslationSequence(), "test");
         assertAll(
                 () -> assertEquals("vocare", verb.getBaseForm()),
-                () -> assertEquals("voco", verb.makeForm(new VerbForm(new ConjugatedForm(Person.FIRST, CNumber.SG), Mode.INDICATIVE, Tense.PRESENT, Voice.ACTIVE)))
+                () -> assertEquals("voco", verb.makeForm(new VerbForm(new ConjugatedForm(Person.FIRST, CNumber.SG), Mode.INDICATIVE, Tense.PRESENT, Voice.ACTIVE)).toString())
         );
     }
 
@@ -69,26 +54,26 @@ class VerbTest {
 
         @Test
         @DisplayName("imperative")
-        void imperative() throws DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-            assertEquals("vocate", verb.makeForm(new VerbForm(CNumber.PL)));
+        void imperative() {
+            assertEquals("vocate", verb.makeForm(new VerbForm(CNumber.PL)).toString());
         }
 
         @Test
         @DisplayName("base infinitive")
-        void baseInfinitive() throws DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-            assertEquals("vocare", verb.makeForm(new VerbForm(InfinitiveTense.PRESENT, Voice.ACTIVE)));
+        void baseInfinitive() {
+            assertEquals("vocare", verb.makeForm(new VerbForm(InfinitiveTense.PRESENT, Voice.ACTIVE)).toString());
         }
 
         @Test
         @DisplayName("infinitive")
-        void infinitive() throws DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-            assertEquals("vocavisse", verb.makeForm(new VerbForm(InfinitiveTense.PERFECT, Voice.ACTIVE)));
+        void infinitive() {
+            assertEquals("vocavisse", verb.makeForm(new VerbForm(InfinitiveTense.PERFECT, Voice.ACTIVE)).toString());
         }
 
         @Test
         @DisplayName("basic")
-        void basic() throws DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-            assertEquals("vocati sunt", verb.makeForm(new VerbForm(new ConjugatedForm(Person.THIRD, CNumber.PL), Mode.INDICATIVE, Tense.PERFECT, Voice.PASSIVE)));
+        void basic() {
+            assertEquals("vocati sunt", verb.makeForm(new VerbForm(new ConjugatedForm(Person.THIRD, CNumber.PL), Mode.INDICATIVE, Tense.PERFECT, Voice.PASSIVE)).toString());
         }
 
         @Nested
@@ -101,14 +86,14 @@ class VerbTest {
 
                 @Test
                 @DisplayName("Nom. Sg.")
-                void nom_sg() throws DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-                    assertEquals("vocatus", verb.makeForm(new VerbForm(NounLikeForm.PPP, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))));
+                void nom_sg() {
+                    assertEquals("vocatus", verb.makeForm(new VerbForm(NounLikeForm.PPP, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))).toString());
                 }
 
                 @Test
                 @DisplayName("other")
-                void other() throws DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-                    assertEquals("vocatis", verb.makeForm(new VerbForm(NounLikeForm.PPP, new DeclinedForm(Casus.DAT, NNumber.PL, Gender.MASC))));
+                void other() {
+                    assertEquals("vocatis", verb.makeForm(new VerbForm(NounLikeForm.PPP, new DeclinedForm(Casus.DAT, NNumber.PL, Gender.MASC))).toString());
                 }
 
             }
@@ -119,14 +104,14 @@ class VerbTest {
 
                 @Test
                 @DisplayName("Nom. Sg.")
-                void nom_sg() throws DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-                    assertEquals("vocans", verb.makeForm(new VerbForm(NounLikeForm.PPA, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))));
+                void nom_sg() {
+                    assertEquals("vocans", verb.makeForm(new VerbForm(NounLikeForm.PPA, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))).toString());
                 }
 
                 @Test
                 @DisplayName("other")
-                void other() throws DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-                    assertEquals("vocantes", verb.makeForm(new VerbForm(NounLikeForm.PPA, new DeclinedForm(Casus.ACC, NNumber.PL, Gender.MASC))));
+                void other() {
+                    assertEquals("vocantes", verb.makeForm(new VerbForm(NounLikeForm.PPA, new DeclinedForm(Casus.ACC, NNumber.PL, Gender.MASC))).toString());
                 }
 
             }
@@ -137,15 +122,15 @@ class VerbTest {
 
                 @Test
                 @DisplayName("with -sur-")
-                void withSur() throws DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
+                void withSur() {
                     verb = new Verb(Database.get().getConjugationClasses().a_Conjugation(), "vocare", "voc", "vocav", "vocas", new TranslationSequence(), "test");
-                    assertEquals("vocasurus", verb.makeForm(new VerbForm(NounLikeForm.PFA, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))));
+                    assertEquals("vocasurus", verb.makeForm(new VerbForm(NounLikeForm.PFA, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))).toString());
                 }
 
                 @Test
                 @DisplayName("normal (-tur-)")
-                void normalTur() throws DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-                    assertEquals("vocaturi", verb.makeForm(new VerbForm(NounLikeForm.PFA, new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC))));
+                void normalTur() {
+                    assertEquals("vocaturi", verb.makeForm(new VerbForm(NounLikeForm.PFA, new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC))).toString());
                 }
 
             }
@@ -156,30 +141,28 @@ class VerbTest {
 
                 @Test
                 @DisplayName("infinitive")
-                void infinitive() throws DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-                    assertEquals("vocare", verb.makeForm(new VerbForm(NounLikeForm.GERUNDIUM, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))));
+                void infinitive() {
+                    assertEquals("vocare", verb.makeForm(new VerbForm(NounLikeForm.GERUNDIUM, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))).toString());
                 }
 
                 @Test
                 @DisplayName("other")
-                void other() throws DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-                    assertEquals("vocandi", verb.makeForm(new VerbForm(NounLikeForm.GERUNDIUM, new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC))));
+                void other() {
+                    assertEquals("vocandi", verb.makeForm(new VerbForm(NounLikeForm.GERUNDIUM, new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC))).toString());
                 }
 
                 @Test
                 @DisplayName("Dat. Pl.")
                 void dat_pl() {
-                    assertThrows(DeclinedFormDoesNotExistException.class, () -> {
-                        verb.makeForm(new VerbForm(NounLikeForm.GERUNDIUM, new DeclinedForm(Casus.DAT, NNumber.SG, Gender.MASC)));
-                    });
+                    assertFalse(verb.makeForm(new VerbForm(NounLikeForm.GERUNDIUM, new DeclinedForm(Casus.DAT, NNumber.SG, Gender.MASC))).exists());
                 }
 
             }
 
             @Test
             @DisplayName("Gerundivum")
-            void gerundivum() throws DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-                assertEquals("vocanda", verb.makeForm(new VerbForm(NounLikeForm.GERUNDIVUM, new DeclinedForm(Casus.NOM, NNumber.PL, Gender.NEUT))));
+            void gerundivum() {
+                assertEquals("vocanda", verb.makeForm(new VerbForm(NounLikeForm.GERUNDIVUM, new DeclinedForm(Casus.NOM, NNumber.PL, Gender.NEUT))).toString());
             }
 
         }

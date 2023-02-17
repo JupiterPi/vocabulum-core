@@ -16,6 +16,7 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionSchema;
+import jupiterpi.vocabulum.core.vocabularies.formresult.FormResult;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import org.bson.Document;
 
@@ -37,6 +38,8 @@ public class Verb extends Vocabulary {
         this.perfectRoot = perfectRoot;
         this.pppRoot = pppRoot;
     }
+
+    /* constructor */
 
     public static Verb fromBaseForms(String infinitive, String first_sg_present, String first_sg_perfect, String ppp_nom_sg_neut, TranslationSequence translations, String portion) throws ParserException, VerbFormDoesNotExistException, DeclinedFormDoesNotExistException {
         ConjugationSchema conjugationSchema = Database.get().getConjugationClasses().a_Conjugation();
@@ -69,26 +72,94 @@ public class Verb extends Vocabulary {
         return new Verb(conjugationSchema, infinitive, presentRoot, perfectRoot, pppRoot, translations, portion);
     }
 
+    /* Vocabulary */
+
+    @Override
+    public Kind getKind() {
+        return Kind.VERB;
+    }
+
     @Override
     public String getBaseForm() {
         return infinitive;
     }
 
-    public String makeForm(VerbForm form) throws VerbFormDoesNotExistException, DeclinedFormDoesNotExistException {
-        VerbInfo info = new VerbInfo(
-                presentRoot, perfectRoot,
-                makeNounLikeForm(new VerbForm(NounLikeForm.PPP, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))),
-                makeNounLikeForm(new VerbForm(NounLikeForm.PPP, new DeclinedForm(Casus.NOM, NNumber.PL, Gender.MASC))),
-                makeNounLikeForm(new VerbForm(NounLikeForm.PPA, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))),
-                makeNounLikeForm(new VerbForm(NounLikeForm.PPA, new DeclinedForm(Casus.NOM, NNumber.PL, Gender.MASC))),
-                makeNounLikeForm(new VerbForm(NounLikeForm.PFA, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))),
-                makeNounLikeForm(new VerbForm(NounLikeForm.PFA, new DeclinedForm(Casus.NOM, NNumber.PL, Gender.MASC))),
-                !perfectRoot.equals("-"), !pppRoot.equals("-")
-        );
-        return switch (form.getKind()) {
-            case IMPERATIVE, INFINITIVE, BASIC -> makeImperativeOrInfinitiveOrBasicForm(form, info);
-            case NOUN_LIKE -> makeNounLikeForm(form);
-        };
+    @Override
+    public String getDefinition() {
+        String first_sg_pres = makeForm(new VerbForm(new ConjugatedForm(Person.FIRST, CNumber.SG), Mode.INDICATIVE, Tense.PRESENT, Voice.ACTIVE)).toString();
+        String first_sg_perfect = makeForm(new VerbForm(new ConjugatedForm(Person.FIRST, CNumber.SG), Mode.INDICATIVE, Tense.PERFECT, Voice.ACTIVE)).toString();
+        String ppp = makeForm(new VerbForm(NounLikeForm.PPP, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT))).toString();
+        return getBaseForm() + ", " + first_sg_pres + ", " + first_sg_perfect + ", " + ppp;
+    }
+
+    @Override
+    public List<String> getAllFormsToString() {
+        List<String> forms = new ArrayList<>();
+
+        // Kind.IMPERATIVE
+        for (CNumber number : CNumber.values()) {
+            VerbForm form = new VerbForm(number);
+            forms.addAll(makeForm(form).getAllForms());
+        }
+
+        // Kind.INFINITIVE
+        for (InfinitiveTense infinitiveTense : InfinitiveTense.values()) {
+            for (Voice voice : Voice.values()) {
+                VerbForm form = new VerbForm(infinitiveTense, voice);
+                forms.addAll(makeForm(form).getAllForms());
+            }
+        }
+
+        // Kind.BASIC
+        for (Voice voice : Voice.values()) {
+            for (Tense tense : Tense.values()) {
+                for (Mode mode : Mode.values()) {
+                    for (CNumber number : CNumber.values()) {
+                        for (Person person : Person.values()) {
+                            VerbForm form = new VerbForm(new ConjugatedForm(person, number), mode, tense, voice);
+                            forms.addAll(makeForm(form).getAllForms());
+                        }
+                    }
+                }
+            }
+        }
+
+        // Kind.NOUN_LIKE
+        for (NounLikeForm nounLikeForm : NounLikeForm.values()) {
+            for (Gender gender : Gender.values()) {
+                for (NNumber number : NNumber.values()) {
+                    for (Casus casus : Casus.values()) {
+                        VerbForm form = new VerbForm(nounLikeForm, new DeclinedForm(casus, number, gender));
+                        forms.addAll(makeForm(form).getAllForms());
+                    }
+                }
+            }
+        }
+
+        return forms;
+    }
+
+    /* Verb */
+
+    public FormResult makeForm(VerbForm form) {
+        try {
+            VerbInfo info = new VerbInfo(
+                    presentRoot, perfectRoot,
+                    makeNounLikeForm(new VerbForm(NounLikeForm.PPP, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))),
+                    makeNounLikeForm(new VerbForm(NounLikeForm.PPP, new DeclinedForm(Casus.NOM, NNumber.PL, Gender.MASC))),
+                    makeNounLikeForm(new VerbForm(NounLikeForm.PPA, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))),
+                    makeNounLikeForm(new VerbForm(NounLikeForm.PPA, new DeclinedForm(Casus.NOM, NNumber.PL, Gender.MASC))),
+                    makeNounLikeForm(new VerbForm(NounLikeForm.PFA, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))),
+                    makeNounLikeForm(new VerbForm(NounLikeForm.PFA, new DeclinedForm(Casus.NOM, NNumber.PL, Gender.MASC))),
+                    !perfectRoot.equals("-"), !pppRoot.equals("-")
+            );
+            return FormResult.withPrimaryForm(switch (form.getKind()) {
+                case IMPERATIVE, INFINITIVE, BASIC -> makeImperativeOrInfinitiveOrBasicForm(form, info);
+                case NOUN_LIKE -> makeNounLikeForm(form);
+            });
+        } catch (DeclinedFormDoesNotExistException | VerbFormDoesNotExistException e) {
+            return FormResult.doesNotExist();
+        }
     }
 
     private String makeImperativeOrInfinitiveOrBasicForm(VerbForm form, VerbInfo info) throws VerbFormDoesNotExistException {
@@ -118,7 +189,7 @@ public class Verb extends Vocabulary {
                     pppRoot + adjective_nom_sg_neut_suffix,
                     Adjective.Kind.AO, pppRoot, new TranslationSequence(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
             AdjectiveForm adjectiveForm = new AdjectiveForm(form.getNounLikeDeclinedForm(), ComparativeForm.POSITIVE);
-            return ppp.makeForm(adjectiveForm);
+            return ppp.makeForm(adjectiveForm).toString();
         } else {
             Document verbsDocument = (Document) Database.get().getVerbsDocument().get("noun_like_form_suffixes");
             if (nounLikeForm == NounLikeForm.PPA) {
@@ -156,7 +227,7 @@ public class Verb extends Vocabulary {
                         root + sign + adjective_nom_sg_fem_suffix,
                         root + sign + adjective_nom_sg_neut_suffix,
                         Adjective.Kind.AO, root + sign, new TranslationSequence(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
-                return pfa.makeForm(new AdjectiveForm(form.getNounLikeDeclinedForm(), ComparativeForm.POSITIVE));
+                return pfa.makeForm(new AdjectiveForm(form.getNounLikeDeclinedForm(), ComparativeForm.POSITIVE)).toString();
             } else if (nounLikeForm == NounLikeForm.GERUNDIUM) {
                 Document gerundiumDocument = (Document) verbsDocument.get("gerundium");
                 String sign = gerundiumDocument.getString("sign");
@@ -188,90 +259,14 @@ public class Verb extends Vocabulary {
                         root + sign + adjective_nom_sg_fem_suffix,
                         root + sign + adjective_nom_sg_neut_suffix,
                         Adjective.Kind.AO, root + sign, new TranslationSequence(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
-                return pfa.makeForm(new AdjectiveForm(form.getNounLikeDeclinedForm(), ComparativeForm.POSITIVE));
+                return pfa.makeForm(new AdjectiveForm(form.getNounLikeDeclinedForm(), ComparativeForm.POSITIVE)).toString();
             }
         }
         return null;
     }
 
-    public String makeFormOrDash(VerbForm form) {
-        try {
-            return makeForm(form);
-        } catch (VerbFormDoesNotExistException | DeclinedFormDoesNotExistException e) {
-            return "-";
-        }
-    }
-
-    @Override
-    public Kind getKind() {
-        return Kind.VERB;
-    }
-
-    @Override
-    public String getDefinition() {
-        String first_sg_pres = makeFormOrDash(new VerbForm(new ConjugatedForm(Person.FIRST, CNumber.SG), Mode.INDICATIVE, Tense.PRESENT, Voice.ACTIVE));
-        String first_sg_perfect = makeFormOrDash(new VerbForm(new ConjugatedForm(Person.FIRST, CNumber.SG), Mode.INDICATIVE, Tense.PERFECT, Voice.ACTIVE));
-        String ppp = makeFormOrDash(new VerbForm(NounLikeForm.PPP, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT)));
-        return getBaseForm() + ", " + first_sg_pres + ", " + first_sg_perfect + ", " + ppp;
-    }
-
-    @Override
-    public List<String> getAllFormsToString() {
-        List<String> forms = new ArrayList<>();
-
-        // Kind.IMPERATIVE
-        for (CNumber number : CNumber.values()) {
-            VerbForm form = new VerbForm(number);
-            try {
-                forms.add(makeForm(form));
-            } catch (Exception ignored) {}
-        }
-
-        // Kind.INFINITIVE
-        for (InfinitiveTense infinitiveTense : InfinitiveTense.values()) {
-            for (Voice voice : Voice.values()) {
-                VerbForm form = new VerbForm(infinitiveTense, voice);
-                try {
-                    forms.add(makeForm(form));
-                } catch (Exception ignored) {}
-            }
-        }
-
-        // Kind.BASIC
-        for (Voice voice : Voice.values()) {
-            for (Tense tense : Tense.values()) {
-                for (Mode mode : Mode.values()) {
-                    for (CNumber number : CNumber.values()) {
-                        for (Person person : Person.values()) {
-                            VerbForm form = new VerbForm(new ConjugatedForm(person, number), mode, tense, voice);
-                            try {
-                                forms.add(makeForm(form));
-                            } catch (Exception ignored) {}
-                        }
-                    }
-                }
-            }
-        }
-
-        // Kind.NOUN_LIKE
-        for (NounLikeForm nounLikeForm : NounLikeForm.values()) {
-            for (Gender gender : Gender.values()) {
-                for (NNumber number : NNumber.values()) {
-                    for (Casus casus : Casus.values()) {
-                        VerbForm form = new VerbForm(nounLikeForm, new DeclinedForm(casus, number, gender));
-                        try {
-                            forms.add(makeForm(form));
-                        } catch (Exception ignored) {}
-                    }
-                }
-            }
-        }
-
-        return forms;
-    }
-
-    public String getConjugationSchema() {
-        return conjugationSchema.getName();
+    public ConjugationSchema getConjugationSchema() {
+        return conjugationSchema;
     }
 
     public List<VerbForm> identifyForm(String word, boolean partialSearch) {
@@ -281,13 +276,9 @@ public class Verb extends Vocabulary {
         for (InfinitiveTense infinitiveTense : InfinitiveTense.values()) {
             for (Voice voice : Voice.values()) {
                 VerbForm form = new VerbForm(infinitiveTense, voice);
-                try {
-                    if (partialSearch) {
-                        if (makeForm(form).contains(word)) forms.add(form);
-                    } else {
-                        if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
-                    }
-                } catch (VerbFormDoesNotExistException | DeclinedFormDoesNotExistException ignored) {}
+                if (makeForm(form).getAllForms().stream()
+                        .anyMatch(f -> partialSearch ? f.contains(word) : f.equalsIgnoreCase(word))
+                ) forms.add(form);
             }
         }
 
@@ -298,13 +289,9 @@ public class Verb extends Vocabulary {
                     for (CNumber number : CNumber.values()) {
                         for (Person person : Person.values()) {
                             VerbForm form = new VerbForm(new ConjugatedForm(person, number), mode, tense, voice);
-                            try {
-                                if (partialSearch) {
-                                    if (makeForm(form).contains(word)) forms.add(form);
-                                } else {
-                                    if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
-                                }
-                            } catch (VerbFormDoesNotExistException | DeclinedFormDoesNotExistException ignored) {}
+                            if (makeForm(form).getAllForms().stream()
+                                    .anyMatch(f -> partialSearch ? f.contains(word) : f.equalsIgnoreCase(word))
+                            ) forms.add(form);
                         }
                     }
                 }
@@ -317,13 +304,9 @@ public class Verb extends Vocabulary {
                 for (NNumber number : NNumber.values()) {
                     for (Casus casus : Casus.values()) {
                         VerbForm form = new VerbForm(nounLikeForm, new DeclinedForm(casus, number, gender));
-                        try {
-                            if (partialSearch) {
-                                if (makeForm(form).contains(word)) forms.add(form);
-                            } else {
-                                if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
-                            }
-                        } catch (VerbFormDoesNotExistException | DeclinedFormDoesNotExistException ignored) {}
+                        if (makeForm(form).getAllForms().stream()
+                                .anyMatch(f -> partialSearch ? f.contains(word) : f.equalsIgnoreCase(word))
+                        ) forms.add(form);
                     }
                 }
             }

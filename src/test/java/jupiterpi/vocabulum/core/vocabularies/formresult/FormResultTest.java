@@ -20,7 +20,7 @@ class FormResultTest {
             FormResult f = FormResult.doesNotExist();
             assertAll(
                     () -> assertFalse(f.exists()),
-                    () -> assertEquals("-", f.getString())
+                    () -> assertEquals("-", f.toString())
             );
         }
 
@@ -31,7 +31,7 @@ class FormResultTest {
             assertAll(
                     () -> assertEquals("prim", f.getPrimaryForm()),
                     () -> assertEquals(List.of("prim"), f.getAllForms()),
-                    () -> assertEquals("prim", f.getString())
+                    () -> assertEquals("prim", f.toString())
             );
         }
 
@@ -44,7 +44,7 @@ class FormResultTest {
                     () -> assertEquals("second", f.getSecondaryForm()),
                     () -> assertTrue(f.hasSecondaryForm()),
                     () -> assertEquals(List.of("prim", "second"), f.getAllForms()),
-                    () -> assertEquals("prim/second", f.getString())
+                    () -> assertEquals("prim/second", f.toString())
             );
         }
 

@@ -10,6 +10,7 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
 import jupiterpi.vocabulum.core.vocabularies.declined.schemas.DeclensionSchema;
+import jupiterpi.vocabulum.core.vocabularies.formresult.FormResult;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ public class Noun extends Vocabulary {
         this.root = root;
         this.gender = gender;
     }
+
+    /* constructor */
 
     private Noun(TranslationSequence translations, String portion) {
         super(translations, portion);
@@ -50,47 +53,22 @@ public class Noun extends Vocabulary {
         return noun;
     }
 
+    /* Vocabulary */
+
+    @Override
+    public Kind getKind() {
+        return Kind.NOUN;
+    }
+
     @Override
     public String getBaseForm() {
         return nom_sg;
     }
 
-    protected Gender getGender() {
-        return gender;
-    }
-
-    public String makeFormOrDash(NounForm form) {
-        try {
-            return makeForm(form);
-        } catch (DeclinedFormDoesNotExistException e) {
-            return "-";
-        }
-    }
-
-    public String makeForm(NounForm form) throws DeclinedFormDoesNotExistException {
-        DeclinedForm declinedForm = form.getDeclinedForm();
-        if (declinedForm.hasGender() && declinedForm.getGender() != this.gender) {
-            throw DeclinedFormDoesNotExistException.forWord(declinedForm, nom_sg);
-        }
-        declinedForm.normalizeGender(gender);
-        if (declinedForm.isCasus(Casus.NOM) && declinedForm.isNumber(NNumber.SG)) {
-            return nom_sg;
-        }
-        return root + declensionSchema.getSuffix(declinedForm);
-    }
-
     @Override
     public String getDefinition() {
-        String gen_sg = "-";
-        try {
-            gen_sg = makeForm(new NounForm(new DeclinedForm(Casus.GEN, NNumber.SG)));
-        } catch (DeclinedFormDoesNotExistException ignored) {}
+        String gen_sg = makeForm(new NounForm(new DeclinedForm(Casus.GEN, NNumber.SG))).toString();
         return getBaseForm() + ", " + gen_sg + " " + Symbols.get().getGenderSymbol(getGender()) + ".";
-    }
-
-    @Override
-    public Kind getKind() {
-        return Kind.NOUN;
     }
 
     @Override
@@ -100,17 +78,38 @@ public class Noun extends Vocabulary {
             for (NNumber number : NNumber.values()) {
                 for (Casus casus : Casus.values()) {
                     NounForm form = new NounForm(new DeclinedForm(casus, number, gender));
-                    try {
-                        forms.add(makeForm(form));
-                    } catch (Exception ignored) {}
+                    FormResult formResult = makeForm(form);
+                    if (formResult.exists()) forms.addAll(formResult.getAllForms());
                 }
             }
         }
         return forms;
     }
 
-    public String getDeclensionSchema() {
-        return declensionSchema.getName();
+    /* Noun */
+
+    protected Gender getGender() {
+        return gender;
+    }
+
+    public FormResult makeForm(NounForm form) {
+        DeclinedForm declinedForm = form.getDeclinedForm();
+        if (declinedForm.hasGender() && declinedForm.getGender() != this.gender) {
+            return FormResult.doesNotExist();
+        }
+        declinedForm.normalizeGender(gender);
+        if (declinedForm.isCasus(Casus.NOM) && declinedForm.isNumber(NNumber.SG)) {
+            return FormResult.withPrimaryForm(nom_sg);
+        }
+        try {
+            return FormResult.withPrimaryForm(root + declensionSchema.getSuffix(declinedForm));
+        } catch (DeclinedFormDoesNotExistException e) {
+            return FormResult.doesNotExist();
+        }
+    }
+
+    public DeclensionSchema getDeclensionSchema() {
+        return declensionSchema;
     }
 
     public List<NounForm> identifyForm(String word, boolean partialSearch) {
@@ -119,13 +118,9 @@ public class Noun extends Vocabulary {
             for (NNumber number : NNumber.values()) {
                 for (Casus casus : Casus.values()) {
                     NounForm form = new NounForm(new DeclinedForm(casus, number, gender));
-                    try {
-                        if (partialSearch) {
-                            if (makeForm(form).contains(word)) forms.add(form);
-                        } else {
-                            if (makeForm(form).equalsIgnoreCase(word)) forms.add(form);
-                        }
-                    } catch (DeclinedFormDoesNotExistException ignored) {}
+                    if (makeForm(form).getAllForms().stream()
+                            .anyMatch(f -> partialSearch ? f.contains(word) : f.equalsIgnoreCase(word))
+                    ) forms.add(form);
                 }
             }
         }

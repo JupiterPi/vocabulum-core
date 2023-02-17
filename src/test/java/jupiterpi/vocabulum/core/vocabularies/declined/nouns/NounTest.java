@@ -41,9 +41,9 @@ class NounTest {
             Noun n = Noun.fromGenitive("amicus", "amici", Gender.MASC, new TranslationSequence(), "test");
             assertAll(
                     () -> assertEquals("amicus", n.getBaseForm()),
-                    () -> assertEquals("amico", n.makeForm(new NounForm(new DeclinedForm(Casus.ABL, NNumber.SG)))),
+                    () -> assertEquals("amico", n.makeForm(new NounForm(new DeclinedForm(Casus.ABL, NNumber.SG))).toString()),
                     () -> assertEquals(Gender.MASC, n.getGender()),
-                    () -> assertEquals("o", n.getDeclensionSchema())
+                    () -> assertEquals("o", n.getDeclensionSchema().getName())
             );
         }
 
@@ -54,7 +54,7 @@ class NounTest {
             assertAll(
                     () -> assertEquals("sol", n.getBaseForm()),
                     () -> assertEquals(Gender.MASC, n.getGender()),
-                    () -> assertEquals("cons", n.getDeclensionSchema())
+                    () -> assertEquals("cons", n.getDeclensionSchema().getName())
             );
         }
 
@@ -79,28 +79,28 @@ class NounTest {
         @DisplayName("wrong gender")
         void wrongGender() {
             NounForm form = new NounForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM));
-            assertThrows(DeclinedFormDoesNotExistException.class, () -> n.makeForm(form));
+            assertFalse(n.makeForm(form).exists());
         }
 
         @Test
         @DisplayName("unset gender")
-        void unsetGender() throws DeclinedFormDoesNotExistException {
+        void unsetGender() {
             NounForm form = new NounForm(new DeclinedForm(Casus.GEN, NNumber.PL));
-            assertEquals("amicorum", n.makeForm(form));
+            assertEquals("amicorum", n.makeForm(form).toString());
         }
 
         @Test
         @DisplayName("Nom. Sg.")
-        void nomSg() throws DeclinedFormDoesNotExistException {
+        void nomSg() {
             NounForm form = new NounForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC));
-            assertEquals("amicus", n.makeForm(form));
+            assertEquals("amicus", n.makeForm(form).toString());
         }
 
         @Test
         @DisplayName("other form")
-        void otherForm() throws DeclinedFormDoesNotExistException {
+        void otherForm() {
             NounForm form = new NounForm(new DeclinedForm(Casus.GEN, NNumber.PL, Gender.MASC));
-            assertEquals("amicorum", n.makeForm(form));
+            assertEquals("amicorum", n.makeForm(form).toString());
         }
 
     }

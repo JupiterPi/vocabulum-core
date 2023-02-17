@@ -31,7 +31,7 @@ class PortionBlocksSelectionTest {
     }
 
     @Nested
-    @DisplayName("getString()")
+    @DisplayName("toString()")
     class GetString {
 
         @Test

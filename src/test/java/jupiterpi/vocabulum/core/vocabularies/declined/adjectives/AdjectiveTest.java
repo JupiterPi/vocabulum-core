@@ -7,6 +7,7 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.Casus;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.DeclinedForm;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.Gender;
 import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
+import jupiterpi.vocabulum.core.vocabularies.formresult.FormResult;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -59,9 +60,9 @@ class AdjectiveTest {
             Adjective a = Adjective.fromBaseForms("pulcher", "pulchra", "pulchrum", new TranslationSequence(), "test");
             assertAll(
                     () -> assertEquals("pulcher", a.getBaseForm()),
-                    () -> assertEquals("pulchra", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM), ComparativeForm.POSITIVE))),
-                    () -> assertEquals("pulchrum", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT), ComparativeForm.POSITIVE))),
-                    () -> assertEquals("pulchri", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC), ComparativeForm.POSITIVE)))
+                    () -> assertEquals("pulchra", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM), ComparativeForm.POSITIVE)).toString()),
+                    () -> assertEquals("pulchrum", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT), ComparativeForm.POSITIVE)).toString()),
+                    () -> assertEquals("pulchri", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC), ComparativeForm.POSITIVE)).toString())
             );
         }
 
@@ -71,9 +72,9 @@ class AdjectiveTest {
             Adjective a = Adjective.fromBaseForms("acer", "acris", "acre", new TranslationSequence(), "test");
             assertAll(
                     () -> assertEquals("acer", a.getBaseForm()),
-                    () -> assertEquals("acris", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM), ComparativeForm.POSITIVE))),
-                    () -> assertEquals("acre", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT), ComparativeForm.POSITIVE))),
-                    () -> assertEquals("acres", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.ACC, NNumber.PL, Gender.MASC), ComparativeForm.POSITIVE)))
+                    () -> assertEquals("acris", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM), ComparativeForm.POSITIVE)).toString()),
+                    () -> assertEquals("acre", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT), ComparativeForm.POSITIVE)).toString()),
+                    () -> assertEquals("acres", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.ACC, NNumber.PL, Gender.MASC), ComparativeForm.POSITIVE)).toString())
             );
         }
 
@@ -84,8 +85,8 @@ class AdjectiveTest {
         Adjective a = Adjective.fromGenitive("felix", "felicis", new TranslationSequence(), "test");
         assertAll(
                 () -> assertEquals("felix", a.getBaseForm()),
-                () -> assertEquals("felicis", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC), ComparativeForm.POSITIVE))),
-                () -> assertEquals("felices", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.ACC, NNumber.PL, Gender.MASC), ComparativeForm.POSITIVE)))
+                () -> assertEquals("felicis", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC), ComparativeForm.POSITIVE)).toString()),
+                () -> assertEquals("felices", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.ACC, NNumber.PL, Gender.MASC), ComparativeForm.POSITIVE)).toString())
         );
     }
 
@@ -112,20 +113,20 @@ class AdjectiveTest {
 
             @Test
             @DisplayName("cons_exceptions")
-            void consExceptions () throws DeclinedFormDoesNotExistException {
-                assertEquals("acriter", cons.makeForm(new AdjectiveForm(true, ComparativeForm.POSITIVE)));
+            void consExceptions () {
+                assertEquals("acriter", cons.makeForm(new AdjectiveForm(true, ComparativeForm.POSITIVE)).toString());
             }
 
             @Test
             @DisplayName("superlative")
-            void superlative() throws DeclinedFormDoesNotExistException {
-                assertEquals("acerrime", cons.makeForm(new AdjectiveForm(true, ComparativeForm.SUPERLATIVE)));
+            void superlative() {
+                assertEquals("acerrime", cons.makeForm(new AdjectiveForm(true, ComparativeForm.SUPERLATIVE)).toString());
             }
 
             @Test
             @DisplayName("normal")
-            void normal() throws DeclinedFormDoesNotExistException {
-                assertEquals("laete", ao.makeForm(new AdjectiveForm(true, ComparativeForm.POSITIVE)));
+            void normal() {
+                assertEquals("laete", ao.makeForm(new AdjectiveForm(true, ComparativeForm.POSITIVE)).toString());
             }
 
         }
@@ -140,20 +141,20 @@ class AdjectiveTest {
 
                 @Test
                 @DisplayName("Nom. Sg.")
-                void nom_sg() throws DeclinedFormDoesNotExistException {
-                    assertEquals("acris", cons.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM), ComparativeForm.POSITIVE)));
+                void nom_sg() {
+                    assertEquals("acris", cons.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM), ComparativeForm.POSITIVE)).toString());
                 }
 
                 @Test
                 @DisplayName("a/o")
-                void ao() throws DeclinedFormDoesNotExistException {
-                    assertEquals("laeti", ao.makeForm(new AdjectiveForm(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC), ComparativeForm.POSITIVE)));
+                void ao() {
+                    assertEquals("laeti", ao.makeForm(new AdjectiveForm(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC), ComparativeForm.POSITIVE)).toString());
                 }
 
                 @Test
                 @DisplayName("cons")
-                void cons() throws DeclinedFormDoesNotExistException {
-                    assertEquals("acres", cons.makeForm(new AdjectiveForm(new DeclinedForm(Casus.ACC, NNumber.PL, Gender.MASC), ComparativeForm.POSITIVE)));
+                void cons() {
+                    assertEquals("acres", cons.makeForm(new AdjectiveForm(new DeclinedForm(Casus.ACC, NNumber.PL, Gender.MASC), ComparativeForm.POSITIVE)).toString());
                 }
 
             }
@@ -168,14 +169,14 @@ class AdjectiveTest {
 
                     @Test
                     @DisplayName("Nom. Sg. n.")
-                    void nom_sg_n() throws DeclinedFormDoesNotExistException {
-                        assertEquals("acrius", cons.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT), ComparativeForm.COMPARATIVE)));
+                    void nom_sg_n() {
+                        assertEquals("acrius", cons.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT), ComparativeForm.COMPARATIVE)).toString());
                     }
 
                     @Test
                     @DisplayName("normal")
-                    void normal() throws DeclinedFormDoesNotExistException {
-                        assertEquals("acrior", cons.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC), ComparativeForm.COMPARATIVE)));
+                    void normal() {
+                        assertEquals("acrior", cons.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC), ComparativeForm.COMPARATIVE)).toString());
                     }
 
                 }
@@ -186,14 +187,14 @@ class AdjectiveTest {
 
                     @Test
                     @DisplayName("Nom. Sg. m.")
-                    void nom_sg_m() throws DeclinedFormDoesNotExistException {
-                        assertEquals("laetissimus", ao.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC), ComparativeForm.SUPERLATIVE)));
+                    void nom_sg_m() {
+                        assertEquals("laetissimus", ao.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC), ComparativeForm.SUPERLATIVE)).toString());
                     }
 
                     @Test
                     @DisplayName("normal")
-                    void normal() throws DeclinedFormDoesNotExistException {
-                        assertEquals("laetissimos", ao.makeForm(new AdjectiveForm(new DeclinedForm(Casus.ACC, NNumber.PL, Gender.MASC), ComparativeForm.SUPERLATIVE)));
+                    void normal() {
+                        assertEquals("laetissimos", ao.makeForm(new AdjectiveForm(new DeclinedForm(Casus.ACC, NNumber.PL, Gender.MASC), ComparativeForm.SUPERLATIVE)).toString());
                     }
 
                 }
@@ -213,9 +214,9 @@ class AdjectiveTest {
                 new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS
         ) {
             @Override
-            public String makeForm(AdjectiveForm form) {
-                if (form.equals(nom_sg_m_pos) || form.equals(adv_comp)) return "targetform";
-                return "";
+            public FormResult makeForm(AdjectiveForm form) {
+                if (form.equals(nom_sg_m_pos) || form.equals(adv_comp)) return FormResult.withPrimaryForm("targetform");
+                return FormResult.withPrimaryForm("");
             }
 
             @Override

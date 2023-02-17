@@ -42,7 +42,7 @@ public class Terminal extends ConsoleInterface {
                                 String formInput = in("[Noun] " + noun.getBaseForm() + " > ");
                                 if (formInput.equals("")) break;
                                 NounForm form = NounForm.fromString(formInput);
-                                out(noun.makeForm(form));
+                                out(noun.makeForm(form).toString());
                             } catch (Exception e) {
                                 out("ERROR: " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
                             }
@@ -54,7 +54,7 @@ public class Terminal extends ConsoleInterface {
                                 String formInput = in("[Adjective] " + adjective.getBaseForm() + " > ");
                                 if (formInput.equals("")) break;
                                 AdjectiveForm form = AdjectiveForm.fromString(formInput);
-                                out(adjective.makeForm(form));
+                                out(adjective.makeForm(form).toString());
                             } catch (Exception e) {
                                 out("ERROR: " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");
                             }
@@ -66,7 +66,7 @@ public class Terminal extends ConsoleInterface {
                                 String formInput = in("[Verb] " + verb.getBaseForm() + " > ");
                                 if (formInput.equals("")) break;
                                 VerbForm form = VerbForm.fromString(formInput);
-                                out(verb.makeForm(form));
+                                out(verb.makeForm(form).toString());
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 out("ERROR: " + e.getClass().getSimpleName() + " \"" + e.getMessage() + "\"");

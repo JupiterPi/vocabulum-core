@@ -118,9 +118,9 @@ public class Dictionary {
             }
             VocabularyForm form = forms.get(0);
             return switch (vocabulary.getKind()) {
-                case NOUN -> ((Noun) vocabulary).makeFormOrDash((NounForm) form);
-                case ADJECTIVE -> ((Adjective) vocabulary).makeFormOrDash((AdjectiveForm) form);
-                case VERB -> ((Verb) vocabulary).makeFormOrDash((VerbForm) form);
+                case NOUN -> ((Noun) vocabulary).makeForm((NounForm) form).toString();
+                case ADJECTIVE -> ((Adjective) vocabulary).makeForm((AdjectiveForm) form).toString();
+                case VERB -> ((Verb) vocabulary).makeForm((VerbForm) form).toString();
                 case INFLEXIBLE -> vocabulary.getBaseForm();
             };
         }

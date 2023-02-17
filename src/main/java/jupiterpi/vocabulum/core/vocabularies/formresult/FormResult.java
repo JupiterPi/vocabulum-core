@@ -44,6 +44,7 @@ public class FormResult {
     }
 
     public List<String> getAllForms() {
+        if (!exists()) return List.of();
         if (hasSecondaryForm()) {
             return List.of(primaryForm, secondaryForm);
         } else {
@@ -53,7 +54,8 @@ public class FormResult {
 
     /* string representation */
 
-    public String getString() {
+    @Override
+    public String toString() {
         if (!exists) return "-";
         String str = primaryForm;
         if (hasSecondaryForm()) {
