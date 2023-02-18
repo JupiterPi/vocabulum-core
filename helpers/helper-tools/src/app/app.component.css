@@ -1,0 +1,30 @@
+body, h1, h2, h3, h4, input, textarea {
+  font-family: Arial, sans-serif;
+}
+
+input {
+  border: 1px solid #838383;
+  border-radius: 2px;
+  padding: 5px;
+}
+input:focus {
+  outline: none;
+  border-color: #1c1c1c;
+}
+input::before {
+  content: "sg";
+  width: 100px;
+  height: 100%;
+  background-color: red;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+h2, h3, h4 {
+  margin: 0;
+}

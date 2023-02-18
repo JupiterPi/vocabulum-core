@@ -1,0 +1,29 @@
+<h1>Conjugation Schema Generator</h1>
+
+<div id="container">
+
+  <h2>Imperative</h2>
+  <div *ngFor="let data of ['test']">
+    {{data}}
+    <input [(ngModel)]="s.imperative.sg" data-name="sg">
+  </div>
+  <input [(ngModel)]="s.imperative.pl" data-name="pl">
+
+  <ng-container *ngFor="let field of fields">
+
+    <h2 *ngIf="field.header">{{field.header}}</h2>
+
+    <div *ngIf="field.name && field.path">
+      {{field.name}}
+      <input (change)="setProperty(field.path, 'test')">
+    </div>
+
+  </ng-container>
+
+</div>
+
+
+<br><br>
+<textarea [value]="stringify()"
+          rows="50" cols="100"
+></textarea>
