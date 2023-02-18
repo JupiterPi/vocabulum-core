@@ -1,160 +1,36 @@
 import {Component} from '@angular/core';
 
+type Field = string | string[];
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  s: any = {
-    "imperative": {},
-    "infinitive": {
-      "present": {},
-      "perfect": {},
-      "future": {}
-    },
-    "basic": {
-      "active": {
-        "present": {
-          "indicative": {
-            "sg": {},
-            "pl": {}
-          },
-          "conjunctive": {
-            "sg": {},
-            "pl": {}
-          }
-        },
-        "imperfect": {
-          "indicative": {
-            "sg": {},
-            "pl": {}
-          },
-          "conjunctive": {
-            "sg": {},
-            "pl": {}
-          }
-        },
-        "perfect": {
-          "indicative": {
-            "sg": {},
-            "pl": {}
-          },
-          "conjunctive": {
-            "sg": {},
-            "pl": {}
-          }
-        },
-        "pluperfect": {
-          "indicative": {
-            "sg": {},
-            "pl": {}
-          },
-          "conjunctive": {
-            "sg": {},
-            "pl": {}
-          }
-        },
-        "future_i": {
-          "indicative": {
-            "sg": {},
-            "pl": {}
-          },
-          "conjunctive": {
-            "sg": {},
-            "pl": {}
-          }
-        },
-        "future_ii": {
-          "indicative": {
-            "sg": {},
-            "pl": {}
-          },
-          "conjunctive": {
-            "sg": {},
-            "pl": {}
-          }
-        }
-      },
-      "passive": {
-        "present": {
-          "indicative": {
-            "sg": {},
-            "pl": {}
-          },
-          "conjunctive": {
-            "sg": {},
-            "pl": {}
-          }
-        },
-        "imperfect": {
-          "indicative": {
-            "sg": {},
-            "pl": {}
-          },
-          "conjunctive": {
-            "sg": {},
-            "pl": {}
-          }
-        },
-        "perfect": {
-          "indicative": {
-            "sg": {},
-            "pl": {}
-          },
-          "conjunctive": {
-            "sg": {},
-            "pl": {}
-          }
-        },
-        "pluperfect": {
-          "indicative": {
-            "sg": {},
-            "pl": {}
-          },
-          "conjunctive": {
-            "sg": {},
-            "pl": {}
-          }
-        },
-        "future_i": {
-          "indicative": {
-            "sg": {},
-            "pl": {}
-          },
-          "conjunctive": {
-            "sg": {},
-            "pl": {}
-          }
-        },
-        "future_ii": {
-          "indicative": {
-            "sg": {},
-            "pl": {}
-          },
-          "conjunctive": {
-            "sg": {},
-            "pl": {}
-          }
-        }
-      }
-    },
-    "noun_like": {}
-  };
+  showFields = true;
 
-  fields = [
-    {
-      "header": "Imperative"
-    },
-    {
-      "name": "sg",
-      "path": "imperative.sg"
-    }
-  ];
+  s: any = {};
+
+  fields: Field[] = [];
+  isHeader(field: Field) {
+    return typeof field == "string";
+  }
+  getFields(fields: Field) {
+    return fields as string[];
+  }
+
+  fieldsSchema = "";
+  readFieldsSchema() {
+    this.fields = JSON.parse(this.fieldsSchema);
+  }
+
+  inputDocument = "";
+  readDocument() {
+    this.s = JSON.parse(this.inputDocument);
+  }
 
   setProperty(name: string, content: string) {
-    console.log(name);
-    console.log(content);
     this.setPropertyOn(this.s, name, content);
   }
   private setPropertyOn(obj: any, name: string, content: string) {
@@ -166,7 +42,28 @@ export class AppComponent {
     }
   }
 
+  getProperty(name: string) {
+    return this.getPropertyOn(this.s, name) ?? '';
+  }
+  private getPropertyOn(obj: any, name: string): string {
+    const parts = name.split(".");
+    if (parts.length > 1) {
+      return this.getPropertyOn(obj[parts[0]], parts.slice(1).join("."));
+    } else {
+      return obj[parts[0]];
+    }
+  }
+
   stringify() {
     return JSON.stringify(this.s, null, 2);
+  }
+
+  getPathEnding(path: string) {
+    const parts = path.split(".");
+    return parts[parts.length-1];
+  }
+
+  eventResult(event: Event) {
+    return ((event as InputEvent).target as HTMLInputElement).value;
   }
 }

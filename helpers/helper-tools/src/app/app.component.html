@@ -1,29 +1,41 @@
 <h1>Conjugation Schema Generator</h1>
 
-<div id="container">
-
-  <h2>Imperative</h2>
-  <div *ngFor="let data of ['test']">
-    {{data}}
-    <input [(ngModel)]="s.imperative.sg" data-name="sg">
-  </div>
-  <input [(ngModel)]="s.imperative.pl" data-name="pl">
+<button (click)="showFields = !showFields">toggle fields {{showFields ? "off" : "on"}}</button>
+<div class="container" *ngIf="showFields">
 
   <ng-container *ngFor="let field of fields">
 
-    <h2 *ngIf="field.header">{{field.header}}</h2>
+    <h2 *ngIf="isHeader(field)">{{field}}</h2>
 
-    <div *ngIf="field.name && field.path">
-      {{field.name}}
-      <input (change)="setProperty(field.path, 'test')">
-    </div>
+    <ng-container *ngIf="!isHeader(field)">
+      <div *ngFor="let f of getFields(field)">
+        {{f}}
+        <input type="text" [value]="getProperty(f)" (input)="setProperty(f, eventResult($event))"
+               [class.does-not-exist]="getProperty(f) == '-'"
+               [class.inherited]="getProperty(f) == '.'">
+      </div>
+    </ng-container>
 
   </ng-container>
 
 </div>
 
+<hr>
 
-<br><br>
-<textarea [value]="stringify()"
-          rows="50" cols="100"
-></textarea>
+<div style="display: flex; flex-direction: row;">
+  <div>
+    <button (click)="readDocument()">read document</button>
+    <br>
+    <textarea [value]="stringify()"
+              (input)="inputDocument = eventResult($event)"
+              rows="50" cols="100"
+    ></textarea>
+  </div>
+  <div>
+    <button (click)="readFieldsSchema()">read fields schema</button>
+    <br>
+    <textarea [(ngModel)]="fieldsSchema"
+              rows="50" cols="60"
+    ></textarea>
+  </div>
+</div>

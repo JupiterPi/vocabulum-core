@@ -1,0 +1,135 @@
+{
+  "imperative": {},
+  "infinitive": {
+    "present": {},
+    "perfect": {},
+    "future": {}
+  },
+  "basic": {
+    "active": {
+      "present": {
+        "indicative": {
+          "sg": {},
+          "pl": {}
+        },
+        "conjunctive": {
+          "sg": {},
+          "pl": {}
+        }
+      },
+      "imperfect": {
+        "indicative": {
+          "sg": {},
+          "pl": {}
+        },
+        "conjunctive": {
+          "sg": {},
+          "pl": {}
+        }
+      },
+      "perfect": {
+        "indicative": {
+          "sg": {},
+          "pl": {}
+        },
+        "conjunctive": {
+          "sg": {},
+          "pl": {}
+        }
+      },
+      "pluperfect": {
+        "indicative": {
+          "sg": {},
+          "pl": {}
+        },
+        "conjunctive": {
+          "sg": {},
+          "pl": {}
+        }
+      },
+      "future_i": {
+        "indicative": {
+          "sg": {},
+          "pl": {}
+        },
+        "conjunctive": {
+          "sg": {},
+          "pl": {}
+        }
+      },
+      "future_ii": {
+        "indicative": {
+          "sg": {},
+          "pl": {}
+        },
+        "conjunctive": {
+          "sg": {},
+          "pl": {}
+        }
+      }
+    },
+    "passive": {
+      "present": {
+        "indicative": {
+          "sg": {},
+          "pl": {}
+        },
+        "conjunctive": {
+          "sg": {},
+          "pl": {}
+        }
+      },
+      "imperfect": {
+        "indicative": {
+          "sg": {},
+          "pl": {}
+        },
+        "conjunctive": {
+          "sg": {},
+          "pl": {}
+        }
+      },
+      "perfect": {
+        "indicative": {
+          "sg": {},
+          "pl": {}
+        },
+        "conjunctive": {
+          "sg": {},
+          "pl": {}
+        }
+      },
+      "pluperfect": {
+        "indicative": {
+          "sg": {},
+          "pl": {}
+        },
+        "conjunctive": {
+          "sg": {},
+          "pl": {}
+        }
+      },
+      "future_i": {
+        "indicative": {
+          "sg": {},
+          "pl": {}
+        },
+        "conjunctive": {
+          "sg": {},
+          "pl": {}
+        }
+      },
+      "future_ii": {
+        "indicative": {
+          "sg": {},
+          "pl": {}
+        },
+        "conjunctive": {
+          "sg": {},
+          "pl": {}
+        }
+      }
+    }
+  },
+  "noun_like": {}
+}
