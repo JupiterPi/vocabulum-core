@@ -3,11 +3,11 @@ import {Component} from '@angular/core';
 type Field = string | string[];
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-schema-json-editor',
+  templateUrl: './schema-json-editor.component.html',
+  styleUrls: ['./schema-json-editor.component.css']
 })
-export class AppComponent {
+export class SchemaJsonEditorComponent {
   showFields = true;
 
   s: any = {};
