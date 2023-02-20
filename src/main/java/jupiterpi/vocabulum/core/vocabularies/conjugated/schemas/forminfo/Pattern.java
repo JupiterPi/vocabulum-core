@@ -2,6 +2,7 @@ package jupiterpi.vocabulum.core.vocabularies.conjugated.schemas.forminfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Conjugation schema Pattern:
@@ -27,7 +28,7 @@ import java.util.List;
 public class Pattern extends ArrayList<Particle> {
     private boolean exists = true;
 
-    public Pattern (Particle... particles) {
+    public Pattern(Particle... particles) {
         super(List.of(particles));
     }
 
@@ -75,5 +76,10 @@ public class Pattern extends ArrayList<Particle> {
             str += particleStr;
         }
         return str;
+    }
+
+    @Override
+    public String toString() {
+        return "{" + this.stream().map(Particle::toString).collect(Collectors.joining(",")) + "}";
     }
 }

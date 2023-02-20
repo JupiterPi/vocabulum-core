@@ -40,6 +40,10 @@ public class Verb extends Vocabulary {
         this.pppRoot = pppRoot;
     }
 
+    protected Verb(TranslationSequence translations, String portion) {
+        super(translations, portion);
+    }
+
     /* constructor */
 
     public static Verb fromBaseForms(String infinitive, String first_sg_present, String first_sg_perfect, String ppp_nom_sg_neut, TranslationSequence translations, String portion) throws ParserException, VerbFormDoesNotExistException, DeclinedFormDoesNotExistException {

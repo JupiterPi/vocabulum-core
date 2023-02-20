@@ -22,8 +22,9 @@ public class Resources {
 
     /////
 
-    // single documents
+    /* --- single documents --- */
 
+    // adjectives
     private Document adjectivesDocument;
     public Document getAdjectivesDocument() {
         if (adjectivesDocument == null) {
@@ -32,6 +33,7 @@ public class Resources {
         return adjectivesDocument;
     }
 
+    // verbs
     private Document verbsDocument;
     public Document getVerbsDocument() {
         if (verbsDocument == null) {
@@ -40,6 +42,7 @@ public class Resources {
         return verbsDocument;
     }
 
+    // translations
     private Document translationsDocument;
     public Document getTranslationsDocument() {
         if (translationsDocument == null) {
@@ -47,6 +50,8 @@ public class Resources {
         }
         return translationsDocument;
     }
+
+    /* --- many documents --- */
 
     // declension classes
 
@@ -83,6 +88,8 @@ public class Resources {
         return conjugationClasses;
     }
 
+    /* --- read in document structures --- */
+
     // portions
 
     private Map<String, List<List<String>>> portions;
@@ -115,5 +122,17 @@ public class Resources {
             }
         }
         return lectures;
+    }
+
+    /* --- other --- */
+
+    // overrides
+
+    private Map<String, Document> overrides = new HashMap<>();
+    public Document getOverride(String name) {
+        if (overrides.get(name) == null) {
+            overrides.put(name, TextFile.readJsonResourceFile("overrides/" + name + ".json"));
+        }
+        return overrides.get(name);
     }
 }

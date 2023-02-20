@@ -7,6 +7,7 @@ import jupiterpi.vocabulum.core.interpreter.parser.VocabularyParser;
 import jupiterpi.vocabulum.core.interpreter.tokens.TokenSequence;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
+import jupiterpi.vocabulum.core.vocabularies.overrides.OverrideVocabularies;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
 import jupiterpi.vocabulum.core.vocabularies.translations.VocabularyTranslation;
 
@@ -27,14 +28,25 @@ public abstract class Vocabulary {
         String[] parts = str.split(" -- ");
         String latinStr = parts[0];
         String translationsStr = parts[1];
+
         TranslationSequence translations = TranslationSequence.fromString(translationsStr);
 
-        Lexer lexer = new Lexer(latinStr);
-        TokenSequence tokens = lexer.getTokens();
-        VocabularyParser parser = new VocabularyParser(tokens, translations, portion);
-        Vocabulary vocabulary = parser.getVocabulary();
+        if (latinStr.contains("[")) { // has template
 
-        return vocabulary;
+            int index = latinStr.indexOf("[");
+            String definition = latinStr.substring(0, index).trim();
+            String template = latinStr.substring(index+1, latinStr.indexOf("]")).trim();
+
+            return OverrideVocabularies.createOverrideVocabulary(portion, definition, template, translations);
+
+        } else {
+
+            Lexer lexer = new Lexer(latinStr);
+            TokenSequence tokens = lexer.getTokens();
+            VocabularyParser parser = new VocabularyParser(tokens, translations, portion);
+            return parser.getVocabulary();
+
+        }
     }
 
     public String getPortion() {

@@ -12,6 +12,9 @@ public class SimpleConjugationSchema extends ConjugationSchema {
     public static SimpleConjugationSchema readFromDocument(Document document) throws LoadingDataException {
         String name = document.getString("name");
         String displayName = document.getString("displayName");
+        return readFromDocument(name, displayName, document);
+    }
+    public static SimpleConjugationSchema readFromDocument(String name, String displayName, Document document) {
         SimpleConjugationSchema schema = new SimpleConjugationSchema(name, displayName);
 
         // Kind.IMPERATIVE
@@ -75,7 +78,9 @@ public class SimpleConjugationSchema extends ConjugationSchema {
     @Override
     public Pattern getPattern(VerbForm verbForm) throws VerbFormDoesNotExistException {
         Pattern formInfo = patterns.get(verbForm);
-        if (!formInfo.exists()) throw VerbFormDoesNotExistException.forConjugationSchema(verbForm, this);
+        if (!formInfo.exists()) {
+            throw VerbFormDoesNotExistException.forConjugationSchema(verbForm, this);
+        }
         return formInfo;
     }
 
