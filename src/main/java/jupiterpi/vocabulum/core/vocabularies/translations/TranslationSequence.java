@@ -1,7 +1,5 @@
 package jupiterpi.vocabulum.core.vocabularies.translations;
 
-import org.bson.Document;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,14 +15,6 @@ public class TranslationSequence extends ArrayList<VocabularyTranslation> {
             translationSequence.addAll(VocabularyTranslation.fromString(translationStr));
         }
         return translationSequence;
-    }
-    public static TranslationSequence readFromDocument(Document document) {
-        List<String> translationsStr = document.getList("translations", String.class);
-        TranslationSequence translations = new TranslationSequence();
-        for (String translationStr : translationsStr) {
-            translations.addAll(VocabularyTranslation.fromString(translationStr));
-        }
-        return translations;
     }
 
     @Override

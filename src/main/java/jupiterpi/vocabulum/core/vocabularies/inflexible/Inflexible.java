@@ -2,7 +2,6 @@ package jupiterpi.vocabulum.core.vocabularies.inflexible;
 
 import jupiterpi.vocabulum.core.vocabularies.Vocabulary;
 import jupiterpi.vocabulum.core.vocabularies.translations.TranslationSequence;
-import org.bson.Document;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,11 +12,6 @@ public class Inflexible extends Vocabulary {
     public Inflexible(String word, TranslationSequence translations, String portion) {
         super(translations, portion);
         this.word = word;
-    }
-
-    public static Inflexible readFromDocument(Document document) {
-        String word = document.getString("base_form");
-        return new Inflexible(word, TranslationSequence.readFromDocument(document), document.getString("portion"));
     }
 
     @Override
