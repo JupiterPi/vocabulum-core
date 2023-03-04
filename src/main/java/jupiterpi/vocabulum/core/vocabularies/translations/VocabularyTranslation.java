@@ -24,9 +24,9 @@ public class VocabularyTranslation {
     public static List<VocabularyTranslation> fromString(String str) {
         StringWithImportance string = StringWithImportance.fromString(str);
         List<VocabularyTranslation> translations = new ArrayList<>();
-        for (String translationStr : new ExchangeablesPreprocessor(string.getString()).getResult()) {
+        for (String translationStr : new ExchangeablesPreprocessor(string.string()).getResult()) {
             TranslationPartContainer translation = TranslationPartContainer.fromString(false, translationStr);
-            translations.add(new VocabularyTranslation(string.isImportant(), translation));
+            translations.add(new VocabularyTranslation(string.important(), translation));
         }
         return translations;
     }
@@ -39,6 +39,15 @@ public class VocabularyTranslation {
 
     public String getTranslation() {
         return translation.getBasicString();
+    }
+
+    public String getFormattedTranslation() {
+        String translation = this.translation.getBasicString();
+        if (isImportant()) {
+            return "*" + translation + "*";
+        } else {
+            return translation;
+        }
     }
 
     public String getRegex() {
@@ -54,7 +63,7 @@ public class VocabularyTranslation {
         return translation.matchValidInput(input);
     }
 
-    /* equals */
+    /* equals, toString */
 
     @Override
     public boolean equals(Object o) {
@@ -62,17 +71,6 @@ public class VocabularyTranslation {
         if (o == null || getClass() != o.getClass()) return false;
         VocabularyTranslation that = (VocabularyTranslation) o;
         return important == that.important && Objects.equals(translation, that.translation);
-    }
-
-    /* to string */
-
-    public String getFormattedTranslation() {
-        String translation = this.translation.getBasicString();
-        if (isImportant()) {
-            return "*" + translation + "*";
-        } else {
-            return translation;
-        }
     }
 
     @Override

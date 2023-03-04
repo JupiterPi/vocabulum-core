@@ -165,8 +165,8 @@ public class Terminal extends ConsoleInterface {
                             for (TranslationSequence.ValidatedTranslation translation : validation) {
                                 out(
                                         "    " +
-                                        translation.getVocabularyTranslation().getTranslation() + ": " +
-                                        (translation.isValid() ? "✅" : "❌") + " " + translation.getInput()
+                                        translation.vocabularyTranslation().getTranslation() + ": " +
+                                        (translation.valid() ? "✅" : "❌") + " " + translation.input()
                                 );
                             }
                         } catch (Exception e) {

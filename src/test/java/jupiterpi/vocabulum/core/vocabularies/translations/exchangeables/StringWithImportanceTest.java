@@ -10,8 +10,8 @@ class StringWithImportanceTest {
     void fromString() {
         StringWithImportance s = StringWithImportance.fromString("*der Freund*");
         assertAll(
-            () -> assertEquals("der Freund", s.getString()),
-            () -> assertTrue(s.isImportant())
+            () -> assertEquals("der Freund", s.string()),
+            () -> assertTrue(s.important())
         );
     }
 

@@ -22,7 +22,7 @@ public class SampleSession extends ConsoleInterface {
                 List<TranslationSequence.ValidatedTranslation> translations = vocabulary.getTranslations().validateInput(input);
                 int amountRight = 0;
                 for (TranslationSequence.ValidatedTranslation translation : translations) {
-                    if (translation.isValid()) {
+                    if (translation.valid()) {
                         amountRight++;
                     }
                 }
