@@ -2,11 +2,7 @@ package jupiterpi.vocabulum.core.util;
 
 import org.bson.Document;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.*;
 import java.util.List;
 
 public class TextFile {
@@ -38,7 +34,8 @@ public class TextFile {
     }
 
     public static TextFile readResourceFile(String path) {
-        return readFile(new File(ClassLoader.getSystemClassLoader().getResource(path).getFile()));
+        if (!path.startsWith("/")) path = "/" + path;
+        return readFile(TextFile.class.getResourceAsStream(path));
     }
 
     public static Document readJsonResourceFile(String path) {
@@ -47,22 +44,15 @@ public class TextFile {
 
     public static TextFile readFile(File file) {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            List<String> lines = new ArrayList<>();
-            while (true) {
-                String line;
-                if ((line = reader.readLine()) != null) {
-                    lines.add(line);
-                } else {
-                    break;
-                }
-            }
-            reader.close();
-
-            return new TextFile(lines);
-        } catch (IOException e) {
+            return new TextFile(new BufferedReader(new FileReader(file))
+                    .lines().toList());
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
+    private static TextFile readFile(InputStream is) {
+        return new TextFile(new BufferedReader(new InputStreamReader(is))
+                .lines().toList());
     }
 }
