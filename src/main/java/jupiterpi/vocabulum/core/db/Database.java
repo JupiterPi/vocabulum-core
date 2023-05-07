@@ -10,6 +10,9 @@ import jupiterpi.vocabulum.core.interpreter.parser.ParserException;
 import jupiterpi.vocabulum.core.vocabularies.conjugated.form.VerbFormDoesNotExistException;
 import jupiterpi.vocabulum.core.vocabularies.declined.DeclinedFormDoesNotExistException;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Loads and hosts all objects that host data from resource files.
  * Call <code>load()</code> to load all data, then access it using <code>getPortions()</code> etc.
@@ -72,8 +75,11 @@ public class Database {
     protected Dictionary dictionary;
 
     protected void loadPortionsAndDictionary() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
+        loadPortionsAndDictionary(Resources.get().getPortions());
+    }
+    protected void loadPortionsAndDictionary(Map<String, List<List<String>>> portions) throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
         this.portions = new Portions();
-        this.portions.loadPortions(Resources.get().getPortions());
+        this.portions.loadPortions(portions);
 
         dictionary = new Dictionary(this.portions);
     }
@@ -91,8 +97,11 @@ public class Database {
     protected Lectures lectures;
 
     protected void loadLectures() {
+        loadLectures(Resources.get().getLectures());
+    }
+    protected void loadLectures(Map<String, List<String>> lectures) {
         this.lectures = new Lectures();
-        this.lectures.loadLectures(Resources.get().getLectures());
+        this.lectures.loadLectures(lectures);
     }
 
     public Lectures getLectures() {
