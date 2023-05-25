@@ -1,8 +1,0 @@
-// supports comments
-# also like this
-
-a/ab (m. Abl.) -- *von (... her)*, von ... weg, *seit* :9
-abducere, abduco, abduxi, abductum -- *wegführen*, (weg)bringen, verschleppen :6
-abesse, absum, afui, - -- *abwesend sein*, fehlen, entfernt sein :20
-# ...
-decimus, decima, decimum -- *der zehnte* :20
