@@ -1,6 +1,7 @@
 package jupiterpi.vocabulum.core.ta;
 
 import jupiterpi.vocabulum.core.db.Database;
+import jupiterpi.vocabulum.core.db.LoadingDataException;
 import jupiterpi.vocabulum.core.db.MockDatabase;
 import jupiterpi.vocabulum.core.db.MockDatabaseSetup;
 import jupiterpi.vocabulum.core.db.portions.Dictionary;
@@ -220,8 +221,8 @@ class TranslationAssistanceTest {
         }
 
         @AfterAll
-        static void cleanup() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
-            ((MockDatabase) Database.get()).reloadPortionsAndDictionary();
+        static void cleanup() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException, LoadingDataException {
+            ((MockDatabase) Database.get()).reload();
         }
 
     }

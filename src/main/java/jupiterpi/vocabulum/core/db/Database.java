@@ -35,10 +35,13 @@ public class Database {
      * Loads all data.
      */
     public void load() throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
+        load(Resources.get().getPortions(), Resources.get().getLectures());
+    }
+    public void load(Map<String, List<List<String>>> portions, Map<String, List<String>> lectures) throws LoadingDataException, ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
         loadDeclensionClasses();
         loadConjugationClasses();
-        loadPortionsAndDictionary();
-        loadLectures();
+        loadPortionsAndDictionary(portions);
+        loadLectures(lectures);
     }
 
     /* ----- objects that read the database ----- */
@@ -74,9 +77,6 @@ public class Database {
     protected Portions portions;
     protected Dictionary dictionary;
 
-    protected void loadPortionsAndDictionary() throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
-        loadPortionsAndDictionary(Resources.get().getPortions());
-    }
     protected void loadPortionsAndDictionary(Map<String, List<List<String>>> portions) throws ParserException, DeclinedFormDoesNotExistException, LexerException, VerbFormDoesNotExistException {
         this.portions = new Portions();
         this.portions.loadPortions(portions);
@@ -96,9 +96,6 @@ public class Database {
 
     protected Lectures lectures;
 
-    protected void loadLectures() {
-        loadLectures(Resources.get().getLectures());
-    }
     protected void loadLectures(Map<String, List<String>> lectures) {
         this.lectures = new Lectures();
         this.lectures.loadLectures(lectures);
