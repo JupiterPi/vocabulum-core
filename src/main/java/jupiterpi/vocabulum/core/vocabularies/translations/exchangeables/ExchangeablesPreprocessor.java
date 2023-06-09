@@ -39,7 +39,7 @@ public class ExchangeablesPreprocessor {
                 List<String> resolvedStrings = new ArrayList<>();
                 for (String exchangeable : inParens.split(" *, *")) {
                     if (exchangeable.endsWith("-")) exchangeable = exchangeable.substring(0, exchangeable.length() - 1);
-                    resolvedStrings.add(beforeParens + exchangeable + afterParens);
+                    resolvedStrings.add(beforeParens + exchangeable + startLowercase(afterParens));
                 }
                 resolvedStrings.add(beforeParens + afterParens);
                 return resolvedStrings;
@@ -55,7 +55,7 @@ public class ExchangeablesPreprocessor {
                 ) {
                     return List.of(
                             beforeParens + afterParens,
-                            beforeParens + inParens + afterParens
+                            beforeParens + inParens + startLowercase(afterParens)
                     );
                 }
 
@@ -97,5 +97,10 @@ public class ExchangeablesPreprocessor {
         }
 
         return List.of(str);
+    }
+
+    private String startLowercase(String str) {
+        if (str.length() < 1) return str;
+        return str.substring(0, 1).toLowerCase() + str.substring(1);
     }
 }

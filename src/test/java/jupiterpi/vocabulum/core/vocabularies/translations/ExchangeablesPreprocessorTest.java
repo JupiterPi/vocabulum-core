@@ -31,6 +31,14 @@ class ExchangeablesPreprocessorTest {
             ), new ExchangeablesPreprocessor("(an-, er-, zu)hören").getResult());
         }
 
+        @Test
+        @DisplayName("capitalization")
+        void capitalization() {
+            assertEquals(List.of(
+                    "das Stadthaus", "das Landhaus", "das Haus"
+            ), new ExchangeablesPreprocessor("das (Stadt-, Land)Haus").getResult());
+        }
+
     }
 
     @Nested
@@ -89,6 +97,14 @@ class ExchangeablesPreprocessorTest {
             assertEquals(List.of(
                     "bringen", "wegbringen"
             ), new ExchangeablesPreprocessor("(weg)bringen").getResult());
+        }
+
+        @Test
+        @DisplayName("capitalization")
+        void capitalization() {
+            assertEquals(List.of(
+                    "das Haus", "das Landhaus"
+            ), new ExchangeablesPreprocessor("das (Land)Haus").getResult());
         }
 
     }
