@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class OverrideVocabularies {
-    public static Vocabulary createOverrideVocabulary(String portion, String definition, String template, TranslationSequence translations) throws ParserException {
+    public static Vocabulary createOverrideVocabulary(String portion, String definition, String template, String punctuationSign, TranslationSequence translations) throws ParserException {
         List<TemplatePart> templateParts = parseTemplateString(template);
         if (templateParts.stream()
                 .filter(part -> part instanceof OverrideTemplatePart)
@@ -23,7 +23,7 @@ public class OverrideVocabularies {
         String kind = override.getString("kind");
 
         if (kind.equalsIgnoreCase("verb")) {
-            return new OverrideVerb(portion, definition, templateParts, translations, override);
+            return new OverrideVerb(portion, definition, templateParts, punctuationSign, translations, override);
         }
 
         return null;

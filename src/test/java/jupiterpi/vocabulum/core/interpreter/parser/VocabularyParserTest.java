@@ -41,14 +41,14 @@ class VocabularyParserTest {
             TranslationSequence translations = generateTranslations("*der Sklave*", "der Diener");
             Noun e = Noun.fromGenitive(
                     "servus", "servi", Gender.MASC,
-                    translations, "test"
+                    null, translations, "test"
             );
             Vocabulary vocabulary = new VocabularyParser(new TokenSequence(
                     new Token(Token.Type.WORD, "servus"),
                     new Token(Token.Type.COMMA, ","),
                     new Token(Token.Type.WORD, "servi"),
                     new Token(Token.Type.GENDER, "m")
-            ), translations, "test").getVocabulary();
+            ), null, translations, "test").getVocabulary();
             assertEquals(e.toString(), vocabulary.toString());
         }
 
@@ -58,7 +58,7 @@ class VocabularyParserTest {
             TranslationSequence translations = generateTranslations("*hart*", "*scharf*");
             Adjective e = Adjective.fromBaseForms(
                     "acer", "acris", "acre",
-                    translations, "test"
+                    null, translations, "test"
             );
             Vocabulary vocabulary = new VocabularyParser(new TokenSequence(
                     new Token(Token.Type.WORD, "acer"),
@@ -66,7 +66,7 @@ class VocabularyParserTest {
                     new Token(Token.Type.WORD, "acris"),
                     new Token(Token.Type.COMMA, ","),
                     new Token(Token.Type.WORD, "acre")
-            ), translations, "test").getVocabulary();
+            ), null, translations, "test").getVocabulary();
             assertEquals(e.toString(), vocabulary.toString());
         }
 
@@ -76,14 +76,14 @@ class VocabularyParserTest {
             TranslationSequence translations = generateTranslations("*glücklich*");
             Adjective e = Adjective.fromGenitive(
                     "felix", "felicis",
-                    translations, "test"
+                    null, translations, "test"
             );
             Vocabulary vocabulary = new VocabularyParser(new TokenSequence(
                     new Token(Token.Type.WORD, "felix"),
                     new Token(Token.Type.COMMA, ","),
                     new Token(Token.Type.CASUS, "Gen"),
                     new Token(Token.Type.WORD, "felicis")
-            ), translations, "test").getVocabulary();
+            ), null, translations, "test").getVocabulary();
             assertEquals(e.toString(), vocabulary.toString());
         }
 
@@ -93,7 +93,7 @@ class VocabularyParserTest {
             TranslationSequence translations = generateTranslations("*rufen*", "nennen");
             Verb e = Verb.fromBaseForms(
                     "vocare", "voco", "vocavi", "vocatum",
-                    translations, "test"
+                    null, translations, "test"
             );
             Vocabulary vocabulary = new VocabularyParser(new TokenSequence(
                     new Token(Token.Type.WORD, "vocare"),
@@ -103,7 +103,7 @@ class VocabularyParserTest {
                     new Token(Token.Type.WORD, "vocavi"),
                     new Token(Token.Type.COMMA, ","),
                     new Token(Token.Type.WORD, "vocatum")
-            ), translations, "test").getVocabulary();
+            ), null, translations, "test").getVocabulary();
             assertEquals(e.toString(), vocabulary.toString());
         }
 
@@ -111,10 +111,10 @@ class VocabularyParserTest {
         @DisplayName("inflexible")
         void inflexible() throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
             TranslationSequence translations = generateTranslations("*und*");
-            Inflexible e = new Inflexible("et", translations, "test");
+            Inflexible e = new Inflexible("et", null, translations, "test");
             Vocabulary vocabulary = new VocabularyParser(new TokenSequence(
                     new Token(Token.Type.WORD, "et")
-            ), translations, "test").getVocabulary();
+            ), null, translations, "test").getVocabulary();
             assertEquals(e, vocabulary);
         }
 
@@ -134,7 +134,7 @@ class VocabularyParserTest {
                                 new Token(Token.Type.CASUS, "Acc"),
                                 new Token(Token.Type.GENDER, "m")
                         ),
-                        new TranslationSequence(), "test"
+                        null, new TranslationSequence(), "test"
                 );
             });
         }

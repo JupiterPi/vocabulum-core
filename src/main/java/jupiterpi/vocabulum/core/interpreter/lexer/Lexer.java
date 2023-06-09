@@ -16,6 +16,7 @@ import jupiterpi.vocabulum.core.vocabularies.declined.form.NNumber;
  */
 public class Lexer {
     private TokenSequence tokens = new TokenSequence();
+    private String punctuationSign = null;
 
     /**
      * Constructs this lexer with the given input expression and transforms it into a token sequence.
@@ -81,14 +82,22 @@ public class Lexer {
                 Symbols.get().getNounLikeFormSymbol(NounLikeForm.GERUNDIVUM)
         );
 
-        generateTokens(expr);
+        generateTokens(processPunctuationSign(expr));
     }
 
     /**
      * @return the resulting token sequence
+     * @see #getPunctuationSign()
      */
     public TokenSequence getTokens() {
         return tokens;
+    }
+
+    /**
+     * @return the punctuation sign contained in the expression
+     */
+    public String getPunctuationSign() {
+        return punctuationSign;
     }
 
     /* lexer */
@@ -98,6 +107,7 @@ public class Lexer {
     private final StringSet letters = StringSet.getCharacters("abcdefghijklmnopqrstuvwxyzäöüß" + "abcdefghijklmnopqrstuvwxyzäöü".toUpperCase() + "123");
     private final String comma = ",";
     private final String dot = ".";
+    private final StringSet punctuationSigns = new StringSet("?", "!");
 
     // other string sets                   // all set in constructor
     private final StringSet casusSymbols;
@@ -114,6 +124,17 @@ public class Lexer {
     private final String infinitiveFlag;
     private final StringSet infinitiveTenseSymbols;
     private final StringSet nounLikeForms;
+
+    private String processPunctuationSign(String expr) {
+        for (String sign : punctuationSigns) {
+            if (expr.contains(sign)) {
+                expr = expr.substring(0, expr.indexOf(sign)) + expr.substring(expr.indexOf(sign) + 1);
+                punctuationSign = sign;
+                break;
+            }
+        }
+        return expr;
+    }
 
     // buffer
     private String buffer = "";
@@ -147,7 +168,7 @@ public class Lexer {
             }
 
             // letter
-            if (letters.contains(c)) {
+            if (letters.contains(c) || punctuationSigns.contains(c)) {
                 buffer += c;
                 bufferType = BufferType.WORD;
                 continue;

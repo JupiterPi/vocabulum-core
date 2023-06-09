@@ -19,8 +19,8 @@ public class OverrideVerb extends Verb {
     private List<OverrideVocabularies.TemplatePart> template;
     private ConjugationSchema overrideSchema;
 
-    public OverrideVerb(String portion, String definition, List<OverrideVocabularies.TemplatePart> template, TranslationSequence translations, Document override) {
-        super(translations, portion);
+    public OverrideVerb(String portion, String definition, List<OverrideVocabularies.TemplatePart> template, String punctuationSign, TranslationSequence translations, Document override) {
+        super(punctuationSign, translations, portion);
         this.definition = definition;
         this.template = template;
 

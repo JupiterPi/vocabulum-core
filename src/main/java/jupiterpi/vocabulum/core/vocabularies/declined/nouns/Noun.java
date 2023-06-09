@@ -22,8 +22,8 @@ public class Noun extends Vocabulary {
     private String root;
     private Gender gender;
 
-    public Noun(DeclensionSchema declensionSchema, String nom_sg, String root, Gender gender, TranslationSequence translations, String portion) {
-        super(translations, portion);
+    public Noun(DeclensionSchema declensionSchema, String nom_sg, String root, Gender gender, String punctuationSign, TranslationSequence translations, String portion) {
+        super(punctuationSign, translations, portion);
         this.declensionSchema = declensionSchema;
         this.nom_sg = nom_sg;
         this.root = root;
@@ -32,11 +32,11 @@ public class Noun extends Vocabulary {
 
     /* constructor */
 
-    private Noun(TranslationSequence translations, String portion) {
-        super(translations, portion);
+    private Noun(String punctuationSign, TranslationSequence translations, String portion) {
+        super(punctuationSign, translations, portion);
     }
-    public static Noun fromGenitive(String nom_sg, String gen_sg, Gender gender, TranslationSequence translations, String portion) throws DeclinedFormDoesNotExistException, ParserException {
-        Noun noun = new Noun(translations, portion);
+    public static Noun fromGenitive(String nom_sg, String gen_sg, Gender gender, String punctuationSign, TranslationSequence translations, String portion) throws DeclinedFormDoesNotExistException, ParserException {
+        Noun noun = new Noun(punctuationSign, translations, portion);
         noun.nom_sg = nom_sg;
         noun.gender = gender;
         for (DeclensionSchema declensionSchema : Database.get().getDeclensionClasses().getAllForNouns()) {
@@ -68,7 +68,7 @@ public class Noun extends Vocabulary {
     @Override
     public String getDefinition() {
         String gen_sg = makeForm(new NounForm(new DeclinedForm(Casus.GEN, NNumber.SG))).toString();
-        return getBaseForm() + ", " + gen_sg + " " + Symbols.get().getGenderSymbol(getGender()) + ".";
+        return getBaseForm() + punctuationStr() + ", " + gen_sg + punctuationStr() + " " + Symbols.get().getGenderSymbol(getGender()) + ".";
     }
 
     @Override

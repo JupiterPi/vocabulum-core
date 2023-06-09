@@ -90,7 +90,7 @@ class TranslationAssistanceTest {
                     new VocabularyTranslation(true, new TranslationPartContainer(new PlainTextPart("transl1"))),
                     new VocabularyTranslation(false, new TranslationPartContainer(new PlainTextPart("transl2")))
             );
-            Vocabulary sampleVocabulary = new Vocabulary(translations, "test") {
+            Vocabulary sampleVocabulary = new Vocabulary(null, translations, "test") {
                 @Override
                 public String getBaseForm() {
                     return "word";

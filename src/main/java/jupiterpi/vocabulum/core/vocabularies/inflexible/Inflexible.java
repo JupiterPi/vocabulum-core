@@ -9,8 +9,8 @@ import java.util.Objects;
 public class Inflexible extends Vocabulary {
     private String word;
 
-    public Inflexible(String word, TranslationSequence translations, String portion) {
-        super(translations, portion);
+    public Inflexible(String word, String punctuationSign, TranslationSequence translations, String portion) {
+        super(punctuationSign, translations, portion);
         this.word = word;
     }
 
@@ -21,7 +21,7 @@ public class Inflexible extends Vocabulary {
 
     @Override
     public String getDefinition() {
-        return word;
+        return word + punctuationStr();
     }
 
     @Override

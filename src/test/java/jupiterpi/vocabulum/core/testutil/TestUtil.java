@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TestUtil {
     public static Vocabulary makeVocabulary(String base_form) {
-        return new Vocabulary(new TranslationSequence(VocabularyTranslation.fromString("*translation*").get(0)), "test") {
+        return new Vocabulary(null, new TranslationSequence(VocabularyTranslation.fromString("*translation*").get(0)), "test") {
             @Override
             public String getBaseForm() {
                 return base_form;

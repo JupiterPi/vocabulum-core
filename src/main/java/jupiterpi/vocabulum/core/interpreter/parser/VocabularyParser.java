@@ -23,13 +23,14 @@ public class VocabularyParser {
 
     /**
      * Constructs this parser with the given token sequence that makes up the definition, translations and portion.
-     * @param tokens       the token sequence that makes up the definition
-     * @param translations the translations
-     * @param portion      the portion that the vocabulary belongs to
+     * @param tokens          the token sequence that makes up the definition
+     * @param punctuationSign the punctuation contained in the original expression, or <code>null</code> if there is none
+     * @param translations    the translations
+     * @param portion         the portion that the vocabulary belongs to
      * @throws ParserException when the given token sequence is not a valid vocabulary
      */
-    public VocabularyParser(TokenSequence tokens, TranslationSequence translations, String portion) throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-        this.vocabulary = parseVocabulary(tokens, translations, portion);
+    public VocabularyParser(TokenSequence tokens, String punctuationSign, TranslationSequence translations, String portion) throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
+        this.vocabulary = parseVocabulary(tokens, punctuationSign, translations, portion);
     }
 
     /**
@@ -41,7 +42,7 @@ public class VocabularyParser {
 
     /* parser */
 
-    private Vocabulary parseVocabulary(TokenSequence tokens, TranslationSequence translations, String portion) throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
+    private Vocabulary parseVocabulary(TokenSequence tokens, String punctuationSign, TranslationSequence translations, String portion) throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
 
         // nouns
         if (tokens.size() == 4 && tokens.fitsStartsWith(TokenSequence.fromTypes(
@@ -53,7 +54,7 @@ public class VocabularyParser {
                     tokens.get(0).getContent(),
                     tokens.get(2).getContent(),
                     Symbols.get().genderFromSymbol(tokens.get(3).getContent()),
-                    translations, portion
+                    punctuationSign, translations, portion
             );
         }
 
@@ -68,7 +69,7 @@ public class VocabularyParser {
                     tokens.get(0).getContent(),
                     tokens.get(2).getContent(),
                     tokens.get(4).getContent(),
-                    translations, portion
+                    punctuationSign, translations, portion
             );
         }
 
@@ -82,7 +83,7 @@ public class VocabularyParser {
             return Adjective.fromGenitive(
                     tokens.get(0).getContent(),
                     tokens.get(3).getContent(),
-                    translations, portion
+                    punctuationSign, translations, portion
             );
         }
 
@@ -101,7 +102,7 @@ public class VocabularyParser {
                     tokens.get(2).getContent(),
                     tokens.get(4).getContent(),
                     tokens.get(6).getContent(),
-                    translations, portion
+                    punctuationSign, translations, portion
             );
         }
 
@@ -109,7 +110,7 @@ public class VocabularyParser {
         if (tokens.size() == 1 && tokens.fitsStartsWith(TokenSequence.fromTypes(
                 Token.Type.WORD
         ))) {
-            return new Inflexible(tokens.get(0).getContent(), translations, portion);
+            return new Inflexible(tokens.get(0).getContent(), punctuationSign, translations, portion);
         }
 
         throw new ParserException("Could not parse vocabulary: " + tokens);

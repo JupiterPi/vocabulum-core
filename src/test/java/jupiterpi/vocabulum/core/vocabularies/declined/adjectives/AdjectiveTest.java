@@ -32,7 +32,7 @@ class AdjectiveTest {
             Adjective adjective = new Adjective(
                     "acer", "acris", "acre",
                     Adjective.Kind.CONS, "acr",
-                    new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS
+                    null, new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS
             );
             assertEquals("acer, acris, acre", adjective.getDefinition());
         }
@@ -43,7 +43,7 @@ class AdjectiveTest {
             Adjective adjective = new Adjective(
                     "felix", "felix", "felix",
                     Adjective.Kind.CONS, "felic",
-                    new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_GENITIVE
+                    null, new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_GENITIVE
             );
             assertEquals("felix, Gen. felicis", adjective.getDefinition());
         }
@@ -57,7 +57,7 @@ class AdjectiveTest {
         @Test
         @DisplayName("a/o")
         void ao() throws DeclinedFormDoesNotExistException {
-            Adjective a = Adjective.fromBaseForms("pulcher", "pulchra", "pulchrum", new TranslationSequence(), "test");
+            Adjective a = Adjective.fromBaseForms("pulcher", "pulchra", "pulchrum", null, new TranslationSequence(), "test");
             assertAll(
                     () -> assertEquals("pulcher", a.getBaseForm()),
                     () -> assertEquals("pulchra", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM), ComparativeForm.POSITIVE)).toString()),
@@ -69,7 +69,7 @@ class AdjectiveTest {
         @Test
         @DisplayName("cons")
         void cons() throws DeclinedFormDoesNotExistException {
-            Adjective a = Adjective.fromBaseForms("acer", "acris", "acre", new TranslationSequence(), "test");
+            Adjective a = Adjective.fromBaseForms("acer", "acris", "acre", null, new TranslationSequence(), "test");
             assertAll(
                     () -> assertEquals("acer", a.getBaseForm()),
                     () -> assertEquals("acris", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM), ComparativeForm.POSITIVE)).toString()),
@@ -82,7 +82,7 @@ class AdjectiveTest {
 
     @Test
     void fromGenitive() throws ParserException, DeclinedFormDoesNotExistException {
-        Adjective a = Adjective.fromGenitive("felix", "felicis", new TranslationSequence(), "test");
+        Adjective a = Adjective.fromGenitive("felix", "felicis", null, new TranslationSequence(), "test");
         assertAll(
                 () -> assertEquals("felix", a.getBaseForm()),
                 () -> assertEquals("felicis", a.makeForm(new AdjectiveForm(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC), ComparativeForm.POSITIVE)).toString()),
@@ -101,10 +101,10 @@ class AdjectiveTest {
         void init() {
             ao = new Adjective(
                     "laetus", "laeta", "laetum", Adjective.Kind.AO, "laet",
-                    new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
+                    null, new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
             cons = new Adjective(
                     "acer", "acris", "acre", Adjective.Kind.CONS, "acr",
-                    new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
+                    null, new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
         }
 
         @Nested
@@ -211,7 +211,7 @@ class AdjectiveTest {
         AdjectiveForm adv_comp = new AdjectiveForm(true, ComparativeForm.COMPARATIVE);
         Adjective adjective = new Adjective(
                 "", "", "", Adjective.Kind.CONS, "",
-                new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS
+                null, new TranslationSequence(), "test", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS
         ) {
             @Override
             public FormResult makeForm(AdjectiveForm form) {

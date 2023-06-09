@@ -19,7 +19,7 @@ class OverrideVerbTest {
                     new OverrideVocabularies.OverrideTemplatePart("esse"),
                     new OverrideVocabularies.TextTemplatePart("(sf)")
             ),
-            new TranslationSequence(), Document.parse("""
+            null, new TranslationSequence(), Document.parse("""
                 {
                   "name": "esse",
                   "kind": "verb",

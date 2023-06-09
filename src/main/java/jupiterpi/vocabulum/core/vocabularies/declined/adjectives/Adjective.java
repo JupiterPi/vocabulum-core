@@ -34,8 +34,8 @@ public class Adjective extends Vocabulary {
         AO, CONS
     }
     private String root;
-    public Adjective(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, Kind kind, String root, TranslationSequence translations, String portion, AdjectiveDefinitionType definitionType) {
-        super(translations, portion);
+    public Adjective(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, Kind kind, String root, String punctuationSign, TranslationSequence translations, String portion, AdjectiveDefinitionType definitionType) {
+        super(punctuationSign, translations, portion);
         this.definitionType = definitionType;
         
         this.nom_sg_masc = nom_sg_masc;
@@ -47,12 +47,12 @@ public class Adjective extends Vocabulary {
 
     /* constructor */
 
-    private Adjective(TranslationSequence translations, String portion, AdjectiveDefinitionType definitionType) {
-        super(translations, portion);
+    private Adjective(String punctuationSign, TranslationSequence translations, String portion, AdjectiveDefinitionType definitionType) {
+        super(punctuationSign, translations, portion);
         this.definitionType = definitionType;
     }
-    public static Adjective fromBaseForms(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, TranslationSequence translations, String portion) throws DeclinedFormDoesNotExistException {
-        Adjective adjective = new Adjective(translations, portion, AdjectiveDefinitionType.FROM_BASE_FORMS);
+    public static Adjective fromBaseForms(String nom_sg_masc, String nom_sg_fem, String nom_sg_neut, String punctuationSign, TranslationSequence translations, String portion) throws DeclinedFormDoesNotExistException {
+        Adjective adjective = new Adjective(punctuationSign, translations, portion, AdjectiveDefinitionType.FROM_BASE_FORMS);
         adjective.nom_sg_masc = nom_sg_masc;
         adjective.nom_sg_fem = nom_sg_fem;
         adjective.nom_sg_neut = nom_sg_neut;
@@ -77,8 +77,8 @@ public class Adjective extends Vocabulary {
 
         return adjective;
     }
-    public static Adjective fromGenitive(String nom_sg, String gen_sg, TranslationSequence translations, String portion) throws DeclinedFormDoesNotExistException, ParserException {
-        Adjective adjective = new Adjective(translations, portion, AdjectiveDefinitionType.FROM_GENITIVE);
+    public static Adjective fromGenitive(String nom_sg, String gen_sg, String punctuationSign, TranslationSequence translations, String portion) throws DeclinedFormDoesNotExistException, ParserException {
+        Adjective adjective = new Adjective(punctuationSign, translations, portion, AdjectiveDefinitionType.FROM_GENITIVE);
         adjective.nom_sg_masc = nom_sg;
         adjective.nom_sg_fem = nom_sg;
         adjective.nom_sg_neut = nom_sg;
@@ -145,7 +145,7 @@ public class Adjective extends Vocabulary {
             nom_sg_fem = makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.FEM), ComparativeForm.POSITIVE)).toString();
             nom_sg_neut = makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT), ComparativeForm.POSITIVE)).toString();
 
-            return nom_sg_masc + ", " + nom_sg_fem + ", " + nom_sg_neut;
+            return nom_sg_masc + punctuationStr() + ", " + nom_sg_fem + punctuationStr() + ", " + nom_sg_neut + punctuationStr();
         } else {
             String nom_sg_masc = "-";
             String gen_sg_masc = "-";
@@ -153,7 +153,7 @@ public class Adjective extends Vocabulary {
             nom_sg_masc = makeForm(new AdjectiveForm(new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC), ComparativeForm.POSITIVE)).toString();
             gen_sg_masc = makeForm(new AdjectiveForm(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC), ComparativeForm.POSITIVE)).toString();
 
-            return nom_sg_masc + ", " + Symbols.get().getCasusSymbol(Casus.GEN) + ". " + gen_sg_masc;
+            return nom_sg_masc + punctuationStr() + ", " + Symbols.get().getCasusSymbol(Casus.GEN) + ". " + gen_sg_masc + punctuationStr();
         }
     }
 

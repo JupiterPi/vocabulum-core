@@ -27,14 +27,14 @@ class VerbTest {
         Verb verb = new Verb(
                 Database.get().getConjugationClasses().a_Conjugation(),
                 "vocare", "voc", "vocav", "vocat",
-                new TranslationSequence(), "test"
+                null, new TranslationSequence(), "test"
         );
         assertEquals("vocare, voco, vocavi, vocatum", verb.getDefinition());
     }
 
     @Test
     void fromBaseForms() throws ParserException, DeclinedFormDoesNotExistException, VerbFormDoesNotExistException {
-        Verb verb = Verb.fromBaseForms("vocare", "voco", "vocavi", "vocatum", new TranslationSequence(), "test");
+        Verb verb = Verb.fromBaseForms("vocare", "voco", "vocavi", "vocatum", null, new TranslationSequence(), "test");
         assertAll(
                 () -> assertEquals("vocare", verb.getBaseForm()),
                 () -> assertEquals("voco", verb.makeForm(new VerbForm(new ConjugatedForm(Person.FIRST, CNumber.SG), Mode.INDICATIVE, Tense.PRESENT, Voice.ACTIVE)).toString())
@@ -49,7 +49,7 @@ class VerbTest {
 
         @BeforeEach
         void init() {
-            verb = new Verb(Database.get().getConjugationClasses().a_Conjugation(), "vocare", "voc", "vocav", "vocat", new TranslationSequence(), "test");
+            verb = new Verb(Database.get().getConjugationClasses().a_Conjugation(), "vocare", "voc", "vocav", "vocat", null, new TranslationSequence(), "test");
         }
 
         @Test
@@ -123,7 +123,7 @@ class VerbTest {
                 @Test
                 @DisplayName("with -sur-")
                 void withSur() {
-                    verb = new Verb(Database.get().getConjugationClasses().a_Conjugation(), "vocare", "voc", "vocav", "vocas", new TranslationSequence(), "test");
+                    verb = new Verb(Database.get().getConjugationClasses().a_Conjugation(), "vocare", "voc", "vocav", "vocas", null, new TranslationSequence(), "test");
                     assertEquals("vocasurus", verb.makeForm(new VerbForm(NounLikeForm.PFA, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.MASC))).toString());
                 }
 
@@ -180,7 +180,7 @@ class VerbTest {
             Verb verb = new Verb(
                     Database.get().getConjugationClasses().a_Conjugation(),
                     "vocare", "voc", "vocav", "vocat",
-                    new TranslationSequence(), "test"
+                    null, new TranslationSequence(), "test"
             );
             assertEquals(List.of(first_sg), verb.identifyForm("voco", false));
         }
@@ -193,7 +193,7 @@ class VerbTest {
             Verb verb = new Verb(
                     Database.get().getConjugationClasses().a_Conjugation(),
                     "vocare", "voc", "vocav", "vocat",
-                    new TranslationSequence(), "test"
+                    null, new TranslationSequence(), "test"
             );
             assertEquals(List.of(inf_pres, gerund_nom_sg), verb.identifyForm("vocare", false));
         }

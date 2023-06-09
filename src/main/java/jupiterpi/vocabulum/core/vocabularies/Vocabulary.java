@@ -17,9 +17,12 @@ import java.util.List;
 public abstract class Vocabulary {
     protected String portion;
 
+    protected String punctuationSign;
+
     protected TranslationSequence translations;
 
-    protected Vocabulary(TranslationSequence translations, String portion) {
+    protected Vocabulary(String punctuationSign, TranslationSequence translations, String portion) {
+        this.punctuationSign = punctuationSign;
         this.translations = translations;
         this.portion = portion;
     }
@@ -37,13 +40,14 @@ public abstract class Vocabulary {
             String definition = latinStr.substring(0, index).trim();
             String template = latinStr.substring(index+1, latinStr.indexOf("]")).trim();
 
-            return OverrideVocabularies.createOverrideVocabulary(portion, definition, template, translations);
+            return OverrideVocabularies.createOverrideVocabulary(portion, definition, template, null /*TODO override vocabulary with null punctuationSign*/, translations);
 
         } else {
 
             Lexer lexer = new Lexer(latinStr);
             TokenSequence tokens = lexer.getTokens();
-            VocabularyParser parser = new VocabularyParser(tokens, translations, portion);
+            String punctuationSign = lexer.getPunctuationSign();
+            VocabularyParser parser = new VocabularyParser(tokens, punctuationSign, translations, portion);
             return parser.getVocabulary();
 
         }
@@ -56,6 +60,11 @@ public abstract class Vocabulary {
     public abstract String getBaseForm();
 
     public abstract String getDefinition();
+
+    protected String punctuationStr() {
+        if (punctuationSign != null) return punctuationSign;
+        else return "";
+    }
 
     public abstract Kind getKind();
     public enum Kind {

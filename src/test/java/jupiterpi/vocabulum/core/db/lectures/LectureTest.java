@@ -21,7 +21,7 @@ class LectureTest {
     @Test
     @DisplayName("(processed) lines")
     void processedLines() {
-        Vocabulary sampleVocabulary = new Vocabulary(new TranslationSequence(), "test") {
+        Vocabulary sampleVocabulary = new Vocabulary(null, new TranslationSequence(), "test") {
             @Override
             public String getBaseForm() {
                 return "word";

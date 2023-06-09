@@ -26,7 +26,7 @@ class NounTest {
         Noun noun = new Noun(
                 Database.get().getDeclensionClasses().o_Declension(),
                 "amicus", "amic", Gender.MASC,
-                new TranslationSequence(), "test"
+                null, new TranslationSequence(), "test"
         );
         assertEquals("amicus, amici m.", noun.getDefinition());
     }
@@ -38,7 +38,7 @@ class NounTest {
         @Test
         @DisplayName("simple")
         void simple() throws ParserException, DeclinedFormDoesNotExistException {
-            Noun n = Noun.fromGenitive("amicus", "amici", Gender.MASC, new TranslationSequence(), "test");
+            Noun n = Noun.fromGenitive("amicus", "amici", Gender.MASC, null, new TranslationSequence(), "test");
             assertAll(
                     () -> assertEquals("amicus", n.getBaseForm()),
                     () -> assertEquals("amico", n.makeForm(new NounForm(new DeclinedForm(Casus.ABL, NNumber.SG))).toString()),
@@ -50,7 +50,7 @@ class NounTest {
         @Test
         @DisplayName("not mixed up with cons_adjectives")
         void notMixedUpWithConsAdjectives() throws ParserException, DeclinedFormDoesNotExistException {
-            Noun n = Noun.fromGenitive("sol", "solis", Gender.MASC, new TranslationSequence(), "test");
+            Noun n = Noun.fromGenitive("sol", "solis", Gender.MASC, null, new TranslationSequence(), "test");
             assertAll(
                     () -> assertEquals("sol", n.getBaseForm()),
                     () -> assertEquals(Gender.MASC, n.getGender()),
@@ -71,7 +71,7 @@ class NounTest {
             n = new Noun(
                     Database.get().getDeclensionClasses().o_Declension(),
                     "amicus", "amic", Gender.MASC,
-                    new TranslationSequence(), "test"
+                    null, new TranslationSequence(), "test"
             );
         }
 
@@ -115,7 +115,7 @@ class NounTest {
             Noun noun = new Noun(
                     Database.get().getDeclensionClasses().o_Declension(),
                     "amicus", "amic", Gender.MASC,
-                    new TranslationSequence(), "test"
+                    null, new TranslationSequence(), "test"
             );
             NounForm gen_pl = new NounForm(new DeclinedForm(Casus.GEN, NNumber.PL, Gender.MASC));
             assertEquals(List.of(gen_pl), noun.identifyForm("amicorum", false));
@@ -127,7 +127,7 @@ class NounTest {
             Noun noun = new Noun(
                     Database.get().getDeclensionClasses().o_Declension(),
                     "amicus", "amic", Gender.MASC,
-                    new TranslationSequence(), "test"
+                    null, new TranslationSequence(), "test"
             );
             NounForm gen_sg = new NounForm(new DeclinedForm(Casus.GEN, NNumber.SG, Gender.MASC));
             NounForm nom_pl = new NounForm(new DeclinedForm(Casus.NOM, NNumber.PL, Gender.MASC));

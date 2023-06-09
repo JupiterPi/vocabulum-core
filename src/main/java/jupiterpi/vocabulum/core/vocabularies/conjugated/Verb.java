@@ -31,8 +31,8 @@ public class Verb extends Vocabulary {
     private String perfectRoot;
     private String pppRoot;
 
-    public Verb(ConjugationSchema conjugationSchema, String infinitive, String presentRoot, String perfectRoot, String pppRoot, TranslationSequence translations, String portion) {
-        super(translations, portion);
+    public Verb(ConjugationSchema conjugationSchema, String infinitive, String presentRoot, String perfectRoot, String pppRoot, String punctuationSign, TranslationSequence translations, String portion) {
+        super(punctuationSign, translations, portion);
         this.conjugationSchema = conjugationSchema;
         this.infinitive = infinitive;
         this.presentRoot = presentRoot;
@@ -40,13 +40,13 @@ public class Verb extends Vocabulary {
         this.pppRoot = pppRoot;
     }
 
-    protected Verb(TranslationSequence translations, String portion) {
-        super(translations, portion);
+    protected Verb(String punctuationSign, TranslationSequence translations, String portion) {
+        super(punctuationSign, translations, portion);
     }
 
     /* constructor */
 
-    public static Verb fromBaseForms(String infinitive, String first_sg_present, String first_sg_perfect, String ppp_nom_sg_neut, TranslationSequence translations, String portion) throws ParserException, VerbFormDoesNotExistException, DeclinedFormDoesNotExistException {
+    public static Verb fromBaseForms(String infinitive, String first_sg_present, String first_sg_perfect, String ppp_nom_sg_neut, String punctuationSign, TranslationSequence translations, String portion) throws ParserException, VerbFormDoesNotExistException, DeclinedFormDoesNotExistException {
         ConjugationSchema conjugationSchema = Database.get().getConjugationClasses().a_Conjugation();
 
         /* roots */
@@ -74,7 +74,7 @@ public class Verb extends Vocabulary {
             pppRoot = ppp_nom_sg_neut.substring(0, ppp_nom_sg_neut.length() - nom_sg_neut_suffix.length());
         }
 
-        return new Verb(conjugationSchema, infinitive, presentRoot, perfectRoot, pppRoot, translations, portion);
+        return new Verb(conjugationSchema, infinitive, presentRoot, perfectRoot, pppRoot, punctuationSign, translations, portion);
     }
 
     /* Vocabulary */
@@ -94,7 +94,7 @@ public class Verb extends Vocabulary {
         String first_sg_pres = makeForm(new VerbForm(new ConjugatedForm(Person.FIRST, CNumber.SG), Mode.INDICATIVE, Tense.PRESENT, Voice.ACTIVE)).toString();
         String first_sg_perfect = makeForm(new VerbForm(new ConjugatedForm(Person.FIRST, CNumber.SG), Mode.INDICATIVE, Tense.PERFECT, Voice.ACTIVE)).toString();
         String ppp = makeForm(new VerbForm(NounLikeForm.PPP, new DeclinedForm(Casus.NOM, NNumber.SG, Gender.NEUT))).toString();
-        return getBaseForm() + ", " + first_sg_pres + ", " + first_sg_perfect + ", " + ppp;
+        return getBaseForm() + punctuationStr() + ", " + first_sg_pres + punctuationStr() + ", " + first_sg_perfect + punctuationStr() + ", " + ppp + punctuationStr();
     }
 
     @Override
@@ -192,7 +192,7 @@ public class Verb extends Vocabulary {
                     pppRoot + adjective_nom_sg_masc_suffix,
                     pppRoot + adjective_nom_sg_fem_suffix,
                     pppRoot + adjective_nom_sg_neut_suffix,
-                    Adjective.Kind.AO, pppRoot, new TranslationSequence(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
+                    Adjective.Kind.AO, pppRoot, null, new TranslationSequence(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
             AdjectiveForm adjectiveForm = new AdjectiveForm(form.getNounLikeDeclinedForm(), ComparativeForm.POSITIVE);
             return ppp.makeForm(adjectiveForm).toString();
         } else {
@@ -231,7 +231,7 @@ public class Verb extends Vocabulary {
                         root + sign + adjective_nom_sg_masc_suffix,
                         root + sign + adjective_nom_sg_fem_suffix,
                         root + sign + adjective_nom_sg_neut_suffix,
-                        Adjective.Kind.AO, root + sign, new TranslationSequence(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
+                        Adjective.Kind.AO, root + sign, null, new TranslationSequence(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
                 return pfa.makeForm(new AdjectiveForm(form.getNounLikeDeclinedForm(), ComparativeForm.POSITIVE)).toString();
             } else if (nounLikeForm == NounLikeForm.GERUNDIUM) {
                 Document gerundiumDocument = (Document) verbsDocument.get("gerundium");
@@ -263,7 +263,7 @@ public class Verb extends Vocabulary {
                         root + sign + adjective_nom_sg_masc_suffix,
                         root + sign + adjective_nom_sg_fem_suffix,
                         root + sign + adjective_nom_sg_neut_suffix,
-                        Adjective.Kind.AO, root + sign, new TranslationSequence(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
+                        Adjective.Kind.AO, root + sign, null, new TranslationSequence(), "ppp", Adjective.AdjectiveDefinitionType.FROM_BASE_FORMS);
                 return pfa.makeForm(new AdjectiveForm(form.getNounLikeDeclinedForm(), ComparativeForm.POSITIVE)).toString();
             }
         }

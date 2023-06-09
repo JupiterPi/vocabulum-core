@@ -33,7 +33,7 @@ class OverrideVocabulariesTest {
     @Test
     @DisplayName("general")
     void general() throws ParserException {
-        Verb v = (Verb) OverrideVocabularies.createOverrideVocabulary("test", "definition", "\"ab\"+esse", new TranslationSequence());
+        Verb v = (Verb) OverrideVocabularies.createOverrideVocabulary("test", "definition", "\"ab\"+esse", null, new TranslationSequence());
         assertEquals("abest", v.makeForm(new VerbForm(new ConjugatedForm(Person.THIRD, CNumber.SG), Mode.INDICATIVE, Tense.PRESENT, Voice.ACTIVE)).toString());
     }
 
