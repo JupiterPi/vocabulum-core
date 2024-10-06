@@ -1,5 +1,5 @@
 # vocabulum-core
-Core logic for [Vocabulum](http://www.vocabulum.de)
+Core logic for Vocabulum
 
 See also: 
 * [vocabulum-website](https://github.com/JupiterPi/vocabulum-website)
